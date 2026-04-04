@@ -5,95 +5,829 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dream Journal</title>
   <style>
-    body {
-      font-family: sans-serif;
-      max-width: 640px;
-      margin: 60px auto;
-      padding: 0 20px;
+    :root {
+      --bg:           #0f1117;
+      --surface:      #1a1d27;
+      --surface2:     #252836;
+      --border:       #2e3347;
+      --accent:       #7c6af0;
+      --accent-hover: #6355d6;
+      --text:         #e8e9f0;
+      --text-dim:     #8b8fa8;
+      --user-msg:     #24225a;
+      --asst-msg:     #1a2535;
+      --danger:       #e05252;
+      --warning-bg:   rgba(245,158,11,.08);
+      --warning-bdr:  rgba(245,158,11,.3);
+      --warning-text: #fde68a;
+      --success:      #4ade80;
+      --r:            8px;
     }
-    #conversation {
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 16px;
-      min-height: 200px;
-      margin-bottom: 16px;
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    /* ── Context banner ─────────────────────────────────────────────────────── */
+    #ctx-banner {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
+      min-height: 44px;
     }
-    .message {
-      padding: 8px 12px;
-      border-radius: 4px;
-      max-width: 80%;
+    #ctx-label-text {
+      font-size: 13px;
+      color: var(--text-dim);
     }
-    .message.user {
-      background: #e8f0fe;
-      align-self: flex-end;
+    #ctx-label-text strong { color: var(--text); }
+    .ctx-phase {
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 100px;
+      background: rgba(124,106,240,.25);
+      color: #c4bbff;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      font-weight: 600;
     }
-    .message.assistant {
-      background: #f1f3f4;
-      align-self: flex-start;
+    .ctx-stressors { font-size: 12px; color: var(--text-dim); }
+    #ctx-update-btn {
+      margin-left: auto;
+      font-size: 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 4px 12px;
+      border-radius: var(--r);
+      cursor: pointer;
+      white-space: nowrap;
     }
-    #input-row {
+    #ctx-update-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Page wrapper ───────────────────────────────────────────────────────── */
+    main {
+      flex: 1;
+      max-width: 680px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 20px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .page-title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -.01em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    /* ── View helpers ───────────────────────────────────────────────────────── */
+    .view { display: none; flex-direction: column; gap: 14px; }
+    .view.active { display: flex; }
+
+    /* ── Chat view ──────────────────────────────────────────────────────────── */
+    #conversation {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 16px;
+      min-height: 260px;
+      max-height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #conversation:empty::before {
+      content: "Tell me about your dream…";
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 14px;
+    }
+    .msg {
+      padding: 10px 14px;
+      border-radius: var(--r);
+      max-width: 86%;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .msg.user      { background: var(--user-msg); align-self: flex-end; color: #cac5ff; }
+    .msg.assistant { background: var(--asst-msg); align-self: flex-start; }
+    .msg.streaming { opacity: .75; }
+
+    .input-row {
       display: flex;
       gap: 8px;
     }
-    #message-input {
+    .input-row input {
       flex: 1;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: var(--r);
+      font-size: 14px;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
+    .input-row input:focus { outline: none; border-color: var(--accent); }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .date-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    input[type="date"] {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 10px;
+      border-radius: var(--r);
+      font-size: 13px;
+    }
+    input[type="date"]:focus { outline: none; border-color: var(--accent); }
+
+    .btn-save {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 11px 0;
+      border-radius: var(--r);
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
+      width: 100%;
+      transition: background .15s;
     }
+    .btn-save:hover:not(:disabled) { background: rgba(124,106,240,.12); }
+    .btn-save:disabled { opacity: .3; cursor: not-allowed; }
+
+    /* ── Loading view ───────────────────────────────────────────────────────── */
+    #loading-view {
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+      text-align: center;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-label { font-size: 14px; color: var(--text-dim); }
+
+    /* ── Review view ────────────────────────────────────────────────────────── */
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .review-header h2 { font-size: 17px; font-weight: 600; }
+    .review-date { font-size: 13px; color: var(--text-dim); }
+
+    .narrative-block {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .meta-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-size: 12px;
+      padding: 4px 11px;
+      border-radius: 100px;
+      background: var(--surface2);
+      color: var(--text-dim);
+    }
+    .chip strong { color: var(--text); }
+
+    .review-section { display: flex; flex-direction: column; gap: 8px; }
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--text-dim);
+    }
+    .item-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .r-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 6px 10px;
+      font-size: 13px;
+    }
+    .r-item .iname { color: var(--text); }
+    .r-item .idetail { color: var(--text-dim); font-size: 12px; }
+    .r-item .xbtn {
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 15px;
+      line-height: 1;
+      padding: 0 2px;
+      margin-left: 2px;
+    }
+    .r-item .xbtn:hover { color: var(--danger); }
+
+    .badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .b-stated    { background: rgba(74,222,128,.15); color: #4ade80; }
+    .b-inferred  { background: rgba(245,158,11,.15);  color: #fbbf24; }
+    .b-ambiguous { background: rgba(156,163,175,.15); color: #9ca3af; }
+    .b-strong    { background: rgba(124,106,240,.2);  color: #a5b4fc; }
+    .b-moderate  { background: rgba(124,106,240,.12); color: #818cf8; }
+    .b-weak      { background: rgba(124,106,240,.06); color: #6366f1; }
+
+    /* ── Divergence notice ──────────────────────────────────────────────────── */
+    #divergence-notice {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-bdr);
+      border-radius: var(--r);
+      padding: 13px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--warning-text);
+      display: none;
+    }
+    #divergence-notice .div-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: block;
+    }
+    #div-update-link {
+      color: var(--accent);
+      cursor: pointer;
+      text-decoration: underline;
+      white-space: nowrap;
+    }
+
+    /* ── Review actions ─────────────────────────────────────────────────────── */
+    .review-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+    .btn {
+      padding: 10px 20px;
+      border-radius: var(--r);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s, background .15s;
+    }
+    .btn:disabled { opacity: .4; cursor: not-allowed; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    .btn-ghost:hover:not(:disabled) { border-color: var(--danger); color: var(--danger); }
+
+    /* ── Success view ───────────────────────────────────────────────────────── */
+    #success-view {
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+      gap: 14px;
+    }
+    .success-glyph  { font-size: 36px; color: var(--success); }
+    .success-title  { font-size: 19px; font-weight: 600; }
+    .success-detail { font-size: 13px; color: var(--text-dim); }
+    .btn-reset {
+      margin-top: 8px;
+      background: var(--surface2);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: var(--r);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-reset:hover { background: #323649; }
+
+    /* ── Context modal ──────────────────────────────────────────────────────── */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.6);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal h3 { font-size: 16px; font-weight: 600; }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { font-size: 12px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
+    .field input, .field select, .field textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: var(--r);
+      font-size: 14px;
+      font-family: inherit;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .field textarea { resize: vertical; min-height: 56px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+    .field select option { background: var(--surface2); }
   </style>
 </head>
 <body>
-  <h2>Dream Journal</h2>
-  <div id="conversation"></div>
-  <div id="input-row">
-    <input id="message-input" type="text" placeholder="Describe your dream..." autofocus>
-    <button onclick="sendMessage()">Send</button>
+
+  <!-- Life Context Window banner — always visible -->
+  <div id="ctx-banner">
+    <div id="ctx-label-text"><em>Loading context…</em></div>
+    <button id="ctx-update-btn" onclick="openContextModal()">Update context</button>
+  </div>
+
+  <main>
+    <h1 class="page-title">Dream Journal</h1>
+
+    <!-- ── View: Chat ───────────────────────────────────────────────────────── -->
+    <div id="chat-view" class="view active">
+      <div id="conversation"></div>
+
+      <div class="input-row">
+        <input type="text" id="message-input" placeholder="Describe your dream…" autocomplete="off">
+        <button class="btn btn-primary" onclick="sendMessage()">Send</button>
+      </div>
+
+      <div class="meta-row">
+        <label class="date-label">
+          Dream date
+          <input type="date" id="dream-date">
+        </label>
+      </div>
+
+      <button class="btn-save" id="save-btn" onclick="saveToJournal()" disabled>
+        Save to Journal
+      </button>
+    </div>
+
+    <!-- ── View: Loading ────────────────────────────────────────────────────── -->
+    <div id="loading-view" class="view">
+      <div class="spinner"></div>
+      <div class="loading-label">Extracting dream data…</div>
+    </div>
+
+    <!-- ── View: Review card ────────────────────────────────────────────────── -->
+    <div id="review-view" class="view">
+      <div class="review-header">
+        <h2>Review Extracted Data</h2>
+        <span class="review-date" id="review-date-display"></span>
+      </div>
+
+      <div class="narrative-block" id="review-narrative"></div>
+
+      <div class="meta-chips" id="review-meta"></div>
+
+      <div id="review-sections"></div>
+
+      <div id="divergence-notice">
+        <span class="div-title">Something may have shifted</span>
+        <span id="div-text"></span>
+        &nbsp;<span id="div-update-link" onclick="openContextModal()">Update your life context →</span>
+      </div>
+
+      <div class="review-actions">
+        <button class="btn btn-ghost" onclick="discardEntry()">Discard</button>
+        <button class="btn btn-primary" onclick="confirmSave()">Confirm &amp; Save to Graph</button>
+      </div>
+    </div>
+
+    <!-- ── View: Success ────────────────────────────────────────────────────── -->
+    <div id="success-view" class="view">
+      <div class="success-glyph">✦</div>
+      <div class="success-title">Dream saved to graph</div>
+      <div class="success-detail" id="success-detail"></div>
+      <button class="btn-reset" onclick="resetToChat()">Log another dream</button>
+    </div>
+  </main>
+
+  <!-- Context update modal -->
+  <div class="overlay" id="ctx-modal-overlay">
+    <div class="modal">
+      <h3>Update Life Context</h3>
+      <div class="field">
+        <label>Label</label>
+        <input type="text" id="ctx-label-input" placeholder="e.g. Active job search + grad school">
+      </div>
+      <div class="field">
+        <label>Start date</label>
+        <input type="date" id="ctx-start-input">
+      </div>
+      <div class="field">
+        <label>Stressors (comma-separated)</label>
+        <textarea id="ctx-stressors-input" placeholder="job search, financial pressure, new role"></textarea>
+      </div>
+      <div class="field">
+        <label>Life phase</label>
+        <select id="ctx-phase-input">
+          <option value="">— select —</option>
+          <option value="major_transition">Major transition</option>
+          <option value="stable">Stable</option>
+          <option value="grief">Grief</option>
+          <option value="creative">Creative</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeContextModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveContext()">Save context</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    const conversation = document.getElementById("conversation");
-    const input = document.getElementById("message-input");
+    // ── State ─────────────────────────────────────────────────────────────────
+    let currentExtracted = null;
+    let currentDate      = null;
+    let exchangeCount    = 0;  // increments after each assistant reply
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") sendMessage();
+    // ── Init ──────────────────────────────────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("dream-date").value = todayISO();
+      document.getElementById("message-input").addEventListener("keydown", e => {
+        if (e.key === "Enter" && !e.shiftKey) sendMessage();
+      });
+      loadContext();
     });
 
-    function addMessage(text, role) {
-      const div = document.createElement("div");
-      div.className = `message ${role}`;
+    function todayISO() {
+      return new Date().toISOString().split("T")[0];
+    }
+
+    function showView(id) {
+      ["chat-view", "loading-view", "review-view", "success-view"].forEach(v => {
+        document.getElementById(v).classList.toggle("active", v === id);
+      });
+    }
+
+    // ── Life Context Window ───────────────────────────────────────────────────
+    async function loadContext() {
+      try {
+        const res = await fetch("/api/context");
+        const ctx = await res.json();
+        renderContextBanner(ctx);
+      } catch {
+        document.getElementById("ctx-label-text").innerHTML = "<em>Could not load context</em>";
+      }
+    }
+
+    function renderContextBanner(ctx) {
+      const el = document.getElementById("ctx-label-text");
+      if (!ctx) {
+        el.innerHTML = '<em>No life context set — <span style="color:var(--accent);cursor:pointer" onclick="openContextModal()">add one</span></em>';
+        return;
+      }
+      const phase    = ctx.life_phase
+        ? `<span class="ctx-phase">${ctx.life_phase.replace("_", " ")}</span>` : "";
+      const stressor = (ctx.stressors || []).length
+        ? `<span class="ctx-stressors">· ${ctx.stressors.join(", ")}</span>` : "";
+      el.innerHTML = `<strong>${ctx.label}</strong> ${phase} ${stressor}`;
+    }
+
+    function openContextModal() {
+      document.getElementById("ctx-start-input").value = todayISO();
+      document.getElementById("ctx-label-input").value  = "";
+      document.getElementById("ctx-stressors-input").value = "";
+      document.getElementById("ctx-phase-input").value  = "";
+      document.getElementById("ctx-modal-overlay").classList.add("open");
+    }
+
+    function closeContextModal() {
+      document.getElementById("ctx-modal-overlay").classList.remove("open");
+    }
+
+    async function saveContext() {
+      const label = document.getElementById("ctx-label-input").value.trim();
+      if (!label) { alert("Please enter a label for this context period."); return; }
+      await fetch("/api/context", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          label,
+          start_date:  document.getElementById("ctx-start-input").value,
+          stressors:   document.getElementById("ctx-stressors-input").value,
+          life_phase:  document.getElementById("ctx-phase-input").value || null,
+        }),
+      });
+      closeContextModal();
+      loadContext();
+    }
+
+    // ── Chat ──────────────────────────────────────────────────────────────────
+    function appendMessage(text, role) {
+      const convo = document.getElementById("conversation");
+      const div   = document.createElement("div");
+      div.className = `msg ${role}`;
       div.textContent = text;
-      conversation.appendChild(div);
-      conversation.scrollTop = conversation.scrollHeight;
+      convo.appendChild(div);
+      convo.scrollTop = convo.scrollHeight;
+      return div;
     }
 
     async function sendMessage() {
-      const text = input.value.trim();
+      const input = document.getElementById("message-input");
+      const text  = input.value.trim();
       if (!text) return;
 
-      addMessage(text, "user");
-      input.value = "";
+      input.value    = "";
+      input.disabled = true;
+      appendMessage(text, "user");
+
+      const bubble = appendMessage("", "assistant");
+      bubble.classList.add("streaming");
 
       try {
         const res = await fetch("/chat", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message: text }),
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({message: text}),
+        });
+
+        if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+        const reader  = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer    = "";
+
+        while (true) {
+          const {done, value} = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, {stream: true});
+          const lines = buffer.split("\n");
+          buffer = lines.pop(); // keep partial line
+          for (const line of lines) {
+            if (!line.startsWith("data: ")) continue;
+            const payload = JSON.parse(line.slice(6));
+            if (payload.delta) {
+              bubble.textContent += payload.delta;
+              document.getElementById("conversation").scrollTop = 999999;
+            }
+          }
+        }
+
+        bubble.classList.remove("streaming");
+        exchangeCount++;
+        document.getElementById("save-btn").disabled = false;
+
+      } catch (err) {
+        bubble.textContent = `Error: ${err.message}`;
+        bubble.style.color = "var(--danger)";
+      } finally {
+        input.disabled = false;
+        input.focus();
+      }
+    }
+
+    // ── Save → Extract → Review ───────────────────────────────────────────────
+    async function saveToJournal() {
+      currentDate = document.getElementById("dream-date").value;
+      showView("loading-view");
+
+      try {
+        const res = await fetch("/api/extract", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({date: currentDate}),
+        });
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || "Extraction failed");
+        }
+        const data = await res.json();
+        currentExtracted = data.extracted;
+        renderReviewCard(data.extracted, data.date, data.divergence);
+        showView("review-view");
+
+      } catch (err) {
+        showView("chat-view");
+        alert(`Could not extract dream: ${err.message}`);
+      }
+    }
+
+    // ── Review card ───────────────────────────────────────────────────────────
+    function renderReviewCard(extracted, date, divergence) {
+      const d = extracted.dream || {};
+
+      document.getElementById("review-date-display").textContent = date;
+      document.getElementById("review-narrative").textContent =
+        d.raw_narrative || "(no narrative captured)";
+
+      // Meta chips
+      const metaEl = document.getElementById("review-meta");
+      metaEl.innerHTML = "";
+      [
+        d.emotional_valence && ["Valence",   d.emotional_valence],
+        d.intensity   != null && ["Intensity", `${d.intensity}/5`],
+        d.visual_quality     && ["Visual",    d.visual_quality],
+        d.lucid       != null && ["Lucid",    d.lucid ? "yes" : "no"],
+        d.notable_color      && ["Color",     d.notable_color],
+      ].filter(Boolean).forEach(([lbl, val]) => {
+        const c = document.createElement("span");
+        c.className = "chip";
+        c.innerHTML = `${lbl}: <strong>${val}</strong>`;
+        metaEl.appendChild(c);
+      });
+
+      // Sections
+      const sec = document.getElementById("review-sections");
+      sec.innerHTML = "";
+
+      addSection(sec, "Characters",   extracted.characters    || [], c =>
+        `<span class="iname">${esc(c.name)}</span>` +
+        (c.character_type  ? ` <span class="idetail">· ${c.character_type}</span>` : "") +
+        (c.role_in_dream   ? ` <span class="idetail">· ${c.role_in_dream}</span>`  : ""),
+      "characters");
+
+      addSection(sec, "Symbols",      extracted.symbols       || [], s =>
+        `<span class="iname">${esc(s.name)}</span>` +
+        (s.prominence ? ` <span class="idetail">· ${s.prominence}</span>` : "") +
+        (s.category   ? ` <span class="idetail">· ${s.category}</span>`   : ""),
+      "symbols");
+
+      addSection(sec, "Settings",     extracted.settings      || [], st =>
+        `<span class="iname">${esc(st.name)}</span>` +
+        (st.familiarity     ? ` <span class="idetail">· ${st.familiarity}</span>`     : "") +
+        (st.distortion_level? ` <span class="idetail">· ${st.distortion_level}</span>`: ""),
+      "settings");
+
+      addSection(sec, "Emotions",     extracted.emotions      || [], e => {
+        const c = e.confidence || "ambiguous";
+        return `<span class="iname">${esc(e.name)}</span> <span class="badge b-${c}">${c}</span>` +
+               (e.anchor ? ` <span class="idetail">· ${esc(e.anchor)}</span>` : "");
+      }, "emotions");
+
+      addSection(sec, "Themes",       extracted.themes        || [], t => {
+        const s = t.strength || "weak";
+        return `<span class="iname">${esc(t.name)}</span> <span class="badge b-${s}">${s}</span>`;
+      }, "themes");
+
+      if ((extracted.body_sensations || []).length) {
+        addSection(sec, "Body Sensations", extracted.body_sensations, bs => {
+          const c = bs.confidence || "inferred";
+          return `<span class="iname">${esc(bs.description)}</span>` +
+                 (bs.location ? ` <span class="idetail">· ${esc(bs.location)}</span>` : "") +
+                 ` <span class="badge b-${c}">${c}</span>`;
+        }, "body_sensations");
+      }
+
+      // Divergence notice
+      const divEl = document.getElementById("divergence-notice");
+      if (divergence && (divergence.new_themes || []).length) {
+        const list = divergence.new_themes.map(t => `<em>${esc(t)}</em>`).join(", ");
+        document.getElementById("div-text").innerHTML =
+          `The theme${divergence.new_themes.length > 1 ? "s" : ""} ${list} ` +
+          `haven't appeared in your "${esc(divergence.context_label)}" context before. ` +
+          `Has anything shifted in your life recently?`;
+        divEl.style.display = "block";
+      } else {
+        divEl.style.display = "none";
+      }
+    }
+
+    function addSection(container, title, items, formatter, key) {
+      if (!items.length) return;
+      const wrap = document.createElement("div");
+      wrap.className = "review-section";
+      const h = document.createElement("div");
+      h.className = "section-title";
+      h.textContent = title;
+      wrap.appendChild(h);
+      const row = document.createElement("div");
+      row.className = "item-row";
+      items.forEach((item, idx) => {
+        const el = document.createElement("div");
+        el.className = "r-item";
+        el.innerHTML = formatter(item) +
+          `<button class="xbtn" title="Remove" onclick="removeItem('${key}', this)">×</button>`;
+        row.appendChild(el);
+      });
+      wrap.appendChild(row);
+      container.appendChild(wrap);
+    }
+
+    function removeItem(key, btn) {
+      const item   = btn.closest(".r-item");
+      const allItems = [...item.parentElement.querySelectorAll(".r-item")];
+      const idx    = allItems.indexOf(item);
+      if (currentExtracted[key] && idx !== -1) {
+        currentExtracted[key].splice(idx, 1);
+      }
+      item.remove();
+    }
+
+    // ── Confirm & Discard ─────────────────────────────────────────────────────
+    async function confirmSave() {
+      try {
+        const res = await fetch("/api/confirm", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({extracted: currentExtracted, date: currentDate}),
         });
         const data = await res.json();
-        addMessage(data.response, "assistant");
+        showSuccess(data.dream_id, data.stats);
       } catch (err) {
-        addMessage("Error: could not reach backend.", "assistant");
+        alert(`Could not save: ${err.message}`);
       }
+    }
+
+    async function discardEntry() {
+      await fetch("/api/discard", {method: "POST"});
+      resetToChat();
+    }
+
+    // ── Post-save state ───────────────────────────────────────────────────────
+    function showSuccess(dreamId, stats) {
+      const n = stats ? stats.nodes : {};
+      document.getElementById("success-detail").textContent =
+        `${n.Dream || 0} dreams · ${n.Theme || 0} themes · ${n.Symbol || 0} symbols in graph`;
+      showView("success-view");
+    }
+
+    function resetToChat() {
+      document.getElementById("conversation").innerHTML = "";
+      document.getElementById("save-btn").disabled = true;
+      document.getElementById("dream-date").value  = todayISO();
+      exchangeCount    = 0;
+      currentExtracted = null;
+      currentDate      = null;
+      showView("chat-view");
+      document.getElementById("message-input").focus();
+    }
+
+    // ── Utility ───────────────────────────────────────────────────────────────
+    function esc(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
   </script>
 </body>

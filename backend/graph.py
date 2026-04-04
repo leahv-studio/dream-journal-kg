@@ -27,6 +27,12 @@ class DreamGraph:
         path = path or GRAPH_PATH
         with open(path) as f:
             data = json.load(f)
+        # NetworkX 3.4+ saves edges under "edges"; older node_link_graph expects "links".
+        # Normalise so the loader finds whichever key it looks for.
+        if "edges" in data and "links" not in data:
+            data["links"] = data["edges"]
+        elif "links" in data and "edges" not in data:
+            data["edges"] = data["links"]
         self.G = json_graph.node_link_graph(data, directed=True, multigraph=True)
 
     # ── Internal helpers ─────────────────────────────────────────────────────
