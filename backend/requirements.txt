@@ -1,3 +1,5 @@
 flask
 flask-cors
 networkx
+anthropic
+python-dotenv

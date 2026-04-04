@@ -1,0 +1,120 @@
+{
+  "project": "Dream Journal Knowledge Graph",
+  "course": "SEIS 666, Spring 2026",
+  "student": "Leah Vandiver",
+  "due_date": "2026-05-14",
+  "checkin_2_date": "2026-04-16",
+  "stack": {
+    "frontend": "HTML / CSS / JS",
+    "backend": "Python + Flask",
+    "graph": "NetworkX (saves to graph.json)",
+    "ai": "Claude API — claude-sonnet-4-20250514",
+    "hosting": "Local backend, GitHub Pages for frontend"
+  },
+  "repo_structure": {
+    "frontend": ["index.html", "journal.html", "style.css", "app.js"],
+    "backend": ["app.py", "graph.py", "extract.py", "prompts.py", "requirements.txt"],
+    "data": ["graph.json", "seed_data.py"],
+    "root": ["schema.json", "SCHEMA.md", "README.md"]
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "name": "Skeleton",
+      "goal": "Frontend and backend talking to each other. No Claude, no graph.",
+      "deadline_note": "Do this first, this week.",
+      "tasks": [
+        "Create GitHub repo",
+        "Set up Python virtual environment",
+        "Install Flask and flask-cors",
+        "Write app.py with one route: POST /chat returns hello",
+        "Write index.html with text input that calls /chat",
+        "Confirm browser talks to backend",
+        "Commit"
+      ],
+      "done_when": "Browser talks to backend, backend responds."
+    },
+    {
+      "stage": 2,
+      "name": "Graph Foundation",
+      "goal": "Schema implemented in NetworkX, graph saves and loads correctly.",
+      "deadline_note": null,
+      "tasks": [
+        "Install NetworkX",
+        "Write graph.py — implement all 8 node types and 15 edge types from schema",
+        "Write seed_data.py — manually encode 10-15 existing dream entries",
+        "Confirm graph saves to data/graph.json and loads back correctly",
+        "Write one test query: show me all dreams",
+        "Commit"
+      ],
+      "done_when": "Graph loads, a dream entry can be added programmatically, basic query returns results."
+    },
+    {
+      "stage": 3,
+      "name": "Claude API Extraction",
+      "goal": "Paste in a dream narrative, get back structured nodes and edges.",
+      "deadline_note": "Must be complete by April 16 — Check-in #2.",
+      "tasks": [
+        "Install Anthropic SDK",
+        "Set up API key in environment variable — never committed to repo",
+        "Write extraction prompt in prompts.py — returns structured JSON matching schema",
+        "Write extract.py — sends narrative to Claude, parses response, writes to graph",
+        "Test with Grand Am dream entry",
+        "Wire extraction to /chat route",
+        "Build before/after comparison",
+        "Commit"
+      ],
+      "done_when": "Dream narrative goes in, structured graph data comes out, graph updates."
+    },
+    {
+      "stage": 4,
+      "name": "Frontend Entry Flow",
+      "goal": "Working chat UI that logs a dream and updates the graph.",
+      "deadline_note": "Target complete by April 30.",
+      "tasks": [
+        "Build chat interface in index.html",
+        "Add Save to journal button that triggers extraction on close",
+        "Build review card — shows extracted nodes before writing to graph",
+        "Add Life Context Window display — always visible, update link",
+        "Wire context divergence detection",
+        "Test full entry flow end to end",
+        "Commit"
+      ],
+      "done_when": "User can have a dream conversation, review extracted data, confirm write to graph — all in browser."
+    },
+    {
+      "stage": 5,
+      "name": "Query Views + Demo Polish",
+      "goal": "Pattern filter views, before/after demo, presentation-ready.",
+      "deadline_note": "Complete by May 14.",
+      "tasks": [
+        "Build journal.html — graph query and pattern view page",
+        "Symbol frequency view",
+        "Filter by life context window",
+        "Filter by theme",
+        "Filter by date range",
+        "Recurring series view",
+        "Before/after demo split view",
+        "Write README",
+        "Dry run full 10-minute demo",
+        "Commit final version"
+      ],
+      "done_when": "10-minute demo can be delivered live without notes."
+    }
+  ],
+  "demo_script": [
+    { "time": "0:00-1:00", "what": "The problem — show raw dream chat. Brilliant but locked, unsearchable, non-cumulative." },
+    { "time": "1:00-2:30", "what": "The solution — show the graph. Two layers: dream entries + life context windows." },
+    { "time": "2:30-5:00", "what": "Live entry — log a new dream, show Claude responding, show extraction review card, confirm write." },
+    { "time": "5:00-7:30", "what": "Pattern queries — navigation failure dreams, themes during transition periods, before/after delta." },
+    { "time": "7:30-9:00", "what": "Recurring series — show duplex dream series timeline." },
+    { "time": "9:00-10:00", "what": "Wrap — who pays for this, roadmap, what AI made possible." }
+  ],
+  "key_decisions": [
+    "NetworkX over Neo4j — simpler setup, no separate database, graph as JSON file",
+    "Extraction runs once per entry after conversation closes — not mid-conversation",
+    "is_recurring and is_novel are user-asserted only — never system-inferred",
+    "Local backend during demo — GitHub Pages for frontend only",
+    "Before/after delta uses Grand Am dream as anchor example"
+  ]
+}
