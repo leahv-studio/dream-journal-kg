@@ -39,6 +39,11 @@ def index():
     return render_template("index.html")
 
 
+@app.route("/journal.html")
+def journal():
+    return render_template("journal.html")
+
+
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json or {}
@@ -177,6 +182,37 @@ def update_context():
 @app.route("/api/dreams")
 def get_dreams():
     return jsonify(dg.get_all_dreams())
+
+
+@app.route("/api/symbols/frequency")
+def get_symbol_frequency():
+    return jsonify(dg.get_symbol_frequency())
+
+
+@app.route("/api/themes")
+def get_themes():
+    return jsonify(dg.get_all_themes())
+
+
+@app.route("/api/life-context-windows")
+def get_life_context_windows():
+    return jsonify(dg.get_all_life_context_windows())
+
+
+@app.route("/api/recurring-series")
+def get_recurring_series():
+    return jsonify(dg.get_recurring_series())
+
+
+@app.route("/api/dreams/filter")
+def filter_dreams():
+    return jsonify(dg.filter_dreams(
+        theme=request.args.get("theme"),
+        context_window=request.args.get("context_window"),
+        start_date=request.args.get("start_date"),
+        end_date=request.args.get("end_date"),
+        series=request.args.get("series"),
+    ))
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

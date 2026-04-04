@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dream Journal — Pattern View</title>
+  <style>
+    :root {
+      --bg:           #0f1117;
+      --surface:      #1a1d27;
+      --surface2:     #252836;
+      --border:       #2e3347;
+      --accent:       #7c6af0;
+      --accent-hover: #6355d6;
+      --text:         #e8e9f0;
+      --text-dim:     #8b8fa8;
+      --danger:       #e05252;
+      --success:      #4ade80;
+      --r:            8px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Top nav ─────────────────────────────────────────────────────────────── */
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+    }
+    .topbar-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dim);
+      padding: 14px 0;
+      margin-right: 20px;
+      white-space: nowrap;
+    }
+    .topbar-title a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .topbar-title a:hover { text-decoration: underline; }
+
+    /* ── Tab bar ─────────────────────────────────────────────────────────────── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+    }
+    .tab {
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--text-dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color .12s, border-color .12s;
+      user-select: none;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Layout ──────────────────────────────────────────────────────────────── */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .section-header {
+      margin-bottom: 20px;
+    }
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .section-header p {
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* ── Two-panel layout ────────────────────────────────────────────────────── */
+    .two-panel {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .panel-list {
+      flex: 0 0 300px;
+      min-width: 240px;
+    }
+    .panel-detail {
+      flex: 1;
+      min-width: 0;
+    }
+
+    @media (max-width: 640px) {
+      .two-panel { flex-direction: column; }
+      .panel-list { flex: none; width: 100%; }
+    }
+
+    /* ── Item list ───────────────────────────────────────────────────────────── */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .list-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 11px 14px;
+      cursor: pointer;
+      transition: border-color .12s, background .12s;
+    }
+    .list-item:hover { border-color: var(--accent); }
+    .list-item.selected {
+      border-color: var(--accent);
+      background: rgba(124,106,240,.08);
+    }
+    .list-item-name {
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .list-item-meta {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ── Detail panel ────────────────────────────────────────────────────────── */
+    .detail-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px;
+      min-height: 180px;
+    }
+    .detail-empty {
+      color: var(--text-dim);
+      font-size: 13px;
+      font-style: italic;
+    }
+    .detail-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Dream cards in detail ───────────────────────────────────────────────── */
+    .dream-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 13px 15px;
+      margin-bottom: 10px;
+    }
+    .dream-card:last-child { margin-bottom: 0; }
+    .dream-card-date {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dream-card-excerpt {
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.55;
+      font-style: italic;
+      margin-top: 5px;
+    }
+
+    /* ── Chips & badges ──────────────────────────────────────────────────────── */
+    .chip {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 9px;
+      border-radius: 100px;
+      background: var(--surface2);
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .chip strong { color: var(--text); }
+
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 100px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .b-positive   { background: rgba(74,222,128,.15);  color: #4ade80; }
+    .b-negative   { background: rgba(224,82,82,.15);   color: #f87171; }
+    .b-mixed      { background: rgba(251,191,36,.15);  color: #fbbf24; }
+    .b-ambiguous  { background: rgba(156,163,175,.15); color: #9ca3af; }
+    .b-stated     { background: rgba(74,222,128,.15);  color: #4ade80; }
+    .b-inferred   { background: rgba(245,158,11,.15);  color: #fbbf24; }
+    .b-strong     { background: rgba(124,106,240,.2);  color: #a5b4fc; }
+    .b-moderate   { background: rgba(124,106,240,.12); color: #818cf8; }
+    .b-weak       { background: rgba(124,106,240,.06); color: #6366f1; }
+    .b-central    { background: rgba(124,106,240,.2);  color: #a5b4fc; }
+    .b-present    { background: rgba(124,106,240,.1);  color: #818cf8; }
+    .b-background { background: rgba(100,100,120,.15); color: #9ca3af; }
+    .b-count      { background: rgba(124,106,240,.15); color: #c4bbff; }
+
+    /* ── Detail section rows ─────────────────────────────────────────────────── */
+    .dsection { margin-bottom: 14px; }
+    .dsection:last-child { margin-bottom: 0; }
+    .dsection-title {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--text-dim);
+      margin-bottom: 7px;
+    }
+    .drow { display: flex; flex-wrap: wrap; gap: 7px; }
+    .ditem {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 5px 10px;
+      font-size: 12px;
+    }
+    .ditem-name { color: var(--text); }
+    .ditem-detail { color: var(--text-dim); font-size: 11px; }
+
+    /* ── Date range filter ───────────────────────────────────────────────────── */
+    .filter-form {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .filter-field { display: flex; flex-direction: column; gap: 5px; }
+    .filter-field label {
+      font-size: 11px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    input[type="date"] {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: var(--r);
+      font-size: 13px;
+    }
+    input[type="date"]:focus { outline: none; border-color: var(--accent); }
+
+    .btn {
+      padding: 9px 18px;
+      border-radius: var(--r);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background .12s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .dream-list { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ── Before/After demo ───────────────────────────────────────────────────── */
+    .demo-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .demo-split {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .demo-panel {
+      flex: 1;
+      min-width: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 20px;
+    }
+    @media (max-width: 640px) {
+      .demo-split { flex-direction: column; }
+    }
+    .demo-panel-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--accent);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .raw-narrative {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── Loading / empty state ───────────────────────────────────────────────── */
+    .state-msg {
+      color: var(--text-dim);
+      font-size: 13px;
+      font-style: italic;
+      padding: 20px 0;
+    }
+
+    /* ── LCW detail ──────────────────────────────────────────────────────────── */
+    .lcw-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 13px 15px;
+      margin-bottom: 10px;
+    }
+    .lcw-meta {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+    }
+
+    .count-badge {
+      font-size: 11px;
+      background: rgba(124,106,240,.15);
+      color: #c4bbff;
+      padding: 1px 8px;
+      border-radius: 100px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top nav -->
+  <div class="topbar">
+    <div class="topbar-title">
+      Dream Journal &mdash; <a href="/">Entry</a>
+    </div>
+    <div class="tabs" id="tab-bar">
+      <div class="tab active" data-tab="symbols">Symbol Frequency</div>
+      <div class="tab" data-tab="themes">Themes</div>
+      <div class="tab" data-tab="context">Life Context</div>
+      <div class="tab" data-tab="dates">Date Range</div>
+      <div class="tab" data-tab="series">Recurring Series</div>
+      <div class="tab" data-tab="demo">Before / After Demo</div>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- ── Symbol Frequency ───────────────────────────────────────────────────── -->
+    <div class="section active" id="sec-symbols">
+      <div class="section-header">
+        <h2>Symbol Frequency</h2>
+        <p>Symbols ranked by how many dreams they appear in. Click to see which dreams.</p>
+      </div>
+      <div class="two-panel">
+        <div class="panel-list">
+          <div class="item-list" id="symbol-list">
+            <div class="state-msg">Loading…</div>
+          </div>
+        </div>
+        <div class="panel-detail">
+          <div class="detail-panel" id="symbol-detail">
+            <div class="detail-empty">Select a symbol to see its dream appearances.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Themes ─────────────────────────────────────────────────────────────── -->
+    <div class="section" id="sec-themes">
+      <div class="section-header">
+        <h2>Theme Filter</h2>
+        <p>Click a theme to see all dreams expressing it, sorted by strength.</p>
+      </div>
+      <div class="two-panel">
+        <div class="panel-list">
+          <div class="item-list" id="theme-list">
+            <div class="state-msg">Loading…</div>
+          </div>
+        </div>
+        <div class="panel-detail">
+          <div class="detail-panel" id="theme-detail">
+            <div class="detail-empty">Select a theme to see matching dreams.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Life Context ───────────────────────────────────────────────────────── -->
+    <div class="section" id="sec-context">
+      <div class="section-header">
+        <h2>Life Context Windows</h2>
+        <p>Click a context window to see all dreams that occurred during it.</p>
+      </div>
+      <div class="two-panel">
+        <div class="panel-list">
+          <div class="item-list" id="lcw-list">
+            <div class="state-msg">Loading…</div>
+          </div>
+        </div>
+        <div class="panel-detail">
+          <div class="detail-panel" id="lcw-detail">
+            <div class="detail-empty">Select a context window to see its dreams.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Date Range ─────────────────────────────────────────────────────────── -->
+    <div class="section" id="sec-dates">
+      <div class="section-header">
+        <h2>Date Range Filter</h2>
+        <p>Filter dreams by date range. Leave either field blank to filter from/to open-ended.</p>
+      </div>
+      <div class="filter-form">
+        <div class="filter-field">
+          <label>Start date</label>
+          <input type="date" id="date-start">
+        </div>
+        <div class="filter-field">
+          <label>End date</label>
+          <input type="date" id="date-end">
+        </div>
+        <button class="btn btn-primary" onclick="runDateFilter()">Filter</button>
+        <button class="btn btn-ghost" onclick="clearDateFilter()">Clear</button>
+      </div>
+      <div class="dream-list" id="date-results">
+        <div class="state-msg">Set a date range and click Filter.</div>
+      </div>
+    </div>
+
+    <!-- ── Recurring Series ───────────────────────────────────────────────────── -->
+    <div class="section" id="sec-series">
+      <div class="section-header">
+        <h2>Recurring Series</h2>
+        <p>Dreams grouped by user-defined recurring series name, in date order.</p>
+      </div>
+      <div class="two-panel">
+        <div class="panel-list">
+          <div class="item-list" id="series-list">
+            <div class="state-msg">Loading…</div>
+          </div>
+        </div>
+        <div class="panel-detail">
+          <div class="detail-panel" id="series-detail">
+            <div class="detail-empty">Select a series to see its full history.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Before / After Demo ───────────────────────────────────────────────── -->
+    <div class="section" id="sec-demo">
+      <div class="section-header">
+        <h2>Before / After Demo</h2>
+        <p>
+          Anchor dream: <strong>The Grand Am</strong> (2025-03-15).
+          Left panel shows the raw journal entry; right panel shows what the knowledge graph extracted.
+        </p>
+      </div>
+      <div class="demo-split">
+
+        <div class="demo-panel">
+          <div class="demo-panel-title">Raw Input</div>
+          <div class="raw-narrative">
+            I'm driving the Grand Am from high school — the white one with the cracked dashboard.
+            I need to get somewhere important but I can't figure out where I parked, and when I
+            finally find the car the GPS won't load. I keep circling the same parking structure.
+            I know I'm late. I never arrive.
+          </div>
+        </div>
+
+        <div class="demo-panel">
+          <div class="demo-panel-title">Graph Query Result</div>
+
+          <div class="dsection">
+            <div class="dsection-title">Dream metadata</div>
+            <div class="drow">
+              <div class="chip">Date: <strong>2025-03-15</strong></div>
+              <div class="chip">Valence: <strong>negative</strong></div>
+              <div class="chip">Intensity: <strong>4 / 5</strong></div>
+              <div class="chip">Visual: <strong>normal</strong></div>
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Life context window</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">New job + proving myself + program coursework</span>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:5px;">
+              2025-01-16 → 2026-04-04 &nbsp;·&nbsp; major transition
+              &nbsp;·&nbsp; stressors: new job learning curve, imposter syndrome, grad school deadlines
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Symbols</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">The Grand Am</span>
+                <span class="badge b-central">central</span>
+              </div>
+              <div class="ditem">
+                <span class="ditem-name">Car / driving</span>
+                <span class="badge b-central">central</span>
+              </div>
+              <div class="ditem">
+                <span class="ditem-name">Lost keys</span>
+                <span class="badge b-present">present</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Characters</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">Unnamed woman</span>
+                <span class="ditem-detail">observer · constructed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Settings</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">Grand Am interior</span>
+                <span class="ditem-detail">intact · real</span>
+              </div>
+              <div class="ditem">
+                <span class="ditem-name">Multi-level parking structure</span>
+                <span class="ditem-detail">distorted · constructed</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Emotions</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">Anxiety</span>
+                <span class="badge b-stated">stated</span>
+                <span class="ditem-detail">"can't find exit"</span>
+              </div>
+              <div class="ditem">
+                <span class="ditem-name">Urgency</span>
+                <span class="badge b-stated">stated</span>
+                <span class="ditem-detail">"late for something important"</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dsection">
+            <div class="dsection-title">Themes</div>
+            <div class="drow">
+              <div class="ditem">
+                <span class="ditem-name">Navigation failure</span>
+                <span class="badge b-strong">strong</span>
+              </div>
+              <div class="ditem">
+                <span class="ditem-name">Loss of control</span>
+                <span class="badge b-moderate">moderate</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <script>
+    // ── State ─────────────────────────────────────────────────────────────────
+    const BASE = "";
+    let allDreams   = [];   // cached /api/dreams
+    let dreamById   = {};   // id → dream
+    let symbols     = [];
+    let themes      = [];
+    let lcws        = [];
+    let series      = [];
+    let dataLoaded  = false;
+
+    // ── Tab switching ─────────────────────────────────────────────────────────
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => switchTab(tab.dataset.tab));
+    });
+
+    function switchTab(name) {
+      document.querySelectorAll(".tab").forEach(t =>
+        t.classList.toggle("active", t.dataset.tab === name));
+      document.querySelectorAll(".section").forEach(s =>
+        s.classList.toggle("active", s.id === `sec-${name}`));
+    }
+
+    // ── Init ──────────────────────────────────────────────────────────────────
+    async function loadAll() {
+      try {
+        const [dreamsRes, symsRes, thmsRes, lcwsRes, serRes] = await Promise.all([
+          fetch(`${BASE}/api/dreams`),
+          fetch(`${BASE}/api/symbols/frequency`),
+          fetch(`${BASE}/api/themes`),
+          fetch(`${BASE}/api/life-context-windows`),
+          fetch(`${BASE}/api/recurring-series`),
+        ]);
+        allDreams = await dreamsRes.json();
+        symbols   = await symsRes.json();
+        themes    = await thmsRes.json();
+        lcws      = await lcwsRes.json();
+        series    = await serRes.json();
+
+        dreamById = {};
+        allDreams.forEach(d => { dreamById[d.id] = d; });
+
+        dataLoaded = true;
+        renderSymbolList();
+        renderThemeList();
+        renderLcwList();
+        renderSeriesList();
+      } catch (err) {
+        console.error("Failed to load data:", err);
+        document.querySelectorAll(".state-msg").forEach(el => {
+          el.textContent = "Could not reach backend at localhost:5001.";
+        });
+      }
+    }
+
+    loadAll();
+
+    // ── Utilities ─────────────────────────────────────────────────────────────
+    function esc(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function fmtDate(iso) {
+      if (!iso) return "";
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+    }
+
+    function excerpt(narrative, len = 120) {
+      if (!narrative) return "(no narrative)";
+      return narrative.length > len ? narrative.slice(0, len).trim() + "…" : narrative;
+    }
+
+    function valenceBadge(v) {
+      if (!v) return "";
+      return `<span class="badge b-${v}">${v}</span>`;
+    }
+
+    function intensityLabel(i) {
+      return i != null ? `intensity ${i}/5` : "";
+    }
+
+    // ── Dream card (compact, for use inside detail panels) ────────────────────
+    function dreamCard(dream, { showStrength, themeId } = {}) {
+      const strengthStr = (() => {
+        if (!showStrength || !themeId) return "";
+        const t = (dream.themes || []).find(t => t.id === themeId);
+        if (!t || !t.strength) return "";
+        return `<span class="badge b-${t.strength}">${t.strength}</span>`;
+      })();
+
+      const valence = dream.emotional_valence || null;
+      return `
+        <div class="dream-card">
+          <div class="dream-card-date">
+            ${esc(fmtDate(dream.date))}
+            ${valence ? valenceBadge(valence) : ""}
+            ${strengthStr}
+            ${dream.intensity != null ? `<span style="color:var(--text-dim);font-size:11px;">· ${dream.intensity}/5</span>` : ""}
+          </div>
+          <div class="dream-card-excerpt">${esc(excerpt(dream.raw_narrative))}</div>
+        </div>`;
+    }
+
+    // ── Symbol Frequency ──────────────────────────────────────────────────────
+    function renderSymbolList() {
+      const el = document.getElementById("symbol-list");
+      if (!symbols.length) {
+        el.innerHTML = '<div class="state-msg">No symbols in graph yet.</div>';
+        return;
+      }
+      el.innerHTML = symbols.map((s, i) => `
+        <div class="list-item" data-idx="${i}" onclick="selectSymbol(${i}, this)">
+          <div class="list-item-name">${esc(s.name)}</div>
+          <div class="list-item-meta">
+            <span class="count-badge">${s.dream_count} dream${s.dream_count !== 1 ? "s" : ""}</span>
+            ${s.category ? ` · ${esc(s.category)}` : ""}
+          </div>
+        </div>`).join("");
+    }
+
+    function selectSymbol(idx, el) {
+      document.querySelectorAll("#symbol-list .list-item").forEach(li =>
+        li.classList.remove("selected"));
+      el.classList.add("selected");
+
+      const sym = symbols[idx];
+      const dreams = sym.dream_ids
+        .map(id => dreamById[id])
+        .filter(Boolean)
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      const detailEl = document.getElementById("symbol-detail");
+      const note = sym.symbolic_note
+        ? `<div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;font-style:italic;">${esc(sym.symbolic_note)}</div>`
+        : "";
+      const cards = dreams.length
+        ? dreams.map(d => dreamCard(d)).join("")
+        : '<div class="state-msg">No dreams yet.</div>';
+
+      detailEl.innerHTML = `
+        <div class="detail-title">${esc(sym.name)}</div>
+        ${note}
+        ${cards}`;
+    }
+
+    // ── Themes ────────────────────────────────────────────────────────────────
+    function renderThemeList() {
+      const el = document.getElementById("theme-list");
+      if (!themes.length) {
+        el.innerHTML = '<div class="state-msg">No themes in graph yet.</div>';
+        return;
+      }
+      el.innerHTML = themes.map((t, i) => `
+        <div class="list-item" data-idx="${i}" onclick="selectTheme(${i}, this)">
+          <div class="list-item-name">${esc(t.name)}</div>
+          <div class="list-item-meta">
+            <span class="count-badge">${t.dream_count} dream${t.dream_count !== 1 ? "s" : ""}</span>
+            ${t.source ? ` · source: ${esc(t.source)}` : ""}
+          </div>
+        </div>`).join("");
+    }
+
+    const STRENGTH_ORDER = { strong: 3, moderate: 2, weak: 1 };
+
+    function selectTheme(idx, el) {
+      document.querySelectorAll("#theme-list .list-item").forEach(li =>
+        li.classList.remove("selected"));
+      el.classList.add("selected");
+
+      const theme = themes[idx];
+      const dreams = theme.dream_ids
+        .map(id => dreamById[id])
+        .filter(Boolean)
+        .sort((a, b) => {
+          const sa = (a.themes || []).find(t => t.id === theme.id);
+          const sb = (b.themes || []).find(t => t.id === theme.id);
+          const wa = STRENGTH_ORDER[sa?.strength] ?? 0;
+          const wb = STRENGTH_ORDER[sb?.strength] ?? 0;
+          if (wb !== wa) return wb - wa;
+          return a.date.localeCompare(b.date);
+        });
+
+      const detailEl = document.getElementById("theme-detail");
+      const desc = theme.description
+        ? `<div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;font-style:italic;">${esc(theme.description)}</div>`
+        : "";
+      const cards = dreams.length
+        ? dreams.map(d => dreamCard(d, { showStrength: true, themeId: theme.id })).join("")
+        : '<div class="state-msg">No dreams yet.</div>';
+
+      detailEl.innerHTML = `
+        <div class="detail-title">${esc(theme.name)}</div>
+        ${desc}
+        ${cards}`;
+    }
+
+    // ── Life Context Windows ──────────────────────────────────────────────────
+    function renderLcwList() {
+      const el = document.getElementById("lcw-list");
+      if (!lcws.length) {
+        el.innerHTML = '<div class="state-msg">No context windows defined yet.</div>';
+        return;
+      }
+      el.innerHTML = lcws.map((lcw, i) => {
+        const range = `${lcw.start_date} → ${lcw.end_date || "present"}`;
+        return `
+          <div class="list-item" data-idx="${i}" onclick="selectLcw(${i}, this)">
+            <div class="list-item-name">${esc(lcw.label)}</div>
+            <div class="list-item-meta">${esc(range)}${lcw.life_phase ? ` · ${esc(lcw.life_phase).replace("_", " ")}` : ""}</div>
+          </div>`;
+      }).join("");
+    }
+
+    function selectLcw(idx, el) {
+      document.querySelectorAll("#lcw-list .list-item").forEach(li =>
+        li.classList.remove("selected"));
+      el.classList.add("selected");
+
+      const lcw = lcws[idx];
+      const dreams = allDreams
+        .filter(d => d.life_context_window && d.life_context_window.id === lcw.id)
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+      const detailEl = document.getElementById("lcw-detail");
+      const stressors = lcw.stressors && lcw.stressors.length
+        ? `<div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;">
+             Stressors: ${lcw.stressors.map(s => esc(s)).join(", ")}
+           </div>`
+        : "";
+      const cards = dreams.length
+        ? dreams.map(d => dreamCard(d)).join("")
+        : '<div class="state-msg">No dreams during this period.</div>';
+
+      detailEl.innerHTML = `
+        <div class="detail-title">${esc(lcw.label)}</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">
+          ${esc(lcw.start_date)} → ${esc(lcw.end_date || "present")}
+          ${lcw.life_phase ? ` · ${esc(lcw.life_phase).replace("_", " ")}` : ""}
+        </div>
+        ${stressors}
+        ${cards}`;
+    }
+
+    // ── Date Range ────────────────────────────────────────────────────────────
+    async function runDateFilter() {
+      const start = document.getElementById("date-start").value;
+      const end   = document.getElementById("date-end").value;
+      const el    = document.getElementById("date-results");
+
+      if (!start && !end) {
+        el.innerHTML = '<div class="state-msg">Please enter at least one date.</div>';
+        return;
+      }
+
+      el.innerHTML = '<div class="state-msg">Loading…</div>';
+      const params = new URLSearchParams();
+      if (start) params.set("start_date", start);
+      if (end)   params.set("end_date", end);
+
+      try {
+        const res = await fetch(`${BASE}/api/dreams/filter?${params}`);
+        const dreams = await res.json();
+        if (!dreams.length) {
+          el.innerHTML = '<div class="state-msg">No dreams found in that range.</div>';
+          return;
+        }
+        el.innerHTML = dreams.map(d => dreamCard(d)).join("");
+      } catch {
+        el.innerHTML = '<div class="state-msg">Error fetching results.</div>';
+      }
+    }
+
+    function clearDateFilter() {
+      document.getElementById("date-start").value = "";
+      document.getElementById("date-end").value   = "";
+      document.getElementById("date-results").innerHTML =
+        '<div class="state-msg">Set a date range and click Filter.</div>';
+    }
+
+    // ── Recurring Series ──────────────────────────────────────────────────────
+    function renderSeriesList() {
+      const el = document.getElementById("series-list");
+      if (!series.length) {
+        el.innerHTML = '<div class="state-msg">No recurring series defined yet.</div>';
+        return;
+      }
+      el.innerHTML = series.map((s, i) => `
+        <div class="list-item" data-idx="${i}" onclick="selectSeries(${i}, this)">
+          <div class="list-item-name">${esc(s.series_name)}</div>
+          <div class="list-item-meta">
+            <span class="count-badge">${s.dreams.length} dream${s.dreams.length !== 1 ? "s" : ""}</span>
+          </div>
+        </div>`).join("");
+    }
+
+    function selectSeries(idx, el) {
+      document.querySelectorAll("#series-list .list-item").forEach(li =>
+        li.classList.remove("selected"));
+      el.classList.add("selected");
+
+      const s = series[idx];
+      const detailEl = document.getElementById("series-detail");
+      const cards = s.dreams.map(d => {
+        const emotions = (d.emotions || [])
+          .map(e => `<span class="chip">${esc(e.name)}</span>`)
+          .join(" ");
+        return `
+          <div class="dream-card">
+            <div class="dream-card-date">
+              ${esc(fmtDate(d.date))}
+              ${valenceBadge(d.emotional_valence)}
+              ${d.intensity != null ? `<span style="color:var(--text-dim);font-size:11px;">· ${d.intensity}/5</span>` : ""}
+              ${d.status ? `<span style="color:var(--text-dim);font-size:11px;">· ${esc(d.status)}</span>` : ""}
+            </div>
+            <div class="dream-card-excerpt">${esc(excerpt(d.raw_narrative))}</div>
+            ${emotions ? `<div style="margin-top:7px;display:flex;flex-wrap:wrap;gap:5px;">${emotions}</div>` : ""}
+          </div>`;
+      }).join("");
+
+      detailEl.innerHTML = `
+        <div class="detail-title">${esc(s.series_name)}</div>
+        ${cards}`;
+    }
+  </script>
+</body>
+</html>

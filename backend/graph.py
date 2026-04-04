@@ -200,14 +200,153 @@ class DreamGraph:
 
     # ── Queries ──────────────────────────────────────────────────────────────
 
+    def _get_dream_connections(self, dream_id: str) -> dict:
+        """Collect all nodes connected to a dream via outgoing edges."""
+        out: dict = {
+            "symbols": [], "characters": [], "settings": [],
+            "emotions": [], "themes": [], "body_sensations": [],
+            "life_context_window": None,
+        }
+        for _, v, _, edata in self.G.edges(dream_id, data=True, keys=True):
+            if v not in self.G:
+                continue
+            et = edata.get("edge_type")
+            node = {"id": v, **self.G.nodes[v]}
+            if et == "contains":
+                node["prominence"] = edata.get("prominence")
+                out["symbols"].append(node)
+            elif et == "features":
+                node["role"] = edata.get("role")
+                out["characters"].append(node)
+            elif et == "takes_place_in":
+                node["distortion_level"] = edata.get("distortion_level")
+                out["settings"].append(node)
+            elif et == "evoked":
+                node["anchor"] = edata.get("anchor")
+                node["edge_confidence"] = edata.get("confidence")
+                out["emotions"].append(node)
+            elif et == "expresses":
+                node["strength"] = edata.get("strength")
+                node["edge_source"] = edata.get("source")
+                out["themes"].append(node)
+            elif et == "includes_sensation":
+                out["body_sensations"].append(node)
+            elif et == "occurred_during":
+                if self.G.nodes[v].get("node_type") == "LifeContextWindow":
+                    out["life_context_window"] = {"id": v, **self.G.nodes[v]}
+        return out
+
     def get_all_dreams(self) -> list[dict]:
-        """Return all Dream nodes sorted by date."""
-        return sorted(
-            [{"id": n, **attrs}
-             for n, attrs in self.G.nodes(data=True)
-             if attrs.get("node_type") == "Dream"],
-            key=lambda d: d.get("date", "")
-        )
+        """Return all Dream nodes with connected nodes, sorted by date."""
+        result = []
+        for n, attrs in self.G.nodes(data=True):
+            if attrs.get("node_type") == "Dream":
+                d = {"id": n, **attrs}
+                d.update(self._get_dream_connections(n))
+                result.append(d)
+        return sorted(result, key=lambda d: d.get("date", ""))
+
+    def get_symbol_frequency(self) -> list[dict]:
+        """Return Symbol nodes with dream appearance count, sorted descending."""
+        sym_dreams: dict[str, set] = {}
+        for u, v, _, edata in self.G.edges(data=True, keys=True):
+            if edata.get("edge_type") == "contains":
+                sym_dreams.setdefault(v, set()).add(u)
+
+        result = []
+        for node_id, attrs in self.G.nodes(data=True):
+            if attrs.get("node_type") == "Symbol":
+                dreams = sym_dreams.get(node_id, set())
+                result.append({
+                    "id": node_id, **attrs,
+                    "dream_count": len(dreams),
+                    "dream_ids": list(dreams),
+                })
+        return sorted(result, key=lambda s: s["dream_count"], reverse=True)
+
+    def get_all_themes(self) -> list[dict]:
+        """Return Theme nodes with dream count, sorted descending."""
+        theme_dreams: dict[str, set] = {}
+        for u, v, _, edata in self.G.edges(data=True, keys=True):
+            if edata.get("edge_type") == "expresses":
+                theme_dreams.setdefault(v, set()).add(u)
+
+        result = []
+        for node_id, attrs in self.G.nodes(data=True):
+            if attrs.get("node_type") == "Theme":
+                dreams = theme_dreams.get(node_id, set())
+                result.append({
+                    "id": node_id, **attrs,
+                    "dream_count": len(dreams),
+                    "dream_ids": list(dreams),
+                })
+        return sorted(result, key=lambda t: t["dream_count"], reverse=True)
+
+    def get_all_life_context_windows(self) -> list[dict]:
+        """Return all LifeContextWindow nodes sorted by start_date."""
+        lcws = [
+            {"id": n, **attrs}
+            for n, attrs in self.G.nodes(data=True)
+            if attrs.get("node_type") == "LifeContextWindow"
+        ]
+        return sorted(lcws, key=lambda x: x.get("start_date", ""))
+
+    def get_recurring_series(self) -> list[dict]:
+        """Return recurring series grouped by name, each with dreams in date order."""
+        series: dict[str, list] = {}
+        for n, attrs in self.G.nodes(data=True):
+            if attrs.get("node_type") == "Dream":
+                name = attrs.get("recurring_series_name")
+                if name:
+                    dream = {"id": n, **attrs}
+                    dream.update(self._get_dream_connections(n))
+                    series.setdefault(name, []).append(dream)
+
+        return [
+            {"series_name": name,
+             "dreams": sorted(dreams, key=lambda d: d.get("date", ""))}
+            for name, dreams in series.items()
+        ]
+
+    def filter_dreams(self, theme: str = None, context_window: str = None,
+                      start_date: str = None, end_date: str = None,
+                      series: str = None) -> list[dict]:
+        """Return dreams matching any combination of filter params."""
+        strength_order = {"strong": 3, "moderate": 2, "weak": 1}
+
+        def matches(d: dict) -> bool:
+            if series and d.get("recurring_series_name") != series:
+                return False
+            if start_date and d.get("date", "") < start_date:
+                return False
+            if end_date and d.get("date", "") > end_date:
+                return False
+            if context_window:
+                lcw = d.get("life_context_window")
+                if not lcw or lcw.get("id") != context_window:
+                    return False
+            if theme:
+                tl = theme.lower()
+                match = any(
+                    t.get("name", "").lower() == tl or t.get("id") == theme
+                    for t in d.get("themes", [])
+                )
+                if not match:
+                    return False
+            return True
+
+        filtered = [d for d in self.get_all_dreams() if matches(d)]
+
+        if theme:
+            def theme_strength(d: dict) -> int:
+                for t in d.get("themes", []):
+                    tl = theme.lower()
+                    if t.get("name", "").lower() == tl or t.get("id") == theme:
+                        return strength_order.get(t.get("strength", ""), 0)
+                return 0
+            filtered.sort(key=lambda d: (-theme_strength(d), d.get("date", "")))
+
+        return filtered
 
     def get_node(self, node_id) -> dict | None:
         if node_id not in self.G:
