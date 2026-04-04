@@ -125,6 +125,20 @@ dream-journal-kg/
 
 ---
 
+### Stage 6 — Graph Visualization + Dashboard
+*Goal: interactive graph visualization as the centerpiece of the project, with filter-driven exploration.*
+
+- [ ] Add GET /api/graph endpoint — returns D3-ready nodes and links with type metadata
+- [ ] Add "Graph View" tab to journal.html — force-directed D3.js graph, node coloring by type, legend, hover tooltips, click-to-inspect side panel
+- [ ] Dream nodes visually larger than other node types
+- [ ] Dashboard redesign — replace tab navigation with a single-screen layout where the graph is central and filters update what's displayed (design TBD — wireframe in progress)
+- [ ] README updated to reflect graph visualization feature
+- [ ] Dry run updated demo with graph as centerpiece
+
+**Done when:** the graph is the first thing you see, and clicking/filtering updates it in place.
+
+---
+
 ## Demo Script (10 minutes)
 
 | Time | What |
@@ -158,4 +172,4 @@ dream-journal-kg/
 
 ---
 
-*Leah Vandiver · SEIS 666, Spring 2026 · University of St. Thomas*
+*Leah Vogel · SEIS 666, Spring 2026 · University of St. Thomas*
