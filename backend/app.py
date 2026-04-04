@@ -215,6 +215,44 @@ def filter_dreams():
     ))
 
 
+def _graph_label(node_type: str, attrs: dict) -> str:
+    if node_type == "Dream":
+        return attrs.get("date", "?")
+    if node_type == "LifeContextWindow":
+        return attrs.get("label", "?")
+    if node_type == "BodySensation":
+        desc = attrs.get("description", "")
+        return desc[:40] + "…" if len(desc) > 40 else desc
+    return attrs.get("name", "?")
+
+
+@app.route("/api/graph")
+def get_graph():
+    nodes = []
+    for node_id, attrs in dg.G.nodes(data=True):
+        ntype = attrs.get("node_type", "Unknown")
+        props = {}
+        for k, v in attrs.items():
+            if k == "node_type":
+                continue
+            if k == "raw_narrative" and isinstance(v, str) and len(v) > 220:
+                props[k] = v[:220] + "…"
+            else:
+                props[k] = v
+        nodes.append({
+            "id": node_id,
+            "label": _graph_label(ntype, attrs),
+            "type": ntype,
+            "properties": props,
+        })
+
+    links = [
+        {"source": u, "target": v, "type": edata.get("edge_type", k)}
+        for u, v, k, edata in dg.G.edges(data=True, keys=True)
+    ]
+    return jsonify({"nodes": nodes, "links": links})
+
+
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def _detect_divergence(extracted: dict, dg: DreamGraph, date: str) -> dict | None:

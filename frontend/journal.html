@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dream Journal — Pattern View</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
   <style>
     :root {
       --bg:           #0f1117;
@@ -368,6 +369,102 @@
       padding: 1px 8px;
       border-radius: 100px;
     }
+
+    /* ── Graph View ──────────────────────────────────────────────────────────── */
+    .graph-layout {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .graph-canvas-wrap {
+      flex: 1;
+      position: relative;
+      background: #080b10;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      min-height: 560px;
+    }
+
+    #graph-svg {
+      display: block;
+      width: 100%;
+    }
+
+    .graph-side-panel {
+      flex: 0 0 260px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px;
+      min-height: 560px;
+      max-height: 560px;
+      overflow-y: auto;
+    }
+
+    .graph-legend {
+      position: absolute;
+      bottom: 12px;
+      left: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      pointer-events: none;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .legend-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-dot.large {
+      width: 13px;
+      height: 13px;
+    }
+
+    #graph-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(15, 17, 23, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 12px;
+      color: var(--text);
+      z-index: 200;
+      max-width: 240px;
+      display: none;
+      line-height: 1.45;
+    }
+
+    .graph-prop-key {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+      margin-bottom: 2px;
+      margin-top: 10px;
+    }
+    .graph-prop-key:first-child { margin-top: 0; }
+    .graph-prop-val {
+      font-size: 12px;
+      color: var(--text);
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+      .graph-layout { flex-direction: column; }
+      .graph-side-panel { flex: none; width: 100%; min-height: auto; max-height: 300px; }
+    }
   </style>
 </head>
 <body>
@@ -384,6 +481,7 @@
       <div class="tab" data-tab="dates">Date Range</div>
       <div class="tab" data-tab="series">Recurring Series</div>
       <div class="tab" data-tab="demo">Before / After Demo</div>
+      <div class="tab" data-tab="graph">Graph View</div>
     </div>
   </div>
 
@@ -615,7 +713,28 @@
       </div>
     </div>
 
+    <!-- ── Graph View ─────────────────────────────────────────────────────────── -->
+    <div class="section" id="sec-graph">
+      <div class="section-header">
+        <h2>Graph View</h2>
+        <p>Force-directed visualization of the full knowledge graph. Hover for labels, click to inspect. Drag nodes, scroll to zoom.</p>
+      </div>
+      <div class="graph-layout">
+        <div class="graph-canvas-wrap" id="graph-canvas-wrap">
+          <svg id="graph-svg"></svg>
+          <div class="graph-legend" id="graph-legend"></div>
+        </div>
+        <div class="graph-side-panel" id="graph-side-panel">
+          <div class="detail-empty" id="graph-panel-empty">Click a node to inspect it.</div>
+          <div id="graph-panel-content" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /page -->
+
+  <!-- Graph tooltip — fixed position, outside page flow -->
+  <div id="graph-tooltip"></div>
 
   <script>
     // ── State ─────────────────────────────────────────────────────────────────
@@ -638,6 +757,7 @@
         t.classList.toggle("active", t.dataset.tab === name));
       document.querySelectorAll(".section").forEach(s =>
         s.classList.toggle("active", s.id === `sec-${name}`));
+      if (name === "graph") initGraph();
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
@@ -942,6 +1062,201 @@
       detailEl.innerHTML = `
         <div class="detail-title">${esc(s.series_name)}</div>
         ${cards}`;
+    }
+
+    // ── Graph View ────────────────────────────────────────────────────────────
+
+    const NODE_COLORS = {
+      Dream:             "#7c6af0",
+      Symbol:            "#f472b6",
+      Theme:             "#60a5fa",
+      Character:         "#34d399",
+      Setting:           "#fb923c",
+      Emotion:           "#f87171",
+      LifeContextWindow: "#fbbf24",
+      BodySensation:     "#c084fc",
+    };
+
+    function nodeR(d) { return d.type === "Dream" ? 13 : 7; }
+
+    let graphInitialized = false;
+    let d3Simulation     = null;
+
+    async function initGraph() {
+      if (graphInitialized) return;
+      graphInitialized = true;
+
+      const emptyEl = document.getElementById("graph-panel-empty");
+      emptyEl.textContent = "Loading graph…";
+
+      try {
+        const res  = await fetch(`${BASE}/api/graph`);
+        const data = await res.json();
+        emptyEl.textContent = "Click a node to inspect it.";
+        buildLegend();
+        buildGraph(data);
+      } catch (err) {
+        emptyEl.textContent = "Could not load graph data.";
+        console.error(err);
+      }
+    }
+
+    function buildLegend() {
+      const el = document.getElementById("graph-legend");
+      el.innerHTML = Object.entries(NODE_COLORS).map(([type, color]) => {
+        const large = type === "Dream" ? " large" : "";
+        return `<div class="legend-item">
+          <div class="legend-dot${large}" style="background:${color}"></div>
+          ${type}
+        </div>`;
+      }).join("");
+    }
+
+    function buildGraph(data) {
+      const wrap   = document.getElementById("graph-canvas-wrap");
+      const W      = wrap.clientWidth || 620;
+      const H      = 560;
+      const tip    = document.getElementById("graph-tooltip");
+
+      const svg = d3.select("#graph-svg")
+        .attr("width", W)
+        .attr("height", H)
+        .attr("viewBox", `0 0 ${W} ${H}`);
+
+      // zoom/pan container
+      const g = svg.append("g");
+      svg.call(
+        d3.zoom().scaleExtent([0.15, 6])
+          .on("zoom", ev => g.attr("transform", ev.transform))
+      );
+
+      // deep-copy so D3 can mutate
+      const nodes = data.nodes.map(n => ({ ...n }));
+      const nodeMap = Object.fromEntries(nodes.map(n => [n.id, n]));
+      const links  = data.links
+        .filter(l => nodeMap[l.source] && nodeMap[l.target])
+        .map(l => ({ ...l }));
+
+      const sim = d3.forceSimulation(nodes)
+        .force("link",    d3.forceLink(links).id(d => d.id).distance(90).strength(0.35))
+        .force("charge",  d3.forceManyBody().strength(-200))
+        .force("center",  d3.forceCenter(W / 2, H / 2))
+        .force("collide", d3.forceCollide(d => nodeR(d) + 5));
+
+      d3Simulation = sim;
+
+      // links
+      const link = g.append("g")
+        .selectAll("line")
+        .data(links)
+        .join("line")
+          .attr("stroke", "#2a2e42")
+          .attr("stroke-width", 1)
+          .attr("stroke-opacity", 0.8);
+
+      // nodes
+      const node = g.append("g")
+        .selectAll("circle")
+        .data(nodes)
+        .join("circle")
+          .attr("r",            d => nodeR(d))
+          .attr("fill",         d => NODE_COLORS[d.type] || "#8b8fa8")
+          .attr("fill-opacity", 0.82)
+          .attr("stroke",       d => NODE_COLORS[d.type] || "#8b8fa8")
+          .attr("stroke-width", 2)
+          .attr("stroke-opacity", 0.35)
+          .style("cursor", "pointer")
+          .call(d3.drag()
+            .on("start", (ev, d) => {
+              if (!ev.active) sim.alphaTarget(0.3).restart();
+              d.fx = d.x; d.fy = d.y;
+            })
+            .on("drag",  (ev, d) => { d.fx = ev.x; d.fy = ev.y; })
+            .on("end",   (ev, d) => {
+              if (!ev.active) sim.alphaTarget(0);
+              d.fx = null; d.fy = null;
+            })
+          )
+          .on("mouseover", (ev, d) => {
+            tip.style.display = "block";
+            tip.innerHTML = `<strong>${esc(d.label)}</strong><br>
+              <span style="color:var(--text-dim)">${esc(d.type)}</span>`;
+          })
+          .on("mousemove", ev => {
+            tip.style.left = (ev.clientX + 14) + "px";
+            tip.style.top  = (ev.clientY - 10) + "px";
+          })
+          .on("mouseout", () => { tip.style.display = "none"; })
+          .on("click", (ev, d) => {
+            ev.stopPropagation();
+            node.attr("stroke-opacity", 0.35).attr("stroke-width", 2);
+            d3.select(ev.currentTarget)
+              .attr("stroke-opacity", 1)
+              .attr("stroke-width",   3.5);
+            showGraphPanel(d);
+          });
+
+      // Dream date labels
+      const labels = g.append("g")
+        .selectAll("text")
+        .data(nodes.filter(n => n.type === "Dream"))
+        .join("text")
+          .attr("text-anchor",    "middle")
+          .attr("dy",             d => nodeR(d) + 11)
+          .attr("fill",           "#6b6f88")
+          .attr("font-size",      "9px")
+          .attr("pointer-events", "none")
+          .text(d => d.label);
+
+      // click canvas to deselect
+      svg.on("click", () => {
+        node.attr("stroke-opacity", 0.35).attr("stroke-width", 2);
+        document.getElementById("graph-panel-content").style.display = "none";
+        document.getElementById("graph-panel-empty").style.display   = "block";
+      });
+
+      sim.on("tick", () => {
+        link
+          .attr("x1", d => d.source.x)
+          .attr("y1", d => d.source.y)
+          .attr("x2", d => d.target.x)
+          .attr("y2", d => d.target.y);
+        node
+          .attr("cx", d => d.x)
+          .attr("cy", d => d.y);
+        labels
+          .attr("x", d => d.x)
+          .attr("y", d => d.y);
+      });
+    }
+
+    function showGraphPanel(d) {
+      document.getElementById("graph-panel-empty").style.display   = "none";
+      document.getElementById("graph-panel-content").style.display = "block";
+
+      const color = NODE_COLORS[d.type] || "#8b8fa8";
+      const props = d.properties || {};
+
+      const SKIP  = new Set(["node_type"]);
+      const rows  = Object.entries(props)
+        .filter(([k, v]) => !SKIP.has(k) && v != null && v !== "")
+        .map(([k, v]) => {
+          const display = Array.isArray(v) ? v.join(", ") : String(v);
+          return `<div class="graph-prop-key">${esc(k.replace(/_/g, " "))}</div>
+                  <div class="graph-prop-val">${esc(display)}</div>`;
+        }).join("");
+
+      document.getElementById("graph-panel-content").innerHTML = `
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px;
+                    padding-bottom:12px;border-bottom:1px solid var(--border);">
+          <div style="width:13px;height:13px;border-radius:50%;
+                      background:${color};flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:14px;font-weight:600;line-height:1.3;">${esc(d.label)}</div>
+            <div style="font-size:11px;color:var(--text-dim);">${esc(d.type)}</div>
+          </div>
+        </div>
+        ${rows || '<div style="color:var(--text-dim);font-size:12px;">No additional properties.</div>'}`;
     }
   </script>
 </body>
