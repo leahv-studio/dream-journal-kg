@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 from extract import extract_dream, write_to_graph, _find_active_context_window
 from graph import DreamGraph
-from prompts import JOURNAL_SYSTEM_PROMPT
+from prompts import JOURNAL_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT
 
 FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
 app = Flask(__name__, template_folder=FRONTEND_DIR)
@@ -98,10 +98,18 @@ def api_extract():
 
     divergence = _detect_divergence(extracted, dg, dream_date)
 
+    raw_narrative = extracted.get("dream", {}).get("raw_narrative", "")
+    suggested_title = ""
+    try:
+        suggested_title = _generate_dream_title(raw_narrative, extracted)
+    except Exception as e:
+        print(f"Title generation failed (non-fatal): {e}")
+
     return jsonify({
         "extracted": extracted,
         "date": dream_date,
         "divergence": divergence,
+        "suggested_title": suggested_title,
     })
 
 
@@ -213,6 +221,25 @@ def filter_dreams():
         end_date=request.args.get("end_date"),
         series=request.args.get("series"),
     ))
+
+
+def _generate_dream_title(raw_narrative: str, extracted: dict) -> str:
+    """One-shot call to generate a short evocative title for the dream."""
+    themes_text = ", ".join(t["name"] for t in extracted.get("themes", []))
+    symbols_text = ", ".join(s["name"] for s in extracted.get("symbols", []))
+    user_msg = (
+        f"Dream narrative:\n{raw_narrative}\n\n"
+        f"Themes: {themes_text or 'none'}\n"
+        f"Symbols: {symbols_text or 'none'}\n\n"
+        "Generate a title for this dream."
+    )
+    response = ai.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=60,
+        system=TITLE_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": user_msg}],
+    )
+    return response.content[0].text.strip().strip('"').strip("'")
 
 
 def _graph_label(node_type: str, attrs: dict) -> str:

@@ -51,14 +51,16 @@ class DreamGraph:
     def add_dream(self, id, date, raw_narrative=None, emotional_valence=None,
                   intensity=None, visual_quality=None, notable_color=None,
                   language=None, is_recurring=None, recurring_series_name=None,
-                  status=None, is_novel=None, age_range=None, lucid=None):
+                  status=None, is_novel=None, age_range=None, lucid=None,
+                  title=None):
         self._add_node(id, "Dream",
                        date=date, raw_narrative=raw_narrative,
                        emotional_valence=emotional_valence, intensity=intensity,
                        visual_quality=visual_quality, notable_color=notable_color,
                        language=language, is_recurring=is_recurring,
                        recurring_series_name=recurring_series_name, status=status,
-                       is_novel=is_novel, age_range=age_range, lucid=lucid)
+                       is_novel=is_novel, age_range=age_range, lucid=lucid,
+                       title=title)
 
     def add_character(self, id, name, character_type=None, symbolic_role=None,
                       language_spoken=None):

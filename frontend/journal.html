@@ -465,6 +465,80 @@
       .graph-layout { flex-direction: column; }
       .graph-side-panel { flex: none; width: 100%; min-height: auto; max-height: 300px; }
     }
+
+    /* ── Lens controls ───────────────────────────────────────────────────────── */
+    .lens-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .lens-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .lens-btn-group {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+    }
+    .lens-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 7px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .12s, color .12s;
+    }
+    .lens-btn:last-child { border-right: none; }
+    .lens-btn:hover { background: rgba(124,106,240,.1); color: var(--text); }
+    .lens-btn.active { background: var(--accent); color: #fff; }
+
+    /* ── Top items sidebar panel ─────────────────────────────────────────────── */
+    .top-items-header {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+    }
+    .top-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: var(--r);
+      cursor: pointer;
+      transition: background .12s;
+      margin-bottom: 4px;
+    }
+    .top-item:last-child { margin-bottom: 0; }
+    .top-item:hover { background: rgba(124,106,240,.1); }
+    .top-item.highlighted { background: rgba(124,106,240,.18); }
+    .top-item-name {
+      font-size: 13px;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .top-items-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
   </style>
 </head>
 <body>
@@ -719,12 +793,27 @@
         <h2>Graph View</h2>
         <p>Force-directed visualization of the full knowledge graph. Hover for labels, click to inspect. Drag nodes, scroll to zoom.</p>
       </div>
+
+      <div class="lens-controls">
+        <span class="lens-label">View by</span>
+        <div class="lens-btn-group">
+          <button class="lens-btn active" data-lens="dreams" onclick="setLens('dreams')">Dreams</button>
+          <button class="lens-btn" data-lens="themes" onclick="setLens('themes')">Themes</button>
+          <button class="lens-btn" data-lens="symbols" onclick="setLens('symbols')">Symbols</button>
+        </div>
+      </div>
+
       <div class="graph-layout">
         <div class="graph-canvas-wrap" id="graph-canvas-wrap">
           <svg id="graph-svg"></svg>
           <div class="graph-legend" id="graph-legend"></div>
         </div>
         <div class="graph-side-panel" id="graph-side-panel">
+          <div id="graph-top-items" style="display:none;">
+            <div class="top-items-header" id="top-items-header"></div>
+            <div id="top-items-list"></div>
+            <div class="top-items-divider"></div>
+          </div>
           <div class="detail-empty" id="graph-panel-empty">Click a node to inspect it.</div>
           <div id="graph-panel-content" style="display:none;"></div>
         </div>
@@ -1067,7 +1156,7 @@
     // ── Graph View ────────────────────────────────────────────────────────────
 
     const NODE_COLORS = {
-      Dream:             "#7c6af0",
+      Dream:             "#7c6af0",  // overridden by gradient for Dream nodes
       Symbol:            "#f472b6",
       Theme:             "#60a5fa",
       Character:         "#34d399",
@@ -1077,7 +1166,40 @@
       BodySensation:     "#c084fc",
     };
 
-    function nodeR(d) { return d.type === "Dream" ? 13 : 7; }
+    // Lens state
+    let currentLens    = "dreams";
+    let nodeSelection  = null;   // D3 selection of all circles
+    let labelsSelection = null;  // D3 selection of dream date labels
+    let dreamColorScale = null;  // D3 color scale for Dream nodes by date
+    let themeCountMap  = {};     // theme name (lower) → dream_count
+    let symbolCountMap = {};     // symbol name (lower) → dream_count
+    let themeNodeIdMap = {};     // theme name (lower) → graph node id
+    let symbolNodeIdMap = {};    // symbol name (lower) → graph node id
+    let themeScale     = null;   // d3 radius scale for themes
+    let symbolScale    = null;   // d3 radius scale for symbols
+
+    function nodeLensR(d) {
+      if (currentLens === "dreams") {
+        return d.type === "Dream" ? 13 : 7;
+      }
+      if (currentLens === "themes") {
+        if (d.type === "Dream") return 5;
+        if (d.type === "Theme" && themeScale) {
+          const count = themeCountMap[(d.properties?.name || "").toLowerCase()] || 1;
+          return themeScale(count);
+        }
+        return 7;
+      }
+      if (currentLens === "symbols") {
+        if (d.type === "Dream") return 5;
+        if (d.type === "Symbol" && symbolScale) {
+          const count = symbolCountMap[(d.properties?.name || "").toLowerCase()] || 1;
+          return symbolScale(count);
+        }
+        return 7;
+      }
+      return 7;
+    }
 
     let graphInitialized = false;
     let d3Simulation     = null;
@@ -1093,8 +1215,32 @@
         const res  = await fetch(`${BASE}/api/graph`);
         const data = await res.json();
         emptyEl.textContent = "Click a node to inspect it.";
+
+        // Build frequency maps from already-loaded data
+        themes.forEach(t => {
+          const key = (t.name || "").toLowerCase();
+          themeCountMap[key] = t.dream_count || 0;
+          themeNodeIdMap[key] = t.id;
+        });
+        symbols.forEach(s => {
+          const key = (s.name || "").toLowerCase();
+          symbolCountMap[key] = s.dream_count || 0;
+          symbolNodeIdMap[key] = s.id;
+        });
+
+        // Build radius scales
+        const themeCounts  = Object.values(themeCountMap);
+        const symbolCounts = Object.values(symbolCountMap);
+        themeScale = d3.scaleSqrt()
+          .domain(d3.extent(themeCounts.length ? themeCounts : [1, 1]))
+          .range([8, 24]).clamp(true);
+        symbolScale = d3.scaleSqrt()
+          .domain(d3.extent(symbolCounts.length ? symbolCounts : [1, 1]))
+          .range([8, 24]).clamp(true);
+
         buildLegend();
         buildGraph(data);
+        updateTopItemsPanel();
       } catch (err) {
         emptyEl.textContent = "Could not load graph data.";
         console.error(err);
@@ -1104,9 +1250,14 @@
     function buildLegend() {
       const el = document.getElementById("graph-legend");
       el.innerHTML = Object.entries(NODE_COLORS).map(([type, color]) => {
-        const large = type === "Dream" ? " large" : "";
+        if (type === "Dream") {
+          return `<div class="legend-item">
+            <div class="legend-dot large" style="background:linear-gradient(135deg,#2d1b6e 0%,#a78bfa 100%);"></div>
+            Dream (oldest → newest)
+          </div>`;
+        }
         return `<div class="legend-item">
-          <div class="legend-dot${large}" style="background:${color}"></div>
+          <div class="legend-dot" style="background:${color}"></div>
           ${type}
         </div>`;
       }).join("");
@@ -1117,6 +1268,23 @@
       const W      = wrap.clientWidth || 620;
       const H      = 560;
       const tip    = document.getElementById("graph-tooltip");
+
+      // Build dream color scale: oldest = deep dark purple, newest = bright light purple
+      const dreamNodes = data.nodes.filter(n => n.type === "Dream");
+      if (dreamNodes.length > 0) {
+        const dates = dreamNodes.map(n => new Date((n.properties?.date || "2000-01-01") + "T00:00:00").getTime());
+        const [minDate, maxDate] = d3.extent(dates);
+        dreamColorScale = minDate === maxDate
+          ? () => "#7c6af0"
+          : d3.scaleSequential().domain([minDate, maxDate]).interpolator(d3.interpolate("#2d1b6e", "#a78bfa"));
+      }
+
+      function nodeColor(d) {
+        if (d.type !== "Dream") return NODE_COLORS[d.type] || "#8b8fa8";
+        if (!dreamColorScale) return "#7c6af0";
+        const ts = new Date((d.properties?.date || "2000-01-01") + "T00:00:00").getTime();
+        return dreamColorScale(ts);
+      }
 
       const svg = d3.select("#graph-svg")
         .attr("width", W)
@@ -1141,7 +1309,7 @@
         .force("link",    d3.forceLink(links).id(d => d.id).distance(90).strength(0.35))
         .force("charge",  d3.forceManyBody().strength(-200))
         .force("center",  d3.forceCenter(W / 2, H / 2))
-        .force("collide", d3.forceCollide(d => nodeR(d) + 5));
+        .force("collide", d3.forceCollide(d => nodeLensR(d) + 5));
 
       d3Simulation = sim;
 
@@ -1159,10 +1327,10 @@
         .selectAll("circle")
         .data(nodes)
         .join("circle")
-          .attr("r",            d => nodeR(d))
-          .attr("fill",         d => NODE_COLORS[d.type] || "#8b8fa8")
+          .attr("r",            d => nodeLensR(d))
+          .attr("fill",         d => nodeColor(d))
           .attr("fill-opacity", 0.82)
-          .attr("stroke",       d => NODE_COLORS[d.type] || "#8b8fa8")
+          .attr("stroke",       d => nodeColor(d))
           .attr("stroke-width", 2)
           .attr("stroke-opacity", 0.35)
           .style("cursor", "pointer")
@@ -1179,7 +1347,10 @@
           )
           .on("mouseover", (ev, d) => {
             tip.style.display = "block";
-            tip.innerHTML = `<strong>${esc(d.label)}</strong><br>
+            const titleLine = d.type === "Dream" && d.properties?.title
+              ? `<br><span style="color:var(--text);font-style:italic">${esc(d.properties.title)}</span>`
+              : "";
+            tip.innerHTML = `<strong>${esc(d.label)}</strong>${titleLine}<br>
               <span style="color:var(--text-dim)">${esc(d.type)}</span>`;
           })
           .on("mousemove", ev => {
@@ -1196,17 +1367,21 @@
             showGraphPanel(d);
           });
 
+      nodeSelection = node;
+
       // Dream date labels
       const labels = g.append("g")
         .selectAll("text")
         .data(nodes.filter(n => n.type === "Dream"))
         .join("text")
           .attr("text-anchor",    "middle")
-          .attr("dy",             d => nodeR(d) + 11)
+          .attr("dy",             d => nodeLensR(d) + 11)
           .attr("fill",           "#6b6f88")
           .attr("font-size",      "9px")
           .attr("pointer-events", "none")
           .text(d => d.label);
+
+      labelsSelection = labels;
 
       // click canvas to deselect
       svg.on("click", () => {
@@ -1230,11 +1405,95 @@
       });
     }
 
+    // ── Lens toggle ───────────────────────────────────────────────────────────
+
+    function setLens(lens) {
+      currentLens = lens;
+
+      // Update button active state
+      document.querySelectorAll(".lens-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.lens === lens);
+      });
+
+      // Update node sizes
+      if (nodeSelection) {
+        nodeSelection.attr("r", d => nodeLensR(d));
+      }
+      // Update label offsets
+      if (labelsSelection) {
+        labelsSelection.attr("dy", d => nodeLensR(d) + 11);
+      }
+      // Update collide force and re-settle
+      if (d3Simulation) {
+        d3Simulation.force("collide", d3.forceCollide(d => nodeLensR(d) + 5));
+        d3Simulation.alpha(0.3).restart();
+      }
+
+      updateTopItemsPanel();
+    }
+
+    // ── Top items panel ───────────────────────────────────────────────────────
+
+    function updateTopItemsPanel() {
+      const panel    = document.getElementById("graph-top-items");
+      const headerEl = document.getElementById("top-items-header");
+      const listEl   = document.getElementById("top-items-list");
+
+      if (currentLens === "dreams") {
+        panel.style.display = "none";
+        return;
+      }
+
+      panel.style.display = "block";
+
+      if (currentLens === "themes") {
+        headerEl.textContent = "Top Themes";
+        const top5 = themes.slice(0, 5);
+        listEl.innerHTML = top5.length
+          ? top5.map(t => `
+            <div class="top-item" id="ti-${t.id}" onclick="highlightGraphNode('${t.id}')">
+              <span class="top-item-name">${esc(t.name)}</span>
+              <span class="count-badge">${t.dream_count}</span>
+            </div>`).join("")
+          : '<div style="font-size:12px;color:var(--text-dim);">No themes yet.</div>';
+      } else if (currentLens === "symbols") {
+        headerEl.textContent = "Top Symbols";
+        const top5 = symbols.slice(0, 5);
+        listEl.innerHTML = top5.length
+          ? top5.map(s => `
+            <div class="top-item" id="ti-${s.id}" onclick="highlightGraphNode('${s.id}')">
+              <span class="top-item-name">${esc(s.name)}</span>
+              <span class="count-badge">${s.dream_count}</span>
+            </div>`).join("")
+          : '<div style="font-size:12px;color:var(--text-dim);">No symbols yet.</div>';
+      }
+    }
+
+    function highlightGraphNode(nodeId) {
+      if (!nodeSelection) return;
+      // Clear previous highlights in top-items panel
+      document.querySelectorAll(".top-item").forEach(el => el.classList.remove("highlighted"));
+      const ti = document.getElementById("ti-" + nodeId);
+      if (ti) ti.classList.add("highlighted");
+      // Highlight node in graph
+      nodeSelection.attr("stroke-opacity", 0.35).attr("stroke-width", 2);
+      const match = nodeSelection.filter(d => d.id === nodeId);
+      match.attr("stroke-opacity", 1).attr("stroke-width", 3.5);
+      // Show in side panel
+      const datum = match.datum();
+      if (datum) showGraphPanel(datum);
+    }
+
     function showGraphPanel(d) {
       document.getElementById("graph-panel-empty").style.display   = "none";
       document.getElementById("graph-panel-content").style.display = "block";
 
-      const color = NODE_COLORS[d.type] || "#8b8fa8";
+      // Use gradient color for Dream nodes, flat color for others
+      let color = NODE_COLORS[d.type] || "#8b8fa8";
+      if (d.type === "Dream" && dreamColorScale) {
+        const ts = new Date((d.properties?.date || "2000-01-01") + "T00:00:00").getTime();
+        color = dreamColorScale(ts);
+      }
       const props = d.properties || {};
 
       const SKIP  = new Set(["node_type"]);

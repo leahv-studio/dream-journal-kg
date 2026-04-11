@@ -122,6 +122,7 @@ def write_to_graph(extracted: dict, dg: DreamGraph, date: str) -> str:
         visual_quality=d.get("visual_quality"),
         notable_color=d.get("notable_color"),
         lucid=d.get("lucid"),
+        title=d.get("title"),
     )
 
     # ── Characters ────────────────────────────────────────────────────────────
