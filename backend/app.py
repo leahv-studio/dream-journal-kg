@@ -142,49 +142,69 @@ def api_discard():
 
 @app.route("/api/context", methods=["GET"])
 def get_context():
-    today = _date.today().isoformat()
-    for node_id, attrs in dg.G.nodes(data=True):
-        if attrs.get("node_type") != "LifeContextWindow":
-            continue
-        start = attrs.get("start_date", "")
-        end = attrs.get("end_date")
-        if start <= today and (end is None or today <= end):
-            return jsonify({"id": node_id, **attrs})
-    return jsonify(None)
+    """Return all foreground LifeContextWindow nodes."""
+    foreground = [
+        {"id": node_id, **attrs}
+        for node_id, attrs in dg.G.nodes(data=True)
+        if attrs.get("node_type") == "LifeContextWindow"
+        and attrs.get("status") == "foreground"
+    ]
+    return jsonify(foreground)
 
 
-@app.route("/api/context", methods=["POST"])
-def update_context():
+@app.route("/api/life-context-windows", methods=["POST"])
+def create_life_context_window():
+    """Create a new LifeContextWindow node."""
     data = request.json or {}
     label = (data.get("label") or "").strip()
     if not label:
         return jsonify({"error": "label is required"}), 400
 
-    start_date = data.get("start_date") or _date.today().isoformat()
+    start_date = data.get("start_date") or None
     stressors_raw = data.get("stressors", "")
     if isinstance(stressors_raw, str):
         stressors = [s.strip() for s in stressors_raw.split(",") if s.strip()]
     else:
-        stressors = stressors_raw or []
-    life_phase = data.get("life_phase") or None
+        stressors = list(stressors_raw) if stressors_raw else []
+    status = data.get("status") or "foreground"
+    if status not in {"foreground", "background", "dormant", "archived"}:
+        return jsonify({"error": "invalid status"}), 400
 
-    # Close any currently active context window
-    today = _date.today().isoformat()
-    for node_id, attrs in dg.G.nodes(data=True):
-        if attrs.get("node_type") == "LifeContextWindow":
-            if attrs.get("end_date") is None and attrs.get("start_date", "") <= today:
-                dg.G.nodes[node_id]["end_date"] = today
+    slug_base = _slug(label[:24])
+    lcw_id = f"lcw_{slug_base}"
+    # If a node with that id already exists, append a counter
+    counter = 1
+    base_id = lcw_id
+    while lcw_id in dg.G:
+        lcw_id = f"{base_id}_{counter}"
+        counter += 1
 
-    lcw_id = f"lcw_{_slug(start_date)}_{_slug(label[:24])}"
     dg.add_life_context_window(
         lcw_id,
         label=label,
         start_date=start_date,
         stressors=stressors or None,
-        life_phase=life_phase,
+        status=status,
     )
     dg.save()
-    return jsonify({"id": lcw_id, "label": label, "start_date": start_date})
+    return jsonify({"id": lcw_id, "label": label, "start_date": start_date, "status": status}), 201
+
+
+@app.route("/api/life-context-windows/<lcw_id>/status", methods=["PUT"])
+def update_life_context_status(lcw_id):
+    """Update the status of a LifeContextWindow node."""
+    data = request.json or {}
+    status = (data.get("status") or "").strip()
+    if status not in {"foreground", "background", "dormant", "archived"}:
+        return jsonify({"error": "status must be one of: foreground, background, dormant, archived"}), 400
+    try:
+        found = dg.update_life_context_status(lcw_id, status)
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+    if not found:
+        return jsonify({"error": "not found"}), 404
+    dg.save()
+    return jsonify({"id": lcw_id, "status": status})
 
 
 @app.route("/api/dreams")

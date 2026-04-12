@@ -128,12 +128,28 @@ dream-journal-kg/
 ### Stage 6 — Graph Visualization + Dashboard
 *Goal: interactive graph visualization as the centerpiece of the project, with filter-driven exploration.*
 
-- [ ] Add GET /api/graph endpoint — returns D3-ready nodes and links with type metadata
-- [ ] Add "Graph View" tab to journal.html — force-directed D3.js graph, node coloring by type, legend, hover tooltips, click-to-inspect side panel
-- [ ] Dream nodes visually larger than other node types
+- [x] Add GET /api/graph endpoint — returns D3-ready nodes and links with type metadata
+- [x] Add "Graph View" tab to journal.html — force-directed D3.js graph, node coloring by type, legend, hover tooltips, click-to-inspect side panel
+- [x] Dream nodes visually larger than other node types
+- [x] Dream nodes colored by date gradient (oldest dark → newest bright purple)
+- [x] Lens toggle: view by Dreams / Themes / Symbols with radius scaling
+- [x] Dream title field on review card; AI-suggested title
+- [x] Question limit guard (max 7 exchanges before prompting to save)
 - [ ] Dashboard redesign — replace tab navigation with a single-screen layout where the graph is central and filters update what's displayed (design TBD — wireframe in progress)
 - [ ] README updated to reflect graph visualization feature
 - [ ] Dry run updated demo with graph as centerpiece
+
+**Life Context redesign (Stage 6 addition):**
+- [x] Removed `life_phase` from LifeContextWindow schema — replaced with `status`
+- [x] New status model: `foreground` / `background` / `dormant` / `archived`
+- [x] `end_date` demoted to rarely-used; archiving is the preferred way to mark a context as past
+- [x] LifeContextWindow description updated to reflect persistent, state-cycling nature
+- [x] `graph.py`: updated `add_life_context_window`, added `update_life_context_status` method
+- [x] `app.py`: new `POST /api/life-context-windows` and `PUT /api/life-context-windows/<id>/status`; GET /api/context returns foreground contexts
+- [x] Life Context tab in journal.html redesigned as a manage view (Foreground / Background / Dormant / Archive drawer)
+- [x] Context chips show status badge (click to cycle), expand on click to show stressors + Edit button
+- [x] "Add context" form in manage view
+- [x] index.html context banner updated: shows foreground contexts as chips; "Update context" link navigates to manage screen
 
 **Done when:** the graph is the first thing you see, and clicking/filtering updates it in place.
 

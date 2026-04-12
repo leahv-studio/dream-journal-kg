@@ -27,7 +27,7 @@ dg.add_life_context_window(
     start_date="2024-09-01",
     end_date="2025-01-15",
     stressors=["unemployment", "financial pressure", "rejection letters", "application deadlines"],
-    life_phase="major_transition",
+    status="archived",
 )
 
 dg.add_life_context_window(
@@ -35,7 +35,7 @@ dg.add_life_context_window(
     label="New job + proving myself + program coursework",
     start_date="2025-01-16",
     stressors=["new job learning curve", "imposter syndrome", "grad school deadlines"],
-    life_phase="major_transition",
+    status="foreground",
 )
 
 

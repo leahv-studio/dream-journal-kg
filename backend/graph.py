@@ -87,11 +87,23 @@ class DreamGraph:
         self._add_node(id, "Theme",
                        name=name, description=description, source=source)
 
-    def add_life_context_window(self, id, label, start_date, end_date=None,
-                                stressors=None, life_phase=None):
+    def add_life_context_window(self, id, label, start_date=None, end_date=None,
+                                stressors=None, status=None):
         self._add_node(id, "LifeContextWindow",
                        label=label, start_date=start_date, end_date=end_date,
-                       stressors=stressors, life_phase=life_phase)
+                       stressors=stressors, status=status)
+
+    def update_life_context_status(self, lcw_id: str, status: str) -> bool:
+        """Update the status of a LifeContextWindow node. Returns True if found."""
+        valid = {"foreground", "background", "dormant", "archived"}
+        if status not in valid:
+            raise ValueError(f"status must be one of {valid}")
+        if lcw_id not in self.G:
+            return False
+        if self.G.nodes[lcw_id].get("node_type") != "LifeContextWindow":
+            return False
+        self.G.nodes[lcw_id]["status"] = status
+        return True
 
     def add_body_sensation(self, id, description, location=None, quality=None,
                            confidence=None):
@@ -285,13 +297,17 @@ class DreamGraph:
         return sorted(result, key=lambda t: t["dream_count"], reverse=True)
 
     def get_all_life_context_windows(self) -> list[dict]:
-        """Return all LifeContextWindow nodes sorted by start_date."""
+        """Return all LifeContextWindow nodes sorted by status prominence, then start_date."""
+        status_order = {"foreground": 0, "background": 1, "dormant": 2, "archived": 3}
         lcws = [
             {"id": n, **attrs}
             for n, attrs in self.G.nodes(data=True)
             if attrs.get("node_type") == "LifeContextWindow"
         ]
-        return sorted(lcws, key=lambda x: x.get("start_date", ""))
+        return sorted(lcws, key=lambda x: (
+            status_order.get(x.get("status", "dormant"), 2),
+            x.get("start_date", ""),
+        ))
 
     def get_recurring_series(self) -> list[dict]:
         """Return recurring series grouped by name, each with dreams in date order."""

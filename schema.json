@@ -82,15 +82,15 @@
       }
     },
     "LifeContextWindow": {
-      "description": "A persistent waking life period with associated stressors and life phase. Updated occasionally — not per dream entry. Every dream connects to the context window active at its date.",
-      "required": ["id", "label", "start_date"],
+      "description": "A persistent waking life context that can move between states of prominence over time. Not tied to a fixed date range — a context can return to foreground after being dormant. Updated occasionally, not per dream entry.",
+      "required": ["id", "label"],
       "properties": {
         "id": { "type": "string", "required": true },
-        "label": { "type": "string", "required": true, "note": "e.g. 'Active job search + wedding planning'" },
-        "start_date": { "type": "date", "required": true },
-        "end_date": { "type": "date", "required": false, "note": "Null if this is the current active context." },
+        "label": { "type": "string", "required": true, "note": "e.g. 'Job search', 'Duplex'" },
+        "start_date": { "type": "date", "required": false },
+        "end_date": { "type": "date", "required": false, "note": "Rarely used. Most contexts don't have a clean end date. Archiving the context is the preferred way to mark it as past." },
         "stressors": { "type": "array", "items": "string", "required": false },
-        "life_phase": { "type": "enum", "values": ["major_transition", "stable", "grief", "creative", "other"], "required": false }
+        "status": { "type": "enum", "values": ["foreground", "background", "dormant", "archived"], "required": false, "note": "foreground = active and prominent; background = present but not central; dormant = not currently active; archived = past, closed out." }
       }
     },
     "BodySensation": {

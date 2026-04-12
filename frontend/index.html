@@ -39,41 +39,41 @@
     #ctx-banner {
       background: var(--surface);
       border-bottom: 1px solid var(--border);
-      padding: 10px 24px;
+      padding: 8px 24px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
-      min-height: 44px;
+      min-height: 40px;
     }
-    #ctx-label-text {
-      font-size: 13px;
-      color: var(--text-dim);
-    }
-    #ctx-label-text strong { color: var(--text); }
-    .ctx-phase {
+    .ctx-banner-label {
       font-size: 11px;
-      padding: 2px 9px;
-      border-radius: 100px;
-      background: rgba(124,106,240,.25);
-      color: #c4bbff;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: .06em;
-      font-weight: 600;
+      letter-spacing: .07em;
+      color: var(--text-dim);
+      white-space: nowrap;
     }
-    .ctx-stressors { font-size: 12px; color: var(--text-dim); }
+    .ctx-chip {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(124,106,240,.18);
+      color: #c4bbff;
+      white-space: nowrap;
+    }
     #ctx-update-btn {
       margin-left: auto;
       font-size: 12px;
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      padding: 4px 12px;
-      border-radius: var(--r);
+      border: none;
+      color: var(--accent);
+      padding: 4px 0;
       cursor: pointer;
+      text-decoration: underline;
       white-space: nowrap;
     }
-    #ctx-update-btn:hover { border-color: var(--accent); color: var(--accent); }
+    #ctx-update-btn:hover { color: var(--accent-hover); }
 
     /* ── Page wrapper ───────────────────────────────────────────────────────── */
     main {
@@ -439,8 +439,9 @@
 
   <!-- Life Context Window banner — always visible -->
   <div id="ctx-banner">
-    <div id="ctx-label-text"><em>Loading context…</em></div>
-    <button id="ctx-update-btn" onclick="openContextModal()">Update context</button>
+    <span class="ctx-banner-label">Now:</span>
+    <div id="ctx-chips"><span style="font-size:12px;color:var(--text-dim);font-style:italic;">Loading…</span></div>
+    <button id="ctx-update-btn" onclick="location.href='/journal.html'">Update context →</button>
   </div>
 
   <main>
@@ -497,7 +498,7 @@
       <div id="divergence-notice">
         <span class="div-title">Something may have shifted</span>
         <span id="div-text"></span>
-        &nbsp;<span id="div-update-link" onclick="openContextModal()">Update your life context →</span>
+        &nbsp;<span id="div-update-link" onclick="location.href='/journal.html'">Update your life context →</span>
       </div>
 
       <div class="review-actions">
@@ -515,36 +516,25 @@
     </div>
   </main>
 
-  <!-- Context update modal -->
+  <!-- Context update modal (quick-add a new foreground context) -->
   <div class="overlay" id="ctx-modal-overlay">
     <div class="modal">
-      <h3>Update Life Context</h3>
+      <h3>Add Life Context</h3>
       <div class="field">
         <label>Label</label>
-        <input type="text" id="ctx-label-input" placeholder="e.g. Active job search + grad school">
+        <input type="text" id="ctx-label-input" placeholder="e.g. Job search, Duplex renovation">
       </div>
       <div class="field">
-        <label>Start date</label>
+        <label>Start date (optional)</label>
         <input type="date" id="ctx-start-input">
       </div>
       <div class="field">
-        <label>Stressors (comma-separated)</label>
-        <textarea id="ctx-stressors-input" placeholder="job search, financial pressure, new role"></textarea>
-      </div>
-      <div class="field">
-        <label>Life phase</label>
-        <select id="ctx-phase-input">
-          <option value="">— select —</option>
-          <option value="major_transition">Major transition</option>
-          <option value="stable">Stable</option>
-          <option value="grief">Grief</option>
-          <option value="creative">Creative</option>
-          <option value="other">Other</option>
-        </select>
+        <label>Stressors (comma-separated, optional)</label>
+        <textarea id="ctx-stressors-input" placeholder="financial pressure, deadline, new relationship"></textarea>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeContextModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="saveContext()">Save context</button>
+        <button class="btn btn-primary" onclick="saveContext()">Add context</button>
       </div>
     </div>
   </div>
@@ -577,32 +567,30 @@
     // ── Life Context Window ───────────────────────────────────────────────────
     async function loadContext() {
       try {
-        const res = await fetch("/api/context");
-        const ctx = await res.json();
-        renderContextBanner(ctx);
+        const res  = await fetch("/api/context");
+        const ctxs = await res.json();
+        renderContextBanner(Array.isArray(ctxs) ? ctxs : []);
       } catch {
-        document.getElementById("ctx-label-text").innerHTML = "<em>Could not load context</em>";
+        document.getElementById("ctx-chips").innerHTML = "<em style='font-size:12px;color:var(--text-dim)'>Could not load context</em>";
       }
     }
 
-    function renderContextBanner(ctx) {
-      const el = document.getElementById("ctx-label-text");
-      if (!ctx) {
-        el.innerHTML = '<em>No life context set — <span style="color:var(--accent);cursor:pointer" onclick="openContextModal()">add one</span></em>';
+    function renderContextBanner(contexts) {
+      const el = document.getElementById("ctx-chips");
+      if (!contexts.length) {
+        el.innerHTML = '<em style="font-size:12px;color:var(--text-dim)">No foreground contexts — '
+          + '<span style="color:var(--accent);cursor:pointer;text-decoration:underline" onclick="openContextModal()">add one</span></em>';
         return;
       }
-      const phase    = ctx.life_phase
-        ? `<span class="ctx-phase">${ctx.life_phase.replace("_", " ")}</span>` : "";
-      const stressor = (ctx.stressors || []).length
-        ? `<span class="ctx-stressors">· ${ctx.stressors.join(", ")}</span>` : "";
-      el.innerHTML = `<strong>${ctx.label}</strong> ${phase} ${stressor}`;
+      el.innerHTML = contexts
+        .map(ctx => `<span class="ctx-chip">${esc(ctx.label)}</span>`)
+        .join("");
     }
 
     function openContextModal() {
-      document.getElementById("ctx-start-input").value = todayISO();
-      document.getElementById("ctx-label-input").value  = "";
+      document.getElementById("ctx-start-input").value     = "";
+      document.getElementById("ctx-label-input").value     = "";
       document.getElementById("ctx-stressors-input").value = "";
-      document.getElementById("ctx-phase-input").value  = "";
       document.getElementById("ctx-modal-overlay").classList.add("open");
     }
 
@@ -612,15 +600,15 @@
 
     async function saveContext() {
       const label = document.getElementById("ctx-label-input").value.trim();
-      if (!label) { alert("Please enter a label for this context period."); return; }
-      await fetch("/api/context", {
+      if (!label) { alert("Please enter a label for this context."); return; }
+      await fetch("/api/life-context-windows", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
           label,
-          start_date:  document.getElementById("ctx-start-input").value,
-          stressors:   document.getElementById("ctx-stressors-input").value,
-          life_phase:  document.getElementById("ctx-phase-input").value || null,
+          start_date: document.getElementById("ctx-start-input").value || null,
+          stressors:  document.getElementById("ctx-stressors-input").value,
+          status:     "foreground",
         }),
       });
       closeContextModal();

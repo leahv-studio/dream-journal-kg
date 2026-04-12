@@ -466,6 +466,156 @@
       .graph-side-panel { flex: none; width: 100%; min-height: auto; max-height: 300px; }
     }
 
+    /* ── Life Context manage view ────────────────────────────────────────────── */
+    .lcw-manage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .lcw-group { margin-bottom: 24px; }
+    .lcw-group-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .lcw-chips { display: flex; flex-direction: column; gap: 8px; }
+    .lcw-chip {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      overflow: hidden;
+      transition: border-color .12s;
+    }
+    .lcw-chip:hover { border-color: var(--accent); }
+    .lcw-chip-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .lcw-chip-label {
+      font-size: 14px;
+      color: var(--text);
+      flex: 1;
+      min-width: 0;
+    }
+    .lcw-chip-date {
+      font-size: 11px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .lcw-status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 3px 9px;
+      border-radius: 100px;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      transition: opacity .12s;
+    }
+    .lcw-status-badge:hover { opacity: .75; }
+    .s-foreground { background: rgba(74,222,128,.18); color: #4ade80; }
+    .s-background { background: rgba(124,106,240,.18); color: #a5b4fc; }
+    .s-dormant    { background: rgba(139,143,168,.15); color: #8b8fa8; }
+    .s-archived   { background: rgba(100,100,120,.12); color: #6b6d80; }
+    .lcw-chip-body {
+      display: none;
+      padding: 0 14px 13px;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6;
+      border-top: 1px solid var(--border);
+    }
+    .lcw-chip-body.open { display: block; }
+    .lcw-chip-stressors { margin-top: 8px; }
+    .lcw-chip-edit-btn {
+      margin-top: 10px;
+      font-size: 12px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      padding: 4px 12px;
+      border-radius: var(--r);
+      cursor: pointer;
+    }
+    .lcw-chip-edit-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .lcw-empty-state {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-style: italic;
+      padding: 6px 0;
+    }
+    /* Archive drawer */
+    .archive-drawer { margin-top: 8px; }
+    .archive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      padding: 6px 0;
+    }
+    .archive-toggle:hover { color: var(--text); }
+    .archive-toggle-icon { font-size: 10px; transition: transform .15s; }
+    .archive-toggle.open .archive-toggle-icon { transform: rotate(90deg); }
+    .archive-drawer-body { display: none; margin-top: 8px; }
+    .archive-drawer-body.open { display: block; }
+    /* Add context form */
+    .add-ctx-btn {
+      font-size: 13px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 7px 16px;
+      border-radius: var(--r);
+      cursor: pointer;
+    }
+    .add-ctx-btn:hover { background: rgba(124,106,240,.1); }
+    .add-ctx-form {
+      display: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 18px;
+      margin-bottom: 22px;
+    }
+    .add-ctx-form.open { display: block; }
+    .add-ctx-form h3 { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+    .add-ctx-field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+    .add-ctx-field label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-dim);
+    }
+    .add-ctx-field input, .add-ctx-field select, .add-ctx-field textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: var(--r);
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .add-ctx-field input:focus, .add-ctx-field select:focus, .add-ctx-field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+    .add-ctx-field textarea { resize: vertical; min-height: 48px; }
+    .add-ctx-field select option { background: var(--surface2); }
+    .add-ctx-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
     /* ── Lens controls ───────────────────────────────────────────────────────── */
     .lens-controls {
       display: flex;
@@ -603,20 +753,77 @@
 
     <!-- ── Life Context ───────────────────────────────────────────────────────── -->
     <div class="section" id="sec-context">
-      <div class="section-header">
-        <h2>Life Context Windows</h2>
-        <p>Click a context window to see all dreams that occurred during it.</p>
-      </div>
-      <div class="two-panel">
-        <div class="panel-list">
-          <div class="item-list" id="lcw-list">
-            <div class="state-msg">Loading…</div>
-          </div>
+      <div class="lcw-manage-header">
+        <div>
+          <h2 style="font-size:18px;font-weight:600;margin-bottom:4px;">Life Context</h2>
+          <p style="font-size:13px;color:var(--text-dim);">Manage your waking life contexts. Click a status badge to cycle it. Click a chip to expand details.</p>
         </div>
-        <div class="panel-detail">
-          <div class="detail-panel" id="lcw-detail">
-            <div class="detail-empty">Select a context window to see its dreams.</div>
-          </div>
+        <button class="add-ctx-btn" onclick="toggleAddContextForm()">+ Add context</button>
+      </div>
+
+      <!-- Add context form (hidden by default) -->
+      <div class="add-ctx-form" id="add-ctx-form">
+        <h3>New Life Context</h3>
+        <div class="add-ctx-field">
+          <label>Label <span style="color:var(--danger)">*</span></label>
+          <input type="text" id="new-ctx-label" placeholder="e.g. Job search, Duplex renovation">
+        </div>
+        <div class="add-ctx-field">
+          <label>Start date (optional)</label>
+          <input type="date" id="new-ctx-start">
+        </div>
+        <div class="add-ctx-field">
+          <label>Stressors (comma-separated, optional)</label>
+          <textarea id="new-ctx-stressors" placeholder="financial pressure, deadline, new relationship"></textarea>
+        </div>
+        <div class="add-ctx-field">
+          <label>Initial status</label>
+          <select id="new-ctx-status">
+            <option value="foreground">Foreground</option>
+            <option value="background">Background</option>
+            <option value="dormant">Dormant</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+        <div class="add-ctx-actions">
+          <button class="btn btn-ghost" onclick="toggleAddContextForm()">Cancel</button>
+          <button class="btn btn-primary" onclick="submitAddContext()">Add context</button>
+        </div>
+      </div>
+
+      <!-- Foreground -->
+      <div class="lcw-group" id="lcw-group-foreground">
+        <div class="lcw-group-title">Foreground</div>
+        <div class="lcw-chips" id="lcw-chips-foreground">
+          <div class="state-msg">Loading…</div>
+        </div>
+      </div>
+
+      <!-- Background -->
+      <div class="lcw-group" id="lcw-group-background">
+        <div class="lcw-group-title">Background</div>
+        <div class="lcw-chips" id="lcw-chips-background">
+          <div class="state-msg">Loading…</div>
+        </div>
+      </div>
+
+      <!-- Dormant -->
+      <div class="lcw-group" id="lcw-group-dormant">
+        <div class="lcw-group-title">Dormant</div>
+        <div class="lcw-chips" id="lcw-chips-dormant">
+          <div class="state-msg">Loading…</div>
+        </div>
+      </div>
+
+      <!-- Archived (collapsed) -->
+      <div class="archive-drawer">
+        <div class="archive-toggle" id="archive-toggle" onclick="toggleArchiveDrawer()">
+          <span class="archive-toggle-icon">▶</span>
+          <span>Archived</span>
+          <span class="count-badge" id="archive-count" style="margin-left:4px;"></span>
+        </div>
+        <div class="archive-drawer-body" id="archive-drawer-body">
+          <div class="lcw-chips" id="lcw-chips-archived"></div>
         </div>
       </div>
     </div>
@@ -706,7 +913,7 @@
               </div>
             </div>
             <div style="font-size:11px;color:var(--text-dim);margin-top:5px;">
-              2025-01-16 → 2026-04-04 &nbsp;·&nbsp; major transition
+              Started 2025-01-16 &nbsp;·&nbsp; status: foreground
               &nbsp;·&nbsp; stressors: new job learning curve, imposter syndrome, grad school deadlines
             </div>
           </div>
@@ -1026,51 +1233,126 @@
     }
 
     // ── Life Context Windows ──────────────────────────────────────────────────
-    function renderLcwList() {
-      const el = document.getElementById("lcw-list");
-      if (!lcws.length) {
-        el.innerHTML = '<div class="state-msg">No context windows defined yet.</div>';
-        return;
+    const STATUS_CYCLE = ["foreground", "background", "dormant", "archived"];
+
+    function renderLcwManage() {
+      const groups = { foreground: [], background: [], dormant: [], archived: [] };
+      lcws.forEach(lcw => {
+        const s = lcw.status || "dormant";
+        if (groups[s]) groups[s].push(lcw);
+      });
+
+      ["foreground", "background", "dormant"].forEach(status => {
+        const el = document.getElementById(`lcw-chips-${status}`);
+        if (!groups[status].length) {
+          el.innerHTML = `<div class="lcw-empty-state">No ${status} contexts.</div>`;
+        } else {
+          el.innerHTML = groups[status].map(lcw => lcwChipHTML(lcw)).join("");
+        }
+      });
+
+      // Archived drawer
+      const archiveEl = document.getElementById("lcw-chips-archived");
+      const archiveCount = document.getElementById("archive-count");
+      archiveCount.textContent = groups.archived.length || "";
+      if (!groups.archived.length) {
+        archiveEl.innerHTML = '<div class="lcw-empty-state">No archived contexts.</div>';
+      } else {
+        archiveEl.innerHTML = groups.archived.map(lcw => lcwChipHTML(lcw)).join("");
       }
-      el.innerHTML = lcws.map((lcw, i) => {
-        const range = `${lcw.start_date} → ${lcw.end_date || "present"}`;
-        return `
-          <div class="list-item" data-idx="${i}" onclick="selectLcw(${i}, this)">
-            <div class="list-item-name">${esc(lcw.label)}</div>
-            <div class="list-item-meta">${esc(range)}${lcw.life_phase ? ` · ${esc(lcw.life_phase).replace("_", " ")}` : ""}</div>
-          </div>`;
-      }).join("");
     }
 
-    function selectLcw(idx, el) {
-      document.querySelectorAll("#lcw-list .list-item").forEach(li =>
-        li.classList.remove("selected"));
-      el.classList.add("selected");
-
-      const lcw = lcws[idx];
-      const dreams = allDreams
-        .filter(d => d.life_context_window && d.life_context_window.id === lcw.id)
-        .sort((a, b) => a.date.localeCompare(b.date));
-
-      const detailEl = document.getElementById("lcw-detail");
-      const stressors = lcw.stressors && lcw.stressors.length
-        ? `<div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;">
-             Stressors: ${lcw.stressors.map(s => esc(s)).join(", ")}
-           </div>`
-        : "";
-      const cards = dreams.length
-        ? dreams.map(d => dreamCard(d)).join("")
-        : '<div class="state-msg">No dreams during this period.</div>';
-
-      detailEl.innerHTML = `
-        <div class="detail-title">${esc(lcw.label)}</div>
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">
-          ${esc(lcw.start_date)} → ${esc(lcw.end_date || "present")}
-          ${lcw.life_phase ? ` · ${esc(lcw.life_phase).replace("_", " ")}` : ""}
-        </div>
-        ${stressors}
-        ${cards}`;
+    function lcwChipHTML(lcw) {
+      const status = lcw.status || "dormant";
+      const dateText = lcw.start_date ? `<span class="lcw-chip-date">${esc(lcw.start_date)}</span>` : "";
+      const stressorsText = (lcw.stressors || []).length
+        ? `<div class="lcw-chip-stressors">Stressors: ${lcw.stressors.map(s => esc(s)).join(", ")}</div>`
+        : '<div class="lcw-chip-stressors" style="font-style:italic;">No stressors recorded.</div>';
+      return `
+        <div class="lcw-chip" id="chip-${esc(lcw.id)}">
+          <div class="lcw-chip-header" onclick="toggleChipExpand('chip-${esc(lcw.id)}')">
+            <span class="lcw-chip-label">${esc(lcw.label)}</span>
+            ${dateText}
+            <button class="lcw-status-badge s-${esc(status)}"
+                    onclick="cycleStatus(event, '${esc(lcw.id)}', '${esc(status)}')">${esc(status)}</button>
+          </div>
+          <div class="lcw-chip-body" id="body-${esc(lcw.id)}">
+            ${stressorsText}
+            <button class="lcw-chip-edit-btn" onclick="openEditContext('${esc(lcw.id)}')">Edit</button>
+          </div>
+        </div>`;
     }
+
+    function toggleChipExpand(chipId) {
+      const body = document.getElementById(`body-${chipId.replace("chip-", "")}`);
+      if (body) body.classList.toggle("open");
+    }
+
+    async function cycleStatus(event, lcwId, currentStatus) {
+      event.stopPropagation();
+      const idx = STATUS_CYCLE.indexOf(currentStatus);
+      const nextStatus = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+      try {
+        const res = await fetch(`/api/life-context-windows/${encodeURIComponent(lcwId)}/status`, {
+          method: "PUT",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({status: nextStatus}),
+        });
+        if (!res.ok) { const e = await res.json(); alert(e.error); return; }
+        // Update local data and re-render
+        const lcw = lcws.find(l => l.id === lcwId);
+        if (lcw) lcw.status = nextStatus;
+        renderLcwManage();
+      } catch (err) {
+        alert("Could not update status: " + err.message);
+      }
+    }
+
+    function openEditContext(lcwId) {
+      // Minimal edit: just re-open the add form pre-populated — future enhancement
+      alert("Editing is coming soon. For now, use the status badge to change prominence.");
+    }
+
+    function toggleArchiveDrawer() {
+      const toggle = document.getElementById("archive-toggle");
+      const body   = document.getElementById("archive-drawer-body");
+      toggle.classList.toggle("open");
+      body.classList.toggle("open");
+    }
+
+    function toggleAddContextForm() {
+      document.getElementById("add-ctx-form").classList.toggle("open");
+    }
+
+    async function submitAddContext() {
+      const label = document.getElementById("new-ctx-label").value.trim();
+      if (!label) { alert("Label is required."); return; }
+      const start  = document.getElementById("new-ctx-start").value || null;
+      const stress = document.getElementById("new-ctx-stressors").value.trim();
+      const status = document.getElementById("new-ctx-status").value;
+      try {
+        const res = await fetch("/api/life-context-windows", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({label, start_date: start, stressors: stress, status}),
+        });
+        if (!res.ok) { const e = await res.json(); alert(e.error); return; }
+        const newLcw = await res.json();
+        lcws.push(newLcw);
+        renderLcwManage();
+        // Reset form
+        document.getElementById("new-ctx-label").value     = "";
+        document.getElementById("new-ctx-start").value     = "";
+        document.getElementById("new-ctx-stressors").value = "";
+        document.getElementById("new-ctx-status").value    = "foreground";
+        toggleAddContextForm();
+      } catch (err) {
+        alert("Could not add context: " + err.message);
+      }
+    }
+
+    // Alias so loadAll() can call it as renderLcwList (consistent with other renders)
+    function renderLcwList() { renderLcwManage(); }
 
     // ── Date Range ────────────────────────────────────────────────────────────
     async function runDateFilter() {

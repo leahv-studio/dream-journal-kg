@@ -14,7 +14,7 @@
         "rejection letters",
         "application deadlines"
       ],
-      "life_phase": "major_transition",
+      "status": "archived",
       "id": "lcw_job_search"
     },
     {
@@ -26,8 +26,7 @@
         "imposter syndrome",
         "grad school deadlines"
       ],
-      "life_phase": "major_transition",
-      "end_date": "2026-04-04",
+      "status": "foreground",
       "id": "lcw_new_role"
     },
     {
@@ -437,234 +436,9 @@
       "is_novel": true,
       "lucid": false,
       "id": "dream_mirror"
-    },
-    {
-      "node_type": "LifeContextWindow",
-      "label": "Active job search",
-      "start_date": "2026-04-04",
-      "stressors": [
-        "interviews",
-        "imposter syndrome",
-        "money",
-        "bills",
-        "mental capacity"
-      ],
-      "life_phase": "major_transition",
-      "id": "lcw_2026_04_04_active_job_search"
-    },
-    {
-      "node_type": "Dream",
-      "date": "2026-03-12",
-      "raw_narrative": "I was at my undergrad college for my current Spanish class but found myself across campus with no idea where the class was located. I tried to cut through a gorgeous bright white building with gold handrails, but the stairs had converging railings that trapped me at the top. A secretary was visible through a window and I felt embarrassed about my predicament. The building felt hostile, so I turned around and left. I got into a Lyft that took me across campus, but then realized the address was set for a suburb 30 minutes away where my brother's wife is from. Panicking about missing class, I exited the Lyft and started wandering campus. My friend Shawna appeared and was sympathetic but dismissive. I thought out loud that this was horrible like a dream, but insisted it wasn't a dream - it was real. It was dark now and I fell into prickly bushes while following Shawna. I discovered a giant crab clinging to my calf, which seemed impossible since I was in Minnesota. I was scared to touch it because of its claws. I went into a shop where someone offered the crab a ruler to grab onto, which worked to remove it from my leg. I then found myself in a room in my duplex that only exists in dreams but reminded me of both my childhood bedroom and a room at my grandparents' house. It was tattered with old carpet. The air vent fell off the duct and I saw it was glowing with flames at the bottom. I was terrified and felt like a failure as a homeowner, wondering if this was somehow normal. Andy was in my way making it difficult to text my dad a picture for help, and my roommate was also there complaining about something trivial in the kitchen while I was dealing with what felt like hell wanting to crawl out of my air vent. When I tried to photograph the vent, it looked even worse and I couldn't manage to send the text. I worried about my cat falling down the vent, and then an AI feature on my phone simulated what it would look like if my cat fell into the hellfire. I woke up never having made it to Spanish class.",
-      "emotional_valence": "negative",
-      "intensity": 4,
-      "visual_quality": "bright",
-      "notable_color": "gold",
-      "lucid": false,
-      "id": "dream_2026_03_12"
-    },
-    {
-      "node_type": "Character",
-      "name": "Shawna",
-      "character_type": "real_current",
-      "id": "char_shawna"
-    },
-    {
-      "node_type": "Character",
-      "name": "secretary",
-      "character_type": "constructed",
-      "id": "char_secretary"
-    },
-    {
-      "node_type": "Character",
-      "name": "Andy",
-      "character_type": "real_current",
-      "id": "char_andy"
-    },
-    {
-      "node_type": "Character",
-      "name": "roommate",
-      "character_type": "real_current",
-      "id": "char_roommate"
-    },
-    {
-      "node_type": "Character",
-      "name": "shop worker",
-      "character_type": "constructed",
-      "id": "char_shop_worker"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "converging handrails",
-      "category": "object",
-      "symbolic_note": "Beautiful trap that prevents progress",
-      "id": "sym_converging_handrails"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "giant crab",
-      "category": "animal",
-      "symbolic_note": "Unexpected threatening attachment in wrong environment",
-      "id": "sym_giant_crab"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "flaming air vent",
-      "category": "object",
-      "symbolic_note": "Hidden domestic threat and failure",
-      "id": "sym_flaming_air_vent"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "Lyft with wrong address",
-      "category": "object",
-      "symbolic_note": "Transportation that leads away from goals",
-      "id": "sym_lyft_with_wrong_address"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "prickly bushes",
-      "category": "object",
-      "id": "sym_prickly_bushes"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "ruler",
-      "category": "object",
-      "id": "sym_ruler"
-    },
-    {
-      "node_type": "Setting",
-      "name": "undergrad college campus",
-      "familiarity": "known",
-      "real_or_constructed": "real",
-      "id": "set_undergrad_college_campus"
-    },
-    {
-      "node_type": "Setting",
-      "name": "fancy white building with gold railings",
-      "familiarity": "unfamiliar",
-      "real_or_constructed": "constructed",
-      "symbolic_note": "Beautiful but hostile architecture",
-      "id": "set_fancy_white_building_with_gold_railings"
-    },
-    {
-      "node_type": "Setting",
-      "name": "dream duplex room",
-      "familiarity": "known",
-      "real_or_constructed": "composite",
-      "symbolic_note": "Blend of childhood bedroom and grandparents' room",
-      "id": "set_dream_duplex_room"
-    },
-    {
-      "node_type": "Setting",
-      "name": "random shop",
-      "familiarity": "unfamiliar",
-      "real_or_constructed": "constructed",
-      "id": "set_random_shop"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "exasperation",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_exasperation"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "embarrassment",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_embarrassment"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "anger",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_anger"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "panic",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_panic"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "annoyance",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_annoyance"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "terror",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_terror"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "feeling like failure",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_feeling_like_failure"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "helplessness",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_helplessness"
-    },
-    {
-      "node_type": "Theme",
-      "name": "hostile architecture",
-      "description": "Beautiful spaces that trap and prevent progress",
-      "source": "llm",
-      "id": "thm_hostile_architecture"
-    },
-    {
-      "node_type": "Theme",
-      "name": "domestic incompetence",
-      "description": "Feeling inadequate to handle homeowner responsibilities",
-      "source": "llm",
-      "id": "thm_domestic_incompetence"
-    },
-    {
-      "node_type": "Theme",
-      "name": "communication breakdown",
-      "description": "Inability to use technology effectively when help is needed",
-      "source": "llm",
-      "id": "thm_communication_breakdown"
-    },
-    {
-      "node_type": "Theme",
-      "name": "misplaced priorities",
-      "description": "Others focusing on trivial matters while serious problems persist",
-      "source": "llm",
-      "id": "thm_misplaced_priorities"
-    },
-    {
-      "node_type": "BodySensation",
-      "description": "giant crab clinging to calf",
-      "location": "calf",
-      "quality": "pressure",
-      "confidence": "stated",
-      "id": "bs_dream_2026_03_12_0"
-    },
-    {
-      "node_type": "BodySensation",
-      "description": "falling into prickly bushes",
-      "location": "body",
-      "quality": "pain",
-      "confidence": "stated",
-      "id": "bs_dream_2026_03_12_1"
     }
   ],
-  "links": [
+  "edges": [
     {
       "edge_type": "activates",
       "frequency": 2,
@@ -702,7 +476,7 @@
     },
     {
       "edge_type": "activates",
-      "frequency": 3,
+      "frequency": 2,
       "source": "lcw_new_role",
       "target": "thm_navigation_failure",
       "key": "activates"
@@ -733,34 +507,6 @@
       "frequency": 1,
       "source": "lcw_new_role",
       "target": "thm_transformation",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_new_role",
-      "target": "thm_hostile_architecture",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_new_role",
-      "target": "thm_domestic_incompetence",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_new_role",
-      "target": "thm_communication_breakdown",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_new_role",
-      "target": "thm_misplaced_priorities",
       "key": "activates"
     },
     {
@@ -1060,15 +806,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_grand_am",
+      "strength": "strong",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_grand_am",
+      "strength": "moderate",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1110,15 +856,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_duplex_1",
+      "strength": "strong",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_duplex_1",
+      "strength": "moderate",
       "target": "thm_transformation",
       "key": "expresses"
     },
@@ -1187,15 +933,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_duplex_2",
+      "strength": "strong",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_duplex_2",
+      "strength": "strong",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1250,15 +996,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_exam_unprepared",
+      "strength": "strong",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_exam_unprepared",
+      "strength": "strong",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1300,15 +1046,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_phone_wont_work",
+      "strength": "strong",
       "target": "thm_isolation",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_phone_wont_work",
+      "strength": "moderate",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1349,8 +1095,8 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_childhood_home_wrong",
+      "strength": "moderate",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
@@ -1391,8 +1137,8 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_water_basement",
+      "strength": "strong",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1448,15 +1194,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_lost_keys",
+      "strength": "strong",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_lost_keys",
+      "strength": "moderate",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
@@ -1497,15 +1243,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_wrong_slides",
+      "strength": "strong",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_wrong_slides",
+      "strength": "moderate",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1546,15 +1292,15 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_infinite_stairs",
+      "strength": "moderate",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
       "source": "dream_infinite_stairs",
+      "strength": "moderate",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1595,8 +1341,8 @@
     },
     {
       "edge_type": "expresses",
-      "strength": "strong",
       "source": "dream_mirror",
+      "strength": "strong",
       "target": "thm_transformation",
       "key": "expresses"
     },
@@ -1605,340 +1351,6 @@
       "source": "dream_mirror",
       "target": "bs_falling",
       "key": "includes_sensation"
-    },
-    {
-      "edge_type": "features",
-      "role": "active",
-      "source": "dream_2026_03_12",
-      "target": "char_shawna",
-      "key": "features"
-    },
-    {
-      "edge_type": "features",
-      "role": "observer",
-      "source": "dream_2026_03_12",
-      "target": "char_secretary",
-      "key": "features"
-    },
-    {
-      "edge_type": "features",
-      "role": "active",
-      "source": "dream_2026_03_12",
-      "target": "char_andy",
-      "key": "features"
-    },
-    {
-      "edge_type": "features",
-      "role": "active",
-      "source": "dream_2026_03_12",
-      "target": "char_roommate",
-      "key": "features"
-    },
-    {
-      "edge_type": "features",
-      "role": "passive",
-      "source": "dream_2026_03_12",
-      "target": "char_dad",
-      "key": "features"
-    },
-    {
-      "edge_type": "features",
-      "role": "active",
-      "source": "dream_2026_03_12",
-      "target": "char_shop_worker",
-      "key": "features"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_2026_03_12",
-      "target": "sym_converging_handrails",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_2026_03_12",
-      "target": "sym_giant_crab",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_2026_03_12",
-      "target": "sym_flaming_air_vent",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "present",
-      "source": "dream_2026_03_12",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "present",
-      "source": "dream_2026_03_12",
-      "target": "sym_prickly_bushes",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "background",
-      "source": "dream_2026_03_12",
-      "target": "sym_ruler",
-      "key": "contains"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_2026_03_12",
-      "target": "set_undergrad_college_campus",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_2026_03_12",
-      "target": "set_fancy_white_building_with_gold_railings",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "distorted",
-      "source": "dream_2026_03_12",
-      "target": "set_dream_duplex_room",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_2026_03_12",
-      "target": "set_random_shop",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "being trapped by converging handrails",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_exasperation",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "secretary witnessing the predicament",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_embarrassment",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "building seeming hostile",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_anger",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "realizing Lyft address was wrong",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_panic",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "falling in prickly bushes",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_annoyance",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "seeing flames in air vent",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_terror",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "unable to handle homeowner responsibilities",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_feeling_like_failure",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "inability to fix the vent problem",
-      "confidence": "stated",
-      "source": "dream_2026_03_12",
-      "target": "emo_helplessness",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "expresses",
-      "source": "dream_2026_03_12",
-      "strength": "strong",
-      "target": "thm_navigation_failure",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "source": "dream_2026_03_12",
-      "strength": "moderate",
-      "target": "thm_hostile_architecture",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "source": "dream_2026_03_12",
-      "strength": "strong",
-      "target": "thm_domestic_incompetence",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "source": "dream_2026_03_12",
-      "strength": "moderate",
-      "target": "thm_communication_breakdown",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "source": "dream_2026_03_12",
-      "strength": "moderate",
-      "target": "thm_misplaced_priorities",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "includes_sensation",
-      "source": "dream_2026_03_12",
-      "target": "bs_dream_2026_03_12_0",
-      "key": "includes_sensation"
-    },
-    {
-      "edge_type": "includes_sensation",
-      "source": "dream_2026_03_12",
-      "target": "bs_dream_2026_03_12_1",
-      "key": "includes_sensation"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_2026_03_12",
-      "target": "lcw_new_role",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_flaming_air_vent",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_giant_crab",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_flaming_air_vent",
-      "target": "sym_giant_crab",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_flaming_air_vent",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_flaming_air_vent",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_flaming_air_vent",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_lyft_with_wrong_address",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_lyft_with_wrong_address",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_prickly_bushes",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
     }
   ]
 }

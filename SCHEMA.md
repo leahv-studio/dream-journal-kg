@@ -115,16 +115,22 @@ A higher-order interpretive pattern. Can originate from the user or be surfaced 
 ---
 
 ### Life Context Window
-A persistent waking life period with associated stressors. Updated occasionally — not per dream entry. Every dream connects to the context window active at its date.
+A persistent waking life context that can move between states of prominence over time. Not tied to a fixed date range — a context can return to foreground after being dormant. Updated occasionally, not per dream entry.
 
 | Property | Type | Required | Notes |
 |---|---|---|---|
 | `id` | string | yes | |
-| `label` | string | yes | e.g. "Active job search + wedding planning" |
-| `start_date` | date | yes | |
-| `end_date` | date | no | Null if this is the current active context. |
+| `label` | string | yes | e.g. "Job search", "Duplex" |
+| `start_date` | date | no | |
+| `end_date` | date | no | Rarely used. Most contexts don't have a clean end date. Archiving the context is the preferred way to mark it as past. |
 | `stressors` | string[] | no | List of active stressors |
-| `life_phase` | enum | no | `major_transition` / `stable` / `grief` / `creative` / `other` |
+| `status` | enum | no | `foreground` / `background` / `dormant` / `archived` |
+
+**status values:**
+- `foreground` — active and prominent; shown in the dream entry banner
+- `background` — present but not central; not shown in banner
+- `dormant` — not currently active; has faded but not formally closed
+- `archived` — past, closed out; shown in collapsed archive drawer
 
 ---
 
