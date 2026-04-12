@@ -123,7 +123,7 @@ A persistent waking life context that can move between states of prominence over
 | `label` | string | yes | e.g. "Job search", "Duplex" |
 | `start_date` | date | no | |
 | `end_date` | date | no | Rarely used. Most contexts don't have a clean end date. Archiving the context is the preferred way to mark it as past. |
-| `stressors` | string[] | no | List of active stressors |
+| `description` | text | no | Free-text journal entry about this context — what it is, why it matters, how it feels |
 | `status` | enum | no | `foreground` / `background` / `dormant` / `archived` |
 
 **status values:**

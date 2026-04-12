@@ -26,7 +26,13 @@ dg.add_life_context_window(
     label="Active job search + grad school applications",
     start_date="2024-09-01",
     end_date="2025-01-15",
-    stressors=["unemployment", "financial pressure", "rejection letters", "application deadlines"],
+    description=(
+        "I was laid off in late August and spent the fall applying to jobs and finishing "
+        "my grad school applications simultaneously. The financial pressure was constant — "
+        "I was burning through savings and every rejection letter hit harder than it should have. "
+        "There was a specific kind of shame in being unemployed while also trying to present "
+        "myself as competent enough for a grad program. It ended when I got the offer in January."
+    ),
     status="archived",
 )
 
@@ -34,7 +40,13 @@ dg.add_life_context_window(
     "lcw_new_role",
     label="New job + proving myself + program coursework",
     start_date="2025-01-16",
-    stressors=["new job learning curve", "imposter syndrome", "grad school deadlines"],
+    description=(
+        "Started the new role in January — excited but deeply aware that I don't fully know "
+        "what I'm doing yet. The learning curve is steep and I catch myself second-guessing "
+        "things I'd have been confident about a year ago. Grad school is running in parallel "
+        "and the deadlines don't care that I'm also onboarding. I keep waiting to feel "
+        "like I belong in both places."
+    ),
     status="foreground",
 )
 

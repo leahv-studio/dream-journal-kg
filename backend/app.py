@@ -160,12 +160,8 @@ def create_life_context_window():
     if not label:
         return jsonify({"error": "label is required"}), 400
 
-    start_date = data.get("start_date") or None
-    stressors_raw = data.get("stressors", "")
-    if isinstance(stressors_raw, str):
-        stressors = [s.strip() for s in stressors_raw.split(",") if s.strip()]
-    else:
-        stressors = list(stressors_raw) if stressors_raw else []
+    start_date  = data.get("start_date") or None
+    description = (data.get("description") or "").strip() or None
     status = data.get("status") or "foreground"
     if status not in {"foreground", "background", "dormant", "archived"}:
         return jsonify({"error": "invalid status"}), 400
@@ -183,7 +179,7 @@ def create_life_context_window():
         lcw_id,
         label=label,
         start_date=start_date,
-        stressors=stressors or None,
+        description=description,
         status=status,
     )
     dg.save()

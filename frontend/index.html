@@ -529,8 +529,8 @@
         <input type="date" id="ctx-start-input">
       </div>
       <div class="field">
-        <label>Stressors (comma-separated, optional)</label>
-        <textarea id="ctx-stressors-input" placeholder="financial pressure, deadline, new relationship"></textarea>
+        <label>About this context (optional)</label>
+        <textarea id="ctx-description-input" placeholder="What is this context, why does it matter, how does it feel?"></textarea>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeContextModal()">Cancel</button>
@@ -590,7 +590,7 @@
     function openContextModal() {
       document.getElementById("ctx-start-input").value     = "";
       document.getElementById("ctx-label-input").value     = "";
-      document.getElementById("ctx-stressors-input").value = "";
+      document.getElementById("ctx-description-input").value = "";
       document.getElementById("ctx-modal-overlay").classList.add("open");
     }
 
@@ -607,7 +607,7 @@
         body: JSON.stringify({
           label,
           start_date: document.getElementById("ctx-start-input").value || null,
-          stressors:  document.getElementById("ctx-stressors-input").value,
+          description: document.getElementById("ctx-description-input").value.trim() || null,
           status:     "foreground",
         }),
       });

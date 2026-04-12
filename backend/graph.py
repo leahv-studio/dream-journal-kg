@@ -88,10 +88,10 @@ class DreamGraph:
                        name=name, description=description, source=source)
 
     def add_life_context_window(self, id, label, start_date=None, end_date=None,
-                                stressors=None, status=None):
+                                description=None, status=None):
         self._add_node(id, "LifeContextWindow",
                        label=label, start_date=start_date, end_date=end_date,
-                       stressors=stressors, status=status)
+                       description=description, status=status)
 
     def update_life_context_status(self, lcw_id: str, status: str) -> bool:
         """Update the status of a LifeContextWindow node. Returns True if found."""

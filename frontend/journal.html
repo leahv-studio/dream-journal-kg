@@ -536,7 +536,7 @@
       border-top: 1px solid var(--border);
     }
     .lcw-chip-body.open { display: block; }
-    .lcw-chip-stressors { margin-top: 8px; }
+    .lcw-chip-desc { margin-top: 8px; line-height: 1.65; white-space: pre-wrap; }
     .lcw-chip-edit-btn {
       margin-top: 10px;
       font-size: 12px;
@@ -773,8 +773,8 @@
           <input type="date" id="new-ctx-start">
         </div>
         <div class="add-ctx-field">
-          <label>Stressors (comma-separated, optional)</label>
-          <textarea id="new-ctx-stressors" placeholder="financial pressure, deadline, new relationship"></textarea>
+          <label>About this context (optional)</label>
+          <textarea id="new-ctx-description" placeholder="What is this context, why does it matter, how does it feel? Write as much or as little as you want." style="min-height:80px;"></textarea>
         </div>
         <div class="add-ctx-field">
           <label>Initial status</label>
@@ -1265,9 +1265,9 @@
     function lcwChipHTML(lcw) {
       const status = lcw.status || "dormant";
       const dateText = lcw.start_date ? `<span class="lcw-chip-date">${esc(lcw.start_date)}</span>` : "";
-      const stressorsText = (lcw.stressors || []).length
-        ? `<div class="lcw-chip-stressors">Stressors: ${lcw.stressors.map(s => esc(s)).join(", ")}</div>`
-        : '<div class="lcw-chip-stressors" style="font-style:italic;">No stressors recorded.</div>';
+      const descText = lcw.description
+        ? `<div class="lcw-chip-desc">${esc(lcw.description)}</div>`
+        : '<div class="lcw-chip-desc" style="font-style:italic;color:var(--text-dim);">No description yet.</div>';
       return `
         <div class="lcw-chip" id="chip-${esc(lcw.id)}">
           <div class="lcw-chip-header" onclick="toggleChipExpand('chip-${esc(lcw.id)}')">
@@ -1277,7 +1277,7 @@
                     onclick="cycleStatus(event, '${esc(lcw.id)}', '${esc(status)}')">${esc(status)}</button>
           </div>
           <div class="lcw-chip-body" id="body-${esc(lcw.id)}">
-            ${stressorsText}
+            ${descText}
             <button class="lcw-chip-edit-btn" onclick="openEditContext('${esc(lcw.id)}')">Edit</button>
           </div>
         </div>`;
@@ -1327,24 +1327,24 @@
     async function submitAddContext() {
       const label = document.getElementById("new-ctx-label").value.trim();
       if (!label) { alert("Label is required."); return; }
-      const start  = document.getElementById("new-ctx-start").value || null;
-      const stress = document.getElementById("new-ctx-stressors").value.trim();
-      const status = document.getElementById("new-ctx-status").value;
+      const start       = document.getElementById("new-ctx-start").value || null;
+      const description = document.getElementById("new-ctx-description").value.trim() || null;
+      const status      = document.getElementById("new-ctx-status").value;
       try {
         const res = await fetch("/api/life-context-windows", {
           method: "POST",
           headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({label, start_date: start, stressors: stress, status}),
+          body: JSON.stringify({label, start_date: start, description, status}),
         });
         if (!res.ok) { const e = await res.json(); alert(e.error); return; }
         const newLcw = await res.json();
         lcws.push(newLcw);
         renderLcwManage();
         // Reset form
-        document.getElementById("new-ctx-label").value     = "";
-        document.getElementById("new-ctx-start").value     = "";
-        document.getElementById("new-ctx-stressors").value = "";
-        document.getElementById("new-ctx-status").value    = "foreground";
+        document.getElementById("new-ctx-label").value       = "";
+        document.getElementById("new-ctx-start").value       = "";
+        document.getElementById("new-ctx-description").value = "";
+        document.getElementById("new-ctx-status").value      = "foreground";
         toggleAddContextForm();
       } catch (err) {
         alert("Could not add context: " + err.message);
