@@ -65,12 +65,14 @@ def _find_active_context_window(dg: DreamGraph, date: str) -> str | None:
 
 # ── Extraction ────────────────────────────────────────────────────────────────
 
-def extract_dream(conversation_history: list[dict], date: str) -> dict:
+def extract_dream(conversation_history: list[dict], date: str,
+                  context_block: str = "") -> dict:
     """
     Send the full conversation to Claude for structured extraction.
 
     conversation_history: list of {"role": "user"|"assistant", "content": "..."}
     date: ISO date string YYYY-MM-DD for this dream entry
+    context_block: formatted waking-life context string from build_context_block()
 
     Returns the parsed extraction dict.
     """
@@ -88,7 +90,7 @@ def extract_dream(conversation_history: list[dict], date: str) -> dict:
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=4096,
-        system=EXTRACTION_SYSTEM_PROMPT,
+        system=EXTRACTION_SYSTEM_PROMPT(context_block),
         messages=[{"role": "user", "content": user_message}],
     )
 

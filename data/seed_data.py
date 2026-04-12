@@ -33,6 +33,12 @@ dg.add_life_context_window(
         "There was a specific kind of shame in being unemployed while also trying to present "
         "myself as competent enough for a grad program. It ended when I got the offer in January."
     ),
+    summary=(
+        "A period defined by financial precarity and compounding identity stress — simultaneously "
+        "unemployed and applying to a graduate program, forcing the person to perform competence "
+        "while feeling acutely exposed. Shame and legitimacy anxiety were central, with every "
+        "rejection amplified by the underlying fear of not belonging."
+    ),
     status="archived",
 )
 
@@ -46,6 +52,12 @@ dg.add_life_context_window(
         "things I'd have been confident about a year ago. Grad school is running in parallel "
         "and the deadlines don't care that I'm also onboarding. I keep waiting to feel "
         "like I belong in both places."
+    ),
+    summary=(
+        "A high-demand period of simultaneous transitions — new professional role and active "
+        "graduate coursework running in parallel, with no room for either to slow down. "
+        "The dominant emotional register is imposter syndrome: a persistent sense of not yet "
+        "belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived."
     ),
     status="foreground",
 )

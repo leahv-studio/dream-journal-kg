@@ -12,7 +12,7 @@ from flask_cors import CORS
 
 from extract import extract_dream, write_to_graph, _find_active_context_window
 from graph import DreamGraph
-from prompts import JOURNAL_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT
+from prompts import JOURNAL_SYSTEM_PROMPT, EXTRACTION_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT
 
 FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
 app = Flask(__name__, template_folder=FRONTEND_DIR)
@@ -30,6 +30,61 @@ conversation_history: list[dict] = []
 
 def _slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", text.lower()).strip("_")
+
+
+_SUMMARY_SYSTEM_PROMPT = (
+    "You are summarizing a personal life context entry for use in dream analysis. "
+    "Write 2-3 sentences that capture the emotional core and key themes. "
+    "Focus on what would help a dream analyst understand why this period of life is significant. "
+    "Do not include specific names, dates, or minor details. "
+    "Return only the summary — no preamble, no explanation."
+)
+
+
+def _generate_lcw_summary(description: str) -> str | None:
+    """Call Claude to produce a 2-3 sentence summary of a life context description.
+    Returns None if description is too short to summarize."""
+    if not description or len(description.strip()) < 50:
+        return None
+    response = ai.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=200,
+        system=_SUMMARY_SYSTEM_PROMPT,
+        messages=[{"role": "user", "content": description}],
+    )
+    return response.content[0].text.strip()
+
+
+def build_context_block() -> str:
+    """Build a formatted context string from all non-archived LifeContextWindow nodes."""
+    tiers: dict[str, list[dict]] = {"foreground": [], "background": [], "dormant": []}
+    for node_id, attrs in dg.G.nodes(data=True):
+        if attrs.get("node_type") != "LifeContextWindow":
+            continue
+        status = attrs.get("status", "dormant")
+        if status not in tiers:
+            continue  # skip archived
+        tiers[status].append({"id": node_id, **attrs})
+
+    tier_labels = {
+        "foreground": "FOREGROUND (consciously active)",
+        "background": "BACKGROUND (present but not the loudest thing)",
+        "dormant":    "DORMANT (no longer active, but still part of your life)",
+    }
+
+    sections = []
+    for tier in ("foreground", "background", "dormant"):
+        contexts = tiers[tier]
+        if not contexts:
+            continue
+        lines = [f"{tier_labels[tier]}:"]
+        for ctx in contexts:
+            label = ctx.get("label", "Unnamed")
+            text = ctx.get("summary") or (ctx.get("description") or "")[:200] or "(no description)"
+            lines.append(f"- {label}: {text}")
+        sections.append("\n".join(lines))
+
+    return "\n\n".join(sections)
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -53,12 +108,14 @@ def chat():
 
     conversation_history.append({"role": "user", "content": message})
 
+    system_prompt = JOURNAL_SYSTEM_PROMPT(build_context_block())
+
     def generate():
         full_reply = []
         with ai.messages.stream(
             model="claude-sonnet-4-20250514",
             max_tokens=1024,
-            system=JOURNAL_SYSTEM_PROMPT,
+            system=system_prompt,
             messages=conversation_history,
         ) as stream:
             for text in stream.text_stream:
@@ -88,7 +145,7 @@ def api_extract():
     data = request.json or {}
     dream_date = data.get("date") or _date.today().isoformat()
 
-    extracted = extract_dream(conversation_history, dream_date)
+    extracted = extract_dream(conversation_history, dream_date, build_context_block())
 
     print("\n" + "=" * 60)
     print("EXTRACTION RESULT")
@@ -175,11 +232,18 @@ def create_life_context_window():
         lcw_id = f"{base_id}_{counter}"
         counter += 1
 
+    summary = None
+    try:
+        summary = _generate_lcw_summary(description)
+    except Exception as e:
+        print(f"LCW summary generation failed (non-fatal): {e}")
+
     dg.add_life_context_window(
         lcw_id,
         label=label,
         start_date=start_date,
         description=description,
+        summary=summary,
         status=status,
     )
     dg.save()

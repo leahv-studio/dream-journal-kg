@@ -88,10 +88,10 @@ class DreamGraph:
                        name=name, description=description, source=source)
 
     def add_life_context_window(self, id, label, start_date=None, end_date=None,
-                                description=None, status=None):
+                                description=None, summary=None, status=None):
         self._add_node(id, "LifeContextWindow",
                        label=label, start_date=start_date, end_date=end_date,
-                       description=description, status=status)
+                       description=description, summary=summary, status=status)
 
     def update_life_context_status(self, lcw_id: str, status: str) -> bool:
         """Update the status of a LifeContextWindow node. Returns True if found."""
@@ -103,6 +103,15 @@ class DreamGraph:
         if self.G.nodes[lcw_id].get("node_type") != "LifeContextWindow":
             return False
         self.G.nodes[lcw_id]["status"] = status
+        return True
+
+    def update_life_context_summary(self, lcw_id: str, summary: str) -> bool:
+        """Store a generated summary on a LifeContextWindow node. Returns True if found."""
+        if lcw_id not in self.G:
+            return False
+        if self.G.nodes[lcw_id].get("node_type") != "LifeContextWindow":
+            return False
+        self.G.nodes[lcw_id]["summary"] = summary
         return True
 
     def add_body_sensation(self, id, description, location=None, quality=None,
