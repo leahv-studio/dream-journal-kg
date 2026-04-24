@@ -509,7 +509,7 @@
 
       <div class="review-actions">
         <button class="btn btn-ghost" onclick="discardEntry()">Discard</button>
-        <button class="btn btn-outline" onclick="backToChat()">Back to chat</button>
+        <button class="btn btn-outline" id="back-to-chat-btn">Back to chat</button>
         <button class="btn btn-primary" onclick="confirmSave()">Confirm &amp; Save to Graph</button>
       </div>
     </div>
@@ -560,6 +560,7 @@
       document.getElementById("message-input").addEventListener("keydown", e => {
         if (e.key === "Enter" && !e.shiftKey) sendMessage();
       });
+      document.getElementById("back-to-chat-btn").addEventListener("click", backToChat);
       loadContext();
     });
 
