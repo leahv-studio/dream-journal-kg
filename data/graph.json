@@ -429,6 +429,153 @@
       "is_novel": true,
       "lucid": false,
       "id": "dream_mirror"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Job search and financial pressure",
+      "start_date": "2025-11-01",
+      "description": "I've been looking for a new job and not having a lot of luck. I've been networking a lot which has been it's own kind of social stress but also totally necessary. I had an interview in March at a company and a role I was really hoping to get. They ghosted me but it still felt validating to finally get an interview at least. I'm feeling pressure to leave my current company before I'm there too long and appear as though I can only specialize in that particular industry. I'm also feeling a lot of pressure to meaningfully increase my salary to achieve my duplex goals.",
+      "summary": "The dreamer is experiencing significant career uncertainty and pressure, caught between the stress of job searching while feeling trapped in their current position. Financial anxiety about salary growth is intertwined with specific housing aspirations, creating multiple layers of pressure. The emotional landscape includes both hope and disappointment from the job search process, along with social stress from networking, while facing time pressure to make career moves that could impact their long-term professional trajectory.",
+      "status": "background",
+      "id": "lcw_job_search_and_financial"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Test",
+      "description": "Test falsdjkfas;ldkfjas;ldkfj",
+      "status": "foreground",
+      "id": "lcw_test"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-04-24",
+      "raw_narrative": "I was in a busy shopping store like Target with my brother and a coworker. Both of them were serious, unambiguous workers who could irritate me with their inflexibility, but I recognized their approach had merits. Strangely, they both had four young children and were religious. At some point, a store worker demanded to inspect my driver's license and wallet to verify I was qualified to drive. He began picking apart everything wrong with my documents - my license, insurance, passport, and even my cell phone. He implied I was either a scammed fool or a criminal, declared I couldn't drive, and confiscated all my items including my keys. I had to walk home without being able to contact my brother or coworker since he'd taken my phone. The walk 'home' led to my parents' house, which wasn't extremely far but was still a significant walk. When I arrived, I felt embarrassed about explaining what had happened because it wouldn't have happened to them. The car keys he'd seized belonged to my parents' minivan that I'd been driving as a teenager because I couldn't afford my own car, so I figured I'd be in even more trouble for having to abandon it at Target.",
+      "emotional_valence": "negative",
+      "intensity": 4,
+      "lucid": false,
+      "title": "Stripped of My License at Target",
+      "id": "dream_2026_04_24"
+    },
+    {
+      "node_type": "Character",
+      "name": "brother",
+      "character_type": "real_current",
+      "symbolic_role": "represents unshakeable competence and legitimacy that the dreamer feels they lack",
+      "id": "char_brother"
+    },
+    {
+      "node_type": "Character",
+      "name": "coworker",
+      "character_type": "real_current",
+      "symbolic_role": "represents professional seriousness and competence that feels foreign to the dreamer",
+      "id": "char_coworker"
+    },
+    {
+      "node_type": "Character",
+      "name": "store worker/inspector",
+      "character_type": "constructed",
+      "symbolic_role": "embodies the feared authority who will expose the dreamer's illegitimacy",
+      "id": "char_store_worker_inspector"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "driver's license inspection",
+      "category": "action",
+      "symbolic_note": "represents fear of having credentials scrutinized and found inadequate",
+      "id": "sym_driver_s_license_inspection"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "wallet and documents",
+      "category": "object",
+      "symbolic_note": "symbols of adult legitimacy and competence that become evidence against the dreamer",
+      "id": "sym_wallet_and_documents"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "parents' minivan",
+      "category": "object",
+      "symbolic_note": "represents borrowed legitimacy and regression to adolescent dependence",
+      "id": "sym_parents_minivan"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "confiscated keys",
+      "category": "object",
+      "symbolic_note": "loss of autonomy and adult privileges",
+      "id": "sym_confiscated_keys"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "four children each",
+      "category": "object",
+      "symbolic_note": "exaggerated markers of adult stability and social legitimacy",
+      "id": "sym_four_children_each"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Target store",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "consumer space where agency is suddenly stripped away by arbitrary authority",
+      "id": "set_target_store"
+    },
+    {
+      "node_type": "Setting",
+      "name": "parents' house",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "represents regression to dependence and childhood inadequacy",
+      "id": "set_parents_house"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "defeated",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_defeated"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "embarrassed",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_embarrassed"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "irritated",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_irritated"
+    },
+    {
+      "node_type": "Theme",
+      "name": "imposter syndrome",
+      "description": "fear of being exposed as unqualified despite holding credentials",
+      "source": "llm",
+      "id": "thm_imposter_syndrome"
+    },
+    {
+      "node_type": "Theme",
+      "name": "regression under pressure",
+      "description": "returning to adolescent dependence when adult competence is questioned",
+      "source": "llm",
+      "id": "thm_regression_under_pressure"
+    },
+    {
+      "node_type": "Theme",
+      "name": "professional legitimacy anxiety",
+      "description": "fear that credentials and qualifications will be found inadequate under scrutiny",
+      "source": "llm",
+      "id": "thm_professional_legitimacy_anxiety"
+    },
+    {
+      "node_type": "Theme",
+      "name": "isolation in crisis",
+      "description": "being unable to seek help or explain circumstances when things go wrong",
+      "source": "llm",
+      "id": "thm_isolation_in_crisis"
     }
   ],
   "edges": [
@@ -500,6 +647,34 @@
       "frequency": 1,
       "source": "lcw_new_role",
       "target": "thm_transformation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_imposter_syndrome",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_regression_under_pressure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_professional_legitimacy_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_isolation_in_crisis",
       "key": "activates"
     },
     {
@@ -799,15 +974,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_grand_am",
       "strength": "strong",
+      "source": "dream_grand_am",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_grand_am",
       "strength": "moderate",
+      "source": "dream_grand_am",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -849,15 +1024,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_duplex_1",
       "strength": "strong",
+      "source": "dream_duplex_1",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_duplex_1",
       "strength": "moderate",
+      "source": "dream_duplex_1",
       "target": "thm_transformation",
       "key": "expresses"
     },
@@ -926,15 +1101,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_duplex_2",
       "strength": "strong",
+      "source": "dream_duplex_2",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_duplex_2",
       "strength": "strong",
+      "source": "dream_duplex_2",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -989,15 +1164,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_exam_unprepared",
       "strength": "strong",
+      "source": "dream_exam_unprepared",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_exam_unprepared",
       "strength": "strong",
+      "source": "dream_exam_unprepared",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1039,15 +1214,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_phone_wont_work",
       "strength": "strong",
+      "source": "dream_phone_wont_work",
       "target": "thm_isolation",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_phone_wont_work",
       "strength": "moderate",
+      "source": "dream_phone_wont_work",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1088,8 +1263,8 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_childhood_home_wrong",
       "strength": "moderate",
+      "source": "dream_childhood_home_wrong",
       "target": "thm_home_belonging",
       "key": "expresses"
     },
@@ -1130,8 +1305,8 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_water_basement",
       "strength": "strong",
+      "source": "dream_water_basement",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1187,15 +1362,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_lost_keys",
       "strength": "strong",
+      "source": "dream_lost_keys",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_lost_keys",
       "strength": "moderate",
+      "source": "dream_lost_keys",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
@@ -1236,15 +1411,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_wrong_slides",
       "strength": "strong",
+      "source": "dream_wrong_slides",
       "target": "thm_legitimacy_anxiety",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_wrong_slides",
       "strength": "moderate",
+      "source": "dream_wrong_slides",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1285,15 +1460,15 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_infinite_stairs",
       "strength": "moderate",
+      "source": "dream_infinite_stairs",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_infinite_stairs",
       "strength": "moderate",
+      "source": "dream_infinite_stairs",
       "target": "thm_control_loss",
       "key": "expresses"
     },
@@ -1334,8 +1509,8 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_mirror",
       "strength": "strong",
+      "source": "dream_mirror",
       "target": "thm_transformation",
       "key": "expresses"
     },
@@ -1344,6 +1519,204 @@
       "source": "dream_mirror",
       "target": "bs_falling",
       "key": "includes_sensation"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_2026_04_24",
+      "target": "char_brother",
+      "key": "features"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_2026_04_24",
+      "target": "char_coworker",
+      "key": "features"
+    },
+    {
+      "edge_type": "features",
+      "role": "active",
+      "source": "dream_2026_04_24",
+      "target": "char_store_worker_inspector",
+      "key": "features"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_2026_04_24",
+      "target": "sym_driver_s_license_inspection",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_2026_04_24",
+      "target": "sym_wallet_and_documents",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_2026_04_24",
+      "target": "sym_parents_minivan",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_2026_04_24",
+      "target": "sym_confiscated_keys",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_2026_04_24",
+      "target": "sym_four_children_each",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_2026_04_24",
+      "target": "set_target_store",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_2026_04_24",
+      "target": "set_parents_house",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "inspector picking apart wallet contents and confiscating items",
+      "confidence": "stated",
+      "source": "dream_2026_04_24",
+      "target": "emo_defeated",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "having to explain the situation and feeling it wouldn't have happened to others",
+      "confidence": "stated",
+      "source": "dream_2026_04_24",
+      "target": "emo_embarrassed",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "brother and coworker's inflexible working styles",
+      "confidence": "stated",
+      "source": "dream_2026_04_24",
+      "target": "emo_irritated",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "source": "dream_2026_04_24",
+      "strength": "strong",
+      "target": "thm_imposter_syndrome",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "source": "dream_2026_04_24",
+      "strength": "strong",
+      "target": "thm_regression_under_pressure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "source": "dream_2026_04_24",
+      "strength": "strong",
+      "target": "thm_professional_legitimacy_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "source": "dream_2026_04_24",
+      "strength": "moderate",
+      "target": "thm_isolation_in_crisis",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_24",
+      "target": "lcw_new_role",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_four_children_each",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_parents_minivan",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_driver_s_license_inspection",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_four_children_each",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_four_children_each",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_four_children_each",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
     }
   ]
 }

@@ -247,7 +247,21 @@ def create_life_context_window():
         status=status,
     )
     dg.save()
-    return jsonify({"id": lcw_id, "label": label, "start_date": start_date, "status": status}), 201
+
+    node_attrs = dict(dg.G.nodes[lcw_id])
+    print(f"\nNew LCW node '{lcw_id}' attributes after save:")
+    for k, v in node_attrs.items():
+        print(f"  {k}: {v!r}")
+    print()
+
+    return jsonify({
+        "id": lcw_id,
+        "label": label,
+        "start_date": start_date,
+        "description": description,
+        "summary": summary,
+        "status": status,
+    }), 201
 
 
 @app.route("/api/life-context-windows/<lcw_id>/status", methods=["PUT"])
