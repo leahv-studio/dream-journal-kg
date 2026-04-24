@@ -330,6 +330,12 @@
       color: var(--text-dim);
     }
     .btn-ghost:hover:not(:disabled) { border-color: var(--danger); color: var(--danger); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover:not(:disabled) { background: rgba(124,106,240,.12); }
 
     /* ── Dream title field ──────────────────────────────────────────────────── */
     .title-field-wrap {
@@ -503,6 +509,7 @@
 
       <div class="review-actions">
         <button class="btn btn-ghost" onclick="discardEntry()">Discard</button>
+        <button class="btn btn-outline" onclick="backToChat()">Back to chat</button>
         <button class="btn btn-primary" onclick="confirmSave()">Confirm &amp; Save to Graph</button>
       </div>
     </div>
@@ -541,9 +548,11 @@
 
   <script>
     // ── State ─────────────────────────────────────────────────────────────────
-    let currentExtracted = null;
-    let currentDate      = null;
-    let exchangeCount    = 0;  // increments after each assistant reply
+    let currentExtracted         = null;
+    let currentDate              = null;
+    let currentDivergence        = null;
+    let exchangeCount            = 0;  // increments after each assistant reply
+    let extractedAtExchangeCount = -1; // exchangeCount when last extraction ran
 
     // ── Init ──────────────────────────────────────────────────────────────────
     document.addEventListener("DOMContentLoaded", () => {
@@ -682,6 +691,14 @@
 
     // ── Save → Extract → Review ───────────────────────────────────────────────
     async function saveToJournal() {
+      // If nothing new was said since the last extraction, reuse the cached result.
+      if (currentExtracted && exchangeCount === extractedAtExchangeCount) {
+        renderReviewCard(currentExtracted, currentDate, currentDivergence,
+                         currentExtracted.dream?.title);
+        showView("review-view");
+        return;
+      }
+
       currentDate = document.getElementById("dream-date").value;
       showView("loading-view");
 
@@ -697,6 +714,8 @@
         }
         const data = await res.json();
         currentExtracted = data.extracted;
+        currentDivergence = data.divergence;
+        extractedAtExchangeCount = exchangeCount;
         if (data.suggested_title) {
           currentExtracted.dream.title = data.suggested_title;
         }
@@ -823,6 +842,12 @@
       item.remove();
     }
 
+    // ── Back to chat (non-destructive) ───────────────────────────────────────
+    function backToChat() {
+      showView("chat-view");
+      document.getElementById("message-input").focus();
+    }
+
     // ── Confirm & Discard ─────────────────────────────────────────────────────
     async function confirmSave() {
       try {
@@ -856,9 +881,11 @@
       document.getElementById("save-btn").disabled = true;
       document.getElementById("dream-date").value  = todayISO();
       document.getElementById("dream-title-input").value = "";
-      exchangeCount    = 0;
-      currentExtracted = null;
-      currentDate      = null;
+      exchangeCount            = 0;
+      currentExtracted         = null;
+      currentDate              = null;
+      currentDivergence        = null;
+      extractedAtExchangeCount = -1;
       showView("chat-view");
       document.getElementById("message-input").focus();
     }
