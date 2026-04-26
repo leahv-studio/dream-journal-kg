@@ -797,13 +797,13 @@
 
   // ─── Node colors ────────────────────────────────────────────────────────────
   const NODE_COLORS = {
-    Symbol:           '#C9973A',
+    Symbol:           '#B08090',
     Theme:            '#3D4E8A',
     Character:        '#7B8EC9',
-    Setting:          '#B08090',
-    Emotion:          '#A05060',
-    LifeContextWindow:'#7C6B9E',
-    BodySensation:    '#6B6778',
+    Setting:          '#5C5868',
+    Emotion:          '#C47A8A',
+    LifeContextWindow:'#C9973A',
+    BodySensation:    '#9B97A8',
   };
 
   const DREAM_COLOR_OLD  = '#4A3870';
@@ -1229,13 +1229,13 @@
     const el = document.getElementById('graph-legend');
     const entries = [
       { label: 'Dream (oldest → newest)', gradient: true },
-      { label: 'Symbol',            color: '#C9973A' },
+      { label: 'Symbol',            color: '#B08090' },
       { label: 'Theme',             color: '#3D4E8A' },
       { label: 'Character',         color: '#7B8EC9' },
-      { label: 'Setting',           color: '#B08090' },
-      { label: 'Emotion',           color: '#A05060' },
-      { label: 'Life Context',      color: '#7C6B9E' },
-      { label: 'Body Sensation',    color: '#6B6778' },
+      { label: 'Setting',           color: '#5C5868' },
+      { label: 'Emotion',           color: '#C47A8A' },
+      { label: 'Life Context',      color: '#C9973A' },
+      { label: 'Body Sensation',    color: '#9B97A8' },
     ];
     el.innerHTML = entries.map(e => {
       const dot = e.gradient
