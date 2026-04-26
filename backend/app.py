@@ -286,6 +286,65 @@ def update_life_context_status(lcw_id):
     return jsonify({"id": lcw_id, "status": status})
 
 
+@app.route("/api/stats")
+def get_stats():
+    from datetime import date as _dt, timedelta
+    today = _dt.today()
+    first_of_month = today.replace(day=1)
+    last_month_end = first_of_month - timedelta(days=1)
+    last_month_start = last_month_end.replace(day=1)
+    cutoff_90 = (today - timedelta(days=90)).isoformat()
+
+    dreams_this_month = 0
+    dreams_last_month = 0
+    total_dreams = 0
+    for _, attrs in dg.G.nodes(data=True):
+        if attrs.get("node_type") != "Dream":
+            continue
+        total_dreams += 1
+        d = attrs.get("date", "")
+        if d >= first_of_month.isoformat():
+            dreams_this_month += 1
+        if last_month_start.isoformat() <= d <= last_month_end.isoformat():
+            dreams_last_month += 1
+
+    theme_counts_90: dict[str, int] = {}
+    for u, v, _, edata in dg.G.edges(data=True, keys=True):
+        if edata.get("edge_type") == "expresses":
+            dream_date = dg.G.nodes.get(u, {}).get("date", "")
+            if dream_date >= cutoff_90:
+                theme_counts_90[v] = theme_counts_90.get(v, 0) + 1
+
+    top_theme_90 = None
+    if theme_counts_90:
+        top_id = max(theme_counts_90, key=theme_counts_90.get)
+        top_theme_90 = {
+            "name": dg.G.nodes.get(top_id, {}).get("name", top_id),
+            "count": theme_counts_90[top_id],
+        }
+
+    symbol_counts: dict[str, int] = {}
+    for _, v, _, edata in dg.G.edges(data=True, keys=True):
+        if edata.get("edge_type") == "contains":
+            symbol_counts[v] = symbol_counts.get(v, 0) + 1
+
+    top_symbol = None
+    if symbol_counts:
+        top_id = max(symbol_counts, key=symbol_counts.get)
+        top_symbol = {
+            "name": dg.G.nodes.get(top_id, {}).get("name", top_id),
+            "count": symbol_counts[top_id],
+        }
+
+    return jsonify({
+        "dreams_this_month": dreams_this_month,
+        "dreams_last_month": dreams_last_month,
+        "top_theme_90_days": top_theme_90,
+        "top_symbol_all_time": top_symbol,
+        "total_dreams": total_dreams,
+    })
+
+
 @app.route("/api/dreams")
 def get_dreams():
     return jsonify(dg.get_all_dreams())

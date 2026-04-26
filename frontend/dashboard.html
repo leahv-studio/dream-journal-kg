@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 
   <style>
     /* ── Variables ─────────────────────────────────────────── */
@@ -96,9 +97,7 @@
       user-select: none;
     }
 
-    .nav-links li:hover {
-      color: var(--color-ink);
-    }
+    .nav-links li:hover { color: var(--color-ink); }
 
     .nav-links li.active {
       color: var(--color-ink);
@@ -119,13 +118,12 @@
       inset: 0;
     }
 
-    .section.active {
-      display: flex;
-    }
+    .section.active { display: flex; }
 
-    /* ── Dreams — two-column ───────────────────────────────── */
+    /* ── Dreams — layout ───────────────────────────────────── */
     #section-dreams { flex-direction: row; }
 
+    /* ── Left panel ────────────────────────────────────────── */
     .left-panel {
       width: 280px;
       flex-shrink: 0;
@@ -134,7 +132,7 @@
       display: flex;
       flex-direction: column;
       padding: 20px 16px;
-      gap: 14px;
+      gap: 12px;
       overflow-y: auto;
     }
 
@@ -188,6 +186,134 @@
       background: var(--color-surface-deep);
     }
 
+    /* Right Now widget */
+    .lcw-chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
+
+    .lcw-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: var(--color-purple-light);
+      color: var(--color-purple-deep);
+    }
+
+    .lcw-chip.bg-chip {
+      background: transparent;
+      border: 1px solid var(--color-purple-light);
+      color: var(--color-ink-soft);
+    }
+
+    .panel-link {
+      font-size: 12px;
+      color: var(--color-purple);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .panel-link:hover { text-decoration: underline; }
+
+    .panel-empty-prompt {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      line-height: 1.5;
+    }
+
+    /* Trends widget */
+    .trend-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .trend-value {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-ink);
+      line-height: 1;
+    }
+
+    .trend-label {
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      flex: 1;
+    }
+
+    .trend-delta {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .trend-delta.up   { color: var(--color-positive); }
+    .trend-delta.down { color: var(--color-negative); }
+
+    .trend-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-bottom: 8px;
+    }
+
+    .trend-stat-label {
+      font-size: 10px;
+      color: var(--color-ink-faint);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .trend-stat-val {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      font-style: italic;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Filter detail card */
+    .filter-list-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .filter-list-item:last-child { border-bottom: none; }
+
+    .filter-list-rank {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      width: 14px;
+      flex-shrink: 0;
+    }
+
+    .filter-list-name {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .filter-list-count {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      flex-shrink: 0;
+    }
+
+    .lcw-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
     /* ── Dreams — main area ────────────────────────────────── */
     .dreams-main {
       flex: 1;
@@ -198,12 +324,13 @@
     }
 
     .filter-row {
-      padding: 14px 24px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
       gap: 8px;
       border-bottom: 1px solid var(--color-border);
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
     }
 
     .chip {
@@ -216,6 +343,7 @@
       background: transparent;
       color: var(--color-ink-soft);
       cursor: pointer;
+      white-space: nowrap;
       transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
 
@@ -230,8 +358,24 @@
       color: #fff;
     }
 
-    .chip-date {
+    .filter-reset-link {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-left: 4px;
+      transition: color 0.15s;
+    }
+
+    .filter-reset-link:hover { color: var(--color-ink-soft); }
+
+    /* Date range */
+    .date-range-wrapper {
+      position: relative;
       margin-left: auto;
+    }
+
+    .chip-date {
       font-family: var(--font-ui);
       font-size: 13px;
       color: var(--color-ink-faint);
@@ -239,7 +383,9 @@
       padding: 5px 14px;
       border-radius: 999px;
       cursor: pointer;
+      white-space: nowrap;
       transition: color 0.15s, border-color 0.15s;
+      user-select: none;
     }
 
     .chip-date:hover {
@@ -247,12 +393,200 @@
       border-color: var(--color-ink-faint);
     }
 
+    .date-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 30;
+      min-width: 120px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .date-option {
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .date-option:hover { background: var(--color-surface-deep); color: var(--color-ink); }
+    .date-option.active { color: var(--color-purple); font-weight: 500; }
+
+    /* ── Graph area ────────────────────────────────────────── */
     .graph-area {
       flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: var(--color-bg);
+    }
+
+    #graph-container {
+      position: absolute;
+      inset: 0;
+    }
+
+    .graph-empty {
+      position: absolute;
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--color-ink-faint);
+    }
+
+    /* Legend */
+    .graph-legend {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(242, 240, 237, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      margin-bottom: 5px;
+    }
+
+    .legend-row:last-child { margin-bottom: 0; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Inspect drawer */
+    .inspect-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100%;
+      background: var(--color-surface);
+      border-left: 1px solid var(--color-border);
+      transform: translateX(100%);
+      transition: transform 0.22s ease;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .inspect-drawer.open { transform: translateX(0); }
+
+    .inspect-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 18px 16px 12px;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      background: var(--color-surface);
+    }
+
+    .inspect-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1.2;
+      word-break: break-word;
+    }
+
+    .inspect-type {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .inspect-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 16px;
+      padding: 2px 4px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .inspect-close:hover { color: var(--color-ink); }
+
+    .inspect-body { padding: 16px; }
+
+    .inspect-row {
+      display: flex;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--color-border);
+      align-items: baseline;
+    }
+
+    .inspect-row:last-child { border-bottom: none; }
+
+    .inspect-key {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      text-transform: capitalize;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .inspect-val {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      word-break: break-word;
+    }
+
+    .inspect-narrative {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .inspect-empty {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+    }
+
+    /* Tooltip */
+    .graph-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: var(--color-ink);
+      color: #F2F0ED;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 100;
+      white-space: nowrap;
     }
 
     /* ── Shared placeholder box ────────────────────────────── */
@@ -266,11 +600,6 @@
       font-family: var(--font-display);
       font-style: italic;
       font-size: 20px;
-    }
-
-    .graph-placeholder {
-      width: 100%;
-      height: 100%;
     }
 
     /* ── Add New ───────────────────────────────────────────── */
@@ -359,34 +688,69 @@
     <!-- Dreams -->
     <section id="section-dreams" class="section active">
 
+      <!-- Left panel -->
       <aside class="left-panel">
         <div class="panel-card">
           <div class="panel-card-label">Right Now</div>
-          <div class="panel-card-placeholder">Waking life context will appear here</div>
+          <div id="rightnow-content">
+            <p class="panel-card-placeholder">Loading…</p>
+          </div>
         </div>
+
         <div class="panel-card">
           <div class="panel-card-label">Trends</div>
-          <div class="panel-card-placeholder">Dream trends will appear here</div>
+          <div id="trends-content">
+            <p class="panel-card-placeholder">Loading…</p>
+          </div>
         </div>
+
+        <div class="panel-card" id="panel-filter-detail" style="display:none">
+          <div class="panel-card-label" id="filter-detail-label"></div>
+          <div id="filter-detail-content"></div>
+        </div>
+
         <div class="panel-divider"></div>
+
         <ul class="panel-nav-list">
-          <li>Symbols →</li>
-          <li>Themes →</li>
-          <li>Recurring →</li>
+          <li data-filter="symbols">Symbols →</li>
+          <li data-filter="themes">Themes →</li>
+          <li data-filter="recurring">Recurring →</li>
         </ul>
       </aside>
 
+      <!-- Main content -->
       <div class="dreams-main">
         <div class="filter-row">
-          <button class="chip active">Dreams</button>
-          <button class="chip">Themes</button>
-          <button class="chip">Symbols</button>
-          <button class="chip">Life Context</button>
-          <button class="chip">Recurring</button>
-          <span class="chip-date">Date range ▾</span>
+          <button class="chip active" data-filter="dreams">Dreams</button>
+          <button class="chip" data-filter="themes">Themes</button>
+          <button class="chip" data-filter="symbols">Symbols</button>
+          <button class="chip" data-filter="life-context">Life Context</button>
+          <button class="chip" data-filter="recurring">Recurring</button>
+          <a href="#" id="filter-reset" class="filter-reset-link" style="display:none">Reset</a>
+          <div class="date-range-wrapper">
+            <span class="chip-date" id="date-chip">All time ▾</span>
+            <div class="date-dropdown" id="date-dropdown" style="display:none">
+              <div class="date-option active" data-range="all">All time</div>
+              <div class="date-option" data-range="30d">30 days</div>
+              <div class="date-option" data-range="90d">90 days</div>
+              <div class="date-option" data-range="6m">6 months</div>
+            </div>
+          </div>
         </div>
+
         <div class="graph-area">
-          <div class="placeholder-box graph-placeholder">Knowledge Graph</div>
+          <div id="graph-container"></div>
+          <div class="graph-legend" id="graph-legend" style="display:none"></div>
+          <div class="inspect-drawer" id="inspect-drawer">
+            <div class="inspect-header">
+              <div>
+                <div class="inspect-title" id="inspect-title"></div>
+                <div class="inspect-type" id="inspect-type"></div>
+              </div>
+              <button class="inspect-close" id="inspect-close" aria-label="Close">✕</button>
+            </div>
+            <div class="inspect-body" id="inspect-body"></div>
+          </div>
         </div>
       </div>
 
@@ -418,19 +782,588 @@
 
   </main>
 
-  <script>
-    const navItems = document.querySelectorAll('.nav-links li');
-    const sections = document.querySelectorAll('.section');
+  <!-- Tooltip (fixed, outside main) -->
+  <div id="graph-tooltip" class="graph-tooltip"></div>
 
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const target = item.dataset.section;
-        navItems.forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-        sections.forEach(s => s.classList.remove('active'));
-        document.getElementById('section-' + target).classList.add('active');
+  <script>
+  // ─── Escape helper ──────────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Node colors ────────────────────────────────────────────────────────────
+  const NODE_COLORS = {
+    Symbol:           '#C9973A',
+    Theme:            '#3D4E8A',
+    Character:        '#5A8A6A',
+    Setting:          '#8A7A3A',
+    Emotion:          '#A05060',
+    LifeContextWindow:'#7C6B9E',
+    BodySensation:    '#6B6778',
+  };
+
+  const DREAM_COLOR_OLD  = '#4A3870';
+  const DREAM_COLOR_NEW  = '#B09EC9';
+  const DREAM_R_LARGE    = 14;
+  const DREAM_R_SMALL    = 7;
+  const NODE_R_BASE      = 9;
+  const NODE_R_MAX       = 22;
+
+  // ─── State ──────────────────────────────────────────────────────────────────
+  let graphData   = { nodes: [], links: [] };
+  let allLCWs     = [];
+  let allStats    = {};
+  let allSymbols  = [];
+  let allThemes   = [];
+
+  let activeFilter    = 'dreams';
+  let activeDateRange = 'all';
+
+  let simulation   = null;
+  let nodeCircles  = null;
+  let linkLines    = null;
+  let nodeLabels   = null;
+  let dreamColorScale = null;
+
+  // ─── Boot ───────────────────────────────────────────────────────────────────
+  async function boot() {
+    try {
+      const [graph, lcws, stats, symbols, themes] = await Promise.all([
+        fetch('/api/graph').then(r => r.json()),
+        fetch('/api/life-context-windows').then(r => r.json()),
+        fetch('/api/stats').then(r => r.json()),
+        fetch('/api/symbols/frequency').then(r => r.json()),
+        fetch('/api/themes').then(r => r.json()),
+      ]);
+      graphData  = graph;
+      allLCWs    = lcws;
+      allStats   = stats;
+      allSymbols = symbols;
+      allThemes  = themes;
+      renderRightNow();
+      renderTrends();
+      requestAnimationFrame(initGraph);
+    } catch (err) {
+      console.error('Boot failed:', err);
+      document.getElementById('graph-container').innerHTML =
+        '<div class="graph-empty">Could not load graph data.</div>';
+    }
+  }
+
+  // ─── Left panel: Right Now ───────────────────────────────────────────────────
+  function renderRightNow() {
+    const el = document.getElementById('rightnow-content');
+    const fg = allLCWs.filter(c => c.status === 'foreground');
+    const bg = allLCWs.filter(c => c.status === 'background');
+
+    if (fg.length === 0 && bg.length === 0) {
+      el.innerHTML = `<p class="panel-empty-prompt">Add your waking life context to enrich your dream analysis. <a href="#" class="panel-link" id="btn-goto-waking">→</a></p>`;
+      document.getElementById('btn-goto-waking').addEventListener('click', e => {
+        e.preventDefault(); switchSection('waking');
       });
+      return;
+    }
+
+    let html = '<div class="lcw-chip-group">';
+    fg.forEach(c => { html += `<span class="lcw-chip">${esc(c.label)}</span>`; });
+    html += '</div>';
+
+    if (bg.length > 0) {
+      html += '<div class="lcw-chip-group" style="margin-top:6px">';
+      bg.forEach(c => { html += `<span class="lcw-chip bg-chip">${esc(c.label)}</span>`; });
+      html += '</div>';
+    }
+
+    html += `<a href="#" class="panel-link" id="btn-manage-waking">Manage →</a>`;
+    el.innerHTML = html;
+    document.getElementById('btn-manage-waking').addEventListener('click', e => {
+      e.preventDefault(); switchSection('waking');
     });
+  }
+
+  // ─── Left panel: Trends ─────────────────────────────────────────────────────
+  function renderTrends() {
+    const el = document.getElementById('trends-content');
+    const {
+      dreams_this_month = 0,
+      dreams_last_month = 0,
+      top_theme_90_days,
+      top_symbol_all_time,
+    } = allStats;
+
+    const delta = dreams_this_month - dreams_last_month;
+    const deltaHtml = delta !== 0
+      ? `<span class="trend-delta ${delta > 0 ? 'up' : 'down'}">${delta > 0 ? '↑' : '↓'}${Math.abs(delta)}</span>`
+      : '';
+
+    let html = `<div class="trend-row">
+      <span class="trend-value">${dreams_this_month}</span>
+      <span class="trend-label">dreams this month</span>
+      ${deltaHtml}
+    </div>`;
+
+    if (top_theme_90_days) {
+      html += `<div class="trend-stat">
+        <span class="trend-stat-label">Top theme (90d)</span>
+        <span class="trend-stat-val">${esc(top_theme_90_days.name)}</span>
+      </div>`;
+    }
+
+    if (top_symbol_all_time) {
+      html += `<div class="trend-stat">
+        <span class="trend-stat-label">Top symbol</span>
+        <span class="trend-stat-val">${esc(top_symbol_all_time.name)}</span>
+      </div>`;
+    }
+
+    el.innerHTML = html;
+  }
+
+  // ─── Left panel: filter detail card ─────────────────────────────────────────
+  function updatePanelForFilter() {
+    const card    = document.getElementById('panel-filter-detail');
+    const labelEl = document.getElementById('filter-detail-label');
+    const body    = document.getElementById('filter-detail-content');
+
+    if (activeFilter === 'themes') {
+      card.style.display = 'block';
+      labelEl.textContent = 'Top Themes';
+      const top5 = allThemes.slice(0, 5);
+      body.innerHTML = top5.length === 0
+        ? '<p class="panel-card-placeholder">No themes yet.</p>'
+        : top5.map((t, i) => `<div class="filter-list-item">
+            <span class="filter-list-rank">${i + 1}</span>
+            <span class="filter-list-name">${esc(t.name)}</span>
+            <span class="filter-list-count">${t.dream_count}</span>
+          </div>`).join('');
+
+    } else if (activeFilter === 'symbols') {
+      card.style.display = 'block';
+      labelEl.textContent = 'Top Symbols';
+      const top5 = allSymbols.slice(0, 5);
+      body.innerHTML = top5.length === 0
+        ? '<p class="panel-card-placeholder">No symbols yet.</p>'
+        : top5.map((s, i) => `<div class="filter-list-item">
+            <span class="filter-list-rank">${i + 1}</span>
+            <span class="filter-list-name">${esc(s.name)}</span>
+            <span class="filter-list-count">${s.dream_count}</span>
+          </div>`).join('');
+
+    } else if (activeFilter === 'life-context') {
+      card.style.display = 'block';
+      labelEl.textContent = 'Contexts';
+      const active = allLCWs.filter(c => c.status === 'foreground' || c.status === 'background');
+      body.innerHTML = active.length === 0
+        ? '<p class="panel-card-placeholder">No active contexts.</p>'
+        : active.map(c => {
+            const dotColor = c.status === 'foreground' ? 'var(--color-purple)' : 'var(--color-purple-light)';
+            return `<div class="filter-list-item">
+              <span class="lcw-dot" style="background:${dotColor}"></span>
+              <span class="filter-list-name">${esc(c.label)}</span>
+              <span class="filter-list-count">${esc(c.status)}</span>
+            </div>`;
+          }).join('');
+    } else {
+      card.style.display = 'none';
+    }
+  }
+
+  // ─── Graph: radius ───────────────────────────────────────────────────────────
+  function computeRadius(d) {
+    if (d.type === 'Dream') {
+      return activeFilter === 'dreams' ? DREAM_R_LARGE : DREAM_R_SMALL;
+    }
+    if (d.type === 'Theme' && activeFilter === 'themes') {
+      const maxCount = Math.max(...allThemes.map(t => t.dream_count || 0), 1);
+      const count = (allThemes.find(t => t.id === d.id) || {}).dream_count || 0;
+      return NODE_R_BASE + (NODE_R_MAX - NODE_R_BASE) * (count / maxCount);
+    }
+    if (d.type === 'Symbol' && activeFilter === 'symbols') {
+      const maxCount = Math.max(...allSymbols.map(s => s.dream_count || 0), 1);
+      const count = (allSymbols.find(s => s.id === d.id) || {}).dream_count || 0;
+      return NODE_R_BASE + (NODE_R_MAX - NODE_R_BASE) * (count / maxCount);
+    }
+    if (d.type === 'LifeContextWindow' && activeFilter === 'life-context') {
+      return NODE_R_MAX * 0.8;
+    }
+    return NODE_R_BASE;
+  }
+
+  // ─── Graph: color ────────────────────────────────────────────────────────────
+  function buildDreamColorScale() {
+    const dates = graphData.nodes
+      .filter(n => n.type === 'Dream')
+      .map(n => n.properties.date)
+      .filter(Boolean)
+      .sort();
+    if (dates.length < 2) {
+      dreamColorScale = () => '#7C6B9E';
+      return;
+    }
+    dreamColorScale = d3.scaleLinear()
+      .domain([new Date(dates[0]), new Date(dates[dates.length - 1])])
+      .range([DREAM_COLOR_OLD, DREAM_COLOR_NEW]);
+  }
+
+  function computeColor(d) {
+    if (d.type === 'Dream') {
+      if (!dreamColorScale) buildDreamColorScale();
+      const date = (d.properties || {}).date;
+      return date ? dreamColorScale(new Date(date)) : '#7C6B9E';
+    }
+    return NODE_COLORS[d.type] || '#999';
+  }
+
+  // ─── Graph: opacity ──────────────────────────────────────────────────────────
+  function getCutoffDate() {
+    const now = new Date();
+    if (activeDateRange === '30d') return new Date(now - 30 * 86400000);
+    if (activeDateRange === '90d') return new Date(now - 90 * 86400000);
+    if (activeDateRange === '6m')  return new Date(now - 180 * 86400000);
+    return null;
+  }
+
+  function getRecurringConnectedIds() {
+    const recurringIds = new Set(
+      graphData.nodes
+        .filter(n => n.type === 'Dream' && n.properties && n.properties.is_recurring)
+        .map(n => n.id)
+    );
+    const connected = new Set(recurringIds);
+    graphData.links.forEach(l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      if (recurringIds.has(s)) connected.add(t);
+      if (recurringIds.has(t)) connected.add(s);
+    });
+    return connected;
+  }
+
+  function computeNodeOpacity(d, cutoffDate, recurringIds) {
+    if (cutoffDate && d.type === 'Dream') {
+      const date = (d.properties || {}).date;
+      if (!date || new Date(date) < cutoffDate) return 0.12;
+    }
+    if (recurringIds !== null && !recurringIds.has(d.id)) return 0.12;
+    if (activeFilter === 'life-context' &&
+        d.type !== 'LifeContextWindow' && d.type !== 'Dream') return 0.25;
+    return 1;
+  }
+
+  function computeLinkOpacity(l, cutoffDate, recurringIds) {
+    const srcId = typeof l.source === 'object' ? l.source.id : l.source;
+    const tgtId = typeof l.target === 'object' ? l.target.id : l.target;
+    const src = graphData.nodes.find(n => n.id === srcId);
+    const tgt = graphData.nodes.find(n => n.id === tgtId);
+    if (!src || !tgt) return 0.05;
+    const minOp = Math.min(
+      computeNodeOpacity(src, cutoffDate, recurringIds),
+      computeNodeOpacity(tgt, cutoffDate, recurringIds)
+    );
+    return minOp < 0.5 ? 0.05 : 0.35;
+  }
+
+  // ─── Graph: apply filter ─────────────────────────────────────────────────────
+  function applyFilterToGraph() {
+    if (!nodeCircles) return;
+
+    const cutoff      = getCutoffDate();
+    const recurringIds = activeFilter === 'recurring' ? getRecurringConnectedIds() : null;
+
+    nodeCircles
+      .attr('r', d => computeRadius(d))
+      .attr('fill', d => computeColor(d))
+      .style('opacity', d => computeNodeOpacity(d, cutoff, recurringIds));
+
+    linkLines
+      .style('opacity', l => computeLinkOpacity(l, cutoff, recurringIds));
+
+    nodeLabels
+      .attr('dy', d => computeRadius(d) + 11)
+      .style('opacity', d => computeNodeOpacity(d, cutoff, recurringIds));
+
+    simulation.force('collision').radius(d => computeRadius(d) + 3);
+    simulation.alpha(0.2).restart();
+
+    updatePanelForFilter();
+
+    const isDefault = activeFilter === 'dreams' && activeDateRange === 'all';
+    document.getElementById('filter-reset').style.display = isDefault ? 'none' : 'inline-block';
+  }
+
+  // ─── Graph: init ─────────────────────────────────────────────────────────────
+  function initGraph() {
+    const container = document.getElementById('graph-container');
+    const rect = container.getBoundingClientRect();
+    const W = rect.width || 800;
+    const H = rect.height || 600;
+
+    buildDreamColorScale();
+
+    if (graphData.nodes.length === 0) {
+      container.innerHTML = `<div class="graph-empty">No dreams in the graph yet — add your first dream to see it appear here.</div>`;
+      return;
+    }
+
+    const tooltip = d3.select('#graph-tooltip');
+
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('width', W)
+      .attr('height', H)
+      .style('display', 'block');
+
+    // Zoom/pan layer
+    const g = svg.append('g');
+
+    const zoom = d3.zoom()
+      .scaleExtent([0.25, 4])
+      .on('zoom', e => { g.attr('transform', e.transform); });
+
+    svg.call(zoom);
+    svg.on('click', () => closeInspectDrawer());
+
+    // Deep-copy nodes & links so D3 simulation can mutate them
+    const nodes = graphData.nodes.map(d => ({ ...d, properties: { ...(d.properties || {}) } }));
+    const links = graphData.links.map(l => ({ ...l }));
+
+    // Simulation
+    simulation = d3.forceSimulation(nodes)
+      .force('link',      d3.forceLink(links).id(d => d.id).distance(80).strength(0.5))
+      .force('charge',    d3.forceManyBody().strength(-220))
+      .force('center',    d3.forceCenter(W / 2, H / 2))
+      .force('collision', d3.forceCollide().radius(d => computeRadius(d) + 3));
+
+    // Links
+    linkLines = g.append('g').attr('class', 'links')
+      .selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('stroke', '#D8D4CE')
+      .attr('stroke-width', 1.5)
+      .style('opacity', 0.35);
+
+    // Node groups (drag + click)
+    const drag = d3.drag()
+      .on('start', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+      })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+      });
+
+    const nodeGroups = g.append('g').attr('class', 'nodes')
+      .selectAll('g')
+      .data(nodes)
+      .join('g')
+      .call(drag);
+
+    // Circles
+    nodeCircles = nodeGroups.append('circle')
+      .attr('r',           d => computeRadius(d))
+      .attr('fill',        d => computeColor(d))
+      .attr('stroke',      'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5)
+      .style('cursor', 'pointer')
+      .on('mouseover', (event, d) => {
+        tooltip.style('opacity', 1)
+          .html(`<strong>${esc(d.label)}</strong>&ensp;<span style="opacity:.65">${esc(d.type)}</span>`);
+      })
+      .on('mousemove', event => {
+        tooltip
+          .style('left', (event.clientX + 14) + 'px')
+          .style('top',  (event.clientY - 10) + 'px');
+      })
+      .on('mouseout', () => { tooltip.style('opacity', 0); })
+      .on('click', (event, d) => {
+        event.stopPropagation();
+        openInspectDrawer(d);
+      });
+
+    // Labels
+    nodeLabels = nodeGroups.append('text')
+      .text(d => d.label.length > 16 ? d.label.slice(0, 14) + '…' : d.label)
+      .attr('dy',           d => computeRadius(d) + 11)
+      .attr('text-anchor',  'middle')
+      .attr('font-size',    '10px')
+      .attr('font-family',  'DM Sans, sans-serif')
+      .attr('fill',         '#6B6778')
+      .style('pointer-events', 'none')
+      .style('user-select',    'none');
+
+    // Tick
+    simulation.on('tick', () => {
+      linkLines
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+      nodeGroups
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+
+    // Legend
+    renderLegend();
+    document.getElementById('graph-legend').style.display = 'block';
+
+    // Resize
+    new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const { width: w, height: h } = entry.contentRect;
+        svg.attr('width', w).attr('height', h);
+        simulation.force('center', d3.forceCenter(w / 2, h / 2));
+        simulation.alpha(0.1).restart();
+      }
+    }).observe(container);
+  }
+
+  // ─── Legend ──────────────────────────────────────────────────────────────────
+  function renderLegend() {
+    const el = document.getElementById('graph-legend');
+    const entries = [
+      { label: 'Dream (oldest → newest)', gradient: true },
+      { label: 'Symbol',            color: '#C9973A' },
+      { label: 'Theme',             color: '#3D4E8A' },
+      { label: 'Character',         color: '#5A8A6A' },
+      { label: 'Setting',           color: '#8A7A3A' },
+      { label: 'Emotion',           color: '#A05060' },
+      { label: 'Life Context',      color: '#7C6B9E' },
+      { label: 'Body Sensation',    color: '#6B6778' },
+    ];
+    el.innerHTML = entries.map(e => {
+      const dot = e.gradient
+        ? `<span class="legend-dot" style="background:linear-gradient(to right,${DREAM_COLOR_OLD},${DREAM_COLOR_NEW})"></span>`
+        : `<span class="legend-dot" style="background:${e.color}"></span>`;
+      return `<div class="legend-row">${dot}<span>${e.label}</span></div>`;
+    }).join('');
+  }
+
+  // ─── Inspect drawer ──────────────────────────────────────────────────────────
+  function openInspectDrawer(d) {
+    document.getElementById('inspect-title').textContent = d.label;
+    document.getElementById('inspect-type').textContent  = d.type;
+
+    const props  = d.properties || {};
+    const skip   = new Set(['node_type', 'raw_narrative']);
+    let bodyHtml = '';
+
+    if (d.type === 'Dream' && props.raw_narrative) {
+      bodyHtml += `<div class="inspect-narrative">${esc(props.raw_narrative)}</div>`;
+    }
+
+    const rows = Object.entries(props)
+      .filter(([k, v]) => !skip.has(k) && v !== null && v !== undefined && v !== '')
+      .map(([k, v]) => {
+        const label = k.replace(/_/g, ' ');
+        const val   = typeof v === 'boolean' ? (v ? 'yes' : 'no') : esc(String(v));
+        return `<div class="inspect-row">
+          <span class="inspect-key">${esc(label)}</span>
+          <span class="inspect-val">${val}</span>
+        </div>`;
+      });
+
+    bodyHtml += rows.length
+      ? rows.join('')
+      : '<div class="inspect-empty">No additional properties.</div>';
+
+    document.getElementById('inspect-body').innerHTML = bodyHtml;
+    document.getElementById('inspect-drawer').classList.add('open');
+  }
+
+  function closeInspectDrawer() {
+    document.getElementById('inspect-drawer').classList.remove('open');
+  }
+
+  // ─── Section switching ───────────────────────────────────────────────────────
+  function switchSection(id) {
+    document.querySelectorAll('.nav-links li').forEach(li => {
+      li.classList.toggle('active', li.dataset.section === id);
+    });
+    document.querySelectorAll('.section').forEach(s => {
+      s.classList.toggle('active', s.id === 'section-' + id);
+    });
+  }
+
+  // ─── Event listeners ─────────────────────────────────────────────────────────
+
+  // Nav
+  document.querySelectorAll('.nav-links li').forEach(li => {
+    li.addEventListener('click', () => switchSection(li.dataset.section));
+  });
+
+  // Inspect close
+  document.getElementById('inspect-close').addEventListener('click', closeInspectDrawer);
+
+  // Filter chips
+  document.querySelectorAll('.chip[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-filter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilterToGraph();
+    });
+  });
+
+  // Reset link
+  document.getElementById('filter-reset').addEventListener('click', e => {
+    e.preventDefault();
+    activeFilter    = 'dreams';
+    activeDateRange = 'all';
+    document.querySelectorAll('.chip[data-filter]').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === 'dreams');
+    });
+    document.getElementById('date-chip').textContent = 'All time ▾';
+    document.querySelectorAll('.date-option').forEach(o => {
+      o.classList.toggle('active', o.dataset.range === 'all');
+    });
+    applyFilterToGraph();
+  });
+
+  // Date range dropdown toggle
+  const dateChipEl = document.getElementById('date-chip');
+  const dateDropEl = document.getElementById('date-dropdown');
+
+  dateChipEl.addEventListener('click', e => {
+    e.stopPropagation();
+    dateDropEl.style.display = dateDropEl.style.display === 'none' ? 'block' : 'none';
+  });
+
+  document.querySelectorAll('.date-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      activeDateRange = opt.dataset.range;
+      const labels = { all: 'All time', '30d': '30 days', '90d': '90 days', '6m': '6 months' };
+      dateChipEl.textContent = (labels[activeDateRange] || 'All time') + ' ▾';
+      document.querySelectorAll('.date-option').forEach(o => {
+        o.classList.toggle('active', o.dataset.range === activeDateRange);
+      });
+      dateDropEl.style.display = 'none';
+      applyFilterToGraph();
+    });
+  });
+
+  document.addEventListener('click', () => { dateDropEl.style.display = 'none'; });
+
+  // Drill-down nav links in left panel
+  document.querySelectorAll('.panel-nav-list li[data-filter]').forEach(li => {
+    li.addEventListener('click', () => {
+      const f = li.dataset.filter;
+      document.querySelectorAll('.chip[data-filter]').forEach(b => {
+        b.classList.toggle('active', b.dataset.filter === f);
+      });
+      activeFilter = f;
+      applyFilterToGraph();
+    });
+  });
+
+  // ─── Start ───────────────────────────────────────────────────────────────────
+  boot();
   </script>
 
 </body>
