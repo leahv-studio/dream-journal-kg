@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dreama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui: 'DM Sans', sans-serif;
+
+      --color-bg:           #F2F0ED;
+      --color-surface:      #ECEAE6;
+      --color-surface-deep: #E4E1DC;
+      --color-border:       #D8D4CE;
+
+      --color-ink:          #2D2A35;
+      --color-ink-soft:     #6B6778;
+      --color-ink-faint:    #A8A4B5;
+
+      --color-purple:       #7C6B9E;
+      --color-purple-light: #B09EC9;
+      --color-purple-deep:  #4A3870;
+      --color-gold:         #C9973A;
+      --color-indigo:       #3D4E8A;
+
+      --color-positive:     #5A8A6A;
+      --color-negative:     #A05060;
+      --color-mixed:        #8A7A3A;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background: var(--color-bg);
+      color: var(--color-ink);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    .nav {
+      height: 56px;
+      flex-shrink: 0;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 22px;
+      color: var(--color-purple-deep);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links li {
+      font-family: var(--font-ui);
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+
+    .nav-links li:hover {
+      color: var(--color-ink);
+    }
+
+    .nav-links li.active {
+      color: var(--color-ink);
+      font-weight: 500;
+      border-bottom-color: var(--color-purple);
+    }
+
+    /* ── Main / Section shell ──────────────────────────────── */
+    .main {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .section {
+      display: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .section.active {
+      display: flex;
+    }
+
+    /* ── Dreams — two-column ───────────────────────────────── */
+    #section-dreams { flex-direction: row; }
+
+    .left-panel {
+      width: 280px;
+      flex-shrink: 0;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      gap: 14px;
+      overflow-y: auto;
+    }
+
+    .panel-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .panel-card-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--color-ink-faint);
+      margin-bottom: 8px;
+    }
+
+    .panel-card-placeholder {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .panel-divider {
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .panel-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .panel-nav-list li {
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      padding: 9px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .panel-nav-list li:hover {
+      color: var(--color-purple);
+      background: var(--color-surface-deep);
+    }
+
+    /* ── Dreams — main area ────────────────────────────────── */
+    .dreams-main {
+      flex: 1;
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .filter-row {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--color-border);
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 400;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .chip:hover {
+      border-color: var(--color-purple-light);
+      color: var(--color-purple);
+    }
+
+    .chip.active {
+      background: var(--color-purple);
+      border-color: var(--color-purple);
+      color: #fff;
+    }
+
+    .chip-date {
+      margin-left: auto;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      border: 1px dashed var(--color-border);
+      padding: 5px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .chip-date:hover {
+      color: var(--color-ink-soft);
+      border-color: var(--color-ink-faint);
+    }
+
+    .graph-area {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    /* ── Shared placeholder box ────────────────────────────── */
+    .placeholder-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--color-border);
+      border-radius: 12px;
+      color: var(--color-ink-faint);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 20px;
+    }
+
+    .graph-placeholder {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Add New ───────────────────────────────────────────── */
+    #section-add {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-bg);
+    }
+
+    .add-column {
+      max-width: 680px;
+      width: 100%;
+      padding: 40px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .add-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 52px;
+      color: var(--color-purple-deep);
+      letter-spacing: 0.04em;
+    }
+
+    .add-chat-placeholder {
+      width: 100%;
+      height: 320px;
+      font-size: 16px;
+    }
+
+    /* ── Waking Life ───────────────────────────────────────── */
+    #section-waking {
+      flex-direction: column;
+      padding: 44px 48px;
+      background: var(--color-bg);
+    }
+
+    .waking-header {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 38px;
+      color: var(--color-ink);
+      margin-bottom: 28px;
+      letter-spacing: 0.01em;
+    }
+
+    .waking-placeholder {
+      max-width: 680px;
+      height: 240px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-brand" href="#">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                 C3.5 8, 7.5 5, 11 7.5
+                 C12.5 4, 16.5 2.5, 20.5 5.5
+                 C22 3, 26.5 3.5, 27 8.5
+                 C29.5 9, 29.5 14.5, 26.5 15.5
+                 C24 18, 10.5 18, 7 18 Z"
+          stroke="#4A3870" stroke-width="1.4" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-wordmark">dreama</span>
+    </a>
+
+    <ul class="nav-links">
+      <li class="active" data-section="dreams">Dreams</li>
+      <li data-section="add">Add New</li>
+      <li data-section="waking">Waking Life</li>
+    </ul>
+  </nav>
+
+  <!-- ── Main ────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Dreams -->
+    <section id="section-dreams" class="section active">
+
+      <aside class="left-panel">
+        <div class="panel-card">
+          <div class="panel-card-label">Right Now</div>
+          <div class="panel-card-placeholder">Waking life context will appear here</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-card-label">Trends</div>
+          <div class="panel-card-placeholder">Dream trends will appear here</div>
+        </div>
+        <div class="panel-divider"></div>
+        <ul class="panel-nav-list">
+          <li>Symbols →</li>
+          <li>Themes →</li>
+          <li>Recurring →</li>
+        </ul>
+      </aside>
+
+      <div class="dreams-main">
+        <div class="filter-row">
+          <button class="chip active">Dreams</button>
+          <button class="chip">Themes</button>
+          <button class="chip">Symbols</button>
+          <button class="chip">Life Context</button>
+          <button class="chip">Recurring</button>
+          <span class="chip-date">Date range ▾</span>
+        </div>
+        <div class="graph-area">
+          <div class="placeholder-box graph-placeholder">Knowledge Graph</div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Add New -->
+    <section id="section-add" class="section">
+      <div class="add-column">
+        <svg width="72" height="54" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M17 44 C8.5 44, 3.5 35, 11 30
+                   C8.5 20, 18 13, 26.5 18
+                   C30 11, 40 7, 48 13
+                   C52 8, 63 9, 63.5 20
+                   C70 21, 71 34, 64 37.5
+                   C58.5 42, 24.5 44, 17 44 Z"
+            stroke="#4A3870" stroke-width="2" fill="none"
+            stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="add-wordmark">dreama</div>
+        <div class="placeholder-box add-chat-placeholder">Chat interface will appear here</div>
+      </div>
+    </section>
+
+    <!-- Waking Life -->
+    <section id="section-waking" class="section">
+      <h1 class="waking-header">Waking Life</h1>
+      <div class="placeholder-box waking-placeholder">Life context management will appear here</div>
+    </section>
+
+  </main>
+
+  <script>
+    const navItems = document.querySelectorAll('.nav-links li');
+    const sections = document.querySelectorAll('.section');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const target = item.dataset.section;
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        sections.forEach(s => s.classList.remove('active'));
+        document.getElementById('section-' + target).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

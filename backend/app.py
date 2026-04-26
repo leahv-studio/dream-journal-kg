@@ -99,6 +99,11 @@ def journal():
     return render_template("journal.html")
 
 
+@app.route("/dashboard.html")
+def dashboard():
+    return render_template("dashboard.html")
+
+
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.json or {}
