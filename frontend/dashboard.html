@@ -603,36 +603,443 @@
     }
 
     /* ── Add New ───────────────────────────────────────────── */
-    #section-add {
-      flex-direction: column;
+    #section-add { flex-direction: column; background: var(--color-bg); }
+
+    #add-ctx-banner {
+      flex-shrink: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: 8px 24px;
+      display: flex;
       align-items: center;
-      justify-content: center;
-      background: var(--color-bg);
+      gap: 8px;
+      flex-wrap: wrap;
+      min-height: 40px;
     }
 
-    .add-column {
+    .add-ctx-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-faint);
+      white-space: nowrap;
+    }
+
+    .add-ctx-chip {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(124,107,158,0.14);
+      color: var(--color-purple);
+      white-space: nowrap;
+    }
+
+    #add-ctx-update {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--color-purple);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    #add-ctx-update:hover { text-decoration: underline; }
+
+    #add-scroll { flex: 1; overflow-y: auto; }
+
+    #add-content {
       max-width: 680px;
-      width: 100%;
-      padding: 40px 24px;
-      display: flex;
+      margin: 0 auto;
+      padding: 32px 24px 56px;
+    }
+
+    .add-view { display: none; flex-direction: column; gap: 14px; }
+    .add-view.active { display: flex; }
+
+    #add-empty-state {
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 14px;
+      padding: 32px 0 24px;
     }
 
     .add-wordmark {
       font-family: var(--font-display);
       font-weight: 300;
-      font-size: 52px;
+      font-size: 48px;
       color: var(--color-purple-deep);
       letter-spacing: 0.04em;
     }
 
-    .add-chat-placeholder {
-      width: 100%;
-      height: 320px;
-      font-size: 16px;
+    #add-conversation {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 16px;
+      min-height: 200px;
+      max-height: 380px;
+      overflow-y: auto;
+      flex-direction: column;
+      gap: 10px;
     }
+
+    .add-msg {
+      padding: 10px 14px;
+      border-radius: 8px;
+      max-width: 88%;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .add-msg.user {
+      background: var(--color-purple-deep);
+      color: rgba(242,238,255,0.92);
+      align-self: flex-end;
+    }
+
+    .add-msg.assistant {
+      background: var(--color-surface-deep);
+      color: var(--color-ink-soft);
+      align-self: flex-start;
+    }
+
+    .add-msg.streaming { opacity: 0.7; }
+
+    .add-input-row { display: flex; gap: 8px; }
+
+    .add-input-row input {
+      flex: 1;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      transition: border-color 0.15s;
+    }
+
+    .add-input-row input:focus { outline: none; border-color: var(--color-purple); }
+
+    .add-btn-send {
+      background: var(--color-purple);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .add-btn-send:hover:not(:disabled) { background: var(--color-purple-deep); }
+    .add-btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .add-meta-row { display: flex; align-items: center; }
+
+    .add-date-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--color-ink-soft);
+    }
+
+    .add-date-label input[type="date"] {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: var(--font-ui);
+    }
+
+    .add-date-label input[type="date"]:focus { outline: none; border-color: var(--color-purple); }
+
+    .add-btn-save {
+      background: transparent;
+      border: 1px solid var(--color-purple);
+      color: var(--color-purple);
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.15s;
+    }
+
+    .add-btn-save:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+    .add-btn-save:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .add-loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 16px;
+    }
+
+    .add-spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid var(--color-border);
+      border-top-color: var(--color-purple);
+      border-radius: 50%;
+      animation: add-spin 0.7s linear infinite;
+    }
+
+    @keyframes add-spin { to { transform: rotate(360deg); } }
+
+    .add-loading-label { font-size: 14px; color: var(--color-ink-faint); }
+
+    .add-review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .add-review-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--color-ink);
+    }
+
+    .add-review-date { font-size: 13px; color: var(--color-ink-faint); }
+
+    .add-title-wrap {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .add-title-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-faint);
+      margin-bottom: 8px;
+    }
+
+    .add-title-input {
+      width: 100%;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: var(--font-display);
+      font-style: italic;
+      transition: border-color 0.15s;
+    }
+
+    .add-title-input:focus { outline: none; border-color: var(--color-purple); font-style: normal; }
+    .add-title-hint { font-size: 11px; color: var(--color-ink-faint); margin-top: 6px; }
+
+    .add-narrative {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--color-ink-soft);
+      font-style: italic;
+    }
+
+    .add-meta-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .add-meta-chip {
+      font-size: 12px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .add-meta-chip strong { color: var(--color-ink); }
+
+    .add-review-section { display: flex; flex-direction: column; gap: 8px; }
+
+    .add-section-title {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-faint);
+    }
+
+    .add-item-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .add-ritem {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: var(--font-ui);
+    }
+
+    .ritem-character    { border-color: rgba(123,142,201,0.35); background: rgba(123,142,201,0.07); }
+    .ritem-symbol       { border-color: rgba(176,128,144,0.35); background: rgba(176,128,144,0.07); }
+    .ritem-setting      { border-color: rgba(92,88,104,0.3);    background: rgba(92,88,104,0.05);   }
+    .ritem-emotion      { border-color: rgba(196,122,138,0.35); background: rgba(196,122,138,0.07); }
+    .ritem-theme        { border-color: rgba(61,78,138,0.35);   background: rgba(61,78,138,0.07);   }
+    .ritem-bodysensation{ border-color: rgba(155,151,168,0.35); background: rgba(155,151,168,0.07); }
+
+    .add-ritem .iname   { color: var(--color-ink); }
+    .add-ritem .idetail { color: var(--color-ink-soft); font-size: 12px; }
+
+    .add-ritem .xbtn {
+      background: none;
+      border: none;
+      color: var(--color-ink-faint);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 2px;
+      margin-left: 2px;
+    }
+
+    .add-ritem .xbtn:hover { color: var(--color-negative); }
+
+    .add-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-stated    { background: rgba(90,138,106,0.15);  color: #4a7a5a; }
+    .badge-inferred  { background: rgba(201,151,58,0.15);  color: #9a7020; }
+    .badge-ambiguous { background: rgba(168,164,181,0.15); color: var(--color-ink-faint); }
+    .badge-strong    { background: rgba(74,56,112,0.2);    color: var(--color-purple-deep); }
+    .badge-moderate  { background: rgba(124,107,158,0.15); color: var(--color-purple); }
+    .badge-weak      { background: rgba(176,158,201,0.12); color: var(--color-purple-light); }
+
+    .add-divergence {
+      background: rgba(201,151,58,0.07);
+      border: 1px solid rgba(201,151,58,0.28);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #8A6A20;
+    }
+
+    .add-divergence .div-title { font-weight: 600; display: block; margin-bottom: 4px; }
+    .add-divergence a { color: var(--color-purple); text-decoration: underline; cursor: pointer; }
+
+    .add-review-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .add-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .add-btn-ghost {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .add-btn-ghost:hover:not(:disabled) { border-color: var(--color-negative); color: var(--color-negative); }
+
+    .add-btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-purple);
+      color: var(--color-purple);
+    }
+
+    .add-btn-outline:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+
+    .add-btn-primary { background: var(--color-purple); color: #fff; }
+    .add-btn-primary:hover:not(:disabled) { background: var(--color-purple-deep); }
+
+    .add-success-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .add-success-glyph { font-size: 36px; color: var(--color-positive); }
+
+    .add-success-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--color-ink);
+    }
+
+    .add-success-detail { font-size: 13px; color: var(--color-ink-soft); }
+
+    .add-btn-view-graph {
+      margin-top: 8px;
+      background: var(--color-purple);
+      color: #fff;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+    }
+
+    .add-btn-view-graph:hover { background: var(--color-purple-deep); }
+
+    .add-btn-another {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .add-btn-another:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
 
     /* ── Waking Life ───────────────────────────────────────── */
     #section-waking {
@@ -758,19 +1165,112 @@
 
     <!-- Add New -->
     <section id="section-add" class="section">
-      <div class="add-column">
-        <svg width="72" height="54" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M17 44 C8.5 44, 3.5 35, 11 30
-                   C8.5 20, 18 13, 26.5 18
-                   C30 11, 40 7, 48 13
-                   C52 8, 63 9, 63.5 20
-                   C70 21, 71 34, 64 37.5
-                   C58.5 42, 24.5 44, 17 44 Z"
-            stroke="#4A3870" stroke-width="2" fill="none"
-            stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div class="add-wordmark">dreama</div>
-        <div class="placeholder-box add-chat-placeholder">Chat interface will appear here</div>
+
+      <!-- Context banner -->
+      <div id="add-ctx-banner">
+        <span class="add-ctx-label">Now:</span>
+        <div id="add-ctx-chips">
+          <span style="font-size:12px;color:var(--color-ink-faint);font-style:italic">Loading…</span>
+        </div>
+        <a href="#" id="add-ctx-update">Update context →</a>
+      </div>
+
+      <!-- Scrollable content -->
+      <div id="add-scroll">
+        <div id="add-content">
+
+          <!-- View: Chat -->
+          <div id="add-chat-view" class="add-view active">
+
+            <!-- Empty state: cloud + wordmark (hidden once messages appear) -->
+            <div id="add-empty-state" style="display:flex">
+              <svg width="72" height="54" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M17 44 C8.5 44, 3.5 35, 11 30
+                         C8.5 20, 18 13, 26.5 18
+                         C30 11, 40 7, 48 13
+                         C52 8, 63 9, 63.5 20
+                         C70 21, 71 34, 64 37.5
+                         C58.5 42, 24.5 44, 17 44 Z"
+                  stroke="#4A3870" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="add-wordmark">dreama</div>
+            </div>
+
+            <!-- Conversation (hidden until first message) -->
+            <div id="add-conversation" style="display:none"></div>
+
+            <div class="add-input-row">
+              <input type="text" id="add-message-input"
+                     placeholder="Describe your dream…" autocomplete="off">
+              <button class="add-btn-send" id="add-send-btn">Send</button>
+            </div>
+
+            <div class="add-meta-row">
+              <label class="add-date-label">
+                Dream date
+                <input type="date" id="add-dream-date">
+              </label>
+            </div>
+
+            <button class="add-btn-save" id="add-save-btn" disabled>
+              Save to Journal
+            </button>
+          </div>
+
+          <!-- View: Loading -->
+          <div id="add-loading-view" class="add-view">
+            <div class="add-loading-wrap">
+              <div class="add-spinner"></div>
+              <div class="add-loading-label">Extracting dream data…</div>
+            </div>
+          </div>
+
+          <!-- View: Review -->
+          <div id="add-review-view" class="add-view">
+            <div class="add-review-header">
+              <div class="add-review-title">Review Extracted Data</div>
+              <span class="add-review-date" id="add-review-date-display"></span>
+            </div>
+
+            <div class="add-title-wrap">
+              <div class="add-title-label">Dream title</div>
+              <input type="text" class="add-title-input" id="add-title-input"
+                     placeholder="Give this dream a title…">
+              <div class="add-title-hint">Suggested by AI — edit freely or leave as-is</div>
+            </div>
+
+            <div class="add-narrative" id="add-review-narrative"></div>
+
+            <div class="add-meta-chips" id="add-review-meta"></div>
+
+            <div id="add-review-sections"></div>
+
+            <div id="add-divergence" class="add-divergence" style="display:none">
+              <span class="div-title">Something may have shifted</span>
+              <span id="add-div-text"></span>
+              &nbsp;<a href="#" id="add-div-update">Update your life context →</a>
+            </div>
+
+            <div class="add-review-actions">
+              <button class="add-btn add-btn-ghost"    id="add-discard-btn">Discard</button>
+              <button class="add-btn add-btn-outline"  id="add-back-btn">Back to chat</button>
+              <button class="add-btn add-btn-primary"  id="add-confirm-btn">Confirm &amp; Save to Graph</button>
+            </div>
+          </div>
+
+          <!-- View: Success -->
+          <div id="add-success-view" class="add-view">
+            <div class="add-success-wrap">
+              <div class="add-success-glyph">✦</div>
+              <div class="add-success-title">Dream saved to graph</div>
+              <div class="add-success-detail" id="add-success-detail"></div>
+              <button class="add-btn-view-graph" id="add-view-graph-btn">View in graph →</button>
+              <button class="add-btn-another"    id="add-another-btn">Log another dream</button>
+            </div>
+          </div>
+
+        </div>
       </div>
     </section>
 
@@ -1362,8 +1862,392 @@
     });
   });
 
+  // ─── Add New section ─────────────────────────────────────────────────────────
+
+  const addState = {
+    extracted: null,
+    date: null,
+    divergence: null,
+    exchangeCount: 0,
+    extractedAtExchangeCount: -1,
+  };
+
+  function addShowView(id) {
+    ['add-chat-view','add-loading-view','add-review-view','add-success-view'].forEach(v => {
+      document.getElementById(v).classList.toggle('active', v === id);
+    });
+  }
+
+  function addUpdateEmptyState() {
+    const hasMessages = document.getElementById('add-conversation').children.length > 0;
+    document.getElementById('add-empty-state').style.display   = hasMessages ? 'none'  : 'flex';
+    document.getElementById('add-conversation').style.display  = hasMessages ? 'flex'  : 'none';
+  }
+
+  // Context banner
+  async function addLoadContext() {
+    try {
+      const ctxs = await fetch('/api/context').then(r => r.json());
+      const el   = document.getElementById('add-ctx-chips');
+      const list = Array.isArray(ctxs) ? ctxs : [];
+      if (!list.length) {
+        el.innerHTML = '<em style="font-size:12px;color:var(--color-ink-faint)">No foreground contexts set</em>';
+      } else {
+        el.innerHTML = list.map(c => `<span class="add-ctx-chip">${esc(c.label)}</span>`).join('');
+      }
+    } catch {
+      document.getElementById('add-ctx-chips').innerHTML =
+        '<em style="font-size:12px;color:var(--color-ink-faint)">Could not load context</em>';
+    }
+  }
+
+  // Chat
+  function addAppendMessage(text, role) {
+    const convo = document.getElementById('add-conversation');
+    const div   = document.createElement('div');
+    div.className = `add-msg ${role}`;
+    div.textContent = text;
+    convo.appendChild(div);
+    convo.scrollTop = convo.scrollHeight;
+    addUpdateEmptyState();
+    return div;
+  }
+
+  async function addSendMessage() {
+    const input = document.getElementById('add-message-input');
+    const text  = input.value.trim();
+    if (!text) return;
+
+    input.value    = '';
+    input.disabled = true;
+    addAppendMessage(text, 'user');
+
+    const bubble = addAppendMessage('', 'assistant');
+    bubble.classList.add('streaming');
+
+    try {
+      const res = await fetch('/chat', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({message: text}),
+      });
+      if (!res.ok) throw new Error(`Server error ${res.status}`);
+
+      const reader  = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer    = '';
+
+      while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, {stream: true});
+        const lines = buffer.split('\n');
+        buffer = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          const payload = JSON.parse(line.slice(6));
+          if (payload.delta) {
+            bubble.textContent += payload.delta;
+            document.getElementById('add-conversation').scrollTop = 999999;
+          }
+        }
+      }
+
+      bubble.classList.remove('streaming');
+      addState.exchangeCount++;
+      document.getElementById('add-save-btn').disabled = false;
+
+    } catch (err) {
+      bubble.textContent = `Error: ${err.message}`;
+      bubble.style.color = 'var(--color-negative)';
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  // Save → Extract → Review
+  async function addSaveToJournal() {
+    if (addState.extracted && addState.exchangeCount === addState.extractedAtExchangeCount) {
+      addRenderReviewCard(addState.extracted, addState.date, addState.divergence,
+                          addState.extracted.dream?.title);
+      addShowView('add-review-view');
+      return;
+    }
+
+    addState.date = document.getElementById('add-dream-date').value;
+    addShowView('add-loading-view');
+
+    try {
+      const res = await fetch('/api/extract', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({date: addState.date}),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || 'Extraction failed');
+      }
+      const data = await res.json();
+      addState.extracted  = data.extracted;
+      addState.divergence = data.divergence;
+      addState.extractedAtExchangeCount = addState.exchangeCount;
+      if (data.suggested_title) {
+        addState.extracted.dream.title = data.suggested_title;
+      }
+      addRenderReviewCard(data.extracted, data.date, data.divergence, data.suggested_title);
+      addShowView('add-review-view');
+    } catch (err) {
+      addShowView('add-chat-view');
+      alert(`Could not extract dream: ${err.message}`);
+    }
+  }
+
+  // Review card
+  function addRenderReviewCard(extracted, date, divergence, suggestedTitle) {
+    const titleInput   = document.getElementById('add-title-input');
+    titleInput.value   = suggestedTitle || '';
+    titleInput.placeholder = suggestedTitle ? 'Edit or accept the suggested title' : 'Give this dream a title…';
+
+    const d = extracted.dream || {};
+    document.getElementById('add-review-date-display').textContent = date;
+    document.getElementById('add-review-narrative').textContent =
+      d.raw_narrative || '(no narrative captured)';
+
+    // Meta chips
+    const metaEl = document.getElementById('add-review-meta');
+    metaEl.innerHTML = '';
+    [
+      d.emotional_valence && ['Valence',   d.emotional_valence],
+      d.intensity != null  && ['Intensity', `${d.intensity}/5`],
+      d.visual_quality     && ['Visual',    d.visual_quality],
+      d.lucid     != null  && ['Lucid',     d.lucid ? 'yes' : 'no'],
+      d.notable_color      && ['Color',     d.notable_color],
+    ].filter(Boolean).forEach(([lbl, val]) => {
+      const c = document.createElement('span');
+      c.className = 'add-meta-chip';
+      c.innerHTML = `${esc(lbl)}: <strong>${esc(String(val))}</strong>`;
+      metaEl.appendChild(c);
+    });
+
+    // Sections
+    const sec = document.getElementById('add-review-sections');
+    sec.innerHTML = '';
+
+    addBuildSection(sec, 'Characters', extracted.characters || [], c =>
+      `<span class="iname">${esc(c.name)}</span>` +
+      (c.character_type ? ` <span class="idetail">· ${esc(c.character_type)}</span>` : '') +
+      (c.role_in_dream  ? ` <span class="idetail">· ${esc(c.role_in_dream)}</span>`  : ''),
+    'characters', 'character');
+
+    addBuildSection(sec, 'Symbols', extracted.symbols || [], s =>
+      `<span class="iname">${esc(s.name)}</span>` +
+      (s.prominence ? ` <span class="idetail">· ${esc(s.prominence)}</span>` : '') +
+      (s.category   ? ` <span class="idetail">· ${esc(s.category)}</span>`   : ''),
+    'symbols', 'symbol');
+
+    addBuildSection(sec, 'Settings', extracted.settings || [], st =>
+      `<span class="iname">${esc(st.name)}</span>` +
+      (st.familiarity      ? ` <span class="idetail">· ${esc(st.familiarity)}</span>`      : '') +
+      (st.distortion_level ? ` <span class="idetail">· ${esc(st.distortion_level)}</span>` : ''),
+    'settings', 'setting');
+
+    addBuildSection(sec, 'Emotions', extracted.emotions || [], e => {
+      const c = e.confidence || 'ambiguous';
+      return `<span class="iname">${esc(e.name)}</span> <span class="add-badge badge-${c}">${esc(c)}</span>` +
+             (e.anchor ? ` <span class="idetail">· ${esc(e.anchor)}</span>` : '');
+    }, 'emotions', 'emotion');
+
+    addBuildSection(sec, 'Themes', extracted.themes || [], t => {
+      const s = t.strength || 'weak';
+      return `<span class="iname">${esc(t.name)}</span> <span class="add-badge badge-${s}">${esc(s)}</span>`;
+    }, 'themes', 'theme');
+
+    if ((extracted.body_sensations || []).length) {
+      addBuildSection(sec, 'Body Sensations', extracted.body_sensations, bs => {
+        const c = bs.confidence || 'inferred';
+        return `<span class="iname">${esc(bs.description)}</span>` +
+               (bs.location ? ` <span class="idetail">· ${esc(bs.location)}</span>` : '') +
+               ` <span class="add-badge badge-${c}">${esc(c)}</span>`;
+      }, 'body_sensations', 'bodysensation');
+    }
+
+    // Divergence notice
+    const divEl = document.getElementById('add-divergence');
+    if (divergence && (divergence.new_themes || []).length) {
+      const list = divergence.new_themes.map(t => `<em>${esc(t)}</em>`).join(', ');
+      document.getElementById('add-div-text').innerHTML =
+        `The theme${divergence.new_themes.length > 1 ? 's' : ''} ${list} ` +
+        `haven't appeared in your "${esc(divergence.context_label)}" context before. ` +
+        `Has anything shifted in your life recently?`;
+      divEl.style.display = 'block';
+    } else {
+      divEl.style.display = 'none';
+    }
+  }
+
+  function addBuildSection(container, title, items, formatter, key, typeClass) {
+    if (!items.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'add-review-section';
+
+    const h = document.createElement('div');
+    h.className = 'add-section-title';
+    h.textContent = title;
+    wrap.appendChild(h);
+
+    const row = document.createElement('div');
+    row.className = 'add-item-row';
+
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = `add-ritem ritem-${typeClass}`;
+      el.innerHTML = formatter(item) +
+        `<button class="xbtn" title="Remove" data-key="${esc(key)}">×</button>`;
+      row.appendChild(el);
+    });
+
+    wrap.appendChild(row);
+    container.appendChild(wrap);
+  }
+
+  function addRemoveItem(key, btn) {
+    const item = btn.closest('.add-ritem');
+    const allItems = [...item.parentElement.querySelectorAll('.add-ritem')];
+    const idx = allItems.indexOf(item);
+    if (addState.extracted[key] && idx !== -1) {
+      addState.extracted[key].splice(idx, 1);
+    }
+    item.remove();
+  }
+
+  function addBackToChat() {
+    addShowView('add-chat-view');
+    document.getElementById('add-message-input').focus();
+  }
+
+  async function addConfirmSave() {
+    const btn = document.getElementById('add-confirm-btn');
+    btn.disabled = true;
+    try {
+      const res  = await fetch('/api/confirm', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({extracted: addState.extracted, date: addState.date}),
+      });
+      const data = await res.json();
+      addShowSuccessView(data.dream_id, data.stats);
+    } catch (err) {
+      alert(`Could not save: ${err.message}`);
+      btn.disabled = false;
+    }
+  }
+
+  async function addDiscardEntry() {
+    await fetch('/api/discard', {method: 'POST'});
+    addResetToChat();
+  }
+
+  function addShowSuccessView(dreamId, stats) {
+    const n = stats ? stats.nodes : {};
+    document.getElementById('add-success-detail').textContent =
+      `${n.Dream || 0} dreams · ${n.Theme || 0} themes · ${n.Symbol || 0} symbols in graph`;
+    addShowView('add-success-view');
+  }
+
+  function addResetToChat() {
+    document.getElementById('add-conversation').innerHTML = '';
+    document.getElementById('add-save-btn').disabled = true;
+    document.getElementById('add-dream-date').value  = new Date().toISOString().split('T')[0];
+    document.getElementById('add-title-input').value = '';
+    addState.extracted  = null;
+    addState.date       = null;
+    addState.divergence = null;
+    addState.exchangeCount            = 0;
+    addState.extractedAtExchangeCount = -1;
+    addShowView('add-chat-view');
+    addUpdateEmptyState();
+    document.getElementById('add-message-input').focus();
+  }
+
+  async function refreshGraph() {
+    try {
+      const [graph, lcws, stats, symbols, themes] = await Promise.all([
+        fetch('/api/graph').then(r => r.json()),
+        fetch('/api/life-context-windows').then(r => r.json()),
+        fetch('/api/stats').then(r => r.json()),
+        fetch('/api/symbols/frequency').then(r => r.json()),
+        fetch('/api/themes').then(r => r.json()),
+      ]);
+      graphData   = graph;
+      allLCWs     = lcws;
+      allStats    = stats;
+      allSymbols  = symbols;
+      allThemes   = themes;
+
+      const container = document.getElementById('graph-container');
+      container.innerHTML = '';
+      document.getElementById('graph-legend').style.display = 'none';
+      nodeCircles     = null;
+      linkLines       = null;
+      nodeLabels      = null;
+      simulation      = null;
+      dreamColorScale = null;
+      activeFilter    = 'dreams';
+      activeDateRange = 'all';
+
+      renderRightNow();
+      renderTrends();
+      requestAnimationFrame(initGraph);
+    } catch (err) {
+      console.error('Graph refresh failed:', err);
+    }
+  }
+
+  // ─── Add New: event listeners ─────────────────────────────────────────────────
+
+  document.getElementById('add-dream-date').value = new Date().toISOString().split('T')[0];
+
+  document.getElementById('add-ctx-update').addEventListener('click', e => {
+    e.preventDefault(); switchSection('waking');
+  });
+
+  document.getElementById('add-div-update').addEventListener('click', e => {
+    e.preventDefault(); switchSection('waking');
+  });
+
+  document.getElementById('add-message-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) addSendMessage();
+  });
+
+  document.getElementById('add-send-btn').addEventListener('click', addSendMessage);
+
+  document.getElementById('add-save-btn').addEventListener('click', addSaveToJournal);
+
+  document.getElementById('add-title-input').addEventListener('input', function () {
+    if (addState.extracted?.dream) addState.extracted.dream.title = this.value.trim();
+  });
+
+  document.getElementById('add-discard-btn').addEventListener('click', addDiscardEntry);
+  document.getElementById('add-back-btn').addEventListener('click', addBackToChat);
+  document.getElementById('add-confirm-btn').addEventListener('click', addConfirmSave);
+
+  document.getElementById('add-review-sections').addEventListener('click', e => {
+    const btn = e.target.closest('.xbtn');
+    if (btn) addRemoveItem(btn.dataset.key, btn);
+  });
+
+  document.getElementById('add-view-graph-btn').addEventListener('click', () => {
+    addResetToChat();
+    switchSection('dreams');
+    refreshGraph();
+  });
+
+  document.getElementById('add-another-btn').addEventListener('click', addResetToChat);
+
   // ─── Start ───────────────────────────────────────────────────────────────────
   boot();
+  addLoadContext();
   </script>
 
 </body>
