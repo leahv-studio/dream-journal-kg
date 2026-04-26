@@ -286,6 +286,52 @@ def update_life_context_status(lcw_id):
     return jsonify({"id": lcw_id, "status": status})
 
 
+@app.route("/api/life-context-windows/<lcw_id>", methods=["PUT"])
+def update_life_context_window(lcw_id):
+    """Update a LifeContextWindow node's label, start_date, description, and status."""
+    if lcw_id not in dg.G:
+        return jsonify({"error": "not found"}), 404
+    if dg.G.nodes[lcw_id].get("node_type") != "LifeContextWindow":
+        return jsonify({"error": "not a LifeContextWindow"}), 400
+
+    data = request.json or {}
+    label = (data.get("label") or "").strip()
+    if not label:
+        return jsonify({"error": "label is required"}), 400
+
+    status = data.get("status") or dg.G.nodes[lcw_id].get("status", "foreground")
+    if status not in {"foreground", "background", "dormant", "archived"}:
+        return jsonify({"error": "invalid status"}), 400
+
+    description = (data.get("description") or "").strip() or None
+    start_date  = data.get("start_date") or None
+
+    old_description = dg.G.nodes[lcw_id].get("description")
+
+    dg.G.nodes[lcw_id]["label"]       = label
+    dg.G.nodes[lcw_id]["status"]      = status
+    dg.G.nodes[lcw_id]["description"] = description
+    dg.G.nodes[lcw_id]["start_date"]  = start_date
+
+    if description != old_description:
+        try:
+            summary = _generate_lcw_summary(description)
+            dg.G.nodes[lcw_id]["summary"] = summary
+        except Exception as e:
+            print(f"LCW summary re-generation failed (non-fatal): {e}")
+
+    dg.save()
+    node = dict(dg.G.nodes[lcw_id])
+    return jsonify({
+        "id":          lcw_id,
+        "label":       node.get("label"),
+        "start_date":  node.get("start_date"),
+        "description": node.get("description"),
+        "summary":     node.get("summary"),
+        "status":      node.get("status"),
+    })
+
+
 @app.route("/api/stats")
 def get_stats():
     from datetime import date as _dt, timedelta

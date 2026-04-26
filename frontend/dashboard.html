@@ -1042,26 +1042,290 @@
     .add-btn-another:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
 
     /* ── Waking Life ───────────────────────────────────────── */
-    #section-waking {
-      flex-direction: column;
-      padding: 44px 48px;
-      background: var(--color-bg);
-    }
+    #section-waking { flex-direction: column; background: var(--color-bg); }
 
     .waking-header {
       font-family: var(--font-display);
       font-weight: 400;
       font-size: 38px;
       color: var(--color-ink);
-      margin-bottom: 28px;
       letter-spacing: 0.01em;
     }
 
-    .waking-placeholder {
-      max-width: 680px;
-      height: 240px;
-      font-size: 16px;
+    .wl-scroll { flex: 1; overflow-y: auto; padding: 36px 48px 60px; }
+
+    .wl-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
+
+    .wl-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .wl-add-btn {
+      font-size: 13px;
+      color: var(--color-purple);
+      background: none;
+      border: 1px solid var(--color-purple);
+      border-radius: 8px;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .wl-add-btn:hover { background: rgba(124,107,158,0.08); }
+
+    /* Forms */
+    .wl-form {
+      display: none;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .wl-form.open { display: flex; }
+
+    .wl-form-title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--color-ink);
+    }
+
+    .wl-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .wl-field label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-faint);
+    }
+
+    .wl-field input,
+    .wl-field textarea,
+    .wl-field select {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--color-ink);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      width: 100%;
+      transition: border-color 0.15s;
+    }
+
+    .wl-field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+    .wl-field input:focus,
+    .wl-field textarea:focus,
+    .wl-field select:focus { outline: none; border-color: var(--color-purple); }
+
+    .wl-form-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    .wl-btn {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .wl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .wl-btn-cancel {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .wl-btn-cancel:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
+    .wl-btn-save { background: var(--color-purple); color: #fff; }
+    .wl-btn-save:hover:not(:disabled) { background: var(--color-purple-deep); }
+
+    /* Status groups */
+    .wl-group { display: flex; flex-direction: column; gap: 8px; }
+
+    .wl-group-header { display: flex; align-items: center; gap: 6px; }
+
+    .wl-group-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-faint);
+    }
+
+    .wl-group-count { font-size: 11px; color: var(--color-ink-faint); }
+
+    .wl-group-empty {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+    }
+
+    /* Chip cards */
+    .wl-chip-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .wl-chip-card:hover { border-color: var(--color-purple-light); }
+
+    .wl-chip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .wl-chip-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wl-chip-label {
+      font-size: 14px;
+      color: var(--color-ink);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .wl-chip-date {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .wl-chip-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .wl-status-badge {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 9px;
+      border-radius: 999px;
+      cursor: pointer;
+      border: 1px solid;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .wl-status-badge:hover { opacity: 0.75; }
+
+    .wl-status-badge.fg       { background: var(--color-purple); border-color: var(--color-purple); color: #fff; }
+    .wl-status-badge.bg       { background: transparent; border-color: var(--color-purple); color: var(--color-purple); }
+    .wl-status-badge.dormant  { background: transparent; border-color: var(--color-ink-faint); color: var(--color-ink-faint); }
+    .wl-status-badge.archived { background: transparent; border-color: var(--color-border); color: var(--color-ink-faint); }
+
+    .wl-expand-icon {
+      font-size: 10px;
+      color: var(--color-ink-faint);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .wl-chip-card.open .wl-expand-icon { transform: rotate(180deg); }
+
+    .wl-chip-body {
+      display: none;
+      padding: 10px 14px 14px;
+      border-top: 1px solid var(--color-border);
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wl-chip-card.open .wl-chip-body { display: flex; }
+
+    .wl-chip-desc { font-size: 13px; color: var(--color-ink-soft); line-height: 1.6; }
+    .wl-chip-desc.empty { color: var(--color-ink-faint); font-style: italic; }
+
+    .wl-chip-edit-btn {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      cursor: pointer;
+      align-self: flex-start;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .wl-chip-edit-btn:hover { border-color: var(--color-purple); color: var(--color-purple); }
+
+    /* Archive drawer */
+    .wl-archive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      padding: 2px 0;
+    }
+
+    .wl-archive-label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-faint);
+    }
+
+    .wl-archive-count { font-size: 11px; color: var(--color-ink-faint); }
+
+    .wl-archive-icon {
+      font-size: 10px;
+      color: var(--color-ink-faint);
+      margin-left: 2px;
+      transition: transform 0.2s;
+    }
+
+    .wl-archive-open > .wl-archive-toggle .wl-archive-icon { transform: rotate(180deg); }
+
+    .wl-archive-body { display: none; flex-direction: column; gap: 8px; padding-top: 4px; }
+    .wl-archive-open > .wl-archive-body { display: flex; }
   </style>
 </head>
 <body>
@@ -1276,8 +1540,78 @@
 
     <!-- Waking Life -->
     <section id="section-waking" class="section">
-      <h1 class="waking-header">Waking Life</h1>
-      <div class="placeholder-box waking-placeholder">Life context management will appear here</div>
+      <div class="wl-scroll">
+        <div class="wl-inner">
+
+          <div class="wl-top">
+            <h1 class="waking-header">Waking Life</h1>
+            <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
+          </div>
+
+          <!-- Add form (hidden by default) -->
+          <div class="wl-form" id="wl-add-form">
+            <div class="wl-form-title">New life context</div>
+            <div class="wl-field">
+              <label for="wl-add-label">Label *</label>
+              <input type="text" id="wl-add-label" placeholder="e.g. Grad school application season">
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-startdate">Start date</label>
+              <input type="date" id="wl-add-startdate">
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-desc">Description</label>
+              <textarea id="wl-add-desc" placeholder="Describe this life context — what's happening, how it feels, why it matters…"></textarea>
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-status">Status</label>
+              <select id="wl-add-status">
+                <option value="foreground">Foreground — consciously active</option>
+                <option value="background">Background — present but quieter</option>
+                <option value="dormant">Dormant — no longer active</option>
+              </select>
+            </div>
+            <div class="wl-form-actions">
+              <button class="wl-btn wl-btn-cancel" id="wl-add-cancel-btn">Cancel</button>
+              <button class="wl-btn wl-btn-save" id="wl-add-submit-btn">Add context</button>
+            </div>
+          </div>
+
+          <!-- Edit form (hidden by default) -->
+          <div class="wl-form" id="wl-edit-form">
+            <div class="wl-form-title">Edit life context</div>
+            <div class="wl-field">
+              <label for="wl-edit-label">Label *</label>
+              <input type="text" id="wl-edit-label">
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-startdate">Start date</label>
+              <input type="date" id="wl-edit-startdate">
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-desc">Description</label>
+              <textarea id="wl-edit-desc"></textarea>
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-status">Status</label>
+              <select id="wl-edit-status">
+                <option value="foreground">Foreground — consciously active</option>
+                <option value="background">Background — present but quieter</option>
+                <option value="dormant">Dormant — no longer active</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+            <div class="wl-form-actions">
+              <button class="wl-btn wl-btn-cancel" id="wl-edit-cancel-btn">Cancel</button>
+              <button class="wl-btn wl-btn-save" id="wl-edit-submit-btn">Save changes</button>
+            </div>
+          </div>
+
+          <!-- Status groups rendered by JS -->
+          <div id="wl-groups"></div>
+
+        </div>
+      </div>
     </section>
 
   </main>
@@ -1319,6 +1653,8 @@
   let allStats    = {};
   let allSymbols  = [];
   let allThemes   = [];
+  let wlLcws      = [];
+  let wlEditingId = null;
 
   let activeFilter    = 'dreams';
   let activeDateRange = 'all';
@@ -1346,6 +1682,8 @@
       allThemes  = themes;
       renderRightNow();
       renderTrends();
+      wlLcws = lcws.slice();
+      wlRender();
       requestAnimationFrame(initGraph);
     } catch (err) {
       console.error('Boot failed:', err);
@@ -1789,6 +2127,7 @@
     document.querySelectorAll('.section').forEach(s => {
       s.classList.toggle('active', s.id === 'section-' + id);
     });
+    if (id === 'waking') wlLoad();
   }
 
   // ─── Event listeners ─────────────────────────────────────────────────────────
@@ -2198,6 +2537,8 @@
 
       renderRightNow();
       renderTrends();
+      wlLcws = lcws.slice();
+      wlRender();
       requestAnimationFrame(initGraph);
     } catch (err) {
       console.error('Graph refresh failed:', err);
@@ -2244,6 +2585,252 @@
   });
 
   document.getElementById('add-another-btn').addEventListener('click', addResetToChat);
+
+  // ─── Waking Life section ─────────────────────────────────────────────────────
+
+  const WL_STATUS_CYCLE = ['foreground', 'background', 'dormant', 'archived'];
+
+  async function wlLoad() {
+    try {
+      wlLcws = await fetch('/api/life-context-windows').then(r => r.json());
+      wlRender();
+    } catch (err) {
+      const c = document.getElementById('wl-groups');
+      if (c) c.innerHTML =
+        '<p style="color:var(--color-ink-faint);font-style:italic">Could not load life contexts.</p>';
+    }
+  }
+
+  function wlStatusClass(status) {
+    if (status === 'foreground') return 'fg';
+    if (status === 'background') return 'bg';
+    if (status === 'dormant')    return 'dormant';
+    return 'archived';
+  }
+
+  function wlChipHTML(lcw) {
+    const cls  = wlStatusClass(lcw.status);
+    const desc = lcw.description || lcw.summary || '';
+    const descHtml = desc
+      ? `<p class="wl-chip-desc">${esc(desc)}</p>`
+      : `<p class="wl-chip-desc empty">No description.</p>`;
+    return `
+      <div class="wl-chip-card" id="wl-chip-${esc(lcw.id)}">
+        <div class="wl-chip-header" data-lcwid="${esc(lcw.id)}">
+          <div class="wl-chip-left">
+            <span class="wl-chip-label">${esc(lcw.label)}</span>
+            ${lcw.start_date ? `<span class="wl-chip-date">${esc(lcw.start_date)}</span>` : ''}
+          </div>
+          <div class="wl-chip-right">
+            <span class="wl-status-badge ${cls}"
+                  data-lcwid="${esc(lcw.id)}"
+                  data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
+            <span class="wl-expand-icon">▾</span>
+          </div>
+        </div>
+        <div class="wl-chip-body">
+          ${descHtml}
+          <button class="wl-chip-edit-btn" data-lcwid="${esc(lcw.id)}">Edit</button>
+        </div>
+      </div>`;
+  }
+
+  function wlRender() {
+    const container = document.getElementById('wl-groups');
+    if (!container) return;
+
+    const byStatus = { foreground: [], background: [], dormant: [], archived: [] };
+    wlLcws.forEach(lcw => { if (byStatus[lcw.status]) byStatus[lcw.status].push(lcw); });
+
+    const groupLabels = { foreground: 'Foreground', background: 'Background', dormant: 'Dormant' };
+    let html = '';
+
+    for (const status of ['foreground', 'background', 'dormant']) {
+      const items = byStatus[status];
+      html += `<div class="wl-group">
+        <div class="wl-group-header">
+          <span class="wl-group-label">${groupLabels[status]}</span>
+          <span class="wl-group-count">${items.length}</span>
+        </div>`;
+      html += items.length
+        ? items.map(wlChipHTML).join('')
+        : '<div class="wl-group-empty">None</div>';
+      html += '</div>';
+    }
+
+    const archived = byStatus['archived'];
+    html += `<div class="wl-group" id="wl-archive-group">
+      <div class="wl-archive-toggle" id="wl-archive-toggle">
+        <span class="wl-archive-label">Archive</span>
+        <span class="wl-archive-count">${archived.length}</span>
+        <span class="wl-archive-icon">▾</span>
+      </div>
+      <div class="wl-archive-body">`;
+    html += archived.length
+      ? archived.map(wlChipHTML).join('')
+      : '<div class="wl-group-empty">Nothing archived yet.</div>';
+    html += '</div></div>';
+
+    container.innerHTML = html;
+
+    // Chip header → toggle expand
+    container.querySelectorAll('.wl-chip-header').forEach(header => {
+      header.addEventListener('click', e => {
+        if (e.target.closest('.wl-status-badge')) return;
+        const card = document.getElementById(`wl-chip-${header.dataset.lcwid}`);
+        if (card) card.classList.toggle('open');
+      });
+    });
+
+    // Status badge → cycle status
+    container.querySelectorAll('.wl-status-badge').forEach(badge => {
+      badge.addEventListener('click', e => {
+        e.stopPropagation();
+        wlCycleStatus(badge.dataset.lcwid, badge.dataset.status);
+      });
+    });
+
+    // Edit button → open edit form
+    container.querySelectorAll('.wl-chip-edit-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        wlOpenEditForm(btn.dataset.lcwid);
+      });
+    });
+
+    // Archive drawer toggle
+    const archiveToggle = document.getElementById('wl-archive-toggle');
+    if (archiveToggle) {
+      archiveToggle.addEventListener('click', () => {
+        document.getElementById('wl-archive-group').classList.toggle('wl-archive-open');
+      });
+    }
+  }
+
+  async function wlCycleStatus(lcwId, currentStatus) {
+    const idx        = WL_STATUS_CYCLE.indexOf(currentStatus);
+    const nextStatus = WL_STATUS_CYCLE[(idx + 1) % WL_STATUS_CYCLE.length];
+    try {
+      await fetch(`/api/life-context-windows/${lcwId}/status`, {
+        method:  'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body:    JSON.stringify({status: nextStatus}),
+      });
+      const lcw = wlLcws.find(l => l.id === lcwId);
+      if (lcw) lcw.status = nextStatus;
+      wlRender();
+      allLCWs = wlLcws.slice();
+      renderRightNow();
+    } catch (err) {
+      alert('Could not update status: ' + err.message);
+    }
+  }
+
+  function wlToggleAddForm() {
+    const form    = document.getElementById('wl-add-form');
+    const opening = !form.classList.contains('open');
+    document.getElementById('wl-edit-form').classList.remove('open');
+    wlEditingId = null;
+    form.classList.toggle('open', opening);
+    if (opening) {
+      document.getElementById('wl-add-label').value     = '';
+      document.getElementById('wl-add-startdate').value = '';
+      document.getElementById('wl-add-desc').value      = '';
+      document.getElementById('wl-add-status').value    = 'foreground';
+      document.getElementById('wl-add-label').focus();
+    }
+  }
+
+  function wlOpenEditForm(lcwId) {
+    const lcw = wlLcws.find(l => l.id === lcwId);
+    if (!lcw) return;
+    document.getElementById('wl-add-form').classList.remove('open');
+    wlEditingId = lcwId;
+    document.getElementById('wl-edit-label').value     = lcw.label        || '';
+    document.getElementById('wl-edit-startdate').value = lcw.start_date   || '';
+    document.getElementById('wl-edit-desc').value      = lcw.description  || '';
+    document.getElementById('wl-edit-status').value    = lcw.status       || 'foreground';
+    document.getElementById('wl-edit-form').classList.add('open');
+    document.getElementById('wl-edit-form').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    document.getElementById('wl-edit-label').focus();
+  }
+
+  async function wlSubmitAdd() {
+    const label = document.getElementById('wl-add-label').value.trim();
+    if (!label) { document.getElementById('wl-add-label').focus(); return; }
+    const btn = document.getElementById('wl-add-submit-btn');
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/life-context-windows', {
+        method:  'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:    JSON.stringify({
+          label,
+          start_date:  document.getElementById('wl-add-startdate').value || null,
+          description: document.getElementById('wl-add-desc').value.trim() || null,
+          status:      document.getElementById('wl-add-status').value,
+        }),
+      });
+      if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Failed'); }
+      const newLcw = await res.json();
+      wlLcws.push(newLcw);
+      document.getElementById('wl-add-form').classList.remove('open');
+      wlRender();
+      allLCWs = wlLcws.slice();
+      renderRightNow();
+      addLoadContext();
+    } catch (err) {
+      alert('Could not add context: ' + err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  async function wlSubmitEdit() {
+    if (!wlEditingId) return;
+    const label = document.getElementById('wl-edit-label').value.trim();
+    if (!label) { document.getElementById('wl-edit-label').focus(); return; }
+    const btn = document.getElementById('wl-edit-submit-btn');
+    btn.disabled = true;
+    try {
+      const res = await fetch(`/api/life-context-windows/${wlEditingId}`, {
+        method:  'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body:    JSON.stringify({
+          label,
+          start_date:  document.getElementById('wl-edit-startdate').value || null,
+          description: document.getElementById('wl-edit-desc').value.trim() || null,
+          status:      document.getElementById('wl-edit-status').value,
+        }),
+      });
+      if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Failed to update'); }
+      const updated = await res.json();
+      const idx = wlLcws.findIndex(l => l.id === wlEditingId);
+      if (idx !== -1) wlLcws[idx] = { ...wlLcws[idx], ...updated };
+      document.getElementById('wl-edit-form').classList.remove('open');
+      wlEditingId = null;
+      wlRender();
+      allLCWs = wlLcws.slice();
+      renderRightNow();
+      addLoadContext();
+    } catch (err) {
+      alert('Could not save changes: ' + err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // Waking Life event listeners
+  document.getElementById('wl-add-toggle-btn').addEventListener('click', wlToggleAddForm);
+  document.getElementById('wl-add-cancel-btn').addEventListener('click', () => {
+    document.getElementById('wl-add-form').classList.remove('open');
+  });
+  document.getElementById('wl-add-submit-btn').addEventListener('click', wlSubmitAdd);
+  document.getElementById('wl-edit-cancel-btn').addEventListener('click', () => {
+    document.getElementById('wl-edit-form').classList.remove('open');
+    wlEditingId = null;
+  });
+  document.getElementById('wl-edit-submit-btn').addEventListener('click', wlSubmitEdit);
 
   // ─── Start ───────────────────────────────────────────────────────────────────
   boot();
