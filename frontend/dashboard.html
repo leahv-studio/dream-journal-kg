@@ -808,7 +808,7 @@
 
   const DREAM_COLOR_OLD  = '#4A3870';
   const DREAM_COLOR_NEW  = '#B09EC9';
-  const DREAM_R_LARGE    = 18;
+  const DREAM_R_LARGE    = 14;
   const DREAM_R_SMALL    = 7;
   const NODE_R_BASE      = 9;
   const NODE_R_MAX       = 22;
@@ -1117,14 +1117,6 @@
       .attr('height', H)
       .style('display', 'block');
 
-    // SVG filter: soft glow for Dream nodes
-    const defs = svg.append('defs');
-    const filter = defs.append('filter').attr('id', 'dream-glow');
-    filter.append('feGaussianBlur').attr('stdDeviation', 3).attr('result', 'coloredBlur');
-    const merge = filter.append('feMerge');
-    merge.append('feMergeNode').attr('in', 'coloredBlur');
-    merge.append('feMergeNode').attr('in', 'SourceGraphic');
-
     // Zoom/pan layer
     const g = svg.append('g');
 
@@ -1179,7 +1171,6 @@
       .attr('fill',        d => computeColor(d))
       .attr('stroke',      'rgba(255,255,255,0.35)')
       .attr('stroke-width', 1.5)
-      .attr('filter',      d => d.type === 'Dream' ? 'url(#dream-glow)' : null)
       .style('cursor', 'pointer')
       .on('mouseover', (event, d) => {
         tooltip.style('opacity', 1)
