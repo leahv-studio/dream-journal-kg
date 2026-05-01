@@ -45,7 +45,12 @@
 
     body {
       font-family: var(--font-ui);
-      background: var(--color-bg);
+      background:
+        radial-gradient(ellipse 75% 55% at 52% 4%,  rgba(176,158,201,0.22) 0%, transparent 68%),
+        radial-gradient(ellipse 50% 42% at 8%  18%,  rgba(61,78,138,0.11)  0%, transparent 58%),
+        radial-gradient(ellipse 60% 48% at 14% 78%,  rgba(74,56,112,0.19)  0%, transparent 62%),
+        radial-gradient(ellipse 65% 38% at 88% 85%,  rgba(201,151,58,0.15) 0%, transparent 64%),
+        var(--color-bg);
       color: var(--color-ink);
       display: flex;
       flex-direction: column;
@@ -422,7 +427,6 @@
       flex: 1;
       position: relative;
       overflow: hidden;
-      background: var(--color-bg);
     }
 
     #graph-container {
@@ -603,7 +607,7 @@
     }
 
     /* ── Add New ───────────────────────────────────────────── */
-    #section-add { flex-direction: column; background: var(--color-bg); }
+    #section-add { flex-direction: column; }
 
     #add-ctx-banner {
       flex-shrink: 0;
@@ -656,6 +660,15 @@
     .add-view { display: none; flex-direction: column; gap: 14px; }
     .add-view.active { display: flex; }
 
+    #add-tell-me {
+      font-family: var(--font-display);
+      font-size: 52px;
+      font-weight: 300;
+      color: var(--color-ink-soft);
+      text-align: center;
+      line-height: 1;
+    }
+
     #add-empty-state {
       flex-direction: column;
       align-items: center;
@@ -672,8 +685,8 @@
     }
 
     #add-conversation {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: rgba(255,255,255,0.60);
+      border: 1px solid rgba(176,158,201,0.35);
       border-radius: 10px;
       padding: 16px;
       min-height: 200px;
@@ -681,6 +694,8 @@
       overflow-y: auto;
       flex-direction: column;
       gap: 10px;
+      margin-bottom: -8px;
+      box-shadow: 0 4px 32px rgba(74,56,112,0.10), 0 1px 4px rgba(74,56,112,0.06);
     }
 
     .add-msg {
@@ -699,28 +714,32 @@
     }
 
     .add-msg.assistant {
-      background: var(--color-surface-deep);
-      color: var(--color-ink-soft);
+      background: rgba(176,158,201,0.14);
+      color: var(--color-ink);
       align-self: flex-start;
     }
 
     .add-msg.streaming { opacity: 0.7; }
 
-    .add-input-row { display: flex; gap: 8px; }
+    .add-input-row { display: flex; flex-direction: column; gap: 8px; }
 
-    .add-input-row input {
+    .add-input-row textarea {
       flex: 1;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(176,158,201,0.35);
       color: var(--color-ink);
       padding: 10px 14px;
       border-radius: 8px;
       font-size: 14px;
       font-family: var(--font-ui);
+      line-height: 1.5;
       transition: border-color 0.15s;
+      resize: none;
+      overflow-y: auto;
+      max-height: 300px;
     }
 
-    .add-input-row input:focus { outline: none; border-color: var(--color-purple); }
+    .add-input-row textarea:focus { outline: none; border-color: var(--color-purple); }
 
     .add-btn-send {
       background: var(--color-purple);
@@ -734,9 +753,13 @@
       cursor: pointer;
       white-space: nowrap;
       transition: background 0.15s;
+      align-self: flex-end;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .add-btn-send:hover:not(:disabled) { background: var(--color-purple-deep); }
+.add-btn-send:hover:not(:disabled) { background: var(--color-purple-deep); }
     .add-btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .add-meta-row { display: flex; align-items: center; }
@@ -1042,7 +1065,7 @@
     .add-btn-another:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
 
     /* ── Waking Life ───────────────────────────────────────── */
-    #section-waking { flex-direction: column; background: var(--color-bg); }
+    #section-waking { flex-direction: column; }
 
     .waking-header {
       font-family: var(--font-display);
@@ -1461,13 +1484,26 @@
               <div class="add-wordmark">dreama</div>
             </div>
 
+            <div id="add-tell-me">tell me</div>
+
             <!-- Conversation (hidden until first message) -->
             <div id="add-conversation" style="display:none"></div>
 
             <div class="add-input-row">
-              <input type="text" id="add-message-input"
-                     placeholder="Describe your dream…" autocomplete="off">
-              <button class="add-btn-send" id="add-send-btn">Send</button>
+              <textarea id="add-message-input" rows="4"
+                        placeholder="Tell me about your dream..."></textarea>
+              <button class="add-btn-send" id="add-send-btn" aria-label="Send">
+                <svg width="28" height="20" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                           C3.5 8, 7.5 5, 11 7.5
+                           C12.5 4, 16.5 2.5, 20.5 5.5
+                           C22 3, 26.5 3.5, 27 8.5
+                           C29.5 9, 29.5 14.5, 26.5 15.5
+                           C24 18, 10.5 18, 7 18 Z"
+                    stroke="#fff" stroke-width="1.4" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
             </div>
 
             <div class="add-meta-row">
@@ -2257,8 +2293,9 @@
     const text  = input.value.trim();
     if (!text) return;
 
-    input.value    = '';
-    input.disabled = true;
+    input.value        = '';
+    input.style.height = 'auto';
+    input.disabled     = true;
     addAppendMessage(text, 'user');
 
     const bubble = addAppendMessage('', 'assistant');
@@ -2558,7 +2595,12 @@
   });
 
   document.getElementById('add-message-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter' && !e.shiftKey) addSendMessage();
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addSendMessage(); }
+  });
+
+  document.getElementById('add-message-input').addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 300) + 'px';
   });
 
   document.getElementById('add-send-btn').addEventListener('click', addSendMessage);

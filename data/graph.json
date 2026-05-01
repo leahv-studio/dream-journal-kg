@@ -15,7 +15,7 @@
     },
     {
       "node_type": "LifeContextWindow",
-      "label": "New job + proving myself + program coursework",
+      "label": "Promotion and grad school",
       "start_date": "2025-01-16",
       "description": "Started the new role in January \u2014 excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
       "summary": "A high-demand period of simultaneous transitions \u2014 new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
@@ -443,7 +443,7 @@
       "node_type": "LifeContextWindow",
       "label": "Test",
       "description": "Test falsdjkfas;ldkfjas;ldkfj",
-      "status": "foreground",
+      "status": "dormant",
       "id": "lcw_test"
     },
     {
@@ -576,6 +576,160 @@
       "description": "being unable to seek help or explain circumstances when things go wrong",
       "source": "llm",
       "id": "thm_isolation_in_crisis"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-04-27",
+      "raw_narrative": "I was in a dream where my current class was at my undergrad college and I was across campus but had no idea where class was. I tried to cut through a building but inside the steps were enclosed by handrails that converged at the top, which I didn't notice till I was at the top. There were people around so I wasn't going to jump the rail and look dumb. The building structure seemed hostile and unhelpful. I got pissed and turned around to get back outside. Suddenly I was in a Lyft that took me across campus but then I realized the address in the Lyft app was for a suburb my brother's wife is from like 30 minutes away and we were about to leave campus and get on the highway. I couldn't figure out how to look up where my class was in time so I exited the Lyft where I was. I started wandering campus and my friend Shawna showed up who was sympathetic but dismissive. I thought out loud that this was horrible just like a dream but if only this was a dream, it's not! It's real! It was dark out now and I fell in some prickly bushes following Shawna through campus. I was just annoyed at first but then I realized there was a giant crab clinging to my calf which was insane because I'm in Minnesota and I've never met a crab in real life. I was grossed out and scared to touch it because of its claws. I went into a random shop and a guy offered the crab a big ruler to grab onto and it did and that's how the crab got off my leg.",
+      "emotional_valence": "negative",
+      "intensity": 4,
+      "visual_quality": "dark",
+      "lucid": false,
+      "title": "Lost on Campus with the Giant Crab",
+      "id": "dream_2026_04_27"
+    },
+    {
+      "node_type": "Character",
+      "name": "Shawna",
+      "character_type": "real_current",
+      "symbolic_role": "Represents support that feels inadequate or dismissive during crisis",
+      "id": "char_shawna"
+    },
+    {
+      "node_type": "Character",
+      "name": "shop guy",
+      "character_type": "constructed",
+      "symbolic_role": "Helper figure who provides simple solutions to complex problems",
+      "id": "char_shop_guy"
+    },
+    {
+      "node_type": "Character",
+      "name": "brother's wife",
+      "character_type": "real_current",
+      "id": "char_brother_s_wife"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "converging handrails",
+      "category": "object",
+      "symbolic_note": "Deceptive structures that promise passage but create traps",
+      "id": "sym_converging_handrails"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Lyft with wrong address",
+      "category": "object",
+      "symbolic_note": "Technology that should help but leads away from the goal",
+      "id": "sym_lyft_with_wrong_address"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "giant crab",
+      "category": "animal",
+      "symbolic_note": "Impossible fear or anxiety that's foreign yet clinging to the dreamer",
+      "id": "sym_giant_crab"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "ruler",
+      "category": "object",
+      "symbolic_note": "Simple tool that solves seemingly complex problems",
+      "id": "sym_ruler"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "prickly bushes",
+      "category": "object",
+      "id": "sym_prickly_bushes"
+    },
+    {
+      "node_type": "Setting",
+      "name": "undergrad campus",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "Familiar territory where the dreamer becomes lost",
+      "id": "set_undergrad_campus"
+    },
+    {
+      "node_type": "Setting",
+      "name": "building with enclosed stairs",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "symbolic_note": "Institutional structure that appears helpful but is actually hostile",
+      "id": "set_building_with_enclosed_stairs"
+    },
+    {
+      "node_type": "Setting",
+      "name": "random shop",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "id": "set_random_shop"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "anger",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_anger"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "annoyance",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_annoyance"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "disgust",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_disgust"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "frustration",
+      "valence": "negative",
+      "confidence": "inferred",
+      "id": "emo_frustration"
+    },
+    {
+      "node_type": "Theme",
+      "name": "institutional hostility",
+      "description": "Structures and systems that appear helpful but actually create barriers",
+      "source": "llm",
+      "id": "thm_institutional_hostility"
+    },
+    {
+      "node_type": "Theme",
+      "name": "escalating obstacles",
+      "description": "Problems that compound and become increasingly surreal and difficult",
+      "source": "llm",
+      "id": "thm_escalating_obstacles"
+    },
+    {
+      "node_type": "Theme",
+      "name": "performance anxiety",
+      "description": "Concern about looking foolish or incompetent in front of others",
+      "source": "llm",
+      "id": "thm_performance_anxiety"
+    },
+    {
+      "node_type": "BodySensation",
+      "description": "giant crab clinging to calf",
+      "location": "calf",
+      "quality": "pressure",
+      "confidence": "stated",
+      "id": "bs_dream_2026_04_27_0"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Providing emotional support through my friend's divorce",
+      "start_date": "2025-08-20",
+      "description": "My marriage ended earlier this year. The paperwork is mostly done but the emotional math isn't. I'm relearning what my own life looks like \u2014 routines, space, who I am without that partnership as a reference point.",
+      "summary": "You are navigating the profound identity shift that follows the end of a marriage, moving beyond the legal dissolution to grapple with the deeper emotional work of untangling years of shared life. This period centers on rediscovering your individual self after existing within the framework of partnership, as you establish new rhythms and reclaim personal space. The tension between practical closure and ongoing emotional processing suggests you're in a liminal space between your former coupled identity and an emerging sense of autonomous selfhood.",
+      "status": "background",
+      "id": "lcw_providing_emotional_supp"
     }
   ],
   "edges": [
@@ -616,7 +770,7 @@
     },
     {
       "edge_type": "activates",
-      "frequency": 2,
+      "frequency": 3,
       "source": "lcw_new_role",
       "target": "thm_navigation_failure",
       "key": "activates"
@@ -675,6 +829,27 @@
       "frequency": 1,
       "source": "lcw_new_role",
       "target": "thm_isolation_in_crisis",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_institutional_hostility",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_escalating_obstacles",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_new_role",
+      "target": "thm_performance_anxiety",
       "key": "activates"
     },
     {
@@ -1616,29 +1791,29 @@
     },
     {
       "edge_type": "expresses",
-      "source": "dream_2026_04_24",
       "strength": "strong",
+      "source": "dream_2026_04_24",
       "target": "thm_imposter_syndrome",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_2026_04_24",
       "strength": "strong",
+      "source": "dream_2026_04_24",
       "target": "thm_regression_under_pressure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_2026_04_24",
       "strength": "strong",
+      "source": "dream_2026_04_24",
       "target": "thm_professional_legitimacy_anxiety",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
-      "source": "dream_2026_04_24",
       "strength": "moderate",
+      "source": "dream_2026_04_24",
       "target": "thm_isolation_in_crisis",
       "key": "expresses"
     },
@@ -1716,6 +1891,233 @@
       "frequency": 1,
       "source": "sym_four_children_each",
       "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "features",
+      "role": "active",
+      "source": "dream_2026_04_27",
+      "target": "char_shawna",
+      "key": "features"
+    },
+    {
+      "edge_type": "features",
+      "role": "active",
+      "source": "dream_2026_04_27",
+      "target": "char_shop_guy",
+      "key": "features"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_2026_04_27",
+      "target": "char_brother_s_wife",
+      "key": "features"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_2026_04_27",
+      "target": "sym_converging_handrails",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_2026_04_27",
+      "target": "sym_lyft_with_wrong_address",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_2026_04_27",
+      "target": "sym_giant_crab",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_2026_04_27",
+      "target": "sym_ruler",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_2026_04_27",
+      "target": "sym_prickly_bushes",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_2026_04_27",
+      "target": "set_undergrad_campus",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_2026_04_27",
+      "target": "set_building_with_enclosed_stairs",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_2026_04_27",
+      "target": "set_random_shop",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "building structure being unhelpful and hostile",
+      "confidence": "stated",
+      "source": "dream_2026_04_27",
+      "target": "emo_anger",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "falling in prickly bushes",
+      "confidence": "stated",
+      "source": "dream_2026_04_27",
+      "target": "emo_annoyance",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "giant crab clinging to leg",
+      "confidence": "stated",
+      "source": "dream_2026_04_27",
+      "target": "emo_disgust",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "crab's claws and touching it",
+      "confidence": "stated",
+      "source": "dream_2026_04_27",
+      "target": "emo_fear",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "not being able to find class and navigation failures",
+      "confidence": "inferred",
+      "source": "dream_2026_04_27",
+      "target": "emo_frustration",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_2026_04_27",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_2026_04_27",
+      "target": "thm_institutional_hostility",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_2026_04_27",
+      "target": "thm_escalating_obstacles",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_2026_04_27",
+      "target": "thm_performance_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "includes_sensation",
+      "source": "dream_2026_04_27",
+      "target": "bs_dream_2026_04_27_0",
+      "key": "includes_sensation"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_27",
+      "target": "lcw_new_role",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_giant_crab",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_lyft_with_wrong_address",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_lyft_with_wrong_address",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_lyft_with_wrong_address",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_lyft_with_wrong_address",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_prickly_bushes",
+      "target": "sym_ruler",
       "key": "co_occurs_with"
     }
   ]
