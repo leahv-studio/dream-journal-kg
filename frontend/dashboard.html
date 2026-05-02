@@ -6,14 +6,15 @@
   <title>dreama</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
 
   <style>
     /* ── Variables ─────────────────────────────────────────── */
     :root {
       --font-display: 'Cormorant Garamond', serif;
-      --font-ui: 'DM Sans', sans-serif;
+      --font-ui:      'Figtree', sans-serif;
+      --font-prose:   'Lora', serif;
 
       --color-bg:           #F2F0ED;
       --color-surface:      #ECEAE6;
@@ -45,6 +46,7 @@
 
     body {
       font-family: var(--font-ui);
+      letter-spacing: 0.02em;
       background:
         radial-gradient(ellipse 75% 55% at 52% 4%,  rgba(176,158,201,0.22) 0%, transparent 68%),
         radial-gradient(ellipse 50% 42% at 8%  18%,  rgba(61,78,138,0.11)  0%, transparent 58%),
@@ -240,6 +242,7 @@
       font-weight: 600;
       color: var(--color-ink);
       line-height: 1;
+      letter-spacing: normal;
     }
 
     .trend-label {
@@ -444,6 +447,7 @@
       font-style: italic;
       font-size: 18px;
       color: var(--color-ink-faint);
+      letter-spacing: normal;
     }
 
     /* Legend */
@@ -512,6 +516,7 @@
       color: var(--color-ink);
       line-height: 1.2;
       word-break: break-word;
+      letter-spacing: normal;
     }
 
     .inspect-type {
@@ -604,6 +609,7 @@
       font-family: var(--font-display);
       font-style: italic;
       font-size: 20px;
+      letter-spacing: normal;
     }
 
     /* ── Add New ───────────────────────────────────────────── */
@@ -661,7 +667,7 @@
     .add-view.active { display: flex; }
 
     #add-tell-me {
-      font-family: var(--font-display);
+      font-family: var(--font-prose);
       font-size: 52px;
       font-weight: 300;
       color: var(--color-ink-soft);
@@ -716,6 +722,7 @@
     .add-msg.assistant {
       background: rgba(176,158,201,0.14);
       color: var(--color-ink);
+      font-family: var(--font-prose);
       align-self: flex-start;
     }
 
@@ -836,6 +843,7 @@
       font-size: 24px;
       font-weight: 400;
       color: var(--color-ink);
+      letter-spacing: normal;
     }
 
     .add-review-date { font-size: 13px; color: var(--color-ink-faint); }
@@ -866,6 +874,7 @@
       font-size: 15px;
       font-family: var(--font-display);
       font-style: italic;
+      letter-spacing: normal;
       transition: border-color 0.15s;
     }
 
@@ -1029,6 +1038,7 @@
       font-size: 28px;
       font-weight: 400;
       color: var(--color-ink);
+      letter-spacing: normal;
     }
 
     .add-success-detail { font-size: 13px; color: var(--color-ink-soft); }
@@ -1065,31 +1075,48 @@
     .add-btn-another:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
 
     /* ── Waking Life ───────────────────────────────────────── */
-    #section-waking { flex-direction: column; }
+    #section-waking { flex-direction: row; }
 
     .waking-header {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: 38px;
-      color: var(--color-ink);
+      font-family: var(--font-prose);
+      font-weight: 300;
+      font-size: 28px;
+      color: var(--color-ink-soft);
       letter-spacing: 0.01em;
+      line-height: 1.2;
     }
 
-    .wl-scroll { flex: 1; overflow-y: auto; padding: 36px 48px 60px; }
-
-    .wl-inner {
-      max-width: 720px;
-      margin: 0 auto;
+    /* Left rail */
+    .wl-rail {
+      width: 280px;
+      flex-shrink: 0;
+      background: var(--color-surface);
+      border-right: 1px solid var(--color-border);
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 20px;
+      padding: 32px 24px 28px;
+      overflow-y: auto;
     }
 
-    .wl-top {
+    .wl-rail .wl-add-btn {
+      width: 100%;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    /* Right column */
+    .wl-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 48px 60px;
+    }
+
+    .wl-body-inner {
+      max-width: 600px;
       display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 16px;
+      flex-direction: column;
+      gap: 20px;
     }
 
     .wl-add-btn {
@@ -1126,6 +1153,7 @@
       font-size: 19px;
       font-weight: 400;
       color: var(--color-ink);
+      letter-spacing: normal;
     }
 
     .wl-field { display: flex; flex-direction: column; gap: 5px; }
@@ -1189,19 +1217,23 @@
     .wl-btn-save:hover:not(:disabled) { background: var(--color-purple-deep); }
 
     /* Status groups */
-    .wl-group { display: flex; flex-direction: column; gap: 8px; }
+    .wl-group { display: flex; flex-direction: column; gap: 10px; }
 
-    .wl-group-header { display: flex; align-items: center; gap: 6px; }
+    .wl-group-header { display: flex; align-items: center; gap: 8px; }
 
     .wl-group-label {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--color-ink-faint);
+      letter-spacing: 0.07em;
+      color: var(--color-ink-soft);
     }
 
-    .wl-group-count { font-size: 11px; color: var(--color-ink-faint); }
+    .wl-group-count {
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      font-weight: 400;
+    }
 
     .wl-group-empty {
       font-size: 13px;
@@ -1211,35 +1243,36 @@
 
     /* Chip cards */
     .wl-chip-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 8px;
+      background: #e4ecf4;
+      border: none;
+      border-radius: 12px;
       overflow: hidden;
-      transition: border-color 0.15s;
+      transition: filter 0.2s, transform 0.2s;
     }
 
-    .wl-chip-card:hover { border-color: var(--color-purple-light); }
+    .wl-chip-card:hover { filter: brightness(1.06); transform: translateY(-1px); }
 
     .wl-chip-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 10px;
-      padding: 11px 14px;
+      padding: 16px 18px 10px;
       cursor: pointer;
       user-select: none;
     }
 
     .wl-chip-left {
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
       flex: 1;
       min-width: 0;
     }
 
     .wl-chip-label {
-      font-size: 14px;
+      font-size: 15px;
       color: var(--color-ink);
       font-weight: 500;
       white-space: nowrap;
@@ -1257,51 +1290,60 @@
     .wl-chip-right {
       display: flex;
       align-items: center;
-      gap: 8px;
       flex-shrink: 0;
+      align-self: stretch;
+      padding-left: 8px;
     }
 
     .wl-status-badge {
       font-size: 10px;
       font-weight: 500;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 3px 9px;
-      border-radius: 999px;
+      letter-spacing: 0.08em;
+      padding: 0;
+      border-radius: 0;
       cursor: pointer;
-      border: 1px solid;
+      border: none;
+      background: none;
       transition: opacity 0.15s;
       white-space: nowrap;
     }
 
-    .wl-status-badge:hover { opacity: 0.75; }
+    .wl-status-badge:hover { opacity: 0.6; }
 
-    .wl-status-badge.fg       { background: var(--color-purple); border-color: var(--color-purple); color: #fff; }
-    .wl-status-badge.bg       { background: transparent; border-color: var(--color-purple); color: var(--color-purple); }
-    .wl-status-badge.dormant  { background: transparent; border-color: var(--color-ink-faint); color: var(--color-ink-faint); }
-    .wl-status-badge.archived { background: transparent; border-color: var(--color-border); color: var(--color-ink-faint); }
+    .wl-status-badge.fg       { color: rgba(228,240,255,0.55); }
+    .wl-status-badge.bg       { color: rgba(210,228,252,0.55); }
+    .wl-status-badge.dormant  { color: #6a88a6; }
+    .wl-status-badge.archived { color: #8a9eae; }
 
     .wl-expand-icon {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--color-ink-faint);
-      transition: transform 0.2s;
+      transition: transform 0.22s;
       flex-shrink: 0;
+      margin-top: 1px;
     }
 
     .wl-chip-card.open .wl-expand-icon { transform: rotate(180deg); }
 
     .wl-chip-body {
-      display: none;
-      padding: 10px 14px 14px;
-      border-top: 1px solid var(--color-border);
+      display: flex;
+      padding: 0 18px 16px;
+      border-top: none;
       flex-direction: column;
       gap: 10px;
     }
 
-    .wl-chip-card.open .wl-chip-body { display: flex; }
-
-    .wl-chip-desc { font-size: 13px; color: var(--color-ink-soft); line-height: 1.6; }
-    .wl-chip-desc.empty { color: var(--color-ink-faint); font-style: italic; }
+    .wl-chip-desc {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .wl-chip-desc.empty { font-style: italic; }
 
     .wl-chip-edit-btn {
       background: transparent;
@@ -1329,14 +1371,14 @@
     }
 
     .wl-archive-label {
-      font-size: 11px;
-      font-weight: 500;
+      font-size: 13px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: var(--color-ink-faint);
+      letter-spacing: 0.07em;
+      color: var(--color-ink-soft);
     }
 
-    .wl-archive-count { font-size: 11px; color: var(--color-ink-faint); }
+    .wl-archive-count { font-size: 12px; color: var(--color-ink-soft); font-weight: 400; }
 
     .wl-archive-icon {
       font-size: 10px;
@@ -1349,6 +1391,167 @@
 
     .wl-archive-body { display: none; flex-direction: column; gap: 8px; padding-top: 4px; }
     .wl-archive-open > .wl-archive-body { display: flex; }
+
+    /* ── Blues status palette (:has() for card-level color) ── */
+    .wl-chip-card:has(.wl-status-badge.fg)       { background: #1a2e4a; }
+    .wl-chip-card:has(.wl-status-badge.bg)       { background: #264878; }
+    .wl-chip-card:has(.wl-status-badge.dormant)  { background: #c4d5e6; }
+    .wl-chip-card:has(.wl-status-badge.archived) { background: #e2eaf2; }
+
+    /* Label — near-white on dark cards, dark ink on light */
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label       { color: #f0f5ff; }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label  { color: #1a2c3e; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #334455; }
+
+    /* Date — muted relative to label */
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-date,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-date       { color: rgba(240,245,255,0.52); }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-date  { color: #527090; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-date { color: #7a90a0; }
+
+    /* Desc — readable but secondary */
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-desc,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-desc       { color: rgba(240,245,255,0.80); }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-desc  { color: #2e4a60; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-desc { color: #506070; }
+
+    /* Expand icon per status */
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-expand-icon,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-expand-icon     { color: rgba(240,245,255,0.45); }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-expand-icon  { color: #7a96b2; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-expand-icon { color: #9aaabb; }
+
+    /* Edit button per status */
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-edit-btn,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-edit-btn {
+      border-color: rgba(240,245,255,0.22);
+      color: rgba(240,245,255,0.60);
+    }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-edit-btn:hover,
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-edit-btn:hover {
+      border-color: rgba(240,245,255,0.55);
+      color: rgba(240,245,255,0.92);
+    }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-edit-btn {
+      border-color: rgba(74,112,148,0.35);
+      color: #3a6078;
+    }
+
+    /* ── Status dropdown menu ── */
+    #wl-status-menu {
+      position: fixed;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 4px;
+      min-width: 170px;
+      z-index: 9999;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.06);
+      display: none;
+    }
+    #wl-status-menu.open { display: block; }
+
+    .wl-smenu-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      transition: background 0.1s;
+      user-select: none;
+    }
+    .wl-smenu-item:hover { background: var(--color-surface-deep); color: var(--color-ink); }
+    .wl-smenu-item.active { color: var(--color-ink); font-weight: 500; }
+    .wl-smenu-item.active::after { content: '✓'; margin-left: auto; font-size: 11px; color: var(--color-ink-faint); }
+
+    .wl-smenu-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .wl-smenu-dot.fg       { background: #1a2e4a; }
+    .wl-smenu-dot.bg       { background: #264878; }
+    .wl-smenu-dot.dormant  { background: #c4d5e6; border: 1px solid #7a96b2; }
+    .wl-smenu-dot.archived { background: #e2eaf2; border: 1px solid #9aaabb; }
+
+    .wl-status-badge { margin-top: 2px; }
+    .wl-status-badge::after { content: ' ▾'; font-size: 8px; }
+
+    /* ── Card expand / collapse ── */
+    #wl-groups { display: flex; flex-direction: column; gap: 24px; max-width: 600px; }
+
+    /* Collapsed: 2-line clamp on description */
+    /* (line-clamp already set on .wl-chip-desc) */
+
+    /* No expand arrow when text already fits */
+    .wl-chip-card.wl-no-expand .wl-expand-icon { display: none; }
+    .wl-chip-card.wl-no-expand .wl-chip-header  { cursor: default; }
+
+    /* Expanded: reveal full description */
+    .wl-chip-card.open .wl-chip-desc {
+      -webkit-line-clamp: unset;
+      display: block;
+      overflow: visible;
+    }
+
+    /* ── Rail content ── */
+    .wl-subtitle {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--color-ink-soft);
+      margin: 0;
+      max-width: 580px;
+    }
+
+    .wl-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 16px;
+      background: rgba(45,42,53,0.04);
+      border-radius: 10px;
+      max-width: 500px;
+    }
+
+    .wl-legend-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-family: var(--font-ui);
+    }
+
+    .wl-legend-cloud {
+      flex-shrink: 0;
+      margin-top: 2px;
+      line-height: 0;
+    }
+
+    .wl-legend-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wl-legend-term {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink);
+    }
+
+    .wl-legend-def {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--color-ink-soft);
+    }
   </style>
 </head>
 <body>
@@ -1576,13 +1779,63 @@
 
     <!-- Waking Life -->
     <section id="section-waking" class="section">
-      <div class="wl-scroll">
-        <div class="wl-inner">
 
-          <div class="wl-top">
-            <h1 class="waking-header">Waking Life</h1>
-            <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
-          </div>
+      <!-- Left rail -->
+      <aside class="wl-rail">
+        <h1 class="waking-header">Waking Life</h1>
+        <p class="wl-subtitle">Life context windows are woven into your dream analysis, giving the AI meaningful grounding in what you're living through when you're awake. Status helps the AI interpret your dreams against what's loud in your life and what's quiet — when something you considered dormant surfaces in a dream, we can notice what it reveals.</p>
+        <div class="wl-legend">
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true">
+                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#1a2e4a"/>
+                  </svg>
+                </span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Foreground</span>
+                  <span class="wl-legend-def">What's most alive and present in your waking life right now.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true">
+                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#264878"/>
+                  </svg>
+                </span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Background</span>
+                  <span class="wl-legend-def">Ongoing but not consuming — present, quieter.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true">
+                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#c4d5e6" stroke="#7a96b2" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Dormant</span>
+                  <span class="wl-legend-def">Paused or resolved — no longer active, but still part of your life.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true">
+                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#d8e4ee" stroke="#9aaabb" stroke-width="1.5" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Archived</span>
+                  <span class="wl-legend-def">Excluded from analysis, but remains saved if you ever want to bring it forward again.</span>
+                </div>
+              </div>
+        </div>
+        <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
+      </aside>
+
+      <!-- Right column -->
+      <div class="wl-body">
+        <div class="wl-body-inner">
 
           <!-- Add form (hidden by default) -->
           <div class="wl-form" id="wl-add-form">
@@ -1648,6 +1901,7 @@
 
         </div>
       </div>
+
     </section>
 
   </main>
@@ -1663,6 +1917,28 @@
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
+  }
+
+  // ─── Date formatting ────────────────────────────────────────────────────────
+  // Parse ISO dates as local time (avoid UTC-offset shifting)
+  function _parseLocalDate(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  // "April 30, 2026" — Add New review, inspect drawer
+  function fmtDateFull(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  // "January 2025" — Waking Life card (caller prefixes "Added ")
+  function fmtDateMonthYear(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  }
+  // "Jan 2025" — abbreviated, for graph tooltips / tight labels
+  function fmtDateShort(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   }
 
   // ─── Node colors ────────────────────────────────────────────────────────────
@@ -2067,7 +2343,7 @@
       .attr('dy',           d => computeRadius(d) + 11)
       .attr('text-anchor',  'middle')
       .attr('font-size',    '10px')
-      .attr('font-family',  'DM Sans, sans-serif')
+      .attr('font-family',  'Figtree, sans-serif')
       .attr('fill',         '#6B6778')
       .style('pointer-events', 'none')
       .style('user-select',    'none');
@@ -2136,7 +2412,14 @@
       .filter(([k, v]) => !skip.has(k) && v !== null && v !== undefined && v !== '')
       .map(([k, v]) => {
         const label = k.replace(/_/g, ' ');
-        const val   = typeof v === 'boolean' ? (v ? 'yes' : 'no') : esc(String(v));
+        let val;
+        if (typeof v === 'boolean') {
+          val = v ? 'yes' : 'no';
+        } else if (k === 'date' && typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)) {
+          val = esc(fmtDateFull(v));
+        } else {
+          val = esc(String(v));
+        }
         return `<div class="inspect-row">
           <span class="inspect-key">${esc(label)}</span>
           <span class="inspect-val">${val}</span>
@@ -2386,7 +2669,7 @@
     titleInput.placeholder = suggestedTitle ? 'Edit or accept the suggested title' : 'Give this dream a title…';
 
     const d = extracted.dream || {};
-    document.getElementById('add-review-date-display').textContent = date;
+    document.getElementById('add-review-date-display').textContent = fmtDateFull(date);
     document.getElementById('add-review-narrative').textContent =
       d.raw_narrative || '(no narrative captured)';
 
@@ -2630,7 +2913,7 @@
 
   // ─── Waking Life section ─────────────────────────────────────────────────────
 
-  const WL_STATUS_CYCLE = ['foreground', 'background', 'dormant', 'archived'];
+  let wlMenuLcwId = null;
 
   async function wlLoad() {
     try {
@@ -2661,12 +2944,12 @@
         <div class="wl-chip-header" data-lcwid="${esc(lcw.id)}">
           <div class="wl-chip-left">
             <span class="wl-chip-label">${esc(lcw.label)}</span>
-            ${lcw.start_date ? `<span class="wl-chip-date">${esc(lcw.start_date)}</span>` : ''}
-          </div>
-          <div class="wl-chip-right">
+            ${lcw.start_date ? `<span class="wl-chip-date">Added ${esc(fmtDateMonthYear(lcw.start_date))}</span>` : ''}
             <span class="wl-status-badge ${cls}"
                   data-lcwid="${esc(lcw.id)}"
                   data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
+          </div>
+          <div class="wl-chip-right">
             <span class="wl-expand-icon">▾</span>
           </div>
         </div>
@@ -2720,15 +3003,20 @@
       header.addEventListener('click', e => {
         if (e.target.closest('.wl-status-badge')) return;
         const card = document.getElementById(`wl-chip-${header.dataset.lcwid}`);
-        if (card) card.classList.toggle('open');
+        if (card && !card.classList.contains('wl-no-expand')) card.classList.toggle('open');
       });
     });
 
-    // Status badge → cycle status
+    // Status badge → open status dropdown
     container.querySelectorAll('.wl-status-badge').forEach(badge => {
       badge.addEventListener('click', e => {
         e.stopPropagation();
-        wlCycleStatus(badge.dataset.lcwid, badge.dataset.status);
+        const menu = document.getElementById('wl-status-menu');
+        if (menu.classList.contains('open') && wlMenuLcwId === badge.dataset.lcwid) {
+          wlCloseStatusMenu();
+        } else {
+          wlOpenStatusMenu(badge);
+        }
       });
     });
 
@@ -2747,19 +3035,77 @@
         document.getElementById('wl-archive-group').classList.toggle('wl-archive-open');
       });
     }
+
+    // Hide expand arrow when description already fits within the clamp height
+    container.querySelectorAll('.wl-chip-card').forEach(card => {
+      const desc = card.querySelector('.wl-chip-desc');
+      if (desc && desc.scrollHeight <= desc.clientHeight) {
+        card.classList.add('wl-no-expand');
+      }
+    });
   }
 
-  async function wlCycleStatus(lcwId, currentStatus) {
-    const idx        = WL_STATUS_CYCLE.indexOf(currentStatus);
-    const nextStatus = WL_STATUS_CYCLE[(idx + 1) % WL_STATUS_CYCLE.length];
+  function wlInitStatusMenu() {
+    const menu = document.createElement('div');
+    menu.id = 'wl-status-menu';
+    const opts = [
+      { status: 'foreground', cls: 'fg',       label: 'Foreground' },
+      { status: 'background', cls: 'bg',       label: 'Background' },
+      { status: 'dormant',    cls: 'dormant',  label: 'Dormant'    },
+      { status: 'archived',   cls: 'archived', label: 'Archived'   },
+    ];
+    menu.innerHTML = opts.map(o =>
+      `<div class="wl-smenu-item" data-status="${o.status}" role="menuitem">` +
+      `<span class="wl-smenu-dot ${o.cls}"></span>${o.label}</div>`
+    ).join('');
+    document.body.appendChild(menu);
+
+    menu.addEventListener('click', e => {
+      const item = e.target.closest('.wl-smenu-item');
+      if (item && wlMenuLcwId) wlSetStatus(wlMenuLcwId, item.dataset.status);
+      wlCloseStatusMenu();
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#wl-status-menu') && !e.target.closest('.wl-status-badge'))
+        wlCloseStatusMenu();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') wlCloseStatusMenu();
+    });
+  }
+
+  function wlOpenStatusMenu(badge) {
+    const menu = document.getElementById('wl-status-menu');
+    wlMenuLcwId = badge.dataset.lcwid;
+    const cur = badge.dataset.status;
+    menu.querySelectorAll('.wl-smenu-item').forEach(item =>
+      item.classList.toggle('active', item.dataset.status === cur)
+    );
+    const rect  = badge.getBoundingClientRect();
+    const menuW = 170;
+    const left  = Math.min(rect.left, window.innerWidth - menuW - 8);
+    menu.style.top  = (rect.bottom + 6) + 'px';
+    menu.style.left = left + 'px';
+    menu.classList.add('open');
+  }
+
+  function wlCloseStatusMenu() {
+    const menu = document.getElementById('wl-status-menu');
+    if (menu) menu.classList.remove('open');
+    wlMenuLcwId = null;
+  }
+
+  async function wlSetStatus(lcwId, newStatus) {
     try {
       await fetch(`/api/life-context-windows/${lcwId}/status`, {
         method:  'PUT',
         headers: {'Content-Type': 'application/json'},
-        body:    JSON.stringify({status: nextStatus}),
+        body:    JSON.stringify({ status: newStatus }),
       });
       const lcw = wlLcws.find(l => l.id === lcwId);
-      if (lcw) lcw.status = nextStatus;
+      if (lcw) lcw.status = newStatus;
       wlRender();
       allLCWs = wlLcws.slice();
       renderRightNow();
@@ -2863,6 +3209,7 @@
   }
 
   // Waking Life event listeners
+  wlInitStatusMenu();
   document.getElementById('wl-add-toggle-btn').addEventListener('click', wlToggleAddForm);
   document.getElementById('wl-add-cancel-btn').addEventListener('click', () => {
     document.getElementById('wl-add-form').classList.remove('open');

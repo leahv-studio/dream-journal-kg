@@ -19,7 +19,7 @@
       "start_date": "2025-01-16",
       "description": "Started the new role in January \u2014 excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
       "summary": "A high-demand period of simultaneous transitions \u2014 new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
-      "status": "foreground",
+      "status": "background",
       "id": "lcw_new_role"
     },
     {
@@ -728,7 +728,7 @@
       "start_date": "2025-08-20",
       "description": "My marriage ended earlier this year. The paperwork is mostly done but the emotional math isn't. I'm relearning what my own life looks like \u2014 routines, space, who I am without that partnership as a reference point.",
       "summary": "You are navigating the profound identity shift that follows the end of a marriage, moving beyond the legal dissolution to grapple with the deeper emotional work of untangling years of shared life. This period centers on rediscovering your individual self after existing within the framework of partnership, as you establish new rhythms and reclaim personal space. The tension between practical closure and ongoing emotional processing suggests you're in a liminal space between your former coupled identity and an emerging sense of autonomous selfhood.",
-      "status": "background",
+      "status": "foreground",
       "id": "lcw_providing_emotional_supp"
     }
   ],
