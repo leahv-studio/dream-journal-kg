@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date as _date
 
 from dotenv import load_dotenv
@@ -149,8 +150,18 @@ def api_extract():
 
     data = request.json or {}
     dream_date = data.get("date") or _date.today().isoformat()
+    context_block = build_context_block()
+    history_snapshot = list(conversation_history)
 
-    extracted = extract_dream(conversation_history, dream_date, build_context_block())
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        future_extract = executor.submit(extract_dream, history_snapshot, dream_date, context_block)
+        future_title   = executor.submit(_generate_dream_title, history_snapshot)
+        extracted      = future_extract.result()
+        suggested_title = ""
+        try:
+            suggested_title = future_title.result()
+        except Exception as e:
+            print(f"Title generation failed (non-fatal): {e}")
 
     print("\n" + "=" * 60)
     print("EXTRACTION RESULT")
@@ -159,13 +170,6 @@ def api_extract():
     print("=" * 60 + "\n")
 
     divergence = _detect_divergence(extracted, dg, dream_date)
-
-    raw_narrative = extracted.get("dream", {}).get("raw_narrative", "")
-    suggested_title = ""
-    try:
-        suggested_title = _generate_dream_title(raw_narrative, extracted)
-    except Exception as e:
-        print(f"Title generation failed (non-fatal): {e}")
 
     return jsonify({
         "extracted": extracted,
@@ -427,21 +431,17 @@ def filter_dreams():
     ))
 
 
-def _generate_dream_title(raw_narrative: str, extracted: dict) -> str:
-    """One-shot call to generate a short evocative title for the dream."""
-    themes_text = ", ".join(t["name"] for t in extracted.get("themes", []))
-    symbols_text = ", ".join(s["name"] for s in extracted.get("symbols", []))
-    user_msg = (
-        f"Dream narrative:\n{raw_narrative}\n\n"
-        f"Themes: {themes_text or 'none'}\n"
-        f"Symbols: {symbols_text or 'none'}\n\n"
-        "Generate a title for this dream."
+def _generate_dream_title(conversation_history: list[dict]) -> str:
+    """One-shot title generation directly from the conversation transcript."""
+    transcript = "\n".join(
+        f"{'User' if m['role'] == 'user' else 'Assistant'}: {m['content']}"
+        for m in conversation_history
     )
     response = ai.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=60,
         system=TITLE_SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_msg}],
+        messages=[{"role": "user", "content": transcript}],
     )
     return response.content[0].text.strip().strip('"').strip("'")
 
