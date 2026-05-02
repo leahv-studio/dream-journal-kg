@@ -863,21 +863,31 @@
       align-items: center;
       justify-content: center;
       padding: 80px 20px;
-      gap: 16px;
+      gap: 24px;
     }
 
-    .add-spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid var(--color-border);
-      border-top-color: var(--color-purple);
-      border-radius: 50%;
-      animation: add-spin 0.7s linear infinite;
+    .add-loading-cloud {
+      animation: cloud-float 3.6s ease-in-out infinite;
+      opacity: 0.92;
     }
 
-    @keyframes add-spin { to { transform: rotate(360deg); } }
+    @keyframes cloud-float {
+      0%   { transform: translateY(0);    opacity: 0.92; }
+      50%  { transform: translateY(-14px); opacity: 0.72; }
+      100% { transform: translateY(0);    opacity: 0.92; }
+    }
 
-    .add-loading-label { font-size: 14px; color: var(--color-ink-faint); }
+    .add-loading-phrase {
+      font-family: var(--font-prose);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      transition: opacity 0.6s ease;
+      min-height: 1.4em;
+      text-align: center;
+    }
+
+    .add-loading-phrase.fade { opacity: 0; }
 
     .add-review-header {
       display: flex;
@@ -885,23 +895,21 @@
       align-items: baseline;
       flex-wrap: wrap;
       gap: 6px;
+      margin-bottom: 12px;
     }
 
     .add-review-title {
-      font-family: var(--font-display);
+      font-family: var(--font-prose);
       font-size: 24px;
       font-weight: 400;
-      color: var(--color-ink);
+      color: var(--color-purple-deep);
       letter-spacing: normal;
     }
 
-    .add-review-date { font-size: 13px; color: var(--color-ink-faint); }
+    .add-review-date { font-size: 13px; color: var(--color-ink-soft); }
 
     .add-title-wrap {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 14px 16px;
+      padding: 0;
     }
 
     .add-title-label {
@@ -909,7 +917,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
       margin-bottom: 8px;
     }
 
@@ -928,16 +936,12 @@
     }
 
     .add-title-input:focus { outline: none; border-color: var(--color-purple); font-style: normal; }
-    .add-title-hint { font-size: 11px; color: var(--color-ink-faint); margin-top: 6px; }
+    .add-title-hint { font-size: 11px; color: var(--color-ink-soft); margin-top: 6px; }
 
     .add-narrative {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 14px 16px;
       font-size: 14px;
       line-height: 1.65;
-      color: var(--color-ink-soft);
+      color: var(--color-ink);
       font-style: italic;
     }
 
@@ -954,14 +958,19 @@
 
     .add-meta-chip strong { color: var(--color-ink); }
 
-    .add-review-section { display: flex; flex-direction: column; gap: 8px; }
+    .add-review-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
 
     .add-section-title {
       font-size: 11px;
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
     }
 
     .add-item-row { display: flex; flex-wrap: wrap; gap: 7px; }
@@ -977,12 +986,12 @@
       font-family: var(--font-ui);
     }
 
-    .ritem-character    { border-color: rgba(123,142,201,0.35); background: rgba(123,142,201,0.07); }
-    .ritem-symbol       { border-color: rgba(176,128,144,0.35); background: rgba(176,128,144,0.07); }
-    .ritem-setting      { border-color: rgba(92,88,104,0.3);    background: rgba(92,88,104,0.05);   }
-    .ritem-emotion      { border-color: rgba(196,122,138,0.35); background: rgba(196,122,138,0.07); }
-    .ritem-theme        { border-color: rgba(61,78,138,0.35);   background: rgba(61,78,138,0.07);   }
-    .ritem-bodysensation{ border-color: rgba(155,151,168,0.35); background: rgba(155,151,168,0.07); }
+    .ritem-character,
+    .ritem-symbol,
+    .ritem-setting,
+    .ritem-emotion,
+    .ritem-theme,
+    .ritem-bodysensation { border-color: var(--color-border); background: rgba(255,255,255,0.45); }
 
     .add-ritem .iname   { color: var(--color-ink); }
     .add-ritem .idetail { color: var(--color-ink-soft); font-size: 12px; }
@@ -1010,27 +1019,14 @@
       white-space: nowrap;
     }
 
-    .badge-stated    { background: rgba(90,138,106,0.15);  color: #4a7a5a; }
-    .badge-inferred  { background: rgba(201,151,58,0.15);  color: #9a7020; }
-    .badge-ambiguous { background: rgba(168,164,181,0.15); color: var(--color-ink-faint); }
-    .badge-strong    { background: rgba(74,56,112,0.2);    color: var(--color-purple-deep); }
-    .badge-moderate  { background: rgba(124,107,158,0.15); color: var(--color-purple); }
-    .badge-weak      { background: rgba(176,158,201,0.12); color: var(--color-purple-light); }
+    .badge-stated,
+    .badge-inferred,
+    .badge-ambiguous,
+    .badge-strong,
+    .badge-moderate,
+    .badge-weak { background: var(--color-purple-light); color: var(--color-purple-deep); }
 
-    .add-divergence {
-      background: rgba(201,151,58,0.07);
-      border: 1px solid rgba(201,151,58,0.28);
-      border-radius: 10px;
-      padding: 13px 16px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: #8A6A20;
-    }
-
-    .add-divergence .div-title { font-weight: 600; display: block; margin-bottom: 4px; }
-    .add-divergence a { color: var(--color-purple); text-decoration: underline; cursor: pointer; }
-
-    .add-review-actions {
+.add-review-actions {
       display: flex;
       gap: 10px;
       justify-content: flex-end;
@@ -1764,15 +1760,24 @@
           <!-- View: Loading -->
           <div id="add-loading-view" class="add-view">
             <div class="add-loading-wrap">
-              <div class="add-spinner"></div>
-              <div class="add-loading-label">Extracting dream data…</div>
+              <svg class="add-loading-cloud" width="64" height="48" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                         C3.5 8, 7.5 5, 11 7.5
+                         C12.5 4, 16.5 2.5, 20.5 5.5
+                         C22 3, 26.5 3.5, 27 8.5
+                         C29.5 9, 29.5 14.5, 26.5 15.5
+                         C24 18, 10.5 18, 7 18 Z"
+                  stroke="var(--color-purple)" stroke-width="1.2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="add-loading-phrase" id="add-loading-phrase">finding the threads...</div>
             </div>
           </div>
 
           <!-- View: Review -->
           <div id="add-review-view" class="add-view">
             <div class="add-review-header">
-              <div class="add-review-title">Review Extracted Data</div>
+              <div class="add-review-title">what surfaced</div>
               <span class="add-review-date" id="add-review-date-display"></span>
             </div>
 
@@ -1789,13 +1794,7 @@
 
             <div id="add-review-sections"></div>
 
-            <div id="add-divergence" class="add-divergence" style="display:none">
-              <span class="div-title">Something may have shifted</span>
-              <span id="add-div-text"></span>
-              &nbsp;<a href="#" id="add-div-update">Update your life context →</a>
-            </div>
-
-            <div class="add-review-actions">
+<div class="add-review-actions">
               <button class="add-btn add-btn-ghost"    id="add-discard-btn">Discard</button>
               <button class="add-btn add-btn-outline"  id="add-back-btn">Back to chat</button>
               <button class="add-btn add-btn-primary"  id="add-confirm-btn">Confirm &amp; Save to Graph</button>
@@ -2658,6 +2657,36 @@
   }
 
   // Save → Extract → Review
+  // ─── Loading phrase cycler ───────────────────────────────────────────────────
+  const _loadingPhrases = [
+    'finding the threads...',
+    'reading between the images...',
+    'piecing it together...',
+    'almost there...',
+  ];
+  let _loadingPhraseIdx      = 0;
+  let _loadingPhraseInterval = null;
+
+  function _startLoadingCycler() {
+    const el = document.getElementById('add-loading-phrase');
+    _loadingPhraseIdx = 0;
+    el.textContent = _loadingPhrases[0];
+    el.classList.remove('fade');
+    _loadingPhraseInterval = setInterval(() => {
+      el.classList.add('fade');
+      setTimeout(() => {
+        _loadingPhraseIdx = (_loadingPhraseIdx + 1) % _loadingPhrases.length;
+        el.textContent = _loadingPhrases[_loadingPhraseIdx];
+        el.classList.remove('fade');
+      }, 650);
+    }, 2800);
+  }
+
+  function _stopLoadingCycler() {
+    clearInterval(_loadingPhraseInterval);
+    _loadingPhraseInterval = null;
+  }
+
   async function addSaveToJournal() {
     if (addState.extracted && addState.exchangeCount === addState.extractedAtExchangeCount) {
       addRenderReviewCard(addState.extracted, addState.date, addState.divergence,
@@ -2668,6 +2697,7 @@
 
     addState.date = document.getElementById('add-dream-date').value;
     addShowView('add-loading-view');
+    _startLoadingCycler();
 
     try {
       const res = await fetch('/api/extract', {
@@ -2687,8 +2717,10 @@
         addState.extracted.dream.title = data.suggested_title;
       }
       addRenderReviewCard(data.extracted, data.date, data.divergence, data.suggested_title);
+      _stopLoadingCycler();
       addShowView('add-review-view');
     } catch (err) {
+      _stopLoadingCycler();
       addShowView('add-chat-view');
       alert(`Could not extract dream: ${err.message}`);
     }
@@ -2763,18 +2795,6 @@
       }, 'body_sensations', 'bodysensation');
     }
 
-    // Divergence notice
-    const divEl = document.getElementById('add-divergence');
-    if (divergence && (divergence.new_themes || []).length) {
-      const list = divergence.new_themes.map(t => `<em>${esc(t)}</em>`).join(', ');
-      document.getElementById('add-div-text').innerHTML =
-        `The theme${divergence.new_themes.length > 1 ? 's' : ''} ${list} ` +
-        `haven't appeared in your "${esc(divergence.context_label)}" context before. ` +
-        `Has anything shifted in your life recently?`;
-      divEl.style.display = 'block';
-    } else {
-      divEl.style.display = 'none';
-    }
   }
 
   function addBuildSection(container, title, items, formatter, key, typeClass) {
@@ -2905,9 +2925,6 @@
     e.preventDefault(); switchSection('waking');
   });
 
-  document.getElementById('add-div-update').addEventListener('click', e => {
-    e.preventDefault(); switchSection('waking');
-  });
 
   document.getElementById('add-message-input').addEventListener('keydown', e => {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addSendMessage(); }
