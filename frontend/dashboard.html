@@ -192,26 +192,7 @@
       background: var(--color-surface-deep);
     }
 
-    /* Right Now widget */
-    .lcw-chip-group { display: flex; flex-wrap: wrap; gap: 4px; }
-
-    .lcw-chip {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      background: var(--color-purple-light);
-      color: var(--color-purple-deep);
-    }
-
-    .lcw-chip.bg-chip {
-      background: transparent;
-      border: 1px solid var(--color-purple-light);
-      color: var(--color-ink-soft);
-    }
-
-    .panel-link {
+.panel-link {
       font-size: 12px;
       color: var(--color-purple);
       text-decoration: none;
@@ -616,8 +597,7 @@
 
     #add-ctx-banner {
       flex-shrink: 0;
-      background: var(--color-surface);
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid rgba(176,158,201,0.18);
       padding: 8px 24px;
       display: flex;
       align-items: center;
@@ -631,28 +611,80 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
       white-space: nowrap;
     }
 
     .add-ctx-chip {
-      font-size: 12px;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: rgba(124,107,158,0.14);
-      color: var(--color-purple);
+      font-family: var(--font-prose);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--color-ink-soft);
       white-space: nowrap;
     }
 
     #add-ctx-update {
       margin-left: auto;
       font-size: 12px;
-      color: var(--color-purple);
+      color: var(--color-ink-soft);
       text-decoration: none;
       white-space: nowrap;
     }
 
     #add-ctx-update:hover { text-decoration: underline; }
+
+    .ctx-tier {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-soft);
+    }
+
+    .ctx-more {
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      opacity: 0.7;
+    }
+
+    .ctx-sep {
+      color: var(--color-ink-soft);
+      opacity: 0.45;
+      margin: 0 4px;
+    }
+
+    /* ── Global footer ─────────────────────────────────────── */
+    .app-footer {
+      flex-shrink: 0;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(176,158,201,0.18);
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 17px;
+      letter-spacing: normal;
+      color: var(--color-ink-soft);
+    }
+
+    .footer-sub {
+      font-size: 14px;
+      color: var(--color-ink-soft);
+    }
+
+    .footer-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
 
     #add-scroll { flex: 1; overflow-y: auto; }
 
@@ -667,17 +699,18 @@
 
     #add-tell-me {
       font-family: var(--font-prose);
-      font-size: 52px;
+      font-size: 48px;
       font-weight: 300;
-      color: var(--color-ink-soft);
+      color: var(--color-purple-deep);
       text-align: center;
       line-height: 1;
+      margin-bottom: 20px;
     }
 
     #add-empty-state {
       flex-direction: column;
       align-items: center;
-      gap: 14px;
+      gap: 5px;
       padding: 32px 0 24px;
     }
 
@@ -690,8 +723,7 @@
     }
 
     #add-conversation {
-      background: rgba(255,255,255,0.60);
-      border: 1px solid rgba(176,158,201,0.35);
+      background: rgba(255,255,255,0.20);
       border-radius: 10px;
       padding: 16px;
       min-height: 200px;
@@ -700,7 +732,6 @@
       flex-direction: column;
       gap: 10px;
       margin-bottom: -8px;
-      box-shadow: 0 4px 32px rgba(74,56,112,0.10), 0 1px 4px rgba(74,56,112,0.06);
     }
 
     .add-msg {
@@ -806,6 +837,25 @@
 
     .add-btn-save:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
     .add-btn-save:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .add-extract-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .add-extract-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 0;
+    }
+
+    .add-extract-prompt {
+      font-family: var(--font-prose);
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      text-align: center;
+    }
 
     .add-loading-wrap {
       display: flex;
@@ -1511,10 +1561,7 @@
     .wl-legend {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 14px 16px;
-      background: rgba(45,42,53,0.04);
-      border-radius: 10px;
+      gap: 20px;
       max-width: 500px;
     }
 
@@ -1586,13 +1633,6 @@
       <!-- Left panel -->
       <aside class="left-panel">
         <div class="panel-card">
-          <div class="panel-card-label">Right Now</div>
-          <div id="rightnow-content">
-            <p class="panel-card-placeholder">Loading…</p>
-          </div>
-        </div>
-
-        <div class="panel-card">
           <div class="panel-card-label">Trends</div>
           <div id="trends-content">
             <p class="panel-card-placeholder">Loading…</p>
@@ -1656,11 +1696,10 @@
 
       <!-- Context banner -->
       <div id="add-ctx-banner">
-        <span class="add-ctx-label">Now:</span>
         <div id="add-ctx-chips">
           <span style="font-size:12px;color:var(--color-ink-faint);font-style:italic">Loading…</span>
         </div>
-        <a href="#" id="add-ctx-update">Update context →</a>
+        <a href="#" id="add-ctx-update">Update →</a>
       </div>
 
       <!-- Scrollable content -->
@@ -1682,7 +1721,6 @@
                   stroke="#4A3870" stroke-width="2" fill="none"
                   stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <div class="add-wordmark">dreama</div>
             </div>
 
             <div id="add-tell-me">tell me</div>
@@ -1714,9 +1752,13 @@
               </button>
             </div>
 
-            <button class="add-btn-save" id="add-save-btn" disabled>
-              Extract & Review
-            </button>
+            <div class="add-extract-wrap" id="add-extract-wrap" style="display:none">
+              <hr class="add-extract-divider">
+              <p class="add-extract-prompt">Ready to save this dream?</p>
+              <button class="add-btn-save" id="add-save-btn" disabled>
+                Extract & review dream
+              </button>
+            </div>
           </div>
 
           <!-- View: Loading -->
@@ -1781,7 +1823,7 @@
       <!-- Left rail -->
       <aside class="wl-rail">
         <h1 class="waking-header">Waking Life</h1>
-        <p class="wl-subtitle">Life context windows are woven into your dream analysis, giving the AI meaningful grounding in what you're living through when you're awake. Status helps the AI interpret your dreams against what's loud in your life and what's quiet — when something you considered dormant surfaces in a dream, we can notice what it reveals.</p>
+        <p class="wl-subtitle">Life context windows are woven into your dream analysis. What's present in our waking lives follows us into our dreams. When something you considered dormant surfaces, we can notice what it reveals.</p>
         <div class="wl-legend">
               <div class="wl-legend-row">
                 <span class="wl-legend-cloud" aria-hidden="true">
@@ -1904,6 +1946,15 @@
 
   </main>
 
+  <footer class="app-footer">
+    <svg width="15" height="11" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M7 18 C3.5 18, 1.5 14, 4.5 12 C3.5 8, 7.5 5, 11 7.5 C12.5 4, 16.5 2.5, 20.5 5.5 C22 3, 26.5 3.5, 27 8.5 C29.5 9, 29.5 14.5, 26.5 15.5 C24 18, 10.5 18, 7 18 Z"
+        stroke="#6B6778" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="footer-wordmark">dreama</span>
+    <span class="footer-sub">by leah · <a href="#" class="footer-link">contact</a></span>
+  </footer>
+
   <!-- Tooltip (fixed, outside main) -->
   <div id="graph-tooltip" class="graph-tooltip"></div>
 
@@ -1990,7 +2041,6 @@
       allStats   = stats;
       allSymbols = symbols;
       allThemes  = themes;
-      renderRightNow();
       renderTrends();
       wlLcws = lcws.slice();
       wlRender();
@@ -2000,37 +2050,6 @@
       document.getElementById('graph-container').innerHTML =
         '<div class="graph-empty">Could not load graph data.</div>';
     }
-  }
-
-  // ─── Left panel: Right Now ───────────────────────────────────────────────────
-  function renderRightNow() {
-    const el = document.getElementById('rightnow-content');
-    const fg = allLCWs.filter(c => c.status === 'foreground');
-    const bg = allLCWs.filter(c => c.status === 'background');
-
-    if (fg.length === 0 && bg.length === 0) {
-      el.innerHTML = `<p class="panel-empty-prompt">Add your waking life context to enrich your dream analysis. <a href="#" class="panel-link" id="btn-goto-waking">→</a></p>`;
-      document.getElementById('btn-goto-waking').addEventListener('click', e => {
-        e.preventDefault(); switchSection('waking');
-      });
-      return;
-    }
-
-    let html = '<div class="lcw-chip-group">';
-    fg.forEach(c => { html += `<span class="lcw-chip">${esc(c.label)}</span>`; });
-    html += '</div>';
-
-    if (bg.length > 0) {
-      html += '<div class="lcw-chip-group" style="margin-top:6px">';
-      bg.forEach(c => { html += `<span class="lcw-chip bg-chip">${esc(c.label)}</span>`; });
-      html += '</div>';
-    }
-
-    html += `<a href="#" class="panel-link" id="btn-manage-waking">Manage →</a>`;
-    el.innerHTML = html;
-    document.getElementById('btn-manage-waking').addEventListener('click', e => {
-      e.preventDefault(); switchSection('waking');
-    });
   }
 
   // ─── Left panel: Trends ─────────────────────────────────────────────────────
@@ -2538,22 +2557,37 @@
     const hasMessages = document.getElementById('add-conversation').children.length > 0;
     document.getElementById('add-empty-state').style.display   = hasMessages ? 'none'  : 'flex';
     document.getElementById('add-conversation').style.display  = hasMessages ? 'flex'  : 'none';
+    document.getElementById('add-extract-wrap').style.display  = hasMessages ? 'flex'  : 'none';
   }
 
   // Context banner
   async function addLoadContext() {
+    const el = document.getElementById('add-ctx-chips');
     try {
-      const ctxs = await fetch('/api/context').then(r => r.json());
-      const el   = document.getElementById('add-ctx-chips');
-      const list = Array.isArray(ctxs) ? ctxs : [];
-      if (!list.length) {
-        el.innerHTML = '<em style="font-size:12px;color:var(--color-ink-faint)">No foreground contexts set</em>';
-      } else {
-        el.innerHTML = list.map(c => `<span class="add-ctx-chip">${esc(c.label)}</span>`).join('');
+      const list = await fetch('/api/life-context-windows').then(r => r.json());
+      const byDate = arr => arr.slice().sort((a, b) =>
+        (b.start_date || '') > (a.start_date || '') ? 1 : -1);
+
+      const fg = byDate(list.filter(c => c.status === 'foreground'));
+      const bg = byDate(list.filter(c => c.status === 'background'));
+
+      const parts = [];
+      if (fg.length) {
+        let h = `<span class="ctx-tier">Foreground:</span> <span class="add-ctx-chip">${esc(fg[0].label)}</span>`;
+        if (fg.length > 1) h += ` <span class="ctx-more">+${fg.length - 1} more</span>`;
+        parts.push(h);
       }
+      if (bg.length) {
+        let h = `<span class="ctx-tier">Background:</span> <span class="add-ctx-chip">${esc(bg[0].label)}</span>`;
+        if (bg.length > 1) h += ` <span class="ctx-more">+${bg.length - 1} more</span>`;
+        parts.push(h);
+      }
+
+      el.innerHTML = parts.length
+        ? parts.join('<span class="ctx-sep"> · </span>')
+        : '<em style="font-size:12px;color:var(--color-ink-faint)">No active contexts set</em>';
     } catch {
-      document.getElementById('add-ctx-chips').innerHTML =
-        '<em style="font-size:12px;color:var(--color-ink-faint)">Could not load context</em>';
+      el.innerHTML = '<em style="font-size:12px;color:var(--color-ink-faint)">Could not load context</em>';
     }
   }
 
@@ -2815,6 +2849,7 @@
   function addResetToChat() {
     document.getElementById('add-conversation').innerHTML = '';
     document.getElementById('add-save-btn').disabled = true;
+    document.getElementById('add-extract-wrap').style.display = 'none';
     document.getElementById('add-dream-date').value  = new Date().toISOString().split('T')[0];
     document.getElementById('add-title-input').value = '';
     addState.extracted  = null;
@@ -2853,7 +2888,6 @@
       activeFilter    = 'dreams';
       activeDateRange = 'all';
 
-      renderRightNow();
       renderTrends();
       wlLcws = lcws.slice();
       wlRender();
@@ -3106,7 +3140,6 @@
       if (lcw) lcw.status = newStatus;
       wlRender();
       allLCWs = wlLcws.slice();
-      renderRightNow();
     } catch (err) {
       alert('Could not update status: ' + err.message);
     }
@@ -3163,7 +3196,6 @@
       document.getElementById('wl-add-form').classList.remove('open');
       wlRender();
       allLCWs = wlLcws.slice();
-      renderRightNow();
       addLoadContext();
     } catch (err) {
       alert('Could not add context: ' + err.message);
@@ -3197,7 +3229,6 @@
       wlEditingId = null;
       wlRender();
       allLCWs = wlLcws.slice();
-      renderRightNow();
       addLoadContext();
     } catch (err) {
       alert('Could not save changes: ' + err.message);

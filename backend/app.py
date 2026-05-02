@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 import anthropic
-from flask import Flask, Response, jsonify, render_template, request, stream_with_context
+from flask import Flask, Response, jsonify, render_template, request, send_from_directory, stream_with_context
 from flask_cors import CORS
 
 from extract import extract_dream, write_to_graph, _find_active_context_window
@@ -101,7 +101,7 @@ def journal():
 
 @app.route("/dashboard.html")
 def dashboard():
-    return render_template("dashboard.html")
+    return send_from_directory(FRONTEND_DIR, "dashboard.html")
 
 
 @app.route("/chat", methods=["POST"])
