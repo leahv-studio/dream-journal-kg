@@ -1,0 +1,52 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Active job search + grad school applications",
+      "start_date": "2024-09-01",
+      "end_date": "2025-01-15",
+      "description": "I was laid off in late August and spent the fall applying to jobs and finishing my grad school applications simultaneously. The financial pressure was constant \u2014 I was burning through savings and every rejection letter hit harder than it should have. There was a specific kind of shame in being unemployed while also trying to present myself as competent enough for a grad program. It ended when I got the offer in January.",
+      "summary": "A period defined by financial precarity and compounding identity stress \u2014 simultaneously unemployed and applying to a graduate program, forcing the person to perform competence while feeling acutely exposed. Shame and legitimacy anxiety were central, with every rejection amplified by the underlying fear of not belonging.",
+      "status": "archived",
+      "id": "lcw_job_search"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Promotion and grad school",
+      "start_date": "2025-01-16",
+      "description": "Started the new role in January \u2014 excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
+      "summary": "A high-demand period of simultaneous transitions \u2014 new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
+      "status": "archived",
+      "id": "lcw_new_role"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Job search and financial pressure",
+      "start_date": "2025-11-01",
+      "description": "I've been looking for a new job and not having a lot of luck. I've been networking a lot which has been it's own kind of social stress but also totally necessary. I had an interview in March at a company and a role I was really hoping to get. They ghosted me but it still felt validating to finally get an interview at least. I'm feeling pressure to leave my current company before I'm there too long and appear as though I can only specialize in that particular industry. I'm also feeling a lot of pressure to meaningfully increase my salary to achieve my duplex goals.",
+      "summary": "The dreamer is experiencing significant career uncertainty and pressure, caught between the stress of job searching while feeling trapped in their current position. Financial anxiety about salary growth is intertwined with specific housing aspirations, creating multiple layers of pressure. The emotional landscape includes both hope and disappointment from the job search process, along with social stress from networking, while facing time pressure to make career moves that could impact their long-term professional trajectory.",
+      "status": "background",
+      "id": "lcw_job_search_and_financial"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Test",
+      "description": "Test falsdjkfas;ldkfjas;ldkfj",
+      "status": "dormant",
+      "id": "lcw_test"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Providing emotional support through my friend's divorce",
+      "start_date": "2025-08-20",
+      "description": "My marriage ended earlier this year. The paperwork is mostly done but the emotional math isn't. I'm relearning what my own life looks like \u2014 routines, space, who I am without that partnership as a reference point.",
+      "summary": "You are navigating the profound identity shift that follows the end of a marriage, moving beyond the legal dissolution to grapple with the deeper emotional work of untangling years of shared life. This period centers on rediscovering your individual self after existing within the framework of partnership, as you establish new rhythms and reclaim personal space. The tension between practical closure and ongoing emotional processing suggests you're in a liminal space between your former coupled identity and an emerging sense of autonomous selfhood.",
+      "status": "foreground",
+      "id": "lcw_providing_emotional_supp"
+    }
+  ],
+  "edges": []
+}

@@ -3570,6 +3570,12 @@
   });
   document.getElementById('wl-edit-submit-btn').addEventListener('click', wlSubmitEdit);
 
+  // Demo toggle — footer wordmark, no visible indicator
+  document.querySelector('.footer-wordmark').addEventListener('click', async () => {
+    await fetch('/api/demo/toggle', { method: 'POST' });
+    refreshGraph();
+  });
+
   // ─── Start ───────────────────────────────────────────────────────────────────
   boot();
   addLoadContext();

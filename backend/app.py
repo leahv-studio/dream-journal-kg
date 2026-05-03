@@ -19,6 +19,11 @@ FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "fr
 app = Flask(__name__, template_folder=FRONTEND_DIR)
 CORS(app)
 
+_DATA_DIR       = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data"))
+_GRAPH_FULL     = os.path.join(_DATA_DIR, "graph.json")
+_GRAPH_EMPTY    = os.path.join(_DATA_DIR, "graph_empty.json")
+_demo_mode      = False
+
 dg = DreamGraph()
 try:
     dg.load()
@@ -456,6 +461,19 @@ def _graph_label(node_type: str, attrs: dict) -> str:
         desc = attrs.get("description", "")
         return desc[:40] + "…" if len(desc) > 40 else desc
     return attrs.get("name", "?")
+
+
+@app.route("/api/demo/toggle", methods=["POST"])
+def api_demo_toggle():
+    global _demo_mode, dg
+    _demo_mode = not _demo_mode
+    path = _GRAPH_EMPTY if _demo_mode else _GRAPH_FULL
+    dg = DreamGraph()
+    try:
+        dg.load(path)
+    except FileNotFoundError:
+        pass
+    return jsonify({"demo_mode": _demo_mode})
 
 
 @app.route("/api/graph")
