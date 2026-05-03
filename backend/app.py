@@ -24,6 +24,12 @@ _GRAPH_FULL     = os.path.join(_DATA_DIR, "graph.json")
 _GRAPH_EMPTY    = os.path.join(_DATA_DIR, "graph_empty.json")
 _demo_mode      = False
 
+
+def _save_graph():
+    if not _demo_mode:
+        dg.save()
+
+
 dg = DreamGraph()
 try:
     dg.load()
@@ -196,7 +202,7 @@ def api_confirm():
         return jsonify({"error": "extracted data is required"}), 400
 
     dream_id = write_to_graph(extracted, dg, dream_date)
-    dg.save()
+    _save_graph()
 
     print(f"\nWritten to graph as: {dream_id}")
     print(f"Graph stats: {json.dumps(dg.stats(), indent=2)}\n")
@@ -261,7 +267,7 @@ def create_life_context_window():
         summary=summary,
         status=status,
     )
-    dg.save()
+    _save_graph()
 
     node_attrs = dict(dg.G.nodes[lcw_id])
     print(f"\nNew LCW node '{lcw_id}' attributes after save:")
@@ -292,7 +298,7 @@ def update_life_context_status(lcw_id):
         return jsonify({"error": str(e)}), 400
     if not found:
         return jsonify({"error": "not found"}), 404
-    dg.save()
+    _save_graph()
     return jsonify({"id": lcw_id, "status": status})
 
 
@@ -330,7 +336,7 @@ def update_life_context_window(lcw_id):
         except Exception as e:
             print(f"LCW summary re-generation failed (non-fatal): {e}")
 
-    dg.save()
+    _save_graph()
     node = dict(dg.G.nodes[lcw_id])
     return jsonify({
         "id":          lcw_id,
