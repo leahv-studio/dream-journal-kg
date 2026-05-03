@@ -13,7 +13,7 @@ from flask_cors import CORS
 
 from extract import extract_dream, write_to_graph, build_entity_candidates, _find_active_context_window
 from graph import DreamGraph
-from prompts import JOURNAL_SYSTEM_PROMPT, EXTRACTION_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT
+from prompts import JOURNAL_SYSTEM_PROMPT, EXTRACTION_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT, QUERY_SYSTEM_PROMPT
 
 FRONTEND_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend"))
 app = Flask(__name__, template_folder=FRONTEND_DIR)
@@ -97,6 +97,139 @@ def build_context_block() -> str:
         sections.append("\n".join(lines))
 
     return "\n\n".join(sections)
+
+
+def build_query_context(dg: DreamGraph) -> str:
+    """Serialize pre-aggregated graph analytics for the NL query Claude call."""
+    from datetime import timedelta
+    today = _date.today()
+    cutoff_90  = (today - timedelta(days=90)).isoformat()
+    cutoff_180 = (today - timedelta(days=180)).isoformat()
+
+    s = dg.stats()
+    lines = [
+        "GRAPH OVERVIEW",
+        f"  {s['nodes'].get('Dream', 0)} dreams · "
+        f"{s['nodes'].get('Symbol', 0)} symbols · "
+        f"{s['nodes'].get('Theme', 0)} themes · "
+        f"{s['nodes'].get('Character', 0)} characters · "
+        f"{s['nodes'].get('LifeContextWindow', 0)} life context windows",
+        "",
+    ]
+
+    # Symbols — all time
+    symbols = dg.get_symbol_frequency()
+    lines.append("SYMBOLS — all time (by dream frequency):")
+    for sym in symbols[:30]:
+        lines.append(f"  [{sym['id']}] \"{sym['name']}\" — {sym['dream_count']} dreams")
+    lines.append("")
+
+    # Symbols — last 90 days
+    sym_90: dict[str, int] = {}
+    for u, v, _, edata in dg.G.edges(data=True, keys=True):
+        if edata.get("edge_type") == "contains":
+            if dg.G.nodes.get(u, {}).get("date", "") >= cutoff_90:
+                sym_90[v] = sym_90.get(v, 0) + 1
+    sym_90_sorted = sorted(sym_90.items(), key=lambda x: -x[1])[:20]
+    lines.append("SYMBOLS — last 90 days:")
+    for sym_id, count in sym_90_sorted:
+        name = dg.G.nodes.get(sym_id, {}).get("name", sym_id)
+        lines.append(f"  [{sym_id}] \"{name}\" — {count} dreams")
+    if not sym_90_sorted:
+        lines.append("  (none in this window)")
+    lines.append("")
+
+    # Themes — all time
+    themes = dg.get_all_themes()
+    lines.append("THEMES — all time:")
+    for thm in themes[:30]:
+        desc = thm.get("description") or ""
+        desc_str = f" — {desc}" if desc else ""
+        lines.append(f"  [{thm['id']}] \"{thm['name']}\" — {thm['dream_count']} dreams{desc_str}")
+    lines.append("")
+
+    # Themes — last 90 days
+    thm_90: dict[str, int] = {}
+    for u, v, _, edata in dg.G.edges(data=True, keys=True):
+        if edata.get("edge_type") == "expresses":
+            if dg.G.nodes.get(u, {}).get("date", "") >= cutoff_90:
+                thm_90[v] = thm_90.get(v, 0) + 1
+    thm_90_sorted = sorted(thm_90.items(), key=lambda x: -x[1])[:20]
+    lines.append("THEMES — last 90 days:")
+    for thm_id, count in thm_90_sorted:
+        name = dg.G.nodes.get(thm_id, {}).get("name", thm_id)
+        lines.append(f"  [{thm_id}] \"{name}\" — {count} dreams")
+    if not thm_90_sorted:
+        lines.append("  (none in this window)")
+    lines.append("")
+
+    # Characters — all time
+    char_dreams: dict[str, set] = {}
+    for u, v, _, edata in dg.G.edges(data=True, keys=True):
+        if edata.get("edge_type") == "features":
+            char_dreams.setdefault(v, set()).add(u)
+    chars_sorted = sorted(char_dreams.items(), key=lambda x: -len(x[1]))[:20]
+    lines.append("CHARACTERS — all time:")
+    for char_id, dreams in chars_sorted:
+        name = dg.G.nodes.get(char_id, {}).get("name", char_id)
+        lines.append(f"  [{char_id}] \"{name}\" — {len(dreams)} dreams")
+    if not chars_sorted:
+        lines.append("  (none recorded)")
+    lines.append("")
+
+    # Life context windows with per-window breakdowns
+    lcws = dg.get_all_life_context_windows()
+    lines.append("LIFE CONTEXT WINDOWS:")
+    for lcw in lcws:
+        lcw_id = lcw["id"]
+        label  = lcw.get("label", lcw_id)
+        status = lcw.get("status", "dormant")
+        start  = lcw.get("start_date", "?")
+
+        lcw_dream_ids: set[str] = set()
+        for u, v, _, edata in dg.G.edges(data=True, keys=True):
+            if edata.get("edge_type") == "occurred_during" and v == lcw_id:
+                lcw_dream_ids.add(u)
+
+        thm_in_lcw: dict[str, int] = {}
+        for u, v, _, edata in dg.G.edges(data=True, keys=True):
+            if edata.get("edge_type") == "expresses" and u in lcw_dream_ids:
+                thm_in_lcw[v] = thm_in_lcw.get(v, 0) + 1
+        top_thms = sorted(thm_in_lcw.items(), key=lambda x: -x[1])[:3]
+        thm_str = ", ".join(
+            f"\"{dg.G.nodes.get(t, {}).get('name', t)}\" ×{c}" for t, c in top_thms
+        ) or "none"
+
+        sym_in_lcw: dict[str, int] = {}
+        for u, v, _, edata in dg.G.edges(data=True, keys=True):
+            if edata.get("edge_type") == "contains" and u in lcw_dream_ids:
+                sym_in_lcw[v] = sym_in_lcw.get(v, 0) + 1
+        top_syms = sorted(sym_in_lcw.items(), key=lambda x: -x[1])[:3]
+        sym_str = ", ".join(
+            f"\"{dg.G.nodes.get(s, {}).get('name', s)}\" ×{c}" for s, c in top_syms
+        ) or "none"
+
+        lines.append(
+            f"  [{lcw_id}] \"{label}\" ({status}, from {start}) — {len(lcw_dream_ids)} dreams"
+        )
+        lines.append(f"    Top themes: {thm_str}")
+        lines.append(f"    Top symbols: {sym_str}")
+    lines.append("")
+
+    # Dream index — last 180 days
+    lines.append("DREAM INDEX — last 180 days:")
+    dream_index = [
+        (attrs.get("date", ""), n)
+        for n, attrs in dg.G.nodes(data=True)
+        if attrs.get("node_type") == "Dream" and attrs.get("date", "") >= cutoff_180
+    ]
+    dream_index.sort(reverse=True)
+    for date, node_id in dream_index:
+        lines.append(f"  [{node_id}] {date}")
+    if not dream_index:
+        lines.append("  (no dreams in this window)")
+
+    return "\n".join(lines)
 
 
 # ── Routes ────────────────────────────────────────────────────────────────────
@@ -405,6 +538,31 @@ def get_stats():
         "top_symbol_all_time": top_symbol,
         "total_dreams": total_dreams,
     })
+
+
+@app.route("/api/query", methods=["POST"])
+def api_query():
+    data = request.json or {}
+    question = (data.get("question") or "").strip()
+    if not question:
+        return jsonify({"error": "question is required"}), 400
+
+    context = build_query_context(dg)
+    response = ai.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=600,
+        system=QUERY_SYSTEM_PROMPT,
+        messages=[{
+            "role": "user",
+            "content": f"<graph_data>\n{context}\n</graph_data>\n\nQuestion: {question}",
+        }],
+    )
+
+    raw = response.content[0].text.strip()
+    raw = re.sub(r"^```(?:json)?\s*", "", raw)
+    raw = re.sub(r"\s*```$", "", raw)
+
+    return jsonify(json.loads(raw))
 
 
 @app.route("/api/dreams")

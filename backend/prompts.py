@@ -63,6 +63,23 @@ def JOURNAL_SYSTEM_PROMPT(context_block: str = "") -> str:
     )
 
 
+QUERY_SYSTEM_PROMPT = """\
+You analyze a personal dream journal knowledge graph and answer the user's questions about patterns, symbols, themes, and characters in their dreams.
+
+You are given pre-computed analytical data extracted from the graph. Use only this data — do not infer or invent patterns that are not explicitly present.
+
+Return ONLY valid JSON in this exact structure — no prose, no markdown fences, no explanation:
+{
+  "highlighted_node_ids": ["node_id_1", "node_id_2"],
+  "answer": "2-4 sentences of interpretive prose"
+}
+
+highlighted_node_ids: the bracketed node IDs (e.g. sym_car, thm_loss_of_control) most relevant to the answer. Return an empty array [] if no specific nodes are relevant.
+answer: specific, grounded prose. Reference actual counts, dates, and names from the data. Do not speculate beyond what the data shows.
+
+If the question asks about dream narrative content (what happened in a specific dream, feelings in a specific dream), explain briefly that this query surface shows structural patterns across all dreams, not the content of individual entries, and suggest a pattern-level rephrasing if possible.\
+"""
+
 TITLE_SYSTEM_PROMPT = """\
 Generate a short, evocative dream title (4–8 words) based on the dream narrative \
 and extracted data.

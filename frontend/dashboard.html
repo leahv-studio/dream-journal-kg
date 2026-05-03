@@ -210,29 +210,73 @@
 
     /* ── Left rail: ambient + selected states ──────────────── */
 
-    /* Search placeholder */
-    .rail-search {
+    /* Query input (always visible) */
+    .rail-query-input-wrap {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
+      gap: 7px;
+      padding: 7px 10px;
       background: rgba(236,234,230,0.6);
       border: 1px solid var(--color-border);
       border-radius: 8px;
-      user-select: none;
-      cursor: default;
+      transition: border-color 0.15s;
     }
-    .rail-search-icon { font-size: 15px; color: var(--color-ink-faint); line-height: 1; }
-    .rail-search-text { font-size: 13px; color: var(--color-ink-faint); flex: 1; }
-    .rail-search-soon {
-      font-size: 9px;
+    .rail-query-input-wrap:focus-within {
+      border-color: var(--color-purple-light);
+      background: rgba(236,234,230,0.9);
+    }
+    .rail-search-icon { font-size: 15px; color: var(--color-ink-faint); line-height: 1; flex-shrink: 0; }
+    .rail-query-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--color-ink);
+      font-family: var(--font-ui);
+      min-width: 0;
+    }
+    .rail-query-input::placeholder { color: var(--color-ink-faint); }
+    .rail-query-submit {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 15px;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .rail-query-submit:hover:not(:disabled) { color: var(--color-purple); }
+    .rail-query-submit:disabled { opacity: 0.35; cursor: default; }
+
+    /* Query answer state */
+    .rail-query-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 14px;
+    }
+    .rail-query-label {
+      font-size: 10px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       color: var(--color-ink-faint);
-      background: var(--color-surface-deep);
-      border-radius: 4px;
-      padding: 2px 5px;
+    }
+    .rail-query-answer {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.65;
+    }
+    .rail-query-count {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      font-style: italic;
     }
 
     /* Section label */
@@ -1721,14 +1765,16 @@
       <!-- Left rail -->
       <aside class="left-panel">
 
+        <!-- Always-visible query input -->
+        <div class="rail-query-input-wrap">
+          <span class="rail-search-icon">⌕</span>
+          <input type="text" class="rail-query-input" id="rail-query-input"
+                 placeholder="Ask about your dreams…" autocomplete="off">
+          <button class="rail-query-submit" id="rail-query-submit" title="Ask">↵</button>
+        </div>
+
         <!-- Ambient state: graph at a glance -->
         <div id="rail-ambient">
-          <div class="rail-search">
-            <span class="rail-search-icon">⌕</span>
-            <span class="rail-search-text">Search the graph</span>
-            <span class="rail-search-soon">soon</span>
-          </div>
-
           <div class="rail-section-label">Your graph</div>
 
           <div class="ambient-grid">
@@ -1776,6 +1822,16 @@
             <button class="rail-close-btn" id="rail-close" aria-label="Clear selection">✕</button>
           </div>
           <div id="rail-insights"></div>
+        </div>
+
+        <!-- Query state: NL answer -->
+        <div id="rail-query" style="display:none">
+          <div class="rail-query-header">
+            <div class="rail-query-label">Graph answer</div>
+            <button class="rail-close-btn" id="rail-query-close" aria-label="Clear answer">✕</button>
+          </div>
+          <div class="rail-query-answer" id="rail-query-answer"></div>
+          <div class="rail-query-count" id="rail-query-count"></div>
         </div>
 
       </aside>
@@ -2194,8 +2250,9 @@
   let selectedNodeId = null;
 
   function renderAmbientRail() {
-    document.getElementById('rail-ambient').style.display = '';
+    document.getElementById('rail-ambient').style.display  = '';
     document.getElementById('rail-selected').style.display = 'none';
+    document.getElementById('rail-query').style.display    = 'none';
     selectedNodeId = null;
 
     const dreams  = graphData.nodes.filter(n => n.type === 'Dream');
@@ -2309,8 +2366,9 @@
 
   function renderSelectedRail(d) {
     selectedNodeId = d.id;
-    document.getElementById('rail-ambient').style.display = 'none';
+    document.getElementById('rail-ambient').style.display  = 'none';
     document.getElementById('rail-selected').style.display = '';
+    document.getElementById('rail-query').style.display    = 'none';
 
     // Header
     const color = NODE_COLORS[d.type] || '#B8A8C8';
@@ -2428,6 +2486,25 @@
   function clearSelectedRail() {
     clearEgoHighlight();
     renderAmbientRail();
+  }
+
+  // ─── Graph: set highlight (NL query results) ─────────────────────────────────
+  function applySetHighlight(nodeIds) {
+    if (!nodeCircles) return;
+    const idSet = new Set(nodeIds);
+
+    nodeCircles
+      .style('opacity', d => idSet.has(d.id) ? 1 : 0.07)
+      .attr('stroke',       'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5);
+
+    linkLines.style('opacity', l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      return (idSet.has(s) && idSet.has(t)) ? 0.5 : 0.04;
+    });
+
+    nodeLabels.style('opacity', d => idSet.has(d.id) ? 1 : 0.04);
   }
 
   // updatePanelForFilter is no longer needed — left rail no longer mirrors filter state
@@ -2815,6 +2892,55 @@
     btn.textContent = expanded ? 'Read less' : 'Read more';
   });
   document.getElementById('rail-close').addEventListener('click', clearSelectedRail);
+
+  // ─── NL query ────────────────────────────────────────────────────────────────
+  const queryInput  = document.getElementById('rail-query-input');
+  const querySubmit = document.getElementById('rail-query-submit');
+
+  async function submitQuery() {
+    const q = queryInput.value.trim();
+    if (!q) return;
+
+    querySubmit.disabled    = true;
+    querySubmit.textContent = '…';
+
+    // Show query rail immediately with loading state
+    document.getElementById('rail-ambient').style.display  = 'none';
+    document.getElementById('rail-selected').style.display = 'none';
+    document.getElementById('rail-query').style.display    = '';
+    document.getElementById('rail-query-answer').textContent = 'Thinking…';
+    document.getElementById('rail-query-count').textContent  = '';
+
+    try {
+      const res  = await fetch('/api/query', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ question: q }),
+      });
+      const data = await res.json();
+      const ids  = data.highlighted_node_ids || [];
+
+      if (ids.length > 0) applySetHighlight(ids);
+
+      document.getElementById('rail-query-answer').textContent = data.answer || '(no answer)';
+      document.getElementById('rail-query-count').textContent  =
+        ids.length > 0 ? `${ids.length} node${ids.length === 1 ? '' : 's'} highlighted` : '';
+    } catch (err) {
+      document.getElementById('rail-query-answer').textContent = 'Something went wrong. Please try again.';
+    } finally {
+      querySubmit.disabled    = false;
+      querySubmit.textContent = '↵';
+    }
+  }
+
+  queryInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitQuery(); });
+  querySubmit.addEventListener('click', submitQuery);
+
+  document.getElementById('rail-query-close').addEventListener('click', () => {
+    clearEgoHighlight();
+    renderAmbientRail();
+    queryInput.value = '';
+  });
 
   // Filter chips
   document.querySelectorAll('.chip[data-filter]').forEach(btn => {
