@@ -467,10 +467,7 @@ def get_graph():
         for k, v in attrs.items():
             if k == "node_type":
                 continue
-            if k == "raw_narrative" and isinstance(v, str) and len(v) > 220:
-                props[k] = v[:220] + "…"
-            else:
-                props[k] = v
+            props[k] = v
         nodes.append({
             "id": node_id,
             "label": _graph_label(ntype, attrs),

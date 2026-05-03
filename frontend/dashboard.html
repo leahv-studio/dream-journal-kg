@@ -657,6 +657,29 @@
       border-bottom: 1px solid var(--color-border);
     }
 
+    .narrative-collapsible .narrative-body {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .narrative-collapsible.expanded .narrative-body {
+      display: block;
+      overflow: visible;
+    }
+    .narrative-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      color: var(--color-purple);
+      padding: 5px 0 0;
+      display: block;
+      letter-spacing: 0.01em;
+    }
+    .narrative-toggle:hover { text-decoration: underline; }
+
     .inspect-empty {
       font-size: 13px;
       color: var(--color-ink-faint);
@@ -1283,21 +1306,27 @@
     /* Forms */
     .wl-form {
       display: none;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 10px;
-      padding: 18px 20px;
+      background:
+        radial-gradient(ellipse 120% 60% at 70% -5%, rgba(176,158,201,0.16) 0%, transparent 60%),
+        rgba(252, 250, 248, 0.88);
+      border: 1px solid rgba(176, 158, 201, 0.35);
+      border-radius: 12px;
+      padding: 22px 24px;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      backdrop-filter: blur(12px) saturate(1.2);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.80),
+        0 4px 24px rgba(0,0,0,0.05);
     }
 
     .wl-form.open { display: flex; }
 
     .wl-form-title {
       font-family: var(--font-display);
-      font-size: 19px;
+      font-size: 20px;
       font-weight: 400;
-      color: var(--color-ink);
+      color: #1a2e4a;
       letter-spacing: normal;
     }
 
@@ -1308,7 +1337,7 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
     }
 
     .wl-field input,
@@ -1317,12 +1346,12 @@
       font-family: var(--font-ui);
       font-size: 14px;
       color: var(--color-ink);
-      background: var(--color-bg);
-      border: 1px solid var(--color-border);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(216, 212, 206, 0.75);
       border-radius: 8px;
       padding: 9px 12px;
       width: 100%;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, background 0.15s;
     }
 
     .wl-field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
@@ -1357,7 +1386,7 @@
       color: var(--color-ink-soft);
     }
 
-    .wl-btn-cancel:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
+    .wl-btn-cancel:hover { border-color: var(--color-ink-soft); color: var(--color-ink); }
     .wl-btn-save { background: var(--color-purple); color: #fff; }
     .wl-btn-save:hover:not(:disabled) { background: var(--color-purple-deep); }
 
@@ -1371,7 +1400,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: var(--color-ink-soft);
+      color: var(--color-ink);
     }
 
     .wl-group-count {
@@ -1382,20 +1411,20 @@
 
     .wl-group-empty {
       font-size: 13px;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
       font-style: italic;
     }
 
     /* Chip cards */
     .wl-chip-card {
-      background: #e4ecf4;
-      border: none;
       border-radius: 12px;
       overflow: hidden;
-      transition: filter 0.2s, transform 0.2s;
+      border: 1px solid rgba(216, 212, 206, 0.55);
+      backdrop-filter: blur(10px) saturate(1.3);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .wl-chip-card:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .wl-chip-card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
 
     .wl-chip-header {
       display: flex;
@@ -1403,7 +1432,7 @@
       justify-content: space-between;
       gap: 10px;
       padding: 16px 18px 10px;
-      cursor: pointer;
+      cursor: default;
       user-select: none;
     }
 
@@ -1427,17 +1456,9 @@
 
     .wl-chip-date {
       font-size: 11px;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
       white-space: nowrap;
       flex-shrink: 0;
-    }
-
-    .wl-chip-right {
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-      align-self: stretch;
-      padding-left: 8px;
     }
 
     .wl-status-badge {
@@ -1456,20 +1477,10 @@
 
     .wl-status-badge:hover { opacity: 0.6; }
 
-    .wl-status-badge.fg       { color: rgba(228,240,255,0.55); }
-    .wl-status-badge.bg       { color: rgba(210,228,252,0.55); }
-    .wl-status-badge.dormant  { color: #6a88a6; }
-    .wl-status-badge.archived { color: #8a9eae; }
-
-    .wl-expand-icon {
-      font-size: 11px;
-      color: var(--color-ink-faint);
-      transition: transform 0.22s;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    .wl-chip-card.open .wl-expand-icon { transform: rotate(180deg); }
+    .wl-status-badge.fg       { color: #1a2e4a; }
+    .wl-status-badge.bg       { color: #264878; }
+    .wl-status-badge.dormant  { color: #3d5e78; }
+    .wl-status-badge.archived { color: #4e6878; }
 
     .wl-chip-body {
       display: flex;
@@ -1482,11 +1493,7 @@
     .wl-chip-desc {
       font-size: 13px;
       color: var(--color-ink-soft);
-      line-height: 1.5;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      line-height: 1.55;
     }
     .wl-chip-desc.empty { font-style: italic; }
 
@@ -1527,7 +1534,7 @@
 
     .wl-archive-icon {
       font-size: 10px;
-      color: var(--color-ink-faint);
+      color: var(--color-ink-soft);
       margin-left: 2px;
       transition: transform 0.2s;
     }
@@ -1537,51 +1544,49 @@
     .wl-archive-body { display: none; flex-direction: column; gap: 8px; padding-top: 4px; }
     .wl-archive-open > .wl-archive-body { display: flex; }
 
-    /* ── Blues status palette (:has() for card-level color) ── */
-    .wl-chip-card:has(.wl-status-badge.fg)       { background: #1a2e4a; }
-    .wl-chip-card:has(.wl-status-badge.bg)       { background: #264878; }
-    .wl-chip-card:has(.wl-status-badge.dormant)  { background: #c4d5e6; }
-    .wl-chip-card:has(.wl-status-badge.archived) { background: #e2eaf2; }
+    /* ── Atmospheric status palette ── */
 
-    /* Label — near-white on dark cards, dark ink on light */
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label       { color: #f0f5ff; }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label  { color: #1a2c3e; }
-    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #334455; }
-
-    /* Date — muted relative to label */
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-date,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-date       { color: rgba(240,245,255,0.52); }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-date  { color: #527090; }
-    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-date { color: #7a90a0; }
-
-    /* Desc — readable but secondary */
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-desc,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-desc       { color: rgba(240,245,255,0.80); }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-desc  { color: #2e4a60; }
-    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-desc { color: #506070; }
-
-    /* Expand icon per status */
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-expand-icon,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-expand-icon     { color: rgba(240,245,255,0.45); }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-expand-icon  { color: #7a96b2; }
-    .wl-chip-card:has(.wl-status-badge.archived) .wl-expand-icon { color: #9aaabb; }
-
-    /* Edit button per status */
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-edit-btn,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-edit-btn {
-      border-color: rgba(240,245,255,0.22);
-      color: rgba(240,245,255,0.60);
+    /* Foreground — luminous, warm violet shimmer, most present */
+    .wl-chip-card:has(.wl-status-badge.fg) {
+      background:
+        radial-gradient(ellipse 130% 70% at 65% -10%, rgba(176,158,201,0.22) 0%, transparent 62%),
+        rgba(252, 250, 248, 0.82);
+      border-color: rgba(176, 158, 201, 0.42);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.80),
+        0 4px 20px rgba(124,107,158,0.10);
     }
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-edit-btn:hover,
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-edit-btn:hover {
-      border-color: rgba(240,245,255,0.55);
-      color: rgba(240,245,255,0.92);
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label { color: #1a2e4a; }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Background — steady, clean frosted surface, present but quieter */
+    .wl-chip-card:has(.wl-status-badge.bg) {
+      background: rgba(242, 240, 237, 0.72);
+      border-color: rgba(216, 212, 206, 0.60);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
     }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-edit-btn {
-      border-color: rgba(74,112,148,0.35);
-      color: #3a6078;
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label { color: #264878; }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Dormant — paused, thinning out, receding into the background */
+    .wl-chip-card:has(.wl-status-badge.dormant) {
+      background: rgba(242, 240, 237, 0.42);
+      border-color: rgba(216, 212, 206, 0.36);
     }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label { color: #3d5e78; }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Archived — nearly dissolved, just a whisper of presence */
+    .wl-chip-card:has(.wl-status-badge.archived) {
+      background: rgba(242, 240, 237, 0.24);
+      border-color: rgba(216, 212, 206, 0.22);
+    }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #4e6878; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-desc  { color: var(--color-ink-soft); }
 
     /* ── Status dropdown menu ── */
     #wl-status-menu {
@@ -1622,28 +1627,13 @@
     }
     .wl-smenu-dot.fg       { background: #1a2e4a; }
     .wl-smenu-dot.bg       { background: #264878; }
-    .wl-smenu-dot.dormant  { background: #c4d5e6; border: 1px solid #7a96b2; }
-    .wl-smenu-dot.archived { background: #e2eaf2; border: 1px solid #9aaabb; }
+    .wl-smenu-dot.dormant  { background: #3d5e78; }
+    .wl-smenu-dot.archived { background: #4e6878; }
 
     .wl-status-badge { margin-top: 2px; }
     .wl-status-badge::after { content: ' ▾'; font-size: 8px; }
 
-    /* ── Card expand / collapse ── */
     #wl-groups { display: flex; flex-direction: column; gap: 24px; max-width: 600px; }
-
-    /* Collapsed: 2-line clamp on description */
-    /* (line-clamp already set on .wl-chip-desc) */
-
-    /* No expand arrow when text already fits */
-    .wl-chip-card.wl-no-expand .wl-expand-icon { display: none; }
-    .wl-chip-card.wl-no-expand .wl-chip-header  { cursor: default; }
-
-    /* Expanded: reveal full description */
-    .wl-chip-card.open .wl-chip-desc {
-      -webkit-line-clamp: unset;
-      display: block;
-      overflow: visible;
-    }
 
     /* ── Rail content ── */
     .wl-subtitle {
@@ -1692,7 +1682,7 @@
     .wl-legend-def {
       font-size: 12px;
       line-height: 1.45;
-      color: var(--color-ink-soft);
+      color: var(--color-ink);
     }
   </style>
 </head>
@@ -2128,22 +2118,27 @@
     if (!iso) return iso;
     return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
   }
+  // "Apr 27, 2026" — abbreviated month + day, for Dream node labels and detail card header
+  function fmtDateMed(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
 
   // ─── Node colors ────────────────────────────────────────────────────────────
   const NODE_COLORS = {
-    Symbol:           '#B08090',
-    Theme:            '#3D4E8A',
-    Character:        '#7B8EC9',
-    Setting:          '#5C5868',
-    Emotion:          '#C47A8A',
-    LifeContextWindow:'#C9973A',
-    BodySensation:    '#9B97A8',
+    Symbol:           '#E8B4C0',
+    Theme:            '#7B6BA8',
+    Character:        '#A8C0D6',
+    Setting:          '#4A3D5C',
+    Emotion:          '#D4956A',
+    LifeContextWindow:'#BF8E3A',
+    BodySensation:    '#B8A8C8',
   };
 
-  const DREAM_COLOR_OLD  = '#4A3870';
-  const DREAM_COLOR_NEW  = '#B09EC9';
-  const DREAM_R_LARGE    = 14;
-  const DREAM_R_SMALL    = 7;
+  const DREAM_COLOR_OLD  = '#5C3870';
+  const DREAM_COLOR_NEW  = '#D4B0D0';
+  const DREAM_R_LARGE    = 16;
+  const DREAM_R_SMALL    = 9;
   const NODE_R_BASE      = 9;
   const NODE_R_MAX       = 22;
 
@@ -2164,6 +2159,8 @@
   let linkLines    = null;
   let nodeLabels   = null;
   let dreamColorScale = null;
+  let simLinks     = [];
+  let selectedGraphNodeId = null;
 
   // ─── Boot ───────────────────────────────────────────────────────────────────
   async function boot() {
@@ -2244,12 +2241,11 @@
   // Helpers for per-node insights
 
   function _getDreamIdsForNode(nodeId) {
-    const edgeTypes = new Set(['contains','features','takes_place_in','evoked','expresses','includes_sensation']);
     const dreamSet = new Set();
     for (const l of graphData.links) {
       const src = typeof l.source === 'object' ? l.source.id : l.source;
       const tgt = typeof l.target === 'object' ? l.target.id : l.target;
-      if (tgt === nodeId && edgeTypes.has(l.type)) {
+      if (tgt === nodeId) {
         const srcNode = graphData.nodes.find(n => n.id === src);
         if (srcNode && srcNode.type === 'Dream') dreamSet.add(src);
       }
@@ -2308,7 +2304,7 @@
     document.getElementById('rail-selected').style.display = '';
 
     // Header
-    const color = NODE_COLORS[d.type] || '#9B97A8';
+    const color = NODE_COLORS[d.type] || '#B8A8C8';
     document.getElementById('rail-node-dot').style.background = color;
     document.getElementById('rail-node-name').textContent = d.label;
     document.getElementById('rail-node-type').textContent  =
@@ -2384,7 +2380,44 @@
     document.getElementById('rail-insights').innerHTML = html;
   }
 
+  // ─── Graph: ego-network highlight ───────────────────────────────────────────
+  function applyEgoHighlight(nodeId) {
+    if (!nodeCircles) return;
+    selectedGraphNodeId = nodeId;
+
+    const neighborIds = new Set([nodeId]);
+    for (const l of simLinks) {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      if (s === nodeId) neighborIds.add(t);
+      if (t === nodeId) neighborIds.add(s);
+    }
+
+    nodeCircles
+      .style('opacity', d => neighborIds.has(d.id) ? 1 : 0.07)
+      .attr('stroke',       d => d.id === nodeId ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.35)')
+      .attr('stroke-width', d => d.id === nodeId ? 3 : 1.5);
+
+    linkLines.style('opacity', l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      return (s === nodeId || t === nodeId) ? 0.75 : 0.04;
+    });
+
+    nodeLabels.style('opacity', d => neighborIds.has(d.id) ? 1 : 0.04);
+  }
+
+  function clearEgoHighlight() {
+    if (!nodeCircles) return;
+    selectedGraphNodeId = null;
+    nodeCircles
+      .attr('stroke',       'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5);
+    applyFilterToGraph();
+  }
+
   function clearSelectedRail() {
+    clearEgoHighlight();
     renderAmbientRail();
   }
 
@@ -2420,7 +2453,7 @@
       .filter(Boolean)
       .sort();
     if (dates.length < 2) {
-      dreamColorScale = () => '#7C6B9E';
+      dreamColorScale = () => '#9C74A0';
       return;
     }
     dreamColorScale = d3.scaleLinear()
@@ -2536,6 +2569,19 @@
       .attr('height', H)
       .style('display', 'block');
 
+    // Dream glow filter
+    svg.append('defs').html(`
+      <filter id="dream-glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+        <feFlood flood-color="#D4B0D0" flood-opacity="0.5" result="glow-color"/>
+        <feComposite in="glow-color" in2="blur" operator="in" result="colored-blur"/>
+        <feMerge>
+          <feMergeNode in="colored-blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    `);
+
     // Zoom/pan layer
     const g = svg.append('g');
 
@@ -2549,6 +2595,7 @@
     // Deep-copy nodes & links so D3 simulation can mutate them
     const nodes = graphData.nodes.map(d => ({ ...d, properties: { ...(d.properties || {}) } }));
     const links = graphData.links.map(l => ({ ...l }));
+    simLinks = links; // keep reference for ego-highlight neighbor lookup after D3 mutates source/target
 
     // Simulation
     simulation = d3.forceSimulation(nodes)
@@ -2590,6 +2637,7 @@
       .attr('fill',        d => computeColor(d))
       .attr('stroke',      'rgba(255,255,255,0.35)')
       .attr('stroke-width', 1.5)
+      .attr('filter',      d => d.type === 'Dream' ? 'url(#dream-glow)' : null)
       .style('cursor', 'pointer')
       .on('mouseover', (event, d) => {
         tooltip.style('opacity', 1)
@@ -2603,8 +2651,9 @@
       .on('mouseout', () => { tooltip.style('opacity', 0); })
       .on('click', (event, d) => {
         event.stopPropagation();
+        applyEgoHighlight(d.id);
         if (d.type === 'Dream') {
-          clearSelectedRail();
+          renderAmbientRail();   // reset rail to ambient without touching ego state
           openInspectDrawer(d);
         } else {
           closeInspectDrawer();
@@ -2614,7 +2663,12 @@
 
     // Labels
     nodeLabels = nodeGroups.append('text')
-      .text(d => d.label.length > 16 ? d.label.slice(0, 14) + '…' : d.label)
+      .text(d => {
+        const raw = d.type === 'Dream'
+          ? fmtDateMed((d.properties || {}).date || d.label)
+          : d.label;
+        return raw.length > 16 ? raw.slice(0, 14) + '…' : raw;
+      })
       .attr('dy',           d => computeRadius(d) + 11)
       .attr('text-anchor',  'middle')
       .attr('font-size',    '10px')
@@ -2654,13 +2708,13 @@
     const el = document.getElementById('graph-legend');
     const entries = [
       { label: 'Dream (oldest → newest)', gradient: true },
-      { label: 'Symbol',            color: '#B08090' },
-      { label: 'Theme',             color: '#3D4E8A' },
-      { label: 'Character',         color: '#7B8EC9' },
-      { label: 'Setting',           color: '#5C5868' },
-      { label: 'Emotion',           color: '#C47A8A' },
-      { label: 'Life Context',      color: '#C9973A' },
-      { label: 'Body Sensation',    color: '#9B97A8' },
+      { label: 'Symbol',            color: '#E8B4C0' },
+      { label: 'Theme',             color: '#7B6BA8' },
+      { label: 'Character',         color: '#A8C0D6' },
+      { label: 'Setting',           color: '#4A3D5C' },
+      { label: 'Emotion',           color: '#D4956A' },
+      { label: 'Life Context',      color: '#BF8E3A' },
+      { label: 'Body Sensation',    color: '#B8A8C8' },
     ];
     el.innerHTML = entries.map(e => {
       const dot = e.gradient
@@ -2672,15 +2726,21 @@
 
   // ─── Inspect drawer ──────────────────────────────────────────────────────────
   function openInspectDrawer(d) {
-    document.getElementById('inspect-title').textContent = d.label;
-    document.getElementById('inspect-type').textContent  = d.type;
-
     const props  = d.properties || {};
+    const header = d.type === 'Dream'
+      ? (props.title || fmtDateMed(props.date || d.label))
+      : d.label;
+    document.getElementById('inspect-title').textContent = header;
+    document.getElementById('inspect-type').textContent  = d.type;
     const skip   = new Set(['node_type', 'raw_narrative']);
     let bodyHtml = '';
 
     if (d.type === 'Dream' && props.raw_narrative) {
-      bodyHtml += `<div class="inspect-narrative">${esc(props.raw_narrative)}</div>`;
+      const needsToggle = props.raw_narrative.length > 400;
+      bodyHtml += `<div class="inspect-narrative${needsToggle ? ' narrative-collapsible' : ''}">
+        <div class="narrative-body">${esc(props.raw_narrative)}</div>
+        ${needsToggle ? '<button class="narrative-toggle">Read more</button>' : ''}
+      </div>`;
     }
 
     const rows = Object.entries(props)
@@ -2732,7 +2792,19 @@
   });
 
   // Inspect close
-  document.getElementById('inspect-close').addEventListener('click', closeInspectDrawer);
+  document.getElementById('inspect-close').addEventListener('click', () => {
+    closeInspectDrawer();
+    clearEgoHighlight();
+  });
+
+  // Narrative expand/collapse
+  document.getElementById('inspect-body').addEventListener('click', e => {
+    const btn = e.target.closest('.narrative-toggle');
+    if (!btn) return;
+    const card = btn.closest('.narrative-collapsible');
+    const expanded = card.classList.toggle('expanded');
+    btn.textContent = expanded ? 'Read less' : 'Read more';
+  });
   document.getElementById('rail-close').addEventListener('click', clearSelectedRail);
 
   // Filter chips
@@ -3247,9 +3319,6 @@
                   data-lcwid="${esc(lcw.id)}"
                   data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
           </div>
-          <div class="wl-chip-right">
-            <span class="wl-expand-icon">▾</span>
-          </div>
         </div>
         <div class="wl-chip-body">
           ${descHtml}
@@ -3296,15 +3365,6 @@
 
     container.innerHTML = html;
 
-    // Chip header → toggle expand
-    container.querySelectorAll('.wl-chip-header').forEach(header => {
-      header.addEventListener('click', e => {
-        if (e.target.closest('.wl-status-badge')) return;
-        const card = document.getElementById(`wl-chip-${header.dataset.lcwid}`);
-        if (card && !card.classList.contains('wl-no-expand')) card.classList.toggle('open');
-      });
-    });
-
     // Status badge → open status dropdown
     container.querySelectorAll('.wl-status-badge').forEach(badge => {
       badge.addEventListener('click', e => {
@@ -3334,13 +3394,6 @@
       });
     }
 
-    // Hide expand arrow when description already fits within the clamp height
-    container.querySelectorAll('.wl-chip-card').forEach(card => {
-      const desc = card.querySelector('.wl-chip-desc');
-      if (desc && desc.scrollHeight <= desc.clientHeight) {
-        card.classList.add('wl-no-expand');
-      }
-    });
   }
 
   function wlInitStatusMenu() {
