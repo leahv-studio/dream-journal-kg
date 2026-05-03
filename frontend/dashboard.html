@@ -804,62 +804,41 @@
     /* ── Add New ───────────────────────────────────────────── */
     #section-add { flex-direction: column; }
 
-    #add-ctx-banner {
-      flex-shrink: 0;
-      border-bottom: 1px solid rgba(176,158,201,0.18);
-      padding: 8px 24px;
-      display: flex;
+    /* ── Add New: in-ritual context element ───────────────────── */
+    #add-ctx-ritual {
+      display: none;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      min-height: 40px;
+      gap: 10px;
+      padding: 2px 0 10px;
     }
-
-    .add-ctx-label {
+    .add-ctx-rule {
+      width: 56%;
+      height: 1px;
+      background: var(--color-border);
+    }
+    .add-ctx-ritual-label {
       font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--color-ink-soft);
-      white-space: nowrap;
+      color: var(--color-ink-faint);
+      text-align: center;
+      margin-bottom: 3px;
     }
-
-    .add-ctx-chip {
+    .add-ctx-ritual-fg {
       font-family: var(--font-prose);
       font-style: italic;
-      font-size: 13px;
-      color: var(--color-ink-soft);
-      white-space: nowrap;
-    }
-
-    #add-ctx-update {
-      margin-left: auto;
       font-size: 12px;
       color: var(--color-ink-soft);
-      text-decoration: none;
-      white-space: nowrap;
+      text-align: center;
+      line-height: 1.5;
     }
-
-    #add-ctx-update:hover { text-decoration: underline; }
-
-    .ctx-tier {
-      font-size: 10px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--color-ink-soft);
-    }
-
-    .ctx-more {
-      font-size: 11px;
-      color: var(--color-ink-soft);
-      opacity: 0.7;
-    }
-
-    .ctx-sep {
-      color: var(--color-ink-soft);
-      opacity: 0.45;
-      margin: 0 4px;
+    .add-ctx-ritual-bg {
+      font-family: var(--font-prose);
+      font-style: italic;
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 1px;
     }
 
     /* ── Global footer ─────────────────────────────────────── */
@@ -920,7 +899,7 @@
       flex-direction: column;
       align-items: center;
       gap: 5px;
-      padding: 32px 0 24px;
+      padding: 32px 0 8px;
     }
 
     .add-wordmark {
@@ -1940,14 +1919,6 @@
     <!-- Add New -->
     <section id="section-add" class="section">
 
-      <!-- Context banner -->
-      <div id="add-ctx-banner">
-        <div id="add-ctx-chips">
-          <span style="font-size:12px;color:var(--color-ink-faint);font-style:italic">Loading…</span>
-        </div>
-        <a href="#" id="add-ctx-update">Update →</a>
-      </div>
-
       <!-- Scrollable content -->
       <div id="add-scroll">
         <div id="add-content">
@@ -1970,6 +1941,16 @@
             </div>
 
             <div id="add-tell-me">tell me</div>
+
+            <div id="add-ctx-ritual">
+              <div class="add-ctx-rule"></div>
+              <div>
+                <div class="add-ctx-ritual-label">you're in</div>
+                <div class="add-ctx-ritual-fg" id="add-ctx-ritual-fg"></div>
+                <div class="add-ctx-ritual-bg" id="add-ctx-ritual-bg"></div>
+              </div>
+              <div class="add-ctx-rule"></div>
+            </div>
 
             <div class="add-meta-row">
               <label class="add-date-label">
@@ -3093,13 +3074,16 @@
   function addUpdateEmptyState() {
     const hasMessages = document.getElementById('add-conversation').children.length > 0;
     document.getElementById('add-empty-state').style.display   = hasMessages ? 'none'  : 'flex';
+    if (hasMessages) document.getElementById('add-ctx-ritual').style.display = 'none';
     document.getElementById('add-conversation').style.display  = hasMessages ? 'flex'  : 'none';
     document.getElementById('add-extract-wrap').style.display  = hasMessages ? 'flex'  : 'none';
   }
 
-  // Context banner
+  // In-ritual context element
   async function addLoadContext() {
-    const el = document.getElementById('add-ctx-chips');
+    const ritual = document.getElementById('add-ctx-ritual');
+    const fgEl   = document.getElementById('add-ctx-ritual-fg');
+    const bgEl   = document.getElementById('add-ctx-ritual-bg');
     try {
       const list = await fetch('/api/life-context-windows').then(r => r.json());
       const byDate = arr => arr.slice().sort((a, b) =>
@@ -3108,23 +3092,17 @@
       const fg = byDate(list.filter(c => c.status === 'foreground'));
       const bg = byDate(list.filter(c => c.status === 'background'));
 
-      const parts = [];
-      if (fg.length) {
-        let h = `<span class="ctx-tier">Foreground:</span> <span class="add-ctx-chip">${esc(fg[0].label)}</span>`;
-        if (fg.length > 1) h += ` <span class="ctx-more">+${fg.length - 1} more</span>`;
-        parts.push(h);
-      }
-      if (bg.length) {
-        let h = `<span class="ctx-tier">Background:</span> <span class="add-ctx-chip">${esc(bg[0].label)}</span>`;
-        if (bg.length > 1) h += ` <span class="ctx-more">+${bg.length - 1} more</span>`;
-        parts.push(h);
+      if (!fg.length && !bg.length) {
+        ritual.style.display = 'none';
+        return;
       }
 
-      el.innerHTML = parts.length
-        ? parts.join('<span class="ctx-sep"> · </span>')
-        : '<em style="font-size:12px;color:var(--color-ink-faint)">No active contexts set</em>';
+      fgEl.innerHTML = fg.map(c => `<div>${esc(c.label)}</div>`).join('');
+      bgEl.innerHTML = bg.map(c => `<div>${esc(c.label)}</div>`).join('');
+      bgEl.style.display = bg.length ? '' : 'none';
+      ritual.style.display = 'flex';
     } catch {
-      el.innerHTML = '<em style="font-size:12px;color:var(--color-ink-faint)">Could not load context</em>';
+      ritual.style.display = 'none';
     }
   }
 
@@ -3459,9 +3437,6 @@
 
   document.getElementById('add-dream-date').value = new Date().toISOString().split('T')[0];
 
-  document.getElementById('add-ctx-update').addEventListener('click', e => {
-    e.preventDefault(); switchSection('waking');
-  });
 
 
   document.getElementById('add-message-input').addEventListener('keydown', e => {
