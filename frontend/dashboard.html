@@ -1386,7 +1386,21 @@
       transition: background 0.15s;
     }
 
-    .wl-add-btn:hover { background: rgba(124,107,158,0.08); }
+    .wl-add-btn:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+    .wl-add-btn:disabled {
+      color: var(--color-ink-faint);
+      border-color: var(--color-border);
+      cursor: default;
+    }
+    .wl-limit-msg {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 6px;
+      display: none;
+    }
+    .wl-limit-msg.visible { display: block; }
 
     /* Forms */
     .wl-form {
@@ -2106,6 +2120,7 @@
               </div>
         </div>
         <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
+        <p class="wl-limit-msg" id="wl-limit-msg">10 / 10 active contexts<br>Archive one to add another.</p>
       </aside>
 
       <!-- Right column -->
@@ -3529,6 +3544,27 @@
       </div>`;
   }
 
+  const LCW_ACTIVE_LIMIT = 10;
+
+  function wlActiveCount() {
+    return wlLcws.filter(l => l.status !== 'archived').length;
+  }
+
+  function wlUpdateAddButton() {
+    const atLimit = wlActiveCount() >= LCW_ACTIVE_LIMIT;
+    const btn = document.getElementById('wl-add-toggle-btn');
+    const msg = document.getElementById('wl-limit-msg');
+    if (!btn) return;
+    btn.disabled = atLimit;
+    if (atLimit) {
+      msg.classList.add('visible');
+      // Close the add form if it was open
+      document.getElementById('wl-add-form').classList.remove('open');
+    } else {
+      msg.classList.remove('visible');
+    }
+  }
+
   function wlRender() {
     const container = document.getElementById('wl-groups');
     if (!container) return;
@@ -3596,6 +3632,7 @@
       });
     }
 
+    wlUpdateAddButton();
   }
 
   function wlInitStatusMenu() {
@@ -3711,7 +3748,10 @@
           status:      document.getElementById('wl-add-status').value,
         }),
       });
-      if (!res.ok) { const e = await res.json(); throw new Error(e.error || 'Failed'); }
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e.message || e.error || 'Failed');
+      }
       const newLcw = await res.json();
       wlLcws.push(newLcw);
       document.getElementById('wl-add-form').classList.remove('open');
@@ -3719,7 +3759,7 @@
       allLCWs = wlLcws.slice();
       addLoadContext();
     } catch (err) {
-      alert('Could not add context: ' + err.message);
+      alert(err.message);
     } finally {
       btn.disabled = false;
     }

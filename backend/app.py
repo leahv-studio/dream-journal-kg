@@ -377,6 +377,17 @@ def create_life_context_window():
     if status not in {"foreground", "background", "dormant", "archived"}:
         return jsonify({"error": "invalid status"}), 400
 
+    active_count = sum(
+        1 for _, attrs in dg.G.nodes(data=True)
+        if attrs.get("node_type") == "LifeContextWindow"
+        and attrs.get("status") != "archived"
+    )
+    if active_count >= 10:
+        return jsonify({
+            "error": "limit_reached",
+            "message": "You have 10 active life contexts. Archive one before adding another.",
+        }), 409
+
     slug_base = _slug(label[:24])
     lcw_id = f"lcw_{slug_base}"
     # If a node with that id already exists, append a counter
