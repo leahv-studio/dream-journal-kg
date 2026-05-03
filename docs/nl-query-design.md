@@ -1,6 +1,6 @@
 # Natural Language Graph Query — Design Document
 
-**Status:** Pre-build analysis complete. Not yet implemented.  
+**Status:** Implemented.  
 **Branch:** dashboard-redesign  
 **Last updated:** 2026-05-03
 

@@ -24,7 +24,7 @@ dream-journal-kg/
   frontend/         index.html (chat UI), journal.html (query views), dashboard.html, style.css, app.js
   backend/          app.py (Flask + routes), graph.py (NetworkX ops), extract.py (Claude extraction), prompts.py (all system prompts)
   data/             graph.json (persistent graph)
-  docs/             entity-resolution.md (design decision docs)
+  docs/             entity-resolution.md, nl-query-design.md (design decision docs)
   schema.json       canonical schema definition
   SCHEMA.md         human-readable schema reference
   STYLE.md          design system — fonts, colors, component conventions
@@ -64,6 +64,7 @@ API key must be set as `ANTHROPIC_API_KEY` environment variable — never commit
 - **Null is valid everywhere** (except required fields) — a missing value is meaningful data, not an error
 - **Emotion and BodySensation confidence fields** distinguish `stated` (user named it) from `inferred` (LLM read it from narrative) — inferred values must never be presented as fact
 - **Theme source** is always tracked: `user` or `llm`
+- **LifeContextWindow active limit is 10** — foreground + background + dormant combined may not exceed 10; archived is unlimited. Enforced at creation time in `POST /api/life-context-windows`. This keeps the journal system prompt and query context compact regardless of how long someone uses the app.
 
 ## Build Stages
 
@@ -74,6 +75,7 @@ All stages complete as of May 2026.
 3. ✓ **Claude API Extraction** — dream narrative in → structured JSON out → graph updates
 4. ✓ **Frontend Entry Flow** — chat UI, review card, Life Context Window display, context divergence detection, title generation, entity resolution at extraction time
 5. ✓ **Query Views + Demo Polish** — journal.html, dashboard.html, knowledge graph view, symbol frequency, theme patterns, README
+6. ✓ **Natural Language Graph Query** — `POST /api/query`; `build_query_context()` serializes pre-aggregated graph analytics (symbol/theme/character frequency tables, per-LCW breakdowns, dream date index); Claude returns `{highlighted_node_ids, answer}`; KG screen left rail shows answer, graph highlights relevant nodes. See `docs/nl-query-design.md`.
 
 ## Demo Anchor
 
