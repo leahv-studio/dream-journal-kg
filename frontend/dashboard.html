@@ -1750,13 +1750,13 @@
             </div>
           </div>
 
-          <div class="ambient-insight">
+          <div class="ambient-insight" id="amb-hub-insight">
             <div class="ambient-insight-label">Most connected</div>
             <div class="ambient-insight-value" id="amb-hub-name">—</div>
             <div class="ambient-insight-sub" id="amb-hub-sub"></div>
           </div>
 
-          <div class="ambient-insight">
+          <div class="ambient-insight" id="amb-oldest-insight">
             <div class="ambient-insight-label">Earliest dream on record</div>
             <div class="ambient-insight-value" id="amb-oldest-date">—</div>
             <div class="ambient-insight-sub" id="amb-oldest-sub"></div>
@@ -2221,13 +2221,18 @@
       const node = graphData.nodes.find(n => n.id === id);
       if (node && node.type !== 'Dream' && deg > hubDeg) { hubNode = node; hubDeg = deg; }
     }
+    const hubInsight = document.getElementById('amb-hub-insight');
     if (hubNode) {
       document.getElementById('amb-hub-name').textContent = hubNode.label;
       document.getElementById('amb-hub-sub').textContent  =
         `${hubNode.type.replace(/([A-Z])/g, ' $1').trim()} · ${hubDeg} connections`;
+      hubInsight.style.display = '';
+    } else {
+      hubInsight.style.display = 'none';
     }
 
     // Oldest dream
+    const oldestInsight = document.getElementById('amb-oldest-insight');
     const sorted = dreams.slice().sort((a, b) =>
       ((a.properties||{}).date||'').localeCompare((b.properties||{}).date||''));
     if (sorted.length) {
@@ -2236,6 +2241,9 @@
       document.getElementById('amb-oldest-date').textContent = d ? fmtDateFull(d) : '—';
       const title = (oldest.properties||{}).title || '';
       document.getElementById('amb-oldest-sub').textContent = title ? `"${title}"` : '';
+      oldestInsight.style.display = '';
+    } else {
+      oldestInsight.style.display = 'none';
     }
   }
 
