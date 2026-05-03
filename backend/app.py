@@ -11,7 +11,7 @@ import anthropic
 from flask import Flask, Response, jsonify, render_template, request, send_from_directory, stream_with_context
 from flask_cors import CORS
 
-from extract import extract_dream, write_to_graph, _find_active_context_window
+from extract import extract_dream, write_to_graph, build_entity_candidates, _find_active_context_window
 from graph import DreamGraph
 from prompts import JOURNAL_SYSTEM_PROMPT, EXTRACTION_SYSTEM_PROMPT, TITLE_SYSTEM_PROMPT
 
@@ -151,10 +151,11 @@ def api_extract():
     data = request.json or {}
     dream_date = data.get("date") or _date.today().isoformat()
     context_block = build_context_block()
+    candidates_block = build_entity_candidates(dg)
     history_snapshot = list(conversation_history)
 
     with ThreadPoolExecutor(max_workers=2) as executor:
-        future_extract = executor.submit(extract_dream, history_snapshot, dream_date, context_block)
+        future_extract = executor.submit(extract_dream, history_snapshot, dream_date, context_block, candidates_block)
         future_title   = executor.submit(_generate_dream_title, history_snapshot)
         extracted      = future_extract.result()
         suggested_title = ""

@@ -208,91 +208,192 @@
       line-height: 1.5;
     }
 
-    /* Trends widget */
-    .trend-row {
+    /* ── Left rail: ambient + selected states ──────────────── */
+
+    /* Search placeholder */
+    .rail-search {
       display: flex;
-      align-items: baseline;
-      gap: 6px;
-      margin-bottom: 10px;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(236,234,230,0.6);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      user-select: none;
+      cursor: default;
+    }
+    .rail-search-icon { font-size: 15px; color: var(--color-ink-faint); line-height: 1; }
+    .rail-search-text { font-size: 13px; color: var(--color-ink-faint); flex: 1; }
+    .rail-search-soon {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-ink-faint);
+      background: var(--color-surface-deep);
+      border-radius: 4px;
+      padding: 2px 5px;
     }
 
-    .trend-value {
-      font-family: var(--font-display);
-      font-size: 22px;
+    /* Section label */
+    .rail-section-label {
+      font-size: 10px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-faint);
+      padding: 0 2px;
+      margin: 12px 0 8px;
+    }
+
+    /* Ambient stat grid */
+    .ambient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+    .ambient-stat {
+      background: rgba(242,240,237,0.65);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .ambient-stat-value {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
       color: var(--color-ink);
       line-height: 1;
       letter-spacing: normal;
     }
-
-    .trend-label {
-      font-size: 12px;
+    .ambient-stat-label {
+      font-size: 11px;
       color: var(--color-ink-soft);
-      flex: 1;
+      margin-top: 3px;
     }
 
-    .trend-delta {
-      font-size: 11px;
+    /* Ambient insight rows */
+    .ambient-insight {
+      padding: 16px 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .ambient-insight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-ink-faint);
+      margin-bottom: 5px;
+    }
+    .ambient-insight-value {
+      font-size: 13px;
+      color: var(--color-ink);
       font-weight: 500;
     }
-
-    .trend-delta.up   { color: var(--color-positive); }
-    .trend-delta.down { color: var(--color-negative); }
-
-    .trend-stat {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-      margin-bottom: 8px;
-    }
-
-    .trend-stat-label {
-      font-size: 10px;
-      color: var(--color-ink-faint);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .trend-stat-val {
-      font-size: 13px;
+    .ambient-insight-sub {
+      font-size: 11px;
       color: var(--color-ink-soft);
+      margin-top: 2px;
       font-style: italic;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* Filter detail card */
-    .filter-list-item {
+    /* Ambient invite */
+    .ambient-invite {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.55;
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+
+    /* Selected: header */
+    .rail-selected-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 8px;
-      padding: 5px 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2px;
+    }
+    .rail-node-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .rail-node-meta { flex: 1; min-width: 0; }
+    .rail-node-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-ink);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .rail-node-type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-faint);
+      margin-top: 2px;
+    }
+    .rail-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 13px;
+      padding: 2px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .rail-close-btn:hover { color: var(--color-ink); }
+
+    /* Selected: insight items */
+    .rail-insight {
+      padding: 9px 0;
       border-bottom: 1px solid var(--color-border);
     }
-
-    .filter-list-item:last-child { border-bottom: none; }
-
-    .filter-list-rank {
-      font-size: 11px;
+    .rail-insight:last-of-type { border-bottom: none; }
+    .rail-insight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--color-ink-faint);
-      width: 14px;
-      flex-shrink: 0;
+      margin-bottom: 4px;
     }
-
-    .filter-list-name {
+    .rail-insight-value {
       font-size: 13px;
       color: var(--color-ink-soft);
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      line-height: 1.4;
+    }
+    .rail-insight-value strong { color: var(--color-ink); font-weight: 500; }
+
+    /* Dream count (large) */
+    .rail-dream-count {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1;
+      letter-spacing: normal;
+    }
+    .rail-dream-label {
+      font-size: 12px;
+      color: var(--color-ink-soft);
     }
 
-    .filter-list-count {
-      font-size: 11px;
-      color: var(--color-ink-faint);
-      flex-shrink: 0;
+    /* Symbolic note block */
+    .rail-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: rgba(236,234,230,0.55);
+      border-left: 2px solid var(--color-purple-light);
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      font-style: italic;
+      line-height: 1.6;
     }
 
     .lcw-dot {
@@ -1626,27 +1727,66 @@
     <!-- Dreams -->
     <section id="section-dreams" class="section active">
 
-      <!-- Left panel -->
+      <!-- Left rail -->
       <aside class="left-panel">
-        <div class="panel-card">
-          <div class="panel-card-label">Trends</div>
-          <div id="trends-content">
-            <p class="panel-card-placeholder">Loading…</p>
+
+        <!-- Ambient state: graph at a glance -->
+        <div id="rail-ambient">
+          <div class="rail-search">
+            <span class="rail-search-icon">⌕</span>
+            <span class="rail-search-text">Search the graph</span>
+            <span class="rail-search-soon">soon</span>
           </div>
+
+          <div class="rail-section-label">Your graph</div>
+
+          <div class="ambient-grid">
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-dreams">—</div>
+              <div class="ambient-stat-label">dreams</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-symbols">—</div>
+              <div class="ambient-stat-label">symbols</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-themes">—</div>
+              <div class="ambient-stat-label">themes</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-chars">—</div>
+              <div class="ambient-stat-label">characters</div>
+            </div>
+          </div>
+
+          <div class="ambient-insight">
+            <div class="ambient-insight-label">Most connected</div>
+            <div class="ambient-insight-value" id="amb-hub-name">—</div>
+            <div class="ambient-insight-sub" id="amb-hub-sub"></div>
+          </div>
+
+          <div class="ambient-insight">
+            <div class="ambient-insight-label">Earliest dream on record</div>
+            <div class="ambient-insight-value" id="amb-oldest-date">—</div>
+            <div class="ambient-insight-sub" id="amb-oldest-sub"></div>
+          </div>
+
+          <p class="ambient-invite">Click any node to surface patterns.</p>
         </div>
 
-        <div class="panel-card" id="panel-filter-detail" style="display:none">
-          <div class="panel-card-label" id="filter-detail-label"></div>
-          <div id="filter-detail-content"></div>
+        <!-- Selected state: non-Dream node clicked -->
+        <div id="rail-selected" style="display:none">
+          <div class="rail-selected-header">
+            <span class="rail-node-dot" id="rail-node-dot"></span>
+            <div class="rail-node-meta">
+              <div class="rail-node-name" id="rail-node-name"></div>
+              <div class="rail-node-type" id="rail-node-type"></div>
+            </div>
+            <button class="rail-close-btn" id="rail-close" aria-label="Clear selection">✕</button>
+          </div>
+          <div id="rail-insights"></div>
         </div>
 
-        <div class="panel-divider"></div>
-
-        <ul class="panel-nav-list">
-          <li data-filter="symbols">Symbols →</li>
-          <li data-filter="themes">Themes →</li>
-          <li data-filter="recurring">Recurring →</li>
-        </ul>
       </aside>
 
       <!-- Main content -->
@@ -2040,7 +2180,7 @@
       allStats   = stats;
       allSymbols = symbols;
       allThemes  = themes;
-      renderTrends();
+      renderAmbientRail();
       wlLcws = lcws.slice();
       wlRender();
       requestAnimationFrame(initGraph);
@@ -2051,92 +2191,205 @@
     }
   }
 
-  // ─── Left panel: Trends ─────────────────────────────────────────────────────
-  function renderTrends() {
-    const el = document.getElementById('trends-content');
-    const {
-      dreams_this_month = 0,
-      dreams_last_month = 0,
-      top_theme_90_days,
-      top_symbol_all_time,
-    } = allStats;
+  // ─── Left rail ───────────────────────────────────────────────────────────────
 
-    const delta = dreams_this_month - dreams_last_month;
-    const deltaHtml = delta !== 0
-      ? `<span class="trend-delta ${delta > 0 ? 'up' : 'down'}">${delta > 0 ? '↑' : '↓'}${Math.abs(delta)}</span>`
-      : '';
+  let selectedNodeId = null;
 
-    let html = `<div class="trend-row">
-      <span class="trend-value">${dreams_this_month}</span>
-      <span class="trend-label">dreams this month</span>
-      ${deltaHtml}
+  function renderAmbientRail() {
+    document.getElementById('rail-ambient').style.display = '';
+    document.getElementById('rail-selected').style.display = 'none';
+    selectedNodeId = null;
+
+    const dreams  = graphData.nodes.filter(n => n.type === 'Dream');
+    const symbols = graphData.nodes.filter(n => n.type === 'Symbol');
+    const themes  = graphData.nodes.filter(n => n.type === 'Theme');
+    const chars   = graphData.nodes.filter(n => n.type === 'Character');
+
+    document.getElementById('amb-dreams').textContent  = dreams.length;
+    document.getElementById('amb-symbols').textContent = symbols.length;
+    document.getElementById('amb-themes').textContent  = themes.length;
+    document.getElementById('amb-chars').textContent   = chars.length;
+
+    // Most connected non-Dream node
+    const degree = {};
+    for (const l of graphData.links) {
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      degree[src] = (degree[src] || 0) + 1;
+      degree[tgt] = (degree[tgt] || 0) + 1;
+    }
+    let hubNode = null, hubDeg = 0;
+    for (const [id, deg] of Object.entries(degree)) {
+      const node = graphData.nodes.find(n => n.id === id);
+      if (node && node.type !== 'Dream' && deg > hubDeg) { hubNode = node; hubDeg = deg; }
+    }
+    if (hubNode) {
+      document.getElementById('amb-hub-name').textContent = hubNode.label;
+      document.getElementById('amb-hub-sub').textContent  =
+        `${hubNode.type.replace(/([A-Z])/g, ' $1').trim()} · ${hubDeg} connections`;
+    }
+
+    // Oldest dream
+    const sorted = dreams.slice().sort((a, b) =>
+      ((a.properties||{}).date||'').localeCompare((b.properties||{}).date||''));
+    if (sorted.length) {
+      const oldest = sorted[0];
+      const d = (oldest.properties||{}).date;
+      document.getElementById('amb-oldest-date').textContent = d ? fmtDateFull(d) : '—';
+      const title = (oldest.properties||{}).title || '';
+      document.getElementById('amb-oldest-sub').textContent = title ? `"${title}"` : '';
+    }
+  }
+
+  // Helpers for per-node insights
+
+  function _getDreamIdsForNode(nodeId) {
+    const edgeTypes = new Set(['contains','features','takes_place_in','evoked','expresses','includes_sensation']);
+    const dreamSet = new Set();
+    for (const l of graphData.links) {
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      if (tgt === nodeId && edgeTypes.has(l.type)) {
+        const srcNode = graphData.nodes.find(n => n.id === src);
+        if (srcNode && srcNode.type === 'Dream') dreamSet.add(src);
+      }
+    }
+    return [...dreamSet];
+  }
+
+  function _getTopCoOccurrence(nodeId, nodeType, dreamIds) {
+    if (dreamIds.length === 0) return null;
+    // Count which other same-type nodes appear most in the same connected dreams.
+    // Uses shared-dream count as the metric (consistent across all types, and
+    // independent of edge-level frequency which isn't included in the API link objects).
+    const etMap = {
+      Symbol: 'contains', Theme: 'expresses',
+      Emotion: 'evoked',  Character: 'features', Setting: 'takes_place_in',
+    };
+    const et = etMap[nodeType];
+    if (!et) return null;
+    const dreamSet = new Set(dreamIds);
+    const counts = {};
+    for (const l of graphData.links) {
+      if (l.type !== et) continue;
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      if (dreamSet.has(src) && tgt !== nodeId) counts[tgt] = (counts[tgt] || 0) + 1;
+    }
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    if (!top) return null;
+    const node = graphData.nodes.find(n => n.id === top[0]);
+    return node ? { label: node.label, type: node.type, count: top[1] } : null;
+  }
+
+  function _getTopLCW(dreamIds) {
+    if (!dreamIds.length) return null;
+    const dreamLCW = {};
+    for (const l of graphData.links) {
+      if (l.type !== 'occurred_during') continue;
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      dreamLCW[src] = tgt;
+    }
+    const lcwCounts = {};
+    for (const id of dreamIds) {
+      const lcwId = dreamLCW[id];
+      if (lcwId) lcwCounts[lcwId] = (lcwCounts[lcwId] || 0) + 1;
+    }
+    const top = Object.entries(lcwCounts).sort((a, b) => b[1] - a[1])[0];
+    if (!top) return null;
+    const node = graphData.nodes.find(n => n.id === top[0]);
+    return node ? { label: node.label, count: top[1] } : null;
+  }
+
+  function renderSelectedRail(d) {
+    selectedNodeId = d.id;
+    document.getElementById('rail-ambient').style.display = 'none';
+    document.getElementById('rail-selected').style.display = '';
+
+    // Header
+    const color = NODE_COLORS[d.type] || '#9B97A8';
+    document.getElementById('rail-node-dot').style.background = color;
+    document.getElementById('rail-node-name').textContent = d.label;
+    document.getElementById('rail-node-type').textContent  =
+      d.type.replace(/([A-Z])/g, ' $1').trim().toUpperCase();
+
+    const props    = d.properties || {};
+    const dreamIds = _getDreamIdsForNode(d.id);
+    const coOcc    = _getTopCoOccurrence(d.id, d.type, dreamIds);
+    const topLCW   = _getTopLCW(dreamIds);
+    const note     = props.symbolic_note || props.description || null;
+
+    // Date range from connected dreams
+    const dreamDates = dreamIds
+      .map(id => { const n = graphData.nodes.find(x => x.id === id); return n ? (n.properties||{}).date : null; })
+      .filter(Boolean)
+      .sort();
+    const firstDate = dreamDates[0];
+    const lastDate  = dreamDates[dreamDates.length - 1];
+
+    const coOccLabel = {
+      Symbol:    'Most often alongside',
+      Theme:     'Most often alongside',
+      Emotion:   'Tends to appear with',
+      Character: 'Appears alongside',
+      Setting:   'Often paired with',
+    }[d.type] || 'Often paired with';
+
+    let html = '';
+
+    // Dream count — prominent number
+    html += `<div class="rail-insight">
+      <div class="rail-insight-label">Appears in</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span class="rail-dream-count">${dreamIds.length}</span>
+        <span class="rail-dream-label">${dreamIds.length === 1 ? 'dream' : 'dreams'}</span>
+      </div>
     </div>`;
 
-    if (top_theme_90_days) {
-      html += `<div class="trend-stat">
-        <span class="trend-stat-label">Top theme (90d)</span>
-        <span class="trend-stat-val">${esc(top_theme_90_days.name)}</span>
+    if (firstDate) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">First appeared</div>
+        <div class="rail-insight-value">${fmtDateFull(firstDate)}</div>
+      </div>`;
+    }
+    if (lastDate && lastDate !== firstDate) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">Most recently</div>
+        <div class="rail-insight-value">${fmtDateFull(lastDate)}</div>
       </div>`;
     }
 
-    if (top_symbol_all_time) {
-      html += `<div class="trend-stat">
-        <span class="trend-stat-label">Top symbol</span>
-        <span class="trend-stat-val">${esc(top_symbol_all_time.name)}</span>
+    if (coOcc) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">${coOccLabel}</div>
+        <div class="rail-insight-value">
+          <strong>${esc(coOcc.label)}</strong>
+          <span style="color:var(--color-ink-faint);font-size:11px;margin-left:4px">×${coOcc.count}</span>
+        </div>
       </div>`;
     }
 
-    el.innerHTML = html;
-  }
-
-  // ─── Left panel: filter detail card ─────────────────────────────────────────
-  function updatePanelForFilter() {
-    const card    = document.getElementById('panel-filter-detail');
-    const labelEl = document.getElementById('filter-detail-label');
-    const body    = document.getElementById('filter-detail-content');
-
-    if (activeFilter === 'themes') {
-      card.style.display = 'block';
-      labelEl.textContent = 'Top Themes';
-      const top5 = allThemes.slice(0, 5);
-      body.innerHTML = top5.length === 0
-        ? '<p class="panel-card-placeholder">No themes yet.</p>'
-        : top5.map((t, i) => `<div class="filter-list-item">
-            <span class="filter-list-rank">${i + 1}</span>
-            <span class="filter-list-name">${esc(t.name)}</span>
-            <span class="filter-list-count">${t.dream_count}</span>
-          </div>`).join('');
-
-    } else if (activeFilter === 'symbols') {
-      card.style.display = 'block';
-      labelEl.textContent = 'Top Symbols';
-      const top5 = allSymbols.slice(0, 5);
-      body.innerHTML = top5.length === 0
-        ? '<p class="panel-card-placeholder">No symbols yet.</p>'
-        : top5.map((s, i) => `<div class="filter-list-item">
-            <span class="filter-list-rank">${i + 1}</span>
-            <span class="filter-list-name">${esc(s.name)}</span>
-            <span class="filter-list-count">${s.dream_count}</span>
-          </div>`).join('');
-
-    } else if (activeFilter === 'life-context') {
-      card.style.display = 'block';
-      labelEl.textContent = 'Contexts';
-      const active = allLCWs.filter(c => c.status === 'foreground' || c.status === 'background');
-      body.innerHTML = active.length === 0
-        ? '<p class="panel-card-placeholder">No active contexts.</p>'
-        : active.map(c => {
-            const dotColor = c.status === 'foreground' ? 'var(--color-purple)' : 'var(--color-purple-light)';
-            return `<div class="filter-list-item">
-              <span class="lcw-dot" style="background:${dotColor}"></span>
-              <span class="filter-list-name">${esc(c.label)}</span>
-              <span class="filter-list-count">${esc(c.status)}</span>
-            </div>`;
-          }).join('');
-    } else {
-      card.style.display = 'none';
+    if (topLCW) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">Most active during</div>
+        <div class="rail-insight-value">${esc(topLCW.label)}</div>
+      </div>`;
     }
+
+    if (note) {
+      html += `<div class="rail-note">${esc(note)}</div>`;
+    }
+
+    document.getElementById('rail-insights').innerHTML = html;
   }
+
+  function clearSelectedRail() {
+    renderAmbientRail();
+  }
+
+  // updatePanelForFilter is no longer needed — left rail no longer mirrors filter state
+  function updatePanelForFilter() {}
 
   // ─── Graph: radius ───────────────────────────────────────────────────────────
   function computeRadius(d) {
@@ -2291,7 +2544,7 @@
       .on('zoom', e => { g.attr('transform', e.transform); });
 
     svg.call(zoom);
-    svg.on('click', () => closeInspectDrawer());
+    svg.on('click', () => { closeInspectDrawer(); clearSelectedRail(); });
 
     // Deep-copy nodes & links so D3 simulation can mutate them
     const nodes = graphData.nodes.map(d => ({ ...d, properties: { ...(d.properties || {}) } }));
@@ -2350,7 +2603,13 @@
       .on('mouseout', () => { tooltip.style('opacity', 0); })
       .on('click', (event, d) => {
         event.stopPropagation();
-        openInspectDrawer(d);
+        if (d.type === 'Dream') {
+          clearSelectedRail();
+          openInspectDrawer(d);
+        } else {
+          closeInspectDrawer();
+          renderSelectedRail(d);
+        }
       });
 
     // Labels
@@ -2474,6 +2733,7 @@
 
   // Inspect close
   document.getElementById('inspect-close').addEventListener('click', closeInspectDrawer);
+  document.getElementById('rail-close').addEventListener('click', clearSelectedRail);
 
   // Filter chips
   document.querySelectorAll('.chip[data-filter]').forEach(btn => {
@@ -2524,17 +2784,6 @@
 
   document.addEventListener('click', () => { dateDropEl.style.display = 'none'; });
 
-  // Drill-down nav links in left panel
-  document.querySelectorAll('.panel-nav-list li[data-filter]').forEach(li => {
-    li.addEventListener('click', () => {
-      const f = li.dataset.filter;
-      document.querySelectorAll('.chip[data-filter]').forEach(b => {
-        b.classList.toggle('active', b.dataset.filter === f);
-      });
-      activeFilter = f;
-      applyFilterToGraph();
-    });
-  });
 
   // ─── Add New section ─────────────────────────────────────────────────────────
 
@@ -2908,7 +3157,7 @@
       activeFilter    = 'dreams';
       activeDateRange = 'all';
 
-      renderTrends();
+      renderAmbientRail();
       wlLcws = lcws.slice();
       wlRender();
       requestAnimationFrame(initGraph);

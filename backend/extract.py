@@ -63,16 +63,68 @@ def _find_active_context_window(dg: DreamGraph, date: str) -> str | None:
     return None
 
 
+def build_entity_candidates(dg: DreamGraph, max_per_type: int = 30) -> str:
+    """
+    Serialize existing graph nodes into a formatted block for entity resolution.
+    Sorted by connection count (most-connected first) so that the most recurring
+    nodes appear at the top when the list is trimmed by max_per_type.
+    """
+    def _by_degree(nodes):
+        return sorted(nodes, key=lambda n: dg.G.degree(n[0]), reverse=True)
+
+    buckets: dict[str, list] = {t: [] for t in ("Symbol", "Theme", "Character", "Setting", "Emotion")}
+    for node_id, attrs in dg.G.nodes(data=True):
+        ntype = attrs.get("node_type")
+        if ntype in buckets:
+            buckets[ntype].append((node_id, attrs))
+
+    lines: list[str] = []
+
+    symbols = _by_degree(buckets["Symbol"])[:max_per_type]
+    if symbols:
+        lines.append("SYMBOLS — merge unless the symbolic territory is clearly different:")
+        for _, attrs in symbols:
+            note = attrs.get("symbolic_note", "")
+            lines.append(f'  • "{attrs["name"]}"' + (f" — {note}" if note else ""))
+
+    themes = _by_degree(buckets["Theme"])[:max_per_type]
+    if themes:
+        lines.append("THEMES — merge aggressively; prefer an existing label over creating a new one:")
+        for _, attrs in themes:
+            desc = attrs.get("description", "")
+            lines.append(f'  • "{attrs["name"]}"' + (f" — {desc}" if desc else ""))
+
+    chars = _by_degree(buckets["Character"])[:max_per_type]
+    if chars:
+        names = " | ".join(f'"{a["name"]}"' for _, a in chars)
+        lines.append(f"CHARACTERS — create new unless the match is very strong:\n  • {names}")
+
+    settings = _by_degree(buckets["Setting"])[:max_per_type]
+    if settings:
+        lines.append("SETTINGS — create new unless clearly the same location:")
+        for _, attrs in settings:
+            note = attrs.get("symbolic_note", "")
+            lines.append(f'  • "{attrs["name"]}"' + (f" — {note}" if note else ""))
+
+    emotions = _by_degree(buckets["Emotion"])[:max_per_type]
+    if emotions:
+        names = " | ".join(f'"{a["name"]}"' for _, a in emotions)
+        lines.append(f"EMOTIONS — usually abstract enough that exact matching works; listed for reference:\n  • {names}")
+
+    return "\n".join(lines)
+
+
 # ── Extraction ────────────────────────────────────────────────────────────────
 
 def extract_dream(conversation_history: list[dict], date: str,
-                  context_block: str = "") -> dict:
+                  context_block: str = "", candidates_block: str = "") -> dict:
     """
     Send the full conversation to Claude for structured extraction.
 
     conversation_history: list of {"role": "user"|"assistant", "content": "..."}
     date: ISO date string YYYY-MM-DD for this dream entry
     context_block: formatted waking-life context string from build_context_block()
+    candidates_block: formatted existing-node reference from build_entity_candidates()
 
     Returns the parsed extraction dict.
     """
@@ -90,7 +142,7 @@ def extract_dream(conversation_history: list[dict], date: str,
     response = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=4096,
-        system=EXTRACTION_SYSTEM_PROMPT(context_block),
+        system=EXTRACTION_SYSTEM_PROMPT(context_block, candidates_block),
         messages=[{"role": "user", "content": user_message}],
     )
 

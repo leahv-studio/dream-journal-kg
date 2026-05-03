@@ -70,7 +70,7 @@ The API key must be set as an environment variable — never committed to the re
 
 \* Auto-calculated. `co_occurs_with` increments when two symbols share a dream. `activates` is derived from Dream→Theme edges within a context window.
 
-See [`Schema files/SCHEMA.md`](Schema%20files/SCHEMA.md) for full field definitions and edge properties.
+See [`SCHEMA.md`](SCHEMA.md) for full field definitions and edge properties.
 
 ---
 

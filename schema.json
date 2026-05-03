@@ -26,7 +26,8 @@
         "status": { "type": "enum", "values": ["active", "dormant", "resolved"], "required": false, "note": "For recurring dreams. Dormant = no longer having it. Resolved = consciously processed." },
         "is_novel": { "type": "boolean", "required": false, "note": "User-asserted. Marks dreams with a genuinely new creative or architectural quality not seen before." },
         "age_range": { "type": "string", "required": false, "note": "For pre-journal dreams where an exact date is unavailable. e.g. 'ages 4-8'" },
-        "lucid": { "type": "boolean", "required": false }
+        "lucid": { "type": "boolean", "required": false },
+        "title": { "type": "string", "required": false, "note": "Short evocative title. LLM-generated at extraction time; user-editable before confirming." }
       }
     },
     "Character": {
@@ -90,6 +91,7 @@
         "start_date": { "type": "date", "required": false },
         "end_date": { "type": "date", "required": false, "note": "Rarely used. Most contexts don't have a clean end date. Archiving the context is the preferred way to mark it as past." },
         "description": { "type": "text", "required": false, "note": "Free-text journal entry about this context — what it is, why it matters, how it feels. Written in the user's own voice." },
+        "summary": { "type": "text", "required": false, "note": "Auto-generated 2-3 sentence summary of description. Used in dream analysis prompts instead of the full description to keep context concise. Regenerated when description is edited." },
         "status": { "type": "enum", "values": ["foreground", "background", "dormant", "archived"], "required": false, "note": "foreground = active and prominent; background = present but not central; dormant = not currently active; archived = past, closed out." }
       }
     },
@@ -152,9 +154,8 @@
     },
     "expresses": {
       "from": "Dream", "to": "Theme",
-      "description": "This dream expresses a higher-order theme.",
+      "description": "This dream expresses a higher-order theme. Theme provenance (user vs. llm) is tracked on the Theme node via theme.source — not on this edge. An edge-level source property is not used because NetworkX's node_link serialization reserves 'source' for the origin node ID.",
       "properties": {
-        "source": { "type": "enum", "values": ["user", "llm"] },
         "strength": { "type": "enum", "values": ["weak", "moderate", "strong"] }
       },
       "auto_calculated": false,

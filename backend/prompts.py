@@ -26,6 +26,16 @@ and are excluded from this analysis.
 {context_block}
 --- END WAKING LIFE CONTEXT ---"""
 
+_ENTITY_RESOLUTION_SECTION = """\
+--- EXISTING GRAPH NODES (for entity resolution) ---
+Before finalizing any node name, check whether an existing entry already covers the same concept.
+If a strong match exists, use that entry's name EXACTLY (including capitalization and punctuation) \
+— this is how the system merges the new occurrence with the existing node.
+Only create a new node if the concept is genuinely distinct from everything listed below.
+
+{existing_nodes_block}
+--- END EXISTING GRAPH NODES ---"""
+
 
 def JOURNAL_SYSTEM_PROMPT(context_block: str = "") -> str:
     context_section = _CONTEXT_SECTION.format(
@@ -73,14 +83,19 @@ Return ONLY the title — no quotes, no punctuation at the end, no explanation.\
 """
 
 
-def EXTRACTION_SYSTEM_PROMPT(context_block: str = "") -> str:
+def EXTRACTION_SYSTEM_PROMPT(context_block: str = "", existing_nodes_block: str = "") -> str:
     context_section = _CONTEXT_SECTION.format(
         context_block=context_block.strip() if context_block.strip() else _NO_CONTEXT_MSG
+    )
+    entity_section = (
+        "\n\n" + _ENTITY_RESOLUTION_SECTION.format(existing_nodes_block=existing_nodes_block.strip())
+        if existing_nodes_block.strip() else ""
     )
     return (
         "You extract structured data from dream journal conversations. "
         "Your output is ONLY valid JSON — no prose, no markdown fences, no preamble, no explanation.\n\n"
-        + context_section + "\n\n"
+        + context_section
+        + entity_section + "\n\n"
         "The JSON must match this exact structure. Use JSON null (not the string \"null\") "
         "for any optional field that isn't present in the conversation. Do not invent details.\n\n"
         '{\n'

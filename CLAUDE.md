@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Dream Journal Knowledge Graph — SEIS 666 Final Project, University of St. Thomas (Track A: Knowledge Graph + AI System). A personal dream journaling app that uses Claude for conversational entry and structured data extraction, with a NetworkX knowledge graph as the persistence layer.
 
-**Due:** May 14, 2026 | **Check-in #2:** April 16, 2026 (Stage 3 minimum complete)
+**Due:** May 14, 2026 | **Check-in #2:** April 16, 2026 ✓ (complete)
 
 ## Tech Stack
 
@@ -17,15 +17,18 @@ Dream Journal Knowledge Graph — SEIS 666 Final Project, University of St. Thom
 | Graph | NetworkX, persisted to `data/graph.json` |
 | AI | Claude API — `claude-sonnet-4-20250514` |
 
-## Planned Repo Structure
+## Repo Structure
 
 ```
 dream-journal-kg/
-  frontend/         index.html (chat UI), journal.html (query views), style.css, app.js
+  frontend/         index.html (chat UI), journal.html (query views), dashboard.html, style.css, app.js
   backend/          app.py (Flask + routes), graph.py (NetworkX ops), extract.py (Claude extraction), prompts.py (all system prompts)
-  data/             graph.json (persistent graph), seed_data.py (load existing entries)
+  data/             graph.json (persistent graph)
+  docs/             entity-resolution.md (design decision docs)
   schema.json       canonical schema definition
   SCHEMA.md         human-readable schema reference
+  STYLE.md          design system — fonts, colors, component conventions
+  README.md         project overview
 ```
 
 ## Running the App
@@ -43,7 +46,7 @@ API key must be set as `ANTHROPIC_API_KEY` environment variable — never commit
 
 ## Graph Schema
 
-8 node types, 15 edge types. See `Schema files/SCHEMA.md` and `Schema files/schema.json` for full definitions.
+8 node types, 15 edge types. See `SCHEMA.md` and `schema.json` for full definitions.
 
 **Node types:** Dream, Character, Symbol, Setting, Emotion, Theme, LifeContextWindow, BodySensation
 
@@ -64,13 +67,13 @@ API key must be set as `ANTHROPIC_API_KEY` environment variable — never commit
 
 ## Build Stages
 
-The project is built in 5 stages. Current target: Stage 3 by April 16.
+All stages complete as of May 2026.
 
-1. **Skeleton** — Flask + HTML talking to each other, no Claude, no graph
-2. **Graph Foundation** — NetworkX schema implemented, graph.json save/load, seed data
-3. **Claude API Extraction** — dream narrative in → structured JSON out → graph updates *(Check-in #2 deadline)*
-4. **Frontend Entry Flow** — chat UI, review card, Life Context Window display, context divergence detection
-5. **Query Views + Demo Polish** — journal.html pattern views, before/after demo, README
+1. ✓ **Skeleton** — Flask + HTML talking to each other, no Claude, no graph
+2. ✓ **Graph Foundation** — NetworkX schema implemented, graph.json save/load, seed data
+3. ✓ **Claude API Extraction** — dream narrative in → structured JSON out → graph updates
+4. ✓ **Frontend Entry Flow** — chat UI, review card, Life Context Window display, context divergence detection, title generation, entity resolution at extraction time
+5. ✓ **Query Views + Demo Polish** — journal.html, dashboard.html, knowledge graph view, symbol frequency, theme patterns, README
 
 ## Demo Anchor
 

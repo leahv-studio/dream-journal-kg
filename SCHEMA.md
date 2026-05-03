@@ -36,6 +36,7 @@ The central hub node. All other nodes connect through it.
 | `is_novel` | boolean | no | User-asserted. Marks dreams with genuinely new creative or architectural quality. |
 | `age_range` | string | no | For pre-journal dreams. e.g. "ages 4–8" |
 | `lucid` | boolean | no | |
+| `title` | string | no | Short evocative title. LLM-generated at extraction time; user-editable before confirming. |
 
 ---
 
@@ -124,6 +125,7 @@ A persistent waking life context that can move between states of prominence over
 | `start_date` | date | no | |
 | `end_date` | date | no | Rarely used. Most contexts don't have a clean end date. Archiving the context is the preferred way to mark it as past. |
 | `description` | text | no | Free-text journal entry about this context — what it is, why it matters, how it feels |
+| `summary` | text | no | Auto-generated 2–3 sentence summary of `description`. Used in dream analysis prompts instead of the full description to keep context concise. |
 | `status` | enum | no | `foreground` / `background` / `dormant` / `archived` |
 
 **status values:**
@@ -156,7 +158,7 @@ A physical sensation experienced in the dream. Separate from Symbol and Emotion 
 | `features` | Dream | Character | `role`: active / passive / observer | no |
 | `takes_place_in` | Dream | Setting | `distortion_level`: intact / distorted / unrecognizable | no |
 | `evoked` | Dream | Emotion | `anchor`: text, `confidence`: stated / inferred / ambiguous | no |
-| `expresses` | Dream | Theme | `source`: user / llm, `strength`: weak / moderate / strong | no |
+| `expresses` | Dream | Theme | `strength`: weak / moderate / strong | no |
 | `includes_sensation` | Dream | Body Sensation | — | no |
 | `contributes_to` | Symbol | Theme | — | no |
 | `co_occurs_with` | Symbol | Symbol | `frequency`: integer | **yes** |
@@ -170,6 +172,9 @@ A physical sensation experienced in the dream. Separate from Symbol and Emotion 
 ### Auto-calculated edges
 - **`co_occurs_with`** — any two Symbol nodes sharing a Dream node get this edge; frequency increments each time they co-appear.
 - **`activates`** — derived by analyzing which themes cluster within a Life Context Window, via Dream → Theme edges.
+
+### Note on theme provenance
+Theme provenance (`user` vs `llm`) is tracked on the **Theme node** itself via `theme.source`, not on the `expresses` edge. An edge-level `source` property was considered but is not implemented: NetworkX's node_link serialization uses `source` as a reserved key for the edge's origin node ID, so any edge attribute with that name is silently overwritten on save.
 
 ### Key queries enabled by edge type
 - `occurred_during` — "Show me all dreams during my job search period"
@@ -186,7 +191,7 @@ A physical sensation experienced in the dream. Separate from Symbol and Emotion 
 |---|---|
 | Node types | 8 |
 | Edge types | 15 |
-| Required fields (total across all nodes) | 11 |
+| Required fields (total across all nodes) | 16 |
 | Auto-calculated edges | 2 |
 
 ---
