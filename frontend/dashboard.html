@@ -213,9 +213,9 @@
     /* Query input (always visible) */
     .rail-query-input-wrap {
       display: flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 10px;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 10px;
       background: rgba(236,234,230,0.6);
       border: 1px solid var(--color-border);
       border-radius: 8px;
@@ -225,7 +225,18 @@
       border-color: var(--color-purple-light);
       background: rgba(236,234,230,0.9);
     }
-    .rail-search-icon { font-size: 15px; color: var(--color-ink-faint); line-height: 1; flex-shrink: 0; }
+    .rail-query-input-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .rail-search-icon {
+      font-size: 15px;
+      color: var(--color-ink-faint);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
     .rail-query-input {
       flex: 1;
       background: none;
@@ -235,8 +246,28 @@
       color: var(--color-ink);
       font-family: var(--font-ui);
       min-width: 0;
+      resize: none;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-break: normal;
+      line-height: 1.5;
+      padding: 0;
+      min-height: 20px;
     }
     .rail-query-input::placeholder { color: var(--color-ink-faint); }
+    .rail-query-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .rail-query-counter {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .rail-query-counter.warn  { color: var(--color-gold); }
+    .rail-query-counter.limit { color: var(--color-negative); }
     .rail-query-submit {
       background: none;
       border: none;
@@ -266,6 +297,15 @@
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--color-ink-faint);
+    }
+    .rail-query-question {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      word-break: normal;
+      overflow-wrap: break-word;
     }
     .rail-query-answer {
       font-size: 13px;
@@ -1767,10 +1807,18 @@
 
         <!-- Always-visible query input -->
         <div class="rail-query-input-wrap">
-          <span class="rail-search-icon">⌕</span>
-          <input type="text" class="rail-query-input" id="rail-query-input"
-                 placeholder="Ask about your dreams…" autocomplete="off">
-          <button class="rail-query-submit" id="rail-query-submit" title="Ask">↵</button>
+          <div class="rail-query-input-row">
+            <span class="rail-search-icon">⌕</span>
+            <textarea class="rail-query-input" id="rail-query-input"
+                      placeholder="Ask about your dreams…" autocomplete="off"
+                      maxlength="120" rows="1"
+                      aria-label="Ask about your dreams, 120 character limit"
+                      aria-describedby="rail-query-counter"></textarea>
+          </div>
+          <div class="rail-query-footer">
+            <span class="rail-query-counter" id="rail-query-counter">0 / 120</span>
+            <button class="rail-query-submit" id="rail-query-submit" title="Ask (Enter)">↵</button>
+          </div>
         </div>
 
         <!-- Ambient state: graph at a glance -->
@@ -1830,6 +1878,7 @@
             <div class="rail-query-label">Graph answer</div>
             <button class="rail-close-btn" id="rail-query-close" aria-label="Clear answer">✕</button>
           </div>
+          <div class="rail-query-question" id="rail-query-question"></div>
           <div class="rail-query-answer" id="rail-query-answer"></div>
           <div class="rail-query-count" id="rail-query-count"></div>
         </div>
@@ -2908,8 +2957,9 @@
     document.getElementById('rail-ambient').style.display  = 'none';
     document.getElementById('rail-selected').style.display = 'none';
     document.getElementById('rail-query').style.display    = '';
-    document.getElementById('rail-query-answer').textContent = 'Thinking…';
-    document.getElementById('rail-query-count').textContent  = '';
+    document.getElementById('rail-query-question').textContent = q;
+    document.getElementById('rail-query-answer').textContent   = 'Thinking…';
+    document.getElementById('rail-query-count').textContent    = '';
 
     try {
       const res  = await fetch('/api/query', {
@@ -2933,13 +2983,30 @@
     }
   }
 
-  queryInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitQuery(); });
+  queryInput.addEventListener('input', () => {
+    queryInput.style.height = 'auto';
+    queryInput.style.height = queryInput.scrollHeight + 'px';
+    const len     = queryInput.value.length;
+    const counter = document.getElementById('rail-query-counter');
+    counter.textContent = len >= 120 ? '120 / 120 — limit reached' : `${len} / 120`;
+    counter.classList.toggle('warn',  len >= 100 && len < 120);
+    counter.classList.toggle('limit', len >= 120);
+  });
+
+  queryInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); submitQuery(); }
+  });
   querySubmit.addEventListener('click', submitQuery);
 
   document.getElementById('rail-query-close').addEventListener('click', () => {
     clearEgoHighlight();
     renderAmbientRail();
-    queryInput.value = '';
+    queryInput.value        = '';
+    queryInput.style.height = '';
+    document.getElementById('rail-query-question').textContent = '';
+    const counter = document.getElementById('rail-query-counter');
+    counter.textContent = '0 / 120';
+    counter.classList.remove('warn', 'limit');
   });
 
   // Filter chips
