@@ -3790,6 +3790,7 @@
   document.querySelector('.footer-wordmark').addEventListener('click', async () => {
     await fetch('/api/demo/toggle', { method: 'POST' });
     refreshGraph();
+    addLoadContext();
   });
 
   // ─── Start ───────────────────────────────────────────────────────────────────
