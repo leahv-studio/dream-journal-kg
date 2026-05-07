@@ -8,8 +8,8 @@
       "label": "Active job search + grad school applications",
       "start_date": "2024-09-01",
       "end_date": "2025-01-15",
-      "description": "I was laid off in late August and spent the fall applying to jobs and finishing my grad school applications simultaneously. The financial pressure was constant \u2014 I was burning through savings and every rejection letter hit harder than it should have. There was a specific kind of shame in being unemployed while also trying to present myself as competent enough for a grad program. It ended when I got the offer in January.",
-      "summary": "A period defined by financial precarity and compounding identity stress \u2014 simultaneously unemployed and applying to a graduate program, forcing the person to perform competence while feeling acutely exposed. Shame and legitimacy anxiety were central, with every rejection amplified by the underlying fear of not belonging.",
+      "description": "I was laid off in late August and spent the fall applying to jobs and finishing my grad school applications simultaneously. The financial pressure was constant — I was burning through savings and every rejection letter hit harder than it should have. There was a specific kind of shame in being unemployed while also trying to present myself as competent enough for a grad program. It ended when I got the offer in January.",
+      "summary": "A period defined by financial precarity and compounding identity stress — simultaneously unemployed and applying to a graduate program, forcing the person to perform competence while feeling acutely exposed. Shame and legitimacy anxiety were central, with every rejection amplified by the underlying fear of not belonging.",
       "status": "archived",
       "id": "lcw_job_search"
     },
@@ -17,10 +17,48 @@
       "node_type": "LifeContextWindow",
       "label": "Promotion and grad school",
       "start_date": "2025-01-16",
-      "description": "Started the new role in January \u2014 excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
-      "summary": "A high-demand period of simultaneous transitions \u2014 new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
+      "end_date": "2025-10-31",
+      "description": "Started the new role in January — excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
+      "summary": "A high-demand period of simultaneous transitions — new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
       "status": "archived",
       "id": "lcw_new_role"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Coming out of burnout",
+      "start_date": "2023-06-01",
+      "end_date": "2024-06-01",
+      "description": "The year before the layoff was quietly the worst. I'd been in survival mode at work for so long that I stopped noticing. Not dramatic burnout — the creeping kind. Dreading Sunday nights. Forgetting things. Losing the thread of meetings. When I finally admitted it to myself, I was already out the other side, or at least far enough out to look back. The layoff was almost a relief.",
+      "summary": "A prolonged period of depletion that was largely invisible while it was happening — the gradual erosion of motivation and presence rather than a dramatic collapse. Recovery happened quietly alongside the daily grind, and the end of this period overlapped with the layoff that forced a harder reset. The exhaustion predated the crisis.",
+      "status": "dormant",
+      "id": "lcw_burnout_recovery"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Job search and financial pressure",
+      "start_date": "2025-11-01",
+      "description": "I've been looking for a new job and not having a lot of luck. I've been networking a lot which has been it's own kind of social stress but also totally necessary. I had an interview in March at a company and a role I was really hoping to get. They ghosted me but it still felt validating to finally get an interview at least. I'm feeling pressure to leave my current company before I'm there too long and appear as though I can only specialize in that particular industry. I'm also feeling a lot of pressure to meaningfully increase my salary to achieve my duplex goals.",
+      "summary": "The dreamer is experiencing significant career uncertainty and pressure, caught between the stress of job searching while feeling trapped in their current position. Financial anxiety about salary growth is intertwined with specific housing aspirations, creating multiple layers of pressure. The emotional landscape includes both hope and disappointment from the job search process, along with social stress from networking, while facing time pressure to make career moves that could impact their long-term professional trajectory.",
+      "status": "background",
+      "id": "lcw_job_search_and_financial"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Looking for a place to buy",
+      "start_date": "2025-11-15",
+      "description": "I've started seriously house hunting — or trying to. The market is brutal and I know it going in. Every listing I get excited about sells before I can even schedule a showing. I've been to a few open houses and nothing feels right yet, which is its own kind of confusing — I'm not sure if nothing is right or if I'm afraid to commit. The old duplex I lived in years ago is still in my head as the benchmark. I don't think I'll find that exact thing but I keep looking for the feeling of it.",
+      "summary": "An active search for a first home purchase, shadowed by a competitive market and an internalized benchmark — a former apartment that exists in memory as the ideal. The tension between concrete logistics (listings, showings, prices) and an emotional standard the dreamer can't fully articulate creates a layered anxiety. The uncertainty about whether external or internal factors are blocking commitment adds another dimension to the search.",
+      "status": "background",
+      "id": "lcw_house_hunting"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Supporting my friend through her divorce",
+      "start_date": "2025-08-20",
+      "description": "My closest friend is going through a divorce and it's been heavy in a way I didn't fully anticipate. She's doing the actual hard work of leaving — I'm just the person on the other end of the phone. But emotional labor has a weight to it even when you're not the one going through it. I find myself absorbing her anxiety, her grief, her logistics. There are weeks I feel like I'm carrying something that isn't mine to carry and I'm not sure how to put it down without abandoning her.",
+      "summary": "A sustained period of close emotional support for a friend navigating divorce — a role that requires consistent availability, emotional attunement, and carrying another person's pain without a clear resolution date. The dreamer is experiencing the secondary stress of witnessing grief they cannot fix, alongside a personal reckoning with the limits of what can be offered. The blurring of the friend's experience and the dreamer's own emotional landscape is a central tension.",
+      "status": "foreground",
+      "id": "lcw_providing_emotional_supp"
     },
     {
       "node_type": "Character",
@@ -58,10 +96,65 @@
       "id": "char_classmate"
     },
     {
+      "node_type": "Character",
+      "name": "Brother",
+      "character_type": "real_current",
+      "symbolic_role": "Unshakeable competence and legitimacy the dreamer feels they lack",
+      "id": "char_brother"
+    },
+    {
+      "node_type": "Character",
+      "name": "Coworker",
+      "character_type": "real_current",
+      "symbolic_role": "Professional seriousness and competence that feels foreign",
+      "id": "char_coworker"
+    },
+    {
+      "node_type": "Character",
+      "name": "Store worker / inspector",
+      "character_type": "constructed",
+      "symbolic_role": "Feared authority who will expose the dreamer's illegitimacy",
+      "id": "char_store_worker_inspector"
+    },
+    {
+      "node_type": "Character",
+      "name": "Shawna",
+      "character_type": "real_current",
+      "symbolic_role": "Support that feels inadequate or dismissive during crisis",
+      "id": "char_shawna"
+    },
+    {
+      "node_type": "Character",
+      "name": "Shop guy",
+      "character_type": "constructed",
+      "symbolic_role": "Helper figure who provides simple solutions to complex problems",
+      "id": "char_shop_guy"
+    },
+    {
+      "node_type": "Character",
+      "name": "Brother's wife",
+      "character_type": "real_current",
+      "id": "char_brother_s_wife"
+    },
+    {
+      "node_type": "Character",
+      "name": "Friend going through divorce",
+      "character_type": "real_current",
+      "symbolic_role": "Grief and upheaval the dreamer is trying to hold and cannot fix",
+      "id": "char_friend"
+    },
+    {
+      "node_type": "Character",
+      "name": "Realtor",
+      "character_type": "constructed",
+      "symbolic_role": "Gatekeeper to spaces that remain just out of reach",
+      "id": "char_realtor"
+    },
+    {
       "node_type": "Symbol",
       "name": "Car / driving",
       "category": "object",
-      "symbolic_note": "Navigation, autonomy, forward momentum \u2014 frequent failure site",
+      "symbolic_note": "Navigation, autonomy, forward momentum — frequent failure site",
       "id": "sym_car"
     },
     {
@@ -124,8 +217,77 @@
       "node_type": "Symbol",
       "name": "The Grand Am",
       "category": "object",
-      "symbolic_note": "Specific car from adolescence \u2014 navigation failure, autonomy",
+      "symbolic_note": "Specific car from adolescence — navigation failure, autonomy",
       "id": "sym_grand_am"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Driver's license inspection",
+      "category": "action",
+      "symbolic_note": "Fear of having credentials scrutinized and found inadequate",
+      "id": "sym_driver_s_license_inspection"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Wallet and documents",
+      "category": "object",
+      "symbolic_note": "Symbols of adult legitimacy that become evidence against the dreamer",
+      "id": "sym_wallet_and_documents"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Parents' minivan",
+      "category": "object",
+      "symbolic_note": "Borrowed legitimacy and regression to adolescent dependence",
+      "id": "sym_parents_minivan"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Confiscated keys",
+      "category": "object",
+      "symbolic_note": "Loss of autonomy and adult privileges",
+      "id": "sym_confiscated_keys"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Four children each",
+      "category": "object",
+      "symbolic_note": "Exaggerated markers of adult stability and social legitimacy",
+      "id": "sym_four_children_each"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Converging handrails",
+      "category": "object",
+      "symbolic_note": "Deceptive structures that promise passage but create traps",
+      "id": "sym_converging_handrails"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Lyft with wrong address",
+      "category": "object",
+      "symbolic_note": "Technology that should help but leads away from the goal",
+      "id": "sym_lyft_with_wrong_address"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Giant crab",
+      "category": "animal",
+      "symbolic_note": "Impossible fear or anxiety that's foreign yet clinging to the dreamer",
+      "id": "sym_giant_crab"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Ruler",
+      "category": "object",
+      "symbolic_note": "Simple tool that solves seemingly complex problems",
+      "id": "sym_ruler"
+    },
+    {
+      "node_type": "Symbol",
+      "name": "Prickly bushes",
+      "category": "object",
+      "id": "sym_prickly_bushes"
     },
     {
       "node_type": "Setting",
@@ -140,7 +302,7 @@
       "name": "The duplex (way bigger inside)",
       "familiarity": "distorted",
       "real_or_constructed": "composite",
-      "symbolic_note": "Former apartment; always contains undiscovered rooms \u2014 psychic space",
+      "symbolic_note": "Former apartment; always contains undiscovered rooms — psychic space",
       "id": "set_duplex"
     },
     {
@@ -182,6 +344,69 @@
       "real_or_constructed": "constructed",
       "symbolic_note": "Navigation maze; can't find the car or the exit",
       "id": "set_parking_structure"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Target store",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "Consumer space where agency is suddenly stripped away by arbitrary authority",
+      "id": "set_target_store"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Parents' house",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "Regression to dependence and childhood inadequacy",
+      "id": "set_parents_house"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Undergrad campus",
+      "familiarity": "known",
+      "real_or_constructed": "real",
+      "symbolic_note": "Familiar territory where the dreamer becomes lost",
+      "id": "set_undergrad_campus"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Building with enclosed stairs",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "symbolic_note": "Institutional structure that appears helpful but is actually hostile",
+      "id": "set_building_with_enclosed_stairs"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Random shop",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "id": "set_random_shop"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Open house",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "symbolic_note": "House with more doors than it should have, all locked",
+      "id": "set_open_house"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Empty house for sale",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "symbolic_note": "Liminal space between belonging and not; feels like the duplex",
+      "id": "set_empty_house"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Social gathering",
+      "familiarity": "unfamiliar",
+      "real_or_constructed": "constructed",
+      "symbolic_note": "Space where arrival is unexpected and belonging is withheld",
+      "id": "set_gathering_space"
     },
     {
       "node_type": "Emotion",
@@ -247,9 +472,58 @@
       "id": "emo_urgency"
     },
     {
+      "node_type": "Emotion",
+      "name": "Defeated",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_defeated"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Embarrassed",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_embarrassed"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Irritated",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_irritated"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Anger",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_anger"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Annoyance",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_annoyance"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Disgust",
+      "valence": "negative",
+      "confidence": "stated",
+      "id": "emo_disgust"
+    },
+    {
+      "node_type": "Emotion",
+      "name": "Frustration",
+      "valence": "negative",
+      "confidence": "inferred",
+      "id": "emo_frustration"
+    },
+    {
       "node_type": "Theme",
       "name": "Navigation failure",
-      "description": "Can't get where I'm going \u2014 wrong turns, broken vehicles, lost exits",
+      "description": "Can't get where I'm going — wrong turns, broken vehicles, lost exits",
       "source": "user",
       "id": "thm_navigation_failure"
     },
@@ -277,7 +551,7 @@
     {
       "node_type": "Theme",
       "name": "Transformation / discovery",
-      "description": "Finding new space, capacity, or self \u2014 often surprising",
+      "description": "Finding new space, capacity, or self — often surprising",
       "source": "llm",
       "id": "thm_transformation"
     },
@@ -287,6 +561,55 @@
       "description": "Unable to reach people or be reached; communication breakdown",
       "source": "user",
       "id": "thm_isolation"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Imposter syndrome",
+      "description": "Fear of being exposed as unqualified despite holding credentials",
+      "source": "llm",
+      "id": "thm_imposter_syndrome"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Regression under pressure",
+      "description": "Returning to adolescent dependence when adult competence is questioned",
+      "source": "llm",
+      "id": "thm_regression_under_pressure"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Professional legitimacy anxiety",
+      "description": "Fear that credentials and qualifications will be found inadequate under scrutiny",
+      "source": "llm",
+      "id": "thm_professional_legitimacy_anxiety"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Isolation in crisis",
+      "description": "Being unable to seek help or explain circumstances when things go wrong",
+      "source": "llm",
+      "id": "thm_isolation_in_crisis"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Institutional hostility",
+      "description": "Structures and systems that appear helpful but actually create barriers",
+      "source": "llm",
+      "id": "thm_institutional_hostility"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Escalating obstacles",
+      "description": "Problems that compound and become increasingly surreal and difficult",
+      "source": "llm",
+      "id": "thm_escalating_obstacles"
+    },
+    {
+      "node_type": "Theme",
+      "name": "Performance anxiety",
+      "description": "Concern about looking foolish or incompetent in front of others",
+      "source": "llm",
+      "id": "thm_performance_anxiety"
     },
     {
       "node_type": "BodySensation",
@@ -313,19 +636,51 @@
       "id": "bs_legs_wont_move"
     },
     {
+      "node_type": "BodySensation",
+      "description": "Giant crab clinging to calf",
+      "location": "calf",
+      "quality": "pressure",
+      "confidence": "stated",
+      "id": "bs_dream_2026_04_27_0"
+    },
+    {
       "node_type": "Dream",
-      "date": "2025-03-15",
-      "raw_narrative": "I'm driving the Grand Am from high school \u2014 the white one with the cracked dashboard. I need to get somewhere important but I can't figure out where I parked, and when I finally find the car the GPS won't load. I keep circling the same parking structure. I know I'm late. I never arrive.",
+      "date": "2023-10-12",
+      "title": "Buried at the Old Job",
+      "raw_narrative": "I'm at my desk in the old office but papers keep accumulating faster than I can move them — stacks of folders, printouts, things I don't recognize. The water starts rising from under the desk. I know there's something I'm supposed to finish but I can't find it under the pile. My backpack is somewhere down there too. I never leave the chair.",
       "emotional_valence": "negative",
-      "intensity": 4,
+      "intensity": 3,
+      "visual_quality": "dark",
+      "lucid": false,
+      "id": "dream_buried_at_old_job"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2024-04-02",
+      "title": "The Deadline Room",
+      "raw_narrative": "There's a meeting I was supposed to be in ten minutes ago. I know which building but I can't find the right floor — the stairs keep turning the wrong direction. I try my phone but it shows no signal. Every hallway looks the same. I never find the room.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "washed_out",
+      "lucid": false,
+      "id": "dream_deadline_room"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2024-09-22",
+      "title": "Dad's Table in the Wrong Room",
+      "raw_narrative": "I'm back in the house I grew up in, but the layout is wrong. My bedroom is where the kitchen should be. Dad is there, sitting at a table that doesn't fit the space. He's proud of me about something I haven't done yet.",
+      "emotional_valence": "mixed",
+      "intensity": 2,
       "visual_quality": "normal",
       "lucid": false,
-      "id": "dream_grand_am"
+      "id": "dream_childhood_home_wrong"
     },
     {
       "node_type": "Dream",
       "date": "2024-10-03",
-      "raw_narrative": "I'm back in the old duplex on Aldrich. I go through a door I thought was a closet and there's an entire extra wing \u2014 three more rooms, high ceilings, windows I've never seen. The apartment is way bigger than it ever was. I feel amazed but also anxious, like I've been missing something obvious.",
+      "title": "The Duplex With the Extra Wing",
+      "raw_narrative": "I'm back in the old duplex on Aldrich. I go through a door I thought was a closet and there's an entire extra wing — three more rooms, high ceilings, windows I've never seen. The apartment is way bigger than it ever was. I feel amazed but also anxious, like I've been missing something obvious.",
       "emotional_valence": "mixed",
       "intensity": 3,
       "visual_quality": "bright",
@@ -337,7 +692,30 @@
     },
     {
       "node_type": "Dream",
+      "date": "2024-11-14",
+      "title": "Can't Reach Mom",
+      "raw_narrative": "I need to call mom urgently. My phone keeps opening the wrong apps, the screen distorts, the number won't dial. I try for what feels like hours. I never get through.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "normal",
+      "lucid": false,
+      "id": "dream_phone_wont_work"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2024-12-18",
+      "title": "The Door Is Always One Flight Up",
+      "raw_narrative": "I'm climbing stairs in a building that keeps adding floors. The door I need is always one more flight up. My backpack is unbearably heavy. I don't stop climbing.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "dark",
+      "lucid": false,
+      "id": "dream_infinite_stairs"
+    },
+    {
+      "node_type": "Dream",
       "date": "2025-01-08",
+      "title": "The Flooding Basement",
       "raw_narrative": "The duplex again. This time there's a basement I didn't know about. Water is coming in slowly. The new rooms are there but they feel unstable, like the floors might give. Mom is somewhere in the house but I can't find her.",
       "emotional_valence": "negative",
       "intensity": 4,
@@ -350,48 +728,8 @@
     },
     {
       "node_type": "Dream",
-      "date": "2025-02-20",
-      "raw_narrative": "I'm sitting in an exam room \u2014 big lecture hall, fluorescent lights. The test is already being handed out and I realize I never attended the class. I don't even know what subject this is. My former boss is proctoring. I can't leave.",
-      "emotional_valence": "negative",
-      "intensity": 5,
-      "visual_quality": "washed_out",
-      "lucid": false,
-      "id": "dream_exam_unprepared"
-    },
-    {
-      "node_type": "Dream",
-      "date": "2024-11-14",
-      "raw_narrative": "I need to call mom urgently. My phone keeps opening the wrong apps, the screen distorts, the number won't dial. I try for what feels like hours. I never get through.",
-      "emotional_valence": "negative",
-      "intensity": 3,
-      "visual_quality": "normal",
-      "lucid": false,
-      "id": "dream_phone_wont_work"
-    },
-    {
-      "node_type": "Dream",
-      "date": "2024-09-22",
-      "raw_narrative": "I'm back in the house I grew up in, but the layout is wrong. My bedroom is where the kitchen should be. Dad is there, sitting at a table that doesn't fit the space. He's proud of me about something I haven't done yet.",
-      "emotional_valence": "mixed",
-      "intensity": 2,
-      "visual_quality": "normal",
-      "lucid": false,
-      "id": "dream_childhood_home_wrong"
-    },
-    {
-      "node_type": "Dream",
-      "date": "2025-03-02",
-      "raw_narrative": "There's a basement I need to get to but water is already up to my knees. I know something important is down there. The water is cold and keeps rising. I don't go in.",
-      "emotional_valence": "negative",
-      "intensity": 4,
-      "visual_quality": "dark",
-      "notable_color": "grey-green",
-      "lucid": false,
-      "id": "dream_water_basement"
-    },
-    {
-      "node_type": "Dream",
       "date": "2025-01-29",
+      "title": "Interview in Twenty Minutes",
       "raw_narrative": "I have a job interview in 20 minutes. I cannot find my keys anywhere. I search every pocket, every drawer, the same places over and over. A stranger woman watches me search. She seems unsurprised.",
       "emotional_valence": "negative",
       "intensity": 5,
@@ -402,7 +740,8 @@
     {
       "node_type": "Dream",
       "date": "2025-02-05",
-      "raw_narrative": "I'm presenting to a room of people \u2014 maybe twenty of them. My slides are someone else's entirely. I try to improvise but I don't know the material. A classmate in the front row takes notes. I keep talking.",
+      "title": "Someone Else's Slides",
+      "raw_narrative": "I'm presenting to a room of people — maybe twenty of them. My slides are someone else's entirely. I try to improvise but I don't know the material. A classmate in the front row takes notes. I keep talking.",
       "emotional_valence": "negative",
       "intensity": 4,
       "visual_quality": "washed_out",
@@ -411,18 +750,43 @@
     },
     {
       "node_type": "Dream",
-      "date": "2024-12-18",
-      "raw_narrative": "I'm climbing stairs in a building that keeps adding floors. The door I need is always one more flight up. My backpack is unbearably heavy. I don't stop climbing.",
+      "date": "2025-02-20",
+      "title": "The Exam I Never Attended",
+      "raw_narrative": "I'm sitting in an exam room — big lecture hall, fluorescent lights. The test is already being handed out and I realize I never attended the class. I don't even know what subject this is. My former boss is proctoring. I can't leave.",
       "emotional_valence": "negative",
-      "intensity": 3,
-      "visual_quality": "dark",
+      "intensity": 5,
+      "visual_quality": "washed_out",
       "lucid": false,
-      "id": "dream_infinite_stairs"
+      "id": "dream_exam_unprepared"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2025-03-02",
+      "title": "Something Important Is Down There",
+      "raw_narrative": "There's a basement I need to get to but water is already up to my knees. I know something important is down there. The water is cold and keeps rising. I don't go in.",
+      "emotional_valence": "negative",
+      "intensity": 4,
+      "visual_quality": "dark",
+      "notable_color": "grey-green",
+      "lucid": false,
+      "id": "dream_water_basement"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2025-03-15",
+      "title": "The Grand Am",
+      "raw_narrative": "I'm driving the Grand Am from high school — the white one with the cracked dashboard. I need to get somewhere important but I can't figure out where I parked, and when I finally find the car the GPS won't load. I keep circling the same parking structure. I know I'm late. I never arrive.",
+      "emotional_valence": "negative",
+      "intensity": 4,
+      "visual_quality": "normal",
+      "lucid": false,
+      "id": "dream_grand_am"
     },
     {
       "node_type": "Dream",
       "date": "2025-03-28",
-      "raw_narrative": "I'm in a bathroom I don't recognize. I look in the mirror and the person looking back is me but from a different time \u2014 younger, or older, I can't tell. She mouths something I can't hear. I feel the falling sensation and wake up.",
+      "title": "The Other Me in the Bathroom",
+      "raw_narrative": "I'm in a bathroom I don't recognize. I look in the mirror and the person looking back is me but from a different time — younger, or older, I can't tell. She mouths something I can't hear. I feel the falling sensation and wake up.",
       "emotional_valence": "mixed",
       "intensity": 3,
       "visual_quality": "vivid",
@@ -431,311 +795,86 @@
       "id": "dream_mirror"
     },
     {
-      "node_type": "LifeContextWindow",
-      "label": "Job search and financial pressure",
-      "start_date": "2025-11-01",
-      "description": "I've been looking for a new job and not having a lot of luck. I've been networking a lot which has been it's own kind of social stress but also totally necessary. I had an interview in March at a company and a role I was really hoping to get. They ghosted me but it still felt validating to finally get an interview at least. I'm feeling pressure to leave my current company before I'm there too long and appear as though I can only specialize in that particular industry. I'm also feeling a lot of pressure to meaningfully increase my salary to achieve my duplex goals.",
-      "summary": "The dreamer is experiencing significant career uncertainty and pressure, caught between the stress of job searching while feeling trapped in their current position. Financial anxiety about salary growth is intertwined with specific housing aspirations, creating multiple layers of pressure. The emotional landscape includes both hope and disappointment from the job search process, along with social stress from networking, while facing time pressure to make career moves that could impact their long-term professional trajectory.",
-      "status": "background",
-      "id": "lcw_job_search_and_financial"
+      "node_type": "Dream",
+      "date": "2026-02-15",
+      "title": "The Listing That Sold Overnight",
+      "raw_narrative": "I'm on my phone looking at a listing I've been watching — the right neighborhood, the right price, a yard. I screenshot it to send but when I go back, the photos have changed. Different rooms, different layout. I refresh and they change again. I try to call the realtor but the call won't connect. I know the original listing is gone. I waited too long.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "normal",
+      "lucid": false,
+      "id": "dream_listing_sold_overnight"
     },
     {
-      "node_type": "LifeContextWindow",
-      "label": "Test",
-      "description": "Test falsdjkfas;ldkfjas;ldkfj",
-      "status": "dormant",
-      "id": "lcw_test"
+      "node_type": "Dream",
+      "date": "2026-03-08",
+      "title": "Open House With Locked Rooms",
+      "raw_narrative": "I'm at an open house with a realtor. There are more doors than the floor plan shows. Every one I try is locked. I ask the realtor about them and she says those are the important ones, smiling like that's a normal answer. I try my keys and none fit. The house keeps adding rooms. I never see what's behind any of the doors.",
+      "emotional_valence": "negative",
+      "intensity": 4,
+      "visual_quality": "normal",
+      "lucid": false,
+      "id": "dream_open_house_locked_rooms"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-03-22",
+      "title": "On the Phone All Night",
+      "raw_narrative": "I'm on the phone with my friend. She's in the middle of something hard about the divorce and the call keeps dropping — not all the way, just enough to lose the thread. I catch every third sentence. I try to ask her to repeat things but my voice comes out delayed, wrong. I hold the phone as tight as I can. I'm not sure she can hear me either.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "dark",
+      "lucid": false,
+      "id": "dream_on_the_phone_all_night"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-03-22",
+      "title": "The Empty House Tour",
+      "raw_narrative": "I'm walking through a house for sale. Everything is under white sheets. There's a room at the end of the hall that has the same proportions as the old duplex — same light, same ceiling height. I know it isn't the same place. I look in a mirror on the wall and my reflection doesn't quite match my movements — half a second behind. I don't leave. I keep walking through the same rooms.",
+      "emotional_valence": "mixed",
+      "intensity": 3,
+      "visual_quality": "bright",
+      "lucid": false,
+      "id": "dream_empty_house_tour"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-04-05",
+      "title": "Showing Up Where I Wasn't Expected",
+      "raw_narrative": "I arrive at a gathering. I'm certain I was invited — I have the address, I wrote it down. Everyone pauses when I come through the door. A stranger woman stands near the entrance watching. I feel immediately wrong for being there but leaving would make it worse. Someone eventually says come in, come in, the way you'd say it to someone you hadn't planned on. I stay near the edge the whole night. The stranger woman doesn't look away.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "normal",
+      "lucid": false,
+      "id": "dream_showing_up_uninvited"
     },
     {
       "node_type": "Dream",
       "date": "2026-04-24",
+      "title": "Stripped of My License at Target",
       "raw_narrative": "I was in a busy shopping store like Target with my brother and a coworker. Both of them were serious, unambiguous workers who could irritate me with their inflexibility, but I recognized their approach had merits. Strangely, they both had four young children and were religious. At some point, a store worker demanded to inspect my driver's license and wallet to verify I was qualified to drive. He began picking apart everything wrong with my documents - my license, insurance, passport, and even my cell phone. He implied I was either a scammed fool or a criminal, declared I couldn't drive, and confiscated all my items including my keys. I had to walk home without being able to contact my brother or coworker since he'd taken my phone. The walk 'home' led to my parents' house, which wasn't extremely far but was still a significant walk. When I arrived, I felt embarrassed about explaining what had happened because it wouldn't have happened to them. The car keys he'd seized belonged to my parents' minivan that I'd been driving as a teenager because I couldn't afford my own car, so I figured I'd be in even more trouble for having to abandon it at Target.",
       "emotional_valence": "negative",
       "intensity": 4,
       "lucid": false,
-      "title": "Stripped of My License at Target",
       "id": "dream_2026_04_24"
-    },
-    {
-      "node_type": "Character",
-      "name": "brother",
-      "character_type": "real_current",
-      "symbolic_role": "represents unshakeable competence and legitimacy that the dreamer feels they lack",
-      "id": "char_brother"
-    },
-    {
-      "node_type": "Character",
-      "name": "coworker",
-      "character_type": "real_current",
-      "symbolic_role": "represents professional seriousness and competence that feels foreign to the dreamer",
-      "id": "char_coworker"
-    },
-    {
-      "node_type": "Character",
-      "name": "store worker/inspector",
-      "character_type": "constructed",
-      "symbolic_role": "embodies the feared authority who will expose the dreamer's illegitimacy",
-      "id": "char_store_worker_inspector"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "driver's license inspection",
-      "category": "action",
-      "symbolic_note": "represents fear of having credentials scrutinized and found inadequate",
-      "id": "sym_driver_s_license_inspection"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "wallet and documents",
-      "category": "object",
-      "symbolic_note": "symbols of adult legitimacy and competence that become evidence against the dreamer",
-      "id": "sym_wallet_and_documents"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "parents' minivan",
-      "category": "object",
-      "symbolic_note": "represents borrowed legitimacy and regression to adolescent dependence",
-      "id": "sym_parents_minivan"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "confiscated keys",
-      "category": "object",
-      "symbolic_note": "loss of autonomy and adult privileges",
-      "id": "sym_confiscated_keys"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "four children each",
-      "category": "object",
-      "symbolic_note": "exaggerated markers of adult stability and social legitimacy",
-      "id": "sym_four_children_each"
-    },
-    {
-      "node_type": "Setting",
-      "name": "Target store",
-      "familiarity": "known",
-      "real_or_constructed": "real",
-      "symbolic_note": "consumer space where agency is suddenly stripped away by arbitrary authority",
-      "id": "set_target_store"
-    },
-    {
-      "node_type": "Setting",
-      "name": "parents' house",
-      "familiarity": "known",
-      "real_or_constructed": "real",
-      "symbolic_note": "represents regression to dependence and childhood inadequacy",
-      "id": "set_parents_house"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "defeated",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_defeated"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "embarrassed",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_embarrassed"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "irritated",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_irritated"
-    },
-    {
-      "node_type": "Theme",
-      "name": "imposter syndrome",
-      "description": "fear of being exposed as unqualified despite holding credentials",
-      "source": "llm",
-      "id": "thm_imposter_syndrome"
-    },
-    {
-      "node_type": "Theme",
-      "name": "regression under pressure",
-      "description": "returning to adolescent dependence when adult competence is questioned",
-      "source": "llm",
-      "id": "thm_regression_under_pressure"
-    },
-    {
-      "node_type": "Theme",
-      "name": "professional legitimacy anxiety",
-      "description": "fear that credentials and qualifications will be found inadequate under scrutiny",
-      "source": "llm",
-      "id": "thm_professional_legitimacy_anxiety"
-    },
-    {
-      "node_type": "Theme",
-      "name": "isolation in crisis",
-      "description": "being unable to seek help or explain circumstances when things go wrong",
-      "source": "llm",
-      "id": "thm_isolation_in_crisis"
     },
     {
       "node_type": "Dream",
       "date": "2026-04-27",
+      "title": "Lost on Campus with the Giant Crab",
       "raw_narrative": "I was in a dream where my current class was at my undergrad college and I was across campus but had no idea where class was. I tried to cut through a building but inside the steps were enclosed by handrails that converged at the top, which I didn't notice till I was at the top. There were people around so I wasn't going to jump the rail and look dumb. The building structure seemed hostile and unhelpful. I got pissed and turned around to get back outside. Suddenly I was in a Lyft that took me across campus but then I realized the address in the Lyft app was for a suburb my brother's wife is from like 30 minutes away and we were about to leave campus and get on the highway. I couldn't figure out how to look up where my class was in time so I exited the Lyft where I was. I started wandering campus and my friend Shawna showed up who was sympathetic but dismissive. I thought out loud that this was horrible just like a dream but if only this was a dream, it's not! It's real! It was dark out now and I fell in some prickly bushes following Shawna through campus. I was just annoyed at first but then I realized there was a giant crab clinging to my calf which was insane because I'm in Minnesota and I've never met a crab in real life. I was grossed out and scared to touch it because of its claws. I went into a random shop and a guy offered the crab a big ruler to grab onto and it did and that's how the crab got off my leg.",
       "emotional_valence": "negative",
       "intensity": 4,
       "visual_quality": "dark",
       "lucid": false,
-      "title": "Lost on Campus with the Giant Crab",
       "id": "dream_2026_04_27"
-    },
-    {
-      "node_type": "Character",
-      "name": "Shawna",
-      "character_type": "real_current",
-      "symbolic_role": "Represents support that feels inadequate or dismissive during crisis",
-      "id": "char_shawna"
-    },
-    {
-      "node_type": "Character",
-      "name": "shop guy",
-      "character_type": "constructed",
-      "symbolic_role": "Helper figure who provides simple solutions to complex problems",
-      "id": "char_shop_guy"
-    },
-    {
-      "node_type": "Character",
-      "name": "brother's wife",
-      "character_type": "real_current",
-      "id": "char_brother_s_wife"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "converging handrails",
-      "category": "object",
-      "symbolic_note": "Deceptive structures that promise passage but create traps",
-      "id": "sym_converging_handrails"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "Lyft with wrong address",
-      "category": "object",
-      "symbolic_note": "Technology that should help but leads away from the goal",
-      "id": "sym_lyft_with_wrong_address"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "giant crab",
-      "category": "animal",
-      "symbolic_note": "Impossible fear or anxiety that's foreign yet clinging to the dreamer",
-      "id": "sym_giant_crab"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "ruler",
-      "category": "object",
-      "symbolic_note": "Simple tool that solves seemingly complex problems",
-      "id": "sym_ruler"
-    },
-    {
-      "node_type": "Symbol",
-      "name": "prickly bushes",
-      "category": "object",
-      "id": "sym_prickly_bushes"
-    },
-    {
-      "node_type": "Setting",
-      "name": "undergrad campus",
-      "familiarity": "known",
-      "real_or_constructed": "real",
-      "symbolic_note": "Familiar territory where the dreamer becomes lost",
-      "id": "set_undergrad_campus"
-    },
-    {
-      "node_type": "Setting",
-      "name": "building with enclosed stairs",
-      "familiarity": "unfamiliar",
-      "real_or_constructed": "constructed",
-      "symbolic_note": "Institutional structure that appears helpful but is actually hostile",
-      "id": "set_building_with_enclosed_stairs"
-    },
-    {
-      "node_type": "Setting",
-      "name": "random shop",
-      "familiarity": "unfamiliar",
-      "real_or_constructed": "constructed",
-      "id": "set_random_shop"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "anger",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_anger"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "annoyance",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_annoyance"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "disgust",
-      "valence": "negative",
-      "confidence": "stated",
-      "id": "emo_disgust"
-    },
-    {
-      "node_type": "Emotion",
-      "name": "frustration",
-      "valence": "negative",
-      "confidence": "inferred",
-      "id": "emo_frustration"
-    },
-    {
-      "node_type": "Theme",
-      "name": "institutional hostility",
-      "description": "Structures and systems that appear helpful but actually create barriers",
-      "source": "llm",
-      "id": "thm_institutional_hostility"
-    },
-    {
-      "node_type": "Theme",
-      "name": "escalating obstacles",
-      "description": "Problems that compound and become increasingly surreal and difficult",
-      "source": "llm",
-      "id": "thm_escalating_obstacles"
-    },
-    {
-      "node_type": "Theme",
-      "name": "performance anxiety",
-      "description": "Concern about looking foolish or incompetent in front of others",
-      "source": "llm",
-      "id": "thm_performance_anxiety"
-    },
-    {
-      "node_type": "BodySensation",
-      "description": "giant crab clinging to calf",
-      "location": "calf",
-      "quality": "pressure",
-      "confidence": "stated",
-      "id": "bs_dream_2026_04_27_0"
-    },
-    {
-      "node_type": "LifeContextWindow",
-      "label": "Providing emotional support through my friend's divorce",
-      "start_date": "2025-08-20",
-      "description": "My marriage ended earlier this year. The paperwork is mostly done but the emotional math isn't. I'm relearning what my own life looks like \u2014 routines, space, who I am without that partnership as a reference point.",
-      "summary": "You are navigating the profound identity shift that follows the end of a marriage, moving beyond the legal dissolution to grapple with the deeper emotional work of untangling years of shared life. This period centers on rediscovering your individual self after existing within the framework of partnership, as you establish new rhythms and reclaim personal space. The tension between practical closure and ongoing emotional processing suggests you're in a liminal space between your former coupled identity and an emerging sense of autonomous selfhood.",
-      "status": "foreground",
-      "id": "lcw_providing_emotional_supp"
     }
   ],
   "edges": [
     {
       "edge_type": "activates",
-      "frequency": 2,
+      "frequency": 3,
       "source": "lcw_job_search",
       "target": "thm_home_belonging",
       "key": "activates"
@@ -756,37 +895,30 @@
     },
     {
       "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_job_search",
-      "target": "thm_control_loss",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search",
-      "target": "thm_navigation_failure",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
       "frequency": 3,
-      "source": "lcw_new_role",
-      "target": "thm_navigation_failure",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 5,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search",
       "target": "thm_control_loss",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
+      "source": "lcw_job_search",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
       "source": "lcw_new_role",
-      "target": "thm_home_belonging",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 4,
+      "source": "lcw_new_role",
+      "target": "thm_control_loss",
       "key": "activates"
     },
     {
@@ -805,51 +937,163 @@
     },
     {
       "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_burnout_recovery",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_burnout_recovery",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_burnout_recovery",
+      "target": "thm_isolation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_job_search_and_financial",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_job_search_and_financial",
+      "target": "thm_legitimacy_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_job_search_and_financial",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_job_search_and_financial",
       "target": "thm_imposter_syndrome",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_regression_under_pressure",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_professional_legitimacy_anxiety",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_isolation_in_crisis",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_institutional_hostility",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_escalating_obstacles",
       "key": "activates"
     },
     {
       "edge_type": "activates",
       "frequency": 1,
-      "source": "lcw_new_role",
+      "source": "lcw_job_search_and_financial",
       "target": "thm_performance_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 3,
+      "source": "lcw_house_hunting",
+      "target": "thm_home_belonging",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 3,
+      "source": "lcw_house_hunting",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_house_hunting",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_house_hunting",
+      "target": "thm_transformation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_isolation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_legitimacy_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_home_belonging",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_transformation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_providing_emotional_supp",
+      "target": "thm_navigation_failure",
       "key": "activates"
     },
     {
@@ -901,24 +1145,34 @@
       "key": "associated_with"
     },
     {
+      "edge_type": "associated_with",
+      "source": "char_friend",
+      "target": "thm_isolation",
+      "key": "associated_with"
+    },
+    {
+      "edge_type": "associated_with",
+      "source": "char_friend",
+      "target": "thm_control_loss",
+      "key": "associated_with"
+    },
+    {
+      "edge_type": "associated_with",
+      "source": "char_realtor",
+      "target": "thm_home_belonging",
+      "key": "associated_with"
+    },
+    {
+      "edge_type": "associated_with",
+      "source": "char_realtor",
+      "target": "thm_control_loss",
+      "key": "associated_with"
+    },
+    {
       "edge_type": "contributes_to",
       "source": "sym_car",
       "target": "thm_navigation_failure",
       "key": "contributes_to"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_car",
-      "target": "sym_grand_am",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 2,
-      "source": "sym_car",
-      "target": "sym_keys",
-      "key": "co_occurs_with"
     },
     {
       "edge_type": "contributes_to",
@@ -951,13 +1205,6 @@
       "key": "contributes_to"
     },
     {
-      "edge_type": "co_occurs_with",
-      "frequency": 2,
-      "source": "sym_door",
-      "target": "sym_water",
-      "key": "co_occurs_with"
-    },
-    {
       "edge_type": "contributes_to",
       "source": "sym_water",
       "target": "thm_control_loss",
@@ -968,13 +1215,6 @@
       "source": "sym_backpack",
       "target": "thm_control_loss",
       "key": "contributes_to"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_backpack",
-      "target": "sym_stairs",
-      "key": "co_occurs_with"
     },
     {
       "edge_type": "contributes_to",
@@ -1003,8 +1243,218 @@
     {
       "edge_type": "co_occurs_with",
       "frequency": 1,
+      "source": "sym_car",
+      "target": "sym_grand_am",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 2,
+      "source": "sym_car",
+      "target": "sym_keys",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 2,
+      "source": "sym_door",
+      "target": "sym_water",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_backpack",
+      "target": "sym_stairs",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
       "source": "sym_grand_am",
       "target": "sym_keys",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_water",
+      "target": "sym_backpack",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_stairs",
+      "target": "sym_phone",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_stairs",
+      "target": "sym_door",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 2,
+      "source": "sym_phone",
+      "target": "sym_door",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_door",
+      "target": "sym_keys",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_door",
+      "target": "sym_mirror",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_four_children_each",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_driver_s_license_inspection",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_parents_minivan",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_driver_s_license_inspection",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_four_children_each",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_confiscated_keys",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_four_children_each",
+      "target": "sym_parents_minivan",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_four_children_each",
+      "target": "sym_wallet_and_documents",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_giant_crab",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_lyft_with_wrong_address",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_converging_handrails",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_lyft_with_wrong_address",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_lyft_with_wrong_address",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_lyft_with_wrong_address",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_prickly_bushes",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_giant_crab",
+      "target": "sym_ruler",
+      "key": "co_occurs_with"
+    },
+    {
+      "edge_type": "co_occurs_with",
+      "frequency": 1,
+      "source": "sym_prickly_bushes",
+      "target": "sym_ruler",
       "key": "co_occurs_with"
     },
     {
@@ -1056,6 +1506,42 @@
       "key": "evokes"
     },
     {
+      "edge_type": "evokes",
+      "source": "set_open_house",
+      "target": "thm_home_belonging",
+      "key": "evokes"
+    },
+    {
+      "edge_type": "evokes",
+      "source": "set_open_house",
+      "target": "thm_control_loss",
+      "key": "evokes"
+    },
+    {
+      "edge_type": "evokes",
+      "source": "set_empty_house",
+      "target": "thm_home_belonging",
+      "key": "evokes"
+    },
+    {
+      "edge_type": "evokes",
+      "source": "set_empty_house",
+      "target": "thm_transformation",
+      "key": "evokes"
+    },
+    {
+      "edge_type": "evokes",
+      "source": "set_gathering_space",
+      "target": "thm_legitimacy_anxiety",
+      "key": "evokes"
+    },
+    {
+      "edge_type": "evokes",
+      "source": "set_gathering_space",
+      "target": "thm_isolation",
+      "key": "evokes"
+    },
+    {
       "edge_type": "related_to",
       "relationship_type": "reinforces",
       "source": "thm_navigation_failure",
@@ -1085,80 +1571,185 @@
     },
     {
       "edge_type": "occurred_during",
-      "source": "dream_grand_am",
-      "target": "lcw_new_role",
+      "source": "dream_buried_at_old_job",
+      "target": "lcw_burnout_recovery",
       "key": "occurred_during"
     },
     {
       "edge_type": "contains",
       "prominence": "central",
-      "source": "dream_grand_am",
-      "target": "sym_grand_am",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_grand_am",
-      "target": "sym_car",
+      "source": "dream_buried_at_old_job",
+      "target": "sym_water",
       "key": "contains"
     },
     {
       "edge_type": "contains",
       "prominence": "present",
-      "source": "dream_grand_am",
-      "target": "sym_keys",
+      "source": "dream_buried_at_old_job",
+      "target": "sym_backpack",
       "key": "contains"
-    },
-    {
-      "edge_type": "features",
-      "role": "observer",
-      "source": "dream_grand_am",
-      "target": "char_stranger_woman",
-      "key": "features"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_grand_am",
-      "target": "set_grand_am_interior",
-      "key": "takes_place_in"
     },
     {
       "edge_type": "takes_place_in",
       "distortion_level": "distorted",
-      "source": "dream_grand_am",
-      "target": "set_parking_structure",
+      "source": "dream_buried_at_old_job",
+      "target": "set_workplace",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_buried_at_old_job",
+      "target": "set_basement",
       "key": "takes_place_in"
     },
     {
       "edge_type": "evoked",
-      "anchor": "can't find exit",
+      "anchor": "water rising under desk",
       "confidence": "stated",
-      "source": "dream_grand_am",
-      "target": "emo_anxiety",
+      "source": "dream_buried_at_old_job",
+      "target": "emo_dread",
       "key": "evoked"
     },
     {
       "edge_type": "evoked",
-      "anchor": "late for something important",
+      "anchor": "can't find what I need to finish",
       "confidence": "stated",
-      "source": "dream_grand_am",
+      "source": "dream_buried_at_old_job",
       "target": "emo_urgency",
       "key": "evoked"
     },
     {
       "edge_type": "expresses",
       "strength": "strong",
-      "source": "dream_grand_am",
+      "source": "dream_buried_at_old_job",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_buried_at_old_job",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_deadline_room",
+      "target": "lcw_burnout_recovery",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_deadline_room",
+      "target": "sym_stairs",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_deadline_room",
+      "target": "sym_phone",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_deadline_room",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_deadline_room",
+      "target": "set_workplace",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "ten minutes late to a meeting",
+      "confidence": "stated",
+      "source": "dream_deadline_room",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "phone shows no signal",
+      "confidence": "stated",
+      "source": "dream_deadline_room",
+      "target": "emo_urgency",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_deadline_room",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
       "strength": "moderate",
-      "source": "dream_grand_am",
+      "source": "dream_deadline_room",
       "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_deadline_room",
+      "target": "thm_isolation",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "includes_sensation",
+      "source": "dream_deadline_room",
+      "target": "bs_legs_wont_move",
+      "key": "includes_sensation"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_childhood_home_wrong",
+      "target": "lcw_job_search",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_childhood_home_wrong",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_childhood_home_wrong",
+      "target": "char_dad",
+      "key": "features"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_childhood_home_wrong",
+      "target": "set_childhood_home",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "rooms in wrong places",
+      "confidence": "stated",
+      "source": "dream_childhood_home_wrong",
+      "target": "emo_confusion",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_childhood_home_wrong",
+      "target": "thm_home_belonging",
       "key": "expresses"
     },
     {
@@ -1219,8 +1810,113 @@
     },
     {
       "edge_type": "occurred_during",
+      "source": "dream_phone_wont_work",
+      "target": "lcw_job_search",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_phone_wont_work",
+      "target": "sym_phone",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_phone_wont_work",
+      "target": "char_mom",
+      "key": "features"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "can't reach mom",
+      "confidence": "stated",
+      "source": "dream_phone_wont_work",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "isolation",
+      "confidence": "inferred",
+      "source": "dream_phone_wont_work",
+      "target": "emo_fear",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_phone_wont_work",
+      "target": "thm_isolation",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_phone_wont_work",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_infinite_stairs",
+      "target": "lcw_job_search",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_infinite_stairs",
+      "target": "sym_stairs",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_infinite_stairs",
+      "target": "sym_backpack",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_infinite_stairs",
+      "target": "set_workplace",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "door always one flight higher",
+      "confidence": "stated",
+      "source": "dream_infinite_stairs",
+      "target": "emo_urgency",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_infinite_stairs",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_infinite_stairs",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "includes_sensation",
+      "source": "dream_infinite_stairs",
+      "target": "bs_legs_wont_move",
+      "key": "includes_sensation"
+    },
+    {
+      "edge_type": "occurred_during",
       "source": "dream_duplex_2",
-      "target": "lcw_new_role",
+      "target": "lcw_job_search",
       "key": "occurred_during"
     },
     {
@@ -1293,197 +1989,6 @@
       "source": "dream_duplex_2",
       "target": "bs_chest_pressure",
       "key": "includes_sensation"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_exam_unprepared",
-      "target": "lcw_new_role",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "background",
-      "source": "dream_exam_unprepared",
-      "target": "sym_backpack",
-      "key": "contains"
-    },
-    {
-      "edge_type": "features",
-      "role": "active",
-      "source": "dream_exam_unprepared",
-      "target": "char_old_boss",
-      "key": "features"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_exam_unprepared",
-      "target": "set_school_exam_room",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "former boss watching",
-      "confidence": "stated",
-      "source": "dream_exam_unprepared",
-      "target": "emo_shame",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "can't leave room",
-      "confidence": "stated",
-      "source": "dream_exam_unprepared",
-      "target": "emo_dread",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "strong",
-      "source": "dream_exam_unprepared",
-      "target": "thm_legitimacy_anxiety",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "strong",
-      "source": "dream_exam_unprepared",
-      "target": "thm_control_loss",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_phone_wont_work",
-      "target": "lcw_job_search",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_phone_wont_work",
-      "target": "sym_phone",
-      "key": "contains"
-    },
-    {
-      "edge_type": "features",
-      "role": "passive",
-      "source": "dream_phone_wont_work",
-      "target": "char_mom",
-      "key": "features"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "can't reach mom",
-      "confidence": "stated",
-      "source": "dream_phone_wont_work",
-      "target": "emo_anxiety",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "isolation",
-      "confidence": "inferred",
-      "source": "dream_phone_wont_work",
-      "target": "emo_fear",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "strong",
-      "source": "dream_phone_wont_work",
-      "target": "thm_isolation",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "moderate",
-      "source": "dream_phone_wont_work",
-      "target": "thm_control_loss",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_childhood_home_wrong",
-      "target": "lcw_job_search",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "background",
-      "source": "dream_childhood_home_wrong",
-      "target": "sym_door",
-      "key": "contains"
-    },
-    {
-      "edge_type": "features",
-      "role": "passive",
-      "source": "dream_childhood_home_wrong",
-      "target": "char_dad",
-      "key": "features"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "distorted",
-      "source": "dream_childhood_home_wrong",
-      "target": "set_childhood_home",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "rooms in wrong places",
-      "confidence": "stated",
-      "source": "dream_childhood_home_wrong",
-      "target": "emo_confusion",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "moderate",
-      "source": "dream_childhood_home_wrong",
-      "target": "thm_home_belonging",
-      "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_water_basement",
-      "target": "lcw_new_role",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "central",
-      "source": "dream_water_basement",
-      "target": "sym_water",
-      "key": "contains"
-    },
-    {
-      "edge_type": "contains",
-      "prominence": "background",
-      "source": "dream_water_basement",
-      "target": "sym_door",
-      "key": "contains"
-    },
-    {
-      "edge_type": "takes_place_in",
-      "distortion_level": "intact",
-      "source": "dream_water_basement",
-      "target": "set_basement",
-      "key": "takes_place_in"
-    },
-    {
-      "edge_type": "evoked",
-      "anchor": "water keeps rising",
-      "confidence": "stated",
-      "source": "dream_water_basement",
-      "target": "emo_dread",
-      "key": "evoked"
-    },
-    {
-      "edge_type": "expresses",
-      "strength": "strong",
-      "source": "dream_water_basement",
-      "target": "thm_control_loss",
-      "key": "expresses"
     },
     {
       "edge_type": "occurred_during",
@@ -1600,58 +2105,180 @@
     },
     {
       "edge_type": "occurred_during",
-      "source": "dream_infinite_stairs",
-      "target": "lcw_job_search",
+      "source": "dream_exam_unprepared",
+      "target": "lcw_new_role",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_exam_unprepared",
+      "target": "sym_backpack",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "active",
+      "source": "dream_exam_unprepared",
+      "target": "char_old_boss",
+      "key": "features"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_exam_unprepared",
+      "target": "set_school_exam_room",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "former boss watching",
+      "confidence": "stated",
+      "source": "dream_exam_unprepared",
+      "target": "emo_shame",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "can't leave room",
+      "confidence": "stated",
+      "source": "dream_exam_unprepared",
+      "target": "emo_dread",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_exam_unprepared",
+      "target": "thm_legitimacy_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_exam_unprepared",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_water_basement",
+      "target": "lcw_new_role",
       "key": "occurred_during"
     },
     {
       "edge_type": "contains",
       "prominence": "central",
-      "source": "dream_infinite_stairs",
-      "target": "sym_stairs",
+      "source": "dream_water_basement",
+      "target": "sym_water",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_water_basement",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_water_basement",
+      "target": "set_basement",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "water keeps rising",
+      "confidence": "stated",
+      "source": "dream_water_basement",
+      "target": "emo_dread",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_water_basement",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_grand_am",
+      "target": "lcw_new_role",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_grand_am",
+      "target": "sym_grand_am",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_grand_am",
+      "target": "sym_car",
       "key": "contains"
     },
     {
       "edge_type": "contains",
       "prominence": "present",
-      "source": "dream_infinite_stairs",
-      "target": "sym_backpack",
+      "source": "dream_grand_am",
+      "target": "sym_keys",
       "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "observer",
+      "source": "dream_grand_am",
+      "target": "char_stranger_woman",
+      "key": "features"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_grand_am",
+      "target": "set_grand_am_interior",
+      "key": "takes_place_in"
     },
     {
       "edge_type": "takes_place_in",
       "distortion_level": "distorted",
-      "source": "dream_infinite_stairs",
-      "target": "set_workplace",
+      "source": "dream_grand_am",
+      "target": "set_parking_structure",
       "key": "takes_place_in"
     },
     {
       "edge_type": "evoked",
-      "anchor": "door always one flight higher",
+      "anchor": "can't find exit",
       "confidence": "stated",
-      "source": "dream_infinite_stairs",
+      "source": "dream_grand_am",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "late for something important",
+      "confidence": "stated",
+      "source": "dream_grand_am",
       "target": "emo_urgency",
       "key": "evoked"
     },
     {
       "edge_type": "expresses",
-      "strength": "moderate",
-      "source": "dream_infinite_stairs",
+      "strength": "strong",
+      "source": "dream_grand_am",
       "target": "thm_navigation_failure",
       "key": "expresses"
     },
     {
       "edge_type": "expresses",
       "strength": "moderate",
-      "source": "dream_infinite_stairs",
+      "source": "dream_grand_am",
       "target": "thm_control_loss",
       "key": "expresses"
-    },
-    {
-      "edge_type": "includes_sensation",
-      "source": "dream_infinite_stairs",
-      "target": "bs_legs_wont_move",
-      "key": "includes_sensation"
     },
     {
       "edge_type": "occurred_during",
@@ -1694,6 +2321,325 @@
       "source": "dream_mirror",
       "target": "bs_falling",
       "key": "includes_sensation"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_listing_sold_overnight",
+      "target": "lcw_house_hunting",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_listing_sold_overnight",
+      "target": "sym_phone",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "background",
+      "source": "dream_listing_sold_overnight",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "I waited too long",
+      "confidence": "stated",
+      "source": "dream_listing_sold_overnight",
+      "target": "emo_urgency",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "listing photos keep changing",
+      "confidence": "stated",
+      "source": "dream_listing_sold_overnight",
+      "target": "emo_dread",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_listing_sold_overnight",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_listing_sold_overnight",
+      "target": "thm_home_belonging",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_listing_sold_overnight",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_open_house_locked_rooms",
+      "target": "lcw_house_hunting",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_open_house_locked_rooms",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_open_house_locked_rooms",
+      "target": "sym_keys",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "active",
+      "source": "dream_open_house_locked_rooms",
+      "target": "char_realtor",
+      "key": "features"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_open_house_locked_rooms",
+      "target": "set_open_house",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "realtor says those are the important ones",
+      "confidence": "stated",
+      "source": "dream_open_house_locked_rooms",
+      "target": "emo_confusion",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "house keeps adding rooms",
+      "confidence": "stated",
+      "source": "dream_open_house_locked_rooms",
+      "target": "emo_dread",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_open_house_locked_rooms",
+      "target": "thm_home_belonging",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_open_house_locked_rooms",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_open_house_locked_rooms",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_on_the_phone_all_night",
+      "target": "lcw_providing_emotional_supp",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_on_the_phone_all_night",
+      "target": "sym_phone",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_on_the_phone_all_night",
+      "target": "char_friend",
+      "key": "features"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "call keeps dropping",
+      "confidence": "stated",
+      "source": "dream_on_the_phone_all_night",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "can't hold the thread of her pain",
+      "confidence": "inferred",
+      "source": "dream_on_the_phone_all_night",
+      "target": "emo_grief",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "holding phone as tight as I can",
+      "confidence": "stated",
+      "source": "dream_on_the_phone_all_night",
+      "target": "emo_urgency",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_on_the_phone_all_night",
+      "target": "thm_isolation",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_on_the_phone_all_night",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_empty_house_tour",
+      "target": "lcw_house_hunting",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_empty_house_tour",
+      "target": "lcw_providing_emotional_supp",
+      "key": "occurred_during_2"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_empty_house_tour",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_empty_house_tour",
+      "target": "sym_mirror",
+      "key": "contains"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_empty_house_tour",
+      "target": "set_empty_house",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "room that felt like the duplex",
+      "confidence": "stated",
+      "source": "dream_empty_house_tour",
+      "target": "emo_wonder",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "reflection half a second behind",
+      "confidence": "stated",
+      "source": "dream_empty_house_tour",
+      "target": "emo_confusion",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_empty_house_tour",
+      "target": "thm_home_belonging",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_empty_house_tour",
+      "target": "thm_transformation",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_showing_up_uninvited",
+      "target": "lcw_providing_emotional_supp",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "present",
+      "source": "dream_showing_up_uninvited",
+      "target": "sym_door",
+      "key": "contains"
+    },
+    {
+      "edge_type": "features",
+      "role": "observer",
+      "source": "dream_showing_up_uninvited",
+      "target": "char_stranger_woman",
+      "key": "features"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_showing_up_uninvited",
+      "target": "set_gathering_space",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "feeling immediately wrong for being there",
+      "confidence": "stated",
+      "source": "dream_showing_up_uninvited",
+      "target": "emo_shame",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "can't leave without making it worse",
+      "confidence": "stated",
+      "source": "dream_showing_up_uninvited",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_showing_up_uninvited",
+      "target": "thm_legitimacy_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_showing_up_uninvited",
+      "target": "thm_isolation",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_showing_up_uninvited",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_24",
+      "target": "lcw_job_search_and_financial",
+      "key": "occurred_during"
     },
     {
       "edge_type": "features",
@@ -1775,7 +2721,7 @@
     },
     {
       "edge_type": "evoked",
-      "anchor": "having to explain the situation and feeling it wouldn't have happened to others",
+      "anchor": "having to explain what happened and knowing it wouldn't have happened to them",
       "confidence": "stated",
       "source": "dream_2026_04_24",
       "target": "emo_embarrassed",
@@ -1818,80 +2764,17 @@
       "key": "expresses"
     },
     {
-      "edge_type": "occurred_during",
+      "edge_type": "expresses",
+      "strength": "moderate",
       "source": "dream_2026_04_24",
-      "target": "lcw_new_role",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_27",
+      "target": "lcw_job_search_and_financial",
       "key": "occurred_during"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_driver_s_license_inspection",
-      "target": "sym_four_children_each",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_driver_s_license_inspection",
-      "target": "sym_parents_minivan",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_driver_s_license_inspection",
-      "target": "sym_wallet_and_documents",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_parents_minivan",
-      "target": "sym_wallet_and_documents",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_confiscated_keys",
-      "target": "sym_driver_s_license_inspection",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_confiscated_keys",
-      "target": "sym_four_children_each",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_confiscated_keys",
-      "target": "sym_parents_minivan",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_confiscated_keys",
-      "target": "sym_wallet_and_documents",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_four_children_each",
-      "target": "sym_parents_minivan",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_four_children_each",
-      "target": "sym_wallet_and_documents",
-      "key": "co_occurs_with"
     },
     {
       "edge_type": "features",
@@ -1996,7 +2879,7 @@
     },
     {
       "edge_type": "evoked",
-      "anchor": "crab's claws and touching it",
+      "anchor": "crab's claws",
       "confidence": "stated",
       "source": "dream_2026_04_27",
       "target": "emo_fear",
@@ -2004,7 +2887,7 @@
     },
     {
       "edge_type": "evoked",
-      "anchor": "not being able to find class and navigation failures",
+      "anchor": "not being able to find class",
       "confidence": "inferred",
       "source": "dream_2026_04_27",
       "target": "emo_frustration",
@@ -2043,82 +2926,6 @@
       "source": "dream_2026_04_27",
       "target": "bs_dream_2026_04_27_0",
       "key": "includes_sensation"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_2026_04_27",
-      "target": "lcw_new_role",
-      "key": "occurred_during"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_giant_crab",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_converging_handrails",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_lyft_with_wrong_address",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_lyft_with_wrong_address",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_lyft_with_wrong_address",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_prickly_bushes",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_giant_crab",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
-    },
-    {
-      "edge_type": "co_occurs_with",
-      "frequency": 1,
-      "source": "sym_prickly_bushes",
-      "target": "sym_ruler",
-      "key": "co_occurs_with"
     }
   ]
 }
