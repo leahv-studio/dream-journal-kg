@@ -1388,9 +1388,9 @@
 
     .wl-add-btn {
       font-size: 13px;
-      color: var(--color-purple);
+      color: #6B4410;
       background: none;
-      border: 1px solid var(--color-purple);
+      border: 1px solid rgba(201,151,58,0.55);
       border-radius: 8px;
       padding: 7px 14px;
       cursor: pointer;
@@ -1400,7 +1400,7 @@
       transition: background 0.15s;
     }
 
-    .wl-add-btn:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+    .wl-add-btn:hover:not(:disabled) { background: rgba(201,151,58,0.07); }
     .wl-add-btn:disabled {
       color: var(--color-ink-faint);
       border-color: var(--color-border);
@@ -1420,9 +1420,9 @@
     .wl-form {
       display: none;
       background:
-        radial-gradient(ellipse 120% 60% at 70% -5%, rgba(176,158,201,0.16) 0%, transparent 60%),
+        radial-gradient(ellipse 120% 60% at 70% -5%, rgba(201,151,58,0.10) 0%, transparent 60%),
         rgba(252, 250, 248, 0.88);
-      border: 1px solid rgba(176, 158, 201, 0.35);
+      border: 1px solid rgba(201,151,58,0.28);
       border-radius: 12px;
       padding: 22px 24px;
       flex-direction: column;
@@ -1439,7 +1439,7 @@
       font-family: var(--font-display);
       font-size: 20px;
       font-weight: 400;
-      color: #1a2e4a;
+      color: #5C3A08;
       letter-spacing: normal;
     }
 
@@ -1471,7 +1471,7 @@
 
     .wl-field input:focus,
     .wl-field textarea:focus,
-    .wl-field select:focus { outline: none; border-color: var(--color-purple); }
+    .wl-field select:focus { outline: none; border-color: rgba(201,151,58,0.65); }
 
     .wl-form-actions {
       display: flex;
@@ -1500,8 +1500,8 @@
     }
 
     .wl-btn-cancel:hover { border-color: var(--color-ink-soft); color: var(--color-ink); }
-    .wl-btn-save { background: var(--color-purple); color: #fff; }
-    .wl-btn-save:hover:not(:disabled) { background: var(--color-purple-deep); }
+    .wl-btn-save { background: #6B4410; color: #fff; }
+    .wl-btn-save:hover:not(:disabled) { background: #4A2E05; }
 
     /* Status groups */
     .wl-group { display: flex; flex-direction: column; gap: 10px; }
@@ -1590,10 +1590,10 @@
 
     .wl-status-badge:hover { opacity: 0.6; }
 
-    .wl-status-badge.fg       { color: #1a2e4a; }
-    .wl-status-badge.bg       { color: #264878; }
-    .wl-status-badge.dormant  { color: #3d5e78; }
-    .wl-status-badge.archived { color: #4e6878; }
+    .wl-status-badge.fg       { color: #5C3A08; }
+    .wl-status-badge.bg       { color: #6E4A14; }
+    .wl-status-badge.dormant  { color: #7E5C1E; }
+    .wl-status-badge.archived { color: #8A6820; }
 
     .wl-chip-body {
       display: flex;
@@ -1623,7 +1623,7 @@
       transition: border-color 0.15s, color 0.15s;
     }
 
-    .wl-chip-edit-btn:hover { border-color: var(--color-purple); color: var(--color-purple); }
+    .wl-chip-edit-btn:hover { border-color: rgba(201,151,58,0.6); color: #6B4410; }
 
     /* Archive drawer */
     .wl-archive-toggle {
@@ -1659,45 +1659,45 @@
 
     /* ── Atmospheric status palette ── */
 
-    /* Foreground — luminous, warm violet shimmer, most present */
+    /* Foreground — warm amber shimmer, most present */
     .wl-chip-card:has(.wl-status-badge.fg) {
       background:
-        radial-gradient(ellipse 130% 70% at 65% -10%, rgba(176,158,201,0.22) 0%, transparent 62%),
-        rgba(252, 250, 248, 0.82);
-      border-color: rgba(176, 158, 201, 0.42);
+        radial-gradient(ellipse 130% 70% at 65% -10%, rgba(201,151,58,0.16) 0%, transparent 62%),
+        rgba(252, 250, 248, 0.85);
+      border-color: rgba(201,151,58,0.38);
       box-shadow:
         inset 0 1px 0 rgba(255,255,255,0.80),
-        0 4px 20px rgba(124,107,158,0.10);
+        0 4px 20px rgba(201,151,58,0.08);
     }
-    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label { color: #1a2e4a; }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label { color: #5C3A08; }
     .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-date  { color: var(--color-ink-soft); }
     .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-desc  { color: var(--color-ink-soft); }
 
-    /* Background — steady, clean frosted surface, present but quieter */
+    /* Background — warm cream surface, present but quieter */
     .wl-chip-card:has(.wl-status-badge.bg) {
-      background: rgba(242, 240, 237, 0.72);
-      border-color: rgba(216, 212, 206, 0.60);
+      background: rgba(248, 246, 241, 0.75);
+      border-color: rgba(201,151,58,0.22);
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
     }
-    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label { color: #264878; }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label { color: #6E4A14; }
     .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-date  { color: var(--color-ink-soft); }
     .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-desc  { color: var(--color-ink-soft); }
 
-    /* Dormant — paused, thinning out, receding into the background */
+    /* Dormant — paused, golden and receding */
     .wl-chip-card:has(.wl-status-badge.dormant) {
-      background: rgba(242, 240, 237, 0.42);
-      border-color: rgba(216, 212, 206, 0.36);
+      background: rgba(245, 242, 237, 0.45);
+      border-color: rgba(201,151,58,0.14);
     }
-    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label { color: #3d5e78; }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label { color: #7E5C1E; }
     .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-date  { color: var(--color-ink-soft); }
     .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-desc  { color: var(--color-ink-soft); }
 
-    /* Archived — nearly dissolved, just a whisper of presence */
+    /* Archived — nearly dissolved, just a whisper of warmth */
     .wl-chip-card:has(.wl-status-badge.archived) {
-      background: rgba(242, 240, 237, 0.24);
-      border-color: rgba(216, 212, 206, 0.22);
+      background: rgba(242, 240, 235, 0.26);
+      border-color: rgba(201,151,58,0.10);
     }
-    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #4e6878; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #8A6820; }
     .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-date  { color: var(--color-ink-soft); }
     .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-desc  { color: var(--color-ink-soft); }
 
@@ -1738,12 +1738,12 @@
       border-radius: 50%;
       flex-shrink: 0;
     }
-    .wl-smenu-dot.fg       { background: #1a2e4a; }
-    .wl-smenu-dot.bg       { background: #264878; }
-    .wl-smenu-dot.dormant  { background: #3d5e78; }
-    .wl-smenu-dot.archived { background: #4e6878; }
+    .wl-smenu-dot.fg       { background: #5C3A08; }
+    .wl-smenu-dot.bg       { background: #6E4A14; }
+    .wl-smenu-dot.dormant  { background: #7E5C1E; }
+    .wl-smenu-dot.archived { background: #8A6820; }
 
-    .wl-status-badge { margin-top: 2px; }
+    .wl-status-badge { align-self: flex-start; flex-shrink: 0; }
     .wl-status-badge::after { content: ' ▾'; font-size: 8px; }
 
     #wl-groups { display: flex; flex-direction: column; gap: 24px; max-width: 600px; }
@@ -1774,9 +1774,19 @@
 
     .wl-legend-cloud {
       flex-shrink: 0;
-      margin-top: 2px;
-      line-height: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
     }
+
+    .wl-legend-sun {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .wl-legend-sun.fg       { color: #5C3A08; }
+    .wl-legend-sun.bg       { color: #6E4A14; }
+    .wl-legend-sun.dormant  { color: #7E5C1E; }
+    .wl-legend-sun.archived { color: #8A6820; }
 
     .wl-legend-text {
       display: flex;
@@ -2093,9 +2103,7 @@
         <div class="wl-legend">
               <div class="wl-legend-row">
                 <span class="wl-legend-cloud" aria-hidden="true">
-                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#1a2e4a"/>
-                  </svg>
+                  <i class="ti ti-sun wl-legend-sun fg"></i>
                 </span>
                 <div class="wl-legend-text">
                   <span class="wl-legend-term">Foreground</span>
@@ -2104,9 +2112,7 @@
               </div>
               <div class="wl-legend-row">
                 <span class="wl-legend-cloud" aria-hidden="true">
-                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#264878"/>
-                  </svg>
+                  <i class="ti ti-sun wl-legend-sun bg"></i>
                 </span>
                 <div class="wl-legend-text">
                   <span class="wl-legend-term">Background</span>
@@ -2115,9 +2121,7 @@
               </div>
               <div class="wl-legend-row">
                 <span class="wl-legend-cloud" aria-hidden="true">
-                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#c4d5e6" stroke="#7a96b2" stroke-width="1.5" stroke-linejoin="round"/>
-                  </svg>
+                  <i class="ti ti-sun wl-legend-sun dormant"></i>
                 </span>
                 <div class="wl-legend-text">
                   <span class="wl-legend-term">Dormant</span>
@@ -2126,9 +2130,7 @@
               </div>
               <div class="wl-legend-row">
                 <span class="wl-legend-cloud" aria-hidden="true">
-                  <svg width="15" height="11" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 18 C3.5 18,1.5 14,4.5 12 C3.5 8,7.5 5,11 7.5 C12.5 4,16.5 2.5,20.5 5.5 C22 3,26.5 3.5,27 8.5 C29.5 9,29.5 14.5,26.5 15.5 C24 18,10.5 18,7 18 Z" fill="#d8e4ee" stroke="#9aaabb" stroke-width="1.5" stroke-linejoin="round"/>
-                  </svg>
+                  <i class="ti ti-sun wl-legend-sun archived"></i>
                 </span>
                 <div class="wl-legend-text">
                   <span class="wl-legend-term">Archived</span>
@@ -3549,10 +3551,10 @@
           <div class="wl-chip-left">
             <span class="wl-chip-label">${esc(lcw.label)}</span>
             ${lcw.start_date ? `<span class="wl-chip-date">Added ${esc(fmtDateMonthYear(lcw.start_date))}</span>` : ''}
-            <span class="wl-status-badge ${cls}"
-                  data-lcwid="${esc(lcw.id)}"
-                  data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
           </div>
+          <span class="wl-status-badge ${cls}"
+                data-lcwid="${esc(lcw.id)}"
+                data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
         </div>
         <div class="wl-chip-body">
           ${descHtml}
