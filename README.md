@@ -57,8 +57,9 @@ The API key must be set as an environment variable — never committed to the re
 
 | Page | URL | Purpose |
 |------|-----|---------|
-| `index.html` | `http://localhost:5001/` | Dream entry — chat with Claude, review extraction, save to graph |
+| `dashboard.html` | `http://localhost:5001/dashboard.html` | **Primary app** — unified interface with three sections: Add New (dream entry), Knowledge Graph (interactive visualization + NL query), and Waking Life (life context window management) |
 | `journal.html` | `http://localhost:5001/journal.html` | Query & pattern view — symbol frequency, theme filter, life context, date range, recurring series, before/after demo |
+| `index.html` | `http://localhost:5001/` | Original standalone chat UI — predates the dashboard redesign; kept for reference but not the active entry point |
 
 ---
 
