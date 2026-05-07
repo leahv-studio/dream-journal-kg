@@ -130,28 +130,46 @@ This background does not change between sections. It is the constant atmosphere 
 
 ---
 
-## Waking Life Cards — Blues System
+## Waking Life Cards — Gold System
 
-Status hierarchy is communicated through card depth, not badge color. Darker = more present in the user's waking life right now. The four statuses form a deliberate depth sequence.
+Status hierarchy is communicated through card warmth and depth. Deeper amber = more present in the user's waking life right now. The four statuses form a deliberate intensity sequence within a unified gold-amber family.
 
-| Status | Background | Label color | Meaning |
+### Section title
+
+The "Waking Life" heading uses `#5C3A08` (deep amber) — the same tone as a Foreground label. It anchors the page in its own waking-life register rather than borrowing the dream-purple used by "tell me."
+
+### Status palette
+
+| Status | Card background | Label / badge color | Hex |
 |---|---|---|---|
-| **Foreground** | `#1a2e4a` (deep navy) | `#f0f5ff` (near-white) | Most alive and present — actively shaping waking experience |
-| **Background** | `#264878` (medium blue) | `#f0f5ff` (near-white) | Ongoing but not consuming — present, quieter |
-| **Dormant** | `#c4d5e6` (soft pale blue) | `#1a2c3e` (dark ink) | Paused or resolved — no longer active |
-| **Archived** | `#e2eaf2` (barely-there blue-gray) | `#334455` (muted ink) | Excluded from dream analysis |
+| **Foreground** | Warm amber shimmer + `rgba(252,250,248,0.85)` | Deep amber | `#5C3A08` |
+| **Background** | `rgba(248,246,241,0.75)` | Dark gold | `#6E4A14` |
+| **Dormant** | `rgba(245,242,237,0.45)` | Medium gold | `#7E5C1E` |
+| **Archived** | `rgba(242,240,235,0.26)` | Warm gold | `#8A6820` |
 
-Status is changed via a dropdown (not a cycle) — the status label on each card is a clickable trigger. The expand/collapse chevron lives alone on the right; the status label lives in the left metadata column.
+Card borders also use `rgba(201,151,58,…)` at decreasing opacity (0.38 → 0.22 → 0.14 → 0.10) to reinforce the depth sequence.
 
-The blues palette is intentionally disconnected from the brand purple. Life context is waking-world information; purple is the dream register.
+### Status badge
+
+The badge is plain uppercase text (`font-size: 10px`, `letter-spacing: 0.08em`), no pill. It sits in the **top-right corner** of each card header (right sibling of `.wl-chip-left` in the flex row), so label and date occupy the left column cleanly.
+
+Status is changed via a click-triggered dropdown — the badge is the trigger. The dropdown shows a colored dot + label for each option.
+
+### Left-rail legend
+
+The four status rows in the left rail use `<i class="ti ti-sun">` icons from Tabler Icons (webfont) instead of cloud SVGs. Icon colors match the label colors above.
+
+### Gold vs. purple
+
+The gold palette is intentionally distinct from the brand purple. Life context is waking-world information; purple is the dream register. Do not use `--color-purple` or `--color-purple-deep` anywhere on the Waking Life screen.
 
 ---
 
 ## Component Conventions
 
 - **Cards** — `border-radius: 12px`, no border (color carries the hierarchy), subtle `filter: brightness` on hover
-- **Forms** — `border-radius: 8px–10px`, `var(--color-surface)` background, `var(--color-purple)` focus rings
-- **Buttons (primary)** — `var(--color-purple)` fill, white text, `border-radius: 8px`
+- **Forms** — `border-radius: 8px–10px`, `var(--color-surface)` background. Focus rings are `var(--color-purple)` everywhere except the Waking Life screen, where they use `rgba(201,151,58,0.65)` (gold).
+- **Buttons (primary)** — `var(--color-purple)` fill, white text, `border-radius: 8px`. Exception: Waking Life "Add context" / "Save" buttons use `#6B4410` (dark gold) fill.
 - **Buttons (ghost/outline)** — transparent or surface background, border `var(--color-border)`, text `var(--color-ink-soft)`
 - **Status labels** — plain uppercase text, no pill or badge treatment; `letter-spacing: 0.08em`, `font-size: 10px`
 - **Group headers / section labels** — `font-size: 13px`, `font-weight: 600`, uppercase, `var(--color-ink-soft)`
