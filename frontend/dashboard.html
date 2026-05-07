@@ -1298,7 +1298,7 @@
       text-align: center;
     }
 
-    .add-success-glyph { font-size: 36px; color: var(--color-positive); }
+    .add-success-cloud { opacity: 0.88; }
 
     .add-success-title {
       font-family: var(--font-display);
@@ -2076,7 +2076,16 @@
           <!-- View: Success -->
           <div id="add-success-view" class="add-view">
             <div class="add-success-wrap">
-              <div class="add-success-glyph">✦</div>
+              <svg class="add-success-cloud" width="80" height="60" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                         C3.5 8, 7.5 5, 11 7.5
+                         C12.5 4, 16.5 2.5, 20.5 5.5
+                         C22 3, 26.5 3.5, 27 8.5
+                         C29.5 9, 29.5 14.5, 26.5 15.5
+                         C24 18, 10.5 18, 7 18 Z"
+                  stroke="var(--color-purple)" stroke-width="1.2" fill="rgba(124,107,158,0.10)"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
               <div class="add-success-title">Dream saved to graph</div>
               <div class="add-success-detail" id="add-success-detail"></div>
               <button class="add-btn-view-graph" id="add-view-graph-btn">View in graph →</button>
