@@ -21,7 +21,7 @@ Dream Journal Knowledge Graph — SEIS 666 Final Project, University of St. Thom
 
 ```
 dream-journal-kg/
-  frontend/         index.html (chat UI), journal.html (query views), dashboard.html, style.css, app.js
+  frontend/         dashboard.html (primary app — Add New, Knowledge Graph, Waking Life), journal.html (query views), index.html (original standalone chat UI, pre-redesign), style.css, app.js
   backend/          app.py (Flask + routes), graph.py (NetworkX ops), extract.py (Claude extraction), prompts.py (all system prompts)
   data/             graph.json (persistent graph)
   docs/             entity-resolution.md, nl-query-design.md (design decision docs)
