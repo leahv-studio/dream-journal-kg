@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css" />
 
   <style>
     /* ── Variables ─────────────────────────────────────────── */
@@ -804,42 +805,76 @@
     /* ── Add New ───────────────────────────────────────────── */
     #section-add { flex-direction: column; }
 
-    /* ── Add New: in-ritual context element ───────────────────── */
-    #add-ctx-ritual {
+    /* ── Add New: waking life tooltip trigger ──────────────────── */
+    #add-ctx-trigger {
       display: none;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 10px;
       padding: 2px 0 10px;
+      position: relative;
     }
-    .add-ctx-rule {
-      width: 56%;
-      height: 1px;
-      background: var(--color-border);
+    .add-ctx-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      color: rgba(201,151,58,0.65);
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: rgba(201,151,58,0.45);
+      text-decoration-thickness: 0.5px;
+      user-select: none;
+      background: none;
+      border: none;
+      padding: 0;
     }
-    .add-ctx-ritual-label {
-      font-size: 11px;
-      color: var(--color-ink-faint);
-      text-align: center;
-      margin-bottom: 3px;
+    .add-ctx-trigger-btn i {
+      font-size: 13px;
+      line-height: 1;
+      text-decoration: none;
     }
-    .add-ctx-ritual-fg {
+    #add-ctx-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% - 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(248,246,242,0.97);
+      border: 0.5px solid rgba(201,151,58,0.28);
+      border-radius: 10px;
+      padding: 12px 16px;
+      min-width: 180px;
+      max-width: 280px;
+      z-index: 100;
+    }
+    #add-ctx-tooltip.open { display: block; }
+    .add-ctx-tooltip-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(201,151,58,0.65);
+      margin-bottom: 8px;
+    }
+    .add-ctx-tooltip-item {
       font-family: var(--font-prose);
       font-style: italic;
-      font-size: 12px;
-      color: var(--color-ink-soft);
-      text-align: center;
-      line-height: 1.5;
+      font-size: 13px;
+      padding: 6px 0;
+      line-height: 1.4;
     }
-    .add-ctx-ritual-bg {
-      font-family: var(--font-prose);
-      font-style: italic;
-      font-size: 12px;
-      color: var(--color-ink-faint);
-      text-align: center;
-      line-height: 1.5;
-      margin-top: 1px;
+    .add-ctx-tooltip-item + .add-ctx-tooltip-item {
+      border-top: 0.5px solid rgba(201,151,58,0.2);
     }
+    .add-ctx-tooltip-item.fg      { color: #8A6820; }
+    .add-ctx-tooltip-item.bg      { color: #B08840; }
+    .add-ctx-tooltip-item.dormant { color: #C9A96E; }
 
     /* ── Global footer ─────────────────────────────────────── */
     .app-footer {
@@ -1942,14 +1977,15 @@
 
             <div id="add-tell-me">tell me</div>
 
-            <div id="add-ctx-ritual">
-              <div class="add-ctx-rule"></div>
-              <div>
-                <div class="add-ctx-ritual-label">you're in</div>
-                <div class="add-ctx-ritual-fg" id="add-ctx-ritual-fg"></div>
-                <div class="add-ctx-ritual-bg" id="add-ctx-ritual-bg"></div>
+            <div id="add-ctx-trigger">
+              <button class="add-ctx-trigger-btn" id="add-ctx-trigger-btn" type="button">
+                <i class="ti ti-sun"></i>
+                <span>waking life</span>
+              </button>
+              <div id="add-ctx-tooltip">
+                <div class="add-ctx-tooltip-eyebrow">right now</div>
+                <div id="add-ctx-tooltip-items"></div>
               </div>
-              <div class="add-ctx-rule"></div>
             </div>
 
             <div class="add-meta-row">
@@ -3074,35 +3110,41 @@
   function addUpdateEmptyState() {
     const hasMessages = document.getElementById('add-conversation').children.length > 0;
     document.getElementById('add-empty-state').style.display   = hasMessages ? 'none'  : 'flex';
-    if (hasMessages) document.getElementById('add-ctx-ritual').style.display = 'none';
+    if (hasMessages) document.getElementById('add-ctx-trigger').style.display = 'none';
     document.getElementById('add-conversation').style.display  = hasMessages ? 'flex'  : 'none';
     document.getElementById('add-extract-wrap').style.display  = hasMessages ? 'flex'  : 'none';
   }
 
-  // In-ritual context element
+  // Waking life tooltip trigger
   async function addLoadContext() {
-    const ritual = document.getElementById('add-ctx-ritual');
-    const fgEl   = document.getElementById('add-ctx-ritual-fg');
-    const bgEl   = document.getElementById('add-ctx-ritual-bg');
+    const trigger = document.getElementById('add-ctx-trigger');
+    const itemsEl = document.getElementById('add-ctx-tooltip-items');
     try {
       const list = await fetch('/api/life-context-windows').then(r => r.json());
       const byDate = arr => arr.slice().sort((a, b) =>
         (b.start_date || '') > (a.start_date || '') ? 1 : -1);
 
-      const fg = byDate(list.filter(c => c.status === 'foreground'));
-      const bg = byDate(list.filter(c => c.status === 'background'));
+      const fg      = byDate(list.filter(c => c.status === 'foreground'));
+      const bg      = byDate(list.filter(c => c.status === 'background'));
+      const dormant = byDate(list.filter(c => c.status === 'dormant'));
 
-      if (!fg.length && !bg.length) {
-        ritual.style.display = 'none';
+      const active = [
+        ...fg.map(c => ({ label: c.label, cls: 'fg' })),
+        ...bg.map(c => ({ label: c.label, cls: 'bg' })),
+        ...dormant.map(c => ({ label: c.label, cls: 'dormant' })),
+      ];
+
+      if (!active.length) {
+        trigger.style.display = 'none';
         return;
       }
 
-      fgEl.innerHTML = fg.map(c => `<div>${esc(c.label)}</div>`).join('');
-      bgEl.innerHTML = bg.map(c => `<div>${esc(c.label)}</div>`).join('');
-      bgEl.style.display = bg.length ? '' : 'none';
-      ritual.style.display = 'flex';
+      itemsEl.innerHTML = active
+        .map(c => `<div class="add-ctx-tooltip-item ${c.cls}">${esc(c.label)}</div>`)
+        .join('');
+      trigger.style.display = 'flex';
     } catch {
-      ritual.style.display = 'none';
+      trigger.style.display = 'none';
     }
   }
 
@@ -3791,6 +3833,18 @@
     await fetch('/api/demo/toggle', { method: 'POST' });
     refreshGraph();
     addLoadContext();
+  });
+
+  // ─── Waking life tooltip interactions ───────────────────────────────────────
+  document.getElementById('add-ctx-trigger-btn').addEventListener('click', e => {
+    e.stopPropagation();
+    document.getElementById('add-ctx-tooltip').classList.toggle('open');
+  });
+  document.addEventListener('click', () => {
+    document.getElementById('add-ctx-tooltip').classList.remove('open');
+  });
+  document.getElementById('add-ctx-tooltip').addEventListener('click', e => {
+    e.stopPropagation();
   });
 
   // ─── Start ───────────────────────────────────────────────────────────────────
