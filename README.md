@@ -10,9 +10,9 @@ A personal dream journaling system that uses Claude for conversational entry and
 
 You describe a dream in a chat interface. Claude asks follow-up questions to draw out detail, then — when you're ready — extracts structured data from the conversation: symbols, themes, emotions, characters, settings, body sensations. You review the extraction before anything is written. Once confirmed, it's stored as a graph of interconnected nodes.
 
-The query view (`journal.html`) lets you explore patterns across dreams: which symbols recur most, which themes dominate a life context window, what recurring series look like over time.
+The dashboard's Knowledge Graph section lets you explore patterns across dreams — which symbols recur most, which themes dominate a life context window — and query the graph in natural language.
 
-Seed data is placeholder. Real dreams will be added before demo day.
+The dream entries in `data/graph.json` are fictional — created to demonstrate the system's features and are not real personal data.
 
 ---
 
@@ -58,8 +58,16 @@ The API key must be set as an environment variable — never committed to the re
 | Page | URL | Purpose |
 |------|-----|---------|
 | `dashboard.html` | `http://localhost:5001/dashboard.html` | **Primary app** — unified interface with three sections: Add New (dream entry), Knowledge Graph (interactive visualization + NL query), and Waking Life (life context window management) |
-| `journal.html` | `http://localhost:5001/journal.html` | Query & pattern view — symbol frequency, theme filter, life context, date range, recurring series, before/after demo |
-| `index.html` | `http://localhost:5001/` | Original standalone chat UI — predates the dashboard redesign; kept for reference but not the active entry point |
+| `journal.html` | `http://localhost:5001/journal.html` | Pre-redesign query & pattern view — predates the dashboard; kept for reference |
+| `index.html` | `http://localhost:5001/` | Pre-redesign standalone chat UI — predates the dashboard; kept for reference |
+
+---
+
+## Demo Mode
+
+Clicking the **dreama** wordmark in the footer toggles demo mode. In demo mode the app loads `data/graph_empty.json` (a blank graph) instead of the live `data/graph.json`, and writes are suppressed — nothing you do in demo mode touches real data. Click the wordmark again to return to the full graph. There's no visible indicator; it just reloads the graph view.
+
+This is useful for showing the empty-state onboarding flow without clearing real data.
 
 ---
 
