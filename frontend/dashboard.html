@@ -1946,21 +1946,25 @@
         background: var(--color-bg);
       }
 
-      /* Inspect drawer → bottom sheet */
+      /* Inspect drawer → bottom sheet (fixed, breaks out of overflow:hidden) */
       .inspect-drawer {
+        position: fixed;
         top: auto;
         bottom: 0;
         left: 0;
         right: 0;
         width: 100%;
-        height: 55%;
+        height: 75vh;
         border-left: none;
         border-top: 1px solid var(--color-border);
         border-radius: 16px 16px 0 0;
         transform: translateY(100%);
         transition: transform 0.25s ease;
+        z-index: 150;
       }
       .inspect-drawer.open { transform: translateY(0); }
+
+      body.sheet-open .app-footer { display: none; }
 
       .inspect-drag-handle {
         display: block;
@@ -3168,10 +3172,12 @@
 
     document.getElementById('inspect-body').innerHTML = bodyHtml;
     document.getElementById('inspect-drawer').classList.add('open');
+    if (isMobile()) document.body.classList.add('sheet-open');
   }
 
   function closeInspectDrawer() {
     document.getElementById('inspect-drawer').classList.remove('open');
+    document.body.classList.remove('sheet-open');
   }
 
   // ─── Section switching ───────────────────────────────────────────────────────
@@ -3249,6 +3255,7 @@
       document.getElementById('inspect-body').innerHTML    =
         '<div class="rail-query-answer" style="font-style:italic;color:var(--color-ink-faint)">Thinking…</div>';
       document.getElementById('inspect-drawer').classList.add('open');
+      document.body.classList.add('sheet-open');
     } else {
       document.getElementById('rail-ambient').style.display  = 'none';
       document.getElementById('rail-selected').style.display = 'none';
