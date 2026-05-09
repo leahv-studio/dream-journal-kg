@@ -1958,7 +1958,9 @@
 
       .kg-mobile-search {
         display: flex;
-        padding: 10px 16px;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 16px 14px;
         border-bottom: 1px solid var(--color-border);
         flex-shrink: 0;
         background: var(--color-bg);
@@ -2150,6 +2152,14 @@
             <div class="rail-query-footer">
               <span class="rail-query-counter" id="kg-mob-counter">0 / 120</span>
               <button class="rail-query-submit" id="kg-mob-submit" title="Ask (Enter)">↵</button>
+            </div>
+          </div>
+          <div class="query-preset-wrap" style="width:100%">
+            <div class="query-preset-label">Try a sample query</div>
+            <div class="query-preset-list">
+              <button class="query-preset-chip" data-query="What do I dream about most during times of grief?">What do I dream about most during times of grief?</button>
+              <button class="query-preset-chip" data-query="What's going on in my life when I dream about anxiety?">What's going on in my life when I dream about anxiety?</button>
+              <button class="query-preset-chip" data-query="What symbols show up most in the last 90 days?">What symbols show up most in the last 90 days?</button>
             </div>
           </div>
         </div>
