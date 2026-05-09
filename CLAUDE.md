@@ -24,7 +24,7 @@ dream-journal-kg/
   frontend/         dashboard.html (primary app — Add New, Knowledge Graph, Waking Life), journal.html (query views), index.html (original standalone chat UI, pre-redesign), style.css, app.js
   backend/          app.py (Flask + routes), graph.py (NetworkX ops), extract.py (Claude extraction), prompts.py (all system prompts)
   data/             graph.json (persistent graph)
-  docs/             entity-resolution.md, nl-query-design.md (design decision docs)
+  docs/             index.html (GitHub Pages static demo — full in-browser mock, no backend), data/graph.json (seed data copy for demo), entity-resolution.md, nl-query-design.md (design decision docs)
   schema.json       canonical schema definition
   SCHEMA.md         human-readable schema reference
   STYLE.md          design system — fonts, colors, component conventions
@@ -76,6 +76,7 @@ All stages complete as of May 2026.
 4. ✓ **Frontend Entry Flow** — chat UI, review card, Life Context Window display, context divergence detection, title generation, entity resolution at extraction time
 5. ✓ **Query Views + Demo Polish** — journal.html, dashboard.html, knowledge graph view, symbol frequency, theme patterns, README
 6. ✓ **Natural Language Graph Query** — `POST /api/query`; `build_query_context()` serializes pre-aggregated graph analytics (symbol/theme/character frequency tables, per-LCW breakdowns, dream date index); Claude returns `{highlighted_node_ids, answer}`; KG screen left rail shows answer, graph highlights relevant nodes. See `docs/nl-query-design.md`.
+7. ✓ **GitHub Pages Static Demo** — `docs/index.html` is a self-contained copy of the dashboard with a full in-browser mock API layer (no backend, no API key). Seed data loads from `docs/data/graph.json`; all mutations (dream confirm, LCW add/edit/status) update in-memory state only. Chat flow uses scripted Grand Am playback. Deployed at https://leahv-studio.github.io/dream-journal-kg/ (source: `/docs` folder on `main`).
 
 ## Demo Anchor
 
