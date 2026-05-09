@@ -27,6 +27,20 @@ The dream entries in `data/graph.json` are fictional — created to demonstrate 
 
 ---
 
+## Live Demo
+
+A static demo is deployed to GitHub Pages:
+
+**https://leahv-studio.github.io/dream-journal-kg/**
+
+The demo loads the full seed dataset and runs entirely in-browser — no backend, no API key required. You can add a dream, change life context window statuses, and explore the knowledge graph. Changes are session-only and disappear when you close the tab.
+
+The "Add New" chat flow uses a scripted playback (the Grand Am entry) rather than live Claude API calls, since API calls can't be made from a static page.
+
+The demo is served from the [`/docs`](docs/) folder on `main`.
+
+---
+
 ## How to Run Locally
 
 Every session:
