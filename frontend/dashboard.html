@@ -1367,7 +1367,6 @@
 
     .wl-rail .wl-add-btn {
       width: 100%;
-      margin-top: auto;
       text-align: center;
     }
 
@@ -1561,9 +1560,8 @@
       font-size: 15px;
       color: var(--color-ink);
       font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      word-break: break-word;
     }
 
     .wl-chip-date {
@@ -1754,11 +1752,12 @@
     }
 
     .wl-legend {
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 20px;
       max-width: 500px;
     }
+    .wl-legend.open { display: flex; }
 
     .wl-legend-row {
       display: flex;
@@ -1801,6 +1800,175 @@
       font-size: 12px;
       line-height: 1.45;
       color: var(--color-ink);
+    }
+
+    .wl-legend-section { display: flex; flex-direction: column; gap: 12px; }
+
+    .wl-legend-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+    .wl-legend-toggle:hover { color: var(--color-ink); }
+
+    .wl-legend-chevron {
+      font-size: 10px;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .wl-legend-toggle[aria-expanded="true"] .wl-legend-chevron { transform: rotate(180deg); }
+
+    /* ── KG mobile elements (hidden on desktop) ─────────────── */
+    .kg-mobile-search { display: none; }
+    .kg-mobile-stats  { display: none; }
+    .inspect-drag-handle { display: none; }
+
+    .kg-mobile-stats::-webkit-scrollbar { display: none; }
+
+    .kg-stat-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+      background: rgba(242,240,237,0.75);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 7px 14px;
+      min-width: 58px;
+    }
+
+    .kg-stat-num {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1;
+      letter-spacing: normal;
+    }
+
+    .kg-stat-lbl {
+      font-size: 10px;
+      color: var(--color-ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .kg-stat-insight { min-width: 80px; }
+
+    .kg-stat-insight-val {
+      font-size: 11px;
+      color: var(--color-ink);
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 110px;
+    }
+
+    /* ── Mobile ─────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav { padding: 0 16px; }
+      .nav-links { gap: 20px; }
+
+      #section-waking {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .wl-rail {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding: 24px 20px 20px;
+        overflow-y: visible;
+        flex-shrink: 0;
+      }
+
+      .wl-rail .wl-add-btn { margin-top: 0; }
+
+      .wl-body {
+        padding: 20px 16px 40px;
+        overflow-y: visible;
+        flex-shrink: 0;
+      }
+
+      .wl-body-inner { max-width: 100%; }
+
+      .wl-subtitle,
+      .wl-legend { max-width: 100%; }
+
+      #wl-groups { max-width: 100%; }
+
+      .wl-chip-header { padding: 14px 14px 8px; }
+      .wl-chip-body   { padding: 0 14px 14px; }
+
+      /* ── KG screen ── */
+      #section-dreams { flex-direction: column; }
+      .left-panel { display: none; }
+
+      .kg-mobile-search {
+        display: flex;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+        background: var(--color-bg);
+      }
+
+      .filter-row {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 16px;
+      }
+      .filter-row::-webkit-scrollbar { display: none; }
+
+      .kg-mobile-stats {
+        display: flex;
+        gap: 8px;
+        padding: 10px 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-top: 1px solid var(--color-border);
+        flex-shrink: 0;
+        background: var(--color-bg);
+      }
+
+      /* Inspect drawer → bottom sheet */
+      .inspect-drawer {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 55%;
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+        border-radius: 16px 16px 0 0;
+        transform: translateY(100%);
+        transition: transform 0.25s ease;
+      }
+      .inspect-drawer.open { transform: translateY(0); }
+
+      .inspect-drag-handle {
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: var(--color-border);
+        border-radius: 2px;
+        margin: 10px auto 4px;
+        flex-shrink: 0;
+      }
     }
   </style>
 </head>
@@ -1920,6 +2088,24 @@
 
       <!-- Main content -->
       <div class="dreams-main">
+
+        <!-- Mobile-only: search bar at top -->
+        <div class="kg-mobile-search">
+          <div class="rail-query-input-wrap" style="width:100%">
+            <div class="rail-query-input-row">
+              <span class="rail-search-icon">⌕</span>
+              <textarea class="rail-query-input" id="kg-mob-input"
+                        placeholder="Ask about your dreams…" autocomplete="off"
+                        maxlength="120" rows="1"
+                        aria-label="Ask about your dreams, 120 character limit"></textarea>
+            </div>
+            <div class="rail-query-footer">
+              <span class="rail-query-counter" id="kg-mob-counter">0 / 120</span>
+              <button class="rail-query-submit" id="kg-mob-submit" title="Ask (Enter)">↵</button>
+            </div>
+          </div>
+        </div>
+
         <div class="filter-row">
           <button class="chip active" data-filter="dreams">Dreams</button>
           <button class="chip" data-filter="themes">Themes</button>
@@ -1942,6 +2128,7 @@
           <div id="graph-container"></div>
           <div class="graph-legend" id="graph-legend" style="display:none"></div>
           <div class="inspect-drawer" id="inspect-drawer">
+            <div class="inspect-drag-handle"></div>
             <div class="inspect-header">
               <div>
                 <div class="inspect-title" id="inspect-title"></div>
@@ -1952,6 +2139,23 @@
             <div class="inspect-body" id="inspect-body"></div>
           </div>
         </div>
+
+        <!-- Mobile-only: stats bar at bottom -->
+        <div class="kg-mobile-stats">
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-dreams">—</span><span class="kg-stat-lbl">dreams</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-symbols">—</span><span class="kg-stat-lbl">symbols</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-themes">—</span><span class="kg-stat-lbl">themes</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-chars">—</span><span class="kg-stat-lbl">characters</span></div>
+          <div class="kg-stat-pill kg-stat-insight" id="mob-hub-pill">
+            <span class="kg-stat-lbl">hub</span>
+            <span class="kg-stat-insight-val" id="mob-hub">—</span>
+          </div>
+          <div class="kg-stat-pill kg-stat-insight" id="mob-oldest-pill">
+            <span class="kg-stat-lbl">oldest</span>
+            <span class="kg-stat-insight-val" id="mob-oldest">—</span>
+          </div>
+        </div>
+
       </div>
 
     </section>
@@ -2104,44 +2308,6 @@
       <aside class="wl-rail">
         <h1 class="waking-header">Waking Life</h1>
         <p class="wl-subtitle">Life context windows are woven into your dream analysis. What's present in our waking lives follows us into our dreams. When something you considered dormant surfaces, we can notice what it reveals.</p>
-        <div class="wl-legend">
-              <div class="wl-legend-row">
-                <span class="wl-legend-cloud" aria-hidden="true">
-                  <i class="ti ti-sun wl-legend-sun fg"></i>
-                </span>
-                <div class="wl-legend-text">
-                  <span class="wl-legend-term">Foreground</span>
-                  <span class="wl-legend-def">What's most alive and present in your waking life right now.</span>
-                </div>
-              </div>
-              <div class="wl-legend-row">
-                <span class="wl-legend-cloud" aria-hidden="true">
-                  <i class="ti ti-sun wl-legend-sun bg"></i>
-                </span>
-                <div class="wl-legend-text">
-                  <span class="wl-legend-term">Background</span>
-                  <span class="wl-legend-def">Ongoing but not consuming — present, quieter.</span>
-                </div>
-              </div>
-              <div class="wl-legend-row">
-                <span class="wl-legend-cloud" aria-hidden="true">
-                  <i class="ti ti-sun wl-legend-sun dormant"></i>
-                </span>
-                <div class="wl-legend-text">
-                  <span class="wl-legend-term">Dormant</span>
-                  <span class="wl-legend-def">Paused or resolved — no longer active, but still part of your life.</span>
-                </div>
-              </div>
-              <div class="wl-legend-row">
-                <span class="wl-legend-cloud" aria-hidden="true">
-                  <i class="ti ti-sun wl-legend-sun archived"></i>
-                </span>
-                <div class="wl-legend-text">
-                  <span class="wl-legend-term">Archived</span>
-                  <span class="wl-legend-def">Excluded from analysis, but remains saved if you ever want to bring it forward again.</span>
-                </div>
-              </div>
-        </div>
         <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
         <p class="wl-limit-msg" id="wl-limit-msg">10 / 10 active contexts<br>Archive one to add another.</p>
       </aside>
@@ -2206,6 +2372,43 @@
             <div class="wl-form-actions">
               <button class="wl-btn wl-btn-cancel" id="wl-edit-cancel-btn">Cancel</button>
               <button class="wl-btn wl-btn-save" id="wl-edit-submit-btn">Save changes</button>
+            </div>
+          </div>
+
+          <!-- Status key -->
+          <div class="wl-legend-section">
+            <button class="wl-legend-toggle" id="wl-legend-toggle" aria-expanded="false">
+              About these statuses <span class="wl-legend-chevron">▾</span>
+            </button>
+            <div class="wl-legend" id="wl-legend">
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun fg"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Foreground</span>
+                  <span class="wl-legend-def">What's most alive and present in your waking life right now.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun bg"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Background</span>
+                  <span class="wl-legend-def">Ongoing but not consuming — present, quieter.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun dormant"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Dormant</span>
+                  <span class="wl-legend-def">Paused or resolved — no longer active, but still part of your life.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun archived"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Archived</span>
+                  <span class="wl-legend-def">Excluded from analysis, but remains saved if you ever want to bring it forward again.</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -2388,6 +2591,27 @@
       oldestInsight.style.display = '';
     } else {
       oldestInsight.style.display = 'none';
+    }
+
+    // Mobile stats bar
+    document.getElementById('mob-dreams').textContent  = dreams.length;
+    document.getElementById('mob-symbols').textContent = symbols.length;
+    document.getElementById('mob-themes').textContent  = themes.length;
+    document.getElementById('mob-chars').textContent   = chars.length;
+    const mobHubPill = document.getElementById('mob-hub-pill');
+    if (hubNode) {
+      document.getElementById('mob-hub').textContent = hubNode.label;
+      mobHubPill.style.display = '';
+    } else {
+      mobHubPill.style.display = 'none';
+    }
+    const mobOldestPill = document.getElementById('mob-oldest-pill');
+    if (sorted.length) {
+      const d2 = (sorted[0].properties||{}).date;
+      document.getElementById('mob-oldest').textContent = d2 ? fmtDateFull(d2) : '—';
+      mobOldestPill.style.display = '';
+    } else {
+      mobOldestPill.style.display = 'none';
     }
   }
 
@@ -2826,7 +3050,9 @@
         event.stopPropagation();
         applyEgoHighlight(d.id);
         if (d.type === 'Dream') {
-          renderAmbientRail();   // reset rail to ambient without touching ego state
+          renderAmbientRail();
+          openInspectDrawer(d);
+        } else if (isMobile()) {
           openInspectDrawer(d);
         } else {
           closeInspectDrawer();
@@ -2981,8 +3207,25 @@
   document.getElementById('rail-close').addEventListener('click', clearSelectedRail);
 
   // ─── NL query ────────────────────────────────────────────────────────────────
+  const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
   const queryInput  = document.getElementById('rail-query-input');
   const querySubmit = document.getElementById('rail-query-submit');
+  const mobInput    = document.getElementById('kg-mob-input');
+  const mobSubmit   = document.getElementById('kg-mob-submit');
+
+  mobInput.addEventListener('input', () => {
+    queryInput.value = mobInput.value;
+    mobInput.style.height = 'auto';
+    mobInput.style.height = mobInput.scrollHeight + 'px';
+    const len = mobInput.value.length;
+    const ctr = document.getElementById('kg-mob-counter');
+    ctr.textContent = len >= 120 ? '120 / 120 — limit reached' : `${len} / 120`;
+    ctr.classList.toggle('warn',  len >= 100 && len < 120);
+    ctr.classList.toggle('limit', len >= 120);
+  });
+  mobInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitQuery(); } });
+  mobSubmit.addEventListener('click', submitQuery);
 
   async function submitQuery() {
     const q = queryInput.value.trim();
@@ -2990,14 +3233,23 @@
 
     querySubmit.disabled    = true;
     querySubmit.textContent = '…';
+    mobSubmit.disabled      = true;
+    mobSubmit.textContent   = '…';
 
-    // Show query rail immediately with loading state
-    document.getElementById('rail-ambient').style.display  = 'none';
-    document.getElementById('rail-selected').style.display = 'none';
-    document.getElementById('rail-query').style.display    = '';
-    document.getElementById('rail-query-question').textContent = q;
-    document.getElementById('rail-query-answer').textContent   = 'Thinking…';
-    document.getElementById('rail-query-count').textContent    = '';
+    if (isMobile()) {
+      document.getElementById('inspect-title').textContent = 'Graph answer';
+      document.getElementById('inspect-type').textContent  = q;
+      document.getElementById('inspect-body').innerHTML    =
+        '<div class="rail-query-answer" style="font-style:italic;color:var(--color-ink-faint)">Thinking…</div>';
+      document.getElementById('inspect-drawer').classList.add('open');
+    } else {
+      document.getElementById('rail-ambient').style.display  = 'none';
+      document.getElementById('rail-selected').style.display = 'none';
+      document.getElementById('rail-query').style.display    = '';
+      document.getElementById('rail-query-question').textContent = q;
+      document.getElementById('rail-query-answer').textContent   = 'Thinking…';
+      document.getElementById('rail-query-count').textContent    = '';
+    }
 
     try {
       const res  = await fetch('/api/query', {
@@ -3010,14 +3262,29 @@
 
       if (ids.length > 0) applySetHighlight(ids);
 
-      document.getElementById('rail-query-answer').textContent = data.answer || '(no answer)';
-      document.getElementById('rail-query-count').textContent  =
-        ids.length > 0 ? `${ids.length} node${ids.length === 1 ? '' : 's'} highlighted` : '';
+      if (isMobile()) {
+        const countLine = ids.length > 0
+          ? `<div class="rail-query-count">${ids.length} node${ids.length === 1 ? '' : 's'} highlighted</div>`
+          : '';
+        document.getElementById('inspect-body').innerHTML =
+          `<div class="rail-query-answer">${esc(data.answer || '(no answer)')}</div>${countLine}`;
+      } else {
+        document.getElementById('rail-query-answer').textContent = data.answer || '(no answer)';
+        document.getElementById('rail-query-count').textContent  =
+          ids.length > 0 ? `${ids.length} node${ids.length === 1 ? '' : 's'} highlighted` : '';
+      }
     } catch (err) {
-      document.getElementById('rail-query-answer').textContent = 'Something went wrong. Please try again.';
+      if (isMobile()) {
+        document.getElementById('inspect-body').innerHTML =
+          '<div class="rail-query-answer">Something went wrong. Please try again.</div>';
+      } else {
+        document.getElementById('rail-query-answer').textContent = 'Something went wrong. Please try again.';
+      }
     } finally {
       querySubmit.disabled    = false;
       querySubmit.textContent = '↵';
+      mobSubmit.disabled      = false;
+      mobSubmit.textContent   = '↵';
     }
   }
 
@@ -3824,6 +4091,13 @@
   // Waking Life event listeners
   wlInitStatusMenu();
   document.getElementById('wl-add-toggle-btn').addEventListener('click', wlToggleAddForm);
+  document.getElementById('wl-legend-toggle').addEventListener('click', () => {
+    const toggle = document.getElementById('wl-legend-toggle');
+    const legend = document.getElementById('wl-legend');
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    legend.classList.toggle('open', !open);
+  });
   document.getElementById('wl-add-cancel-btn').addEventListener('click', () => {
     document.getElementById('wl-add-form').classList.remove('open');
   });
