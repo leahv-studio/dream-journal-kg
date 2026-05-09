@@ -3949,9 +3949,21 @@
       renderAmbientRail();
       wlLcws = allLCWs.slice();
       wlRender();
-      // Use setTimeout rather than rAF so the newly-visible section has time
-      // to finish layout before initGraph measures the container dimensions.
-      setTimeout(initGraph, 50);
+      // Retry until the container has layout dimensions, then init the graph.
+      function _tryInitGraph(attempts) {
+        const c = document.getElementById('graph-container');
+        const {width, height} = c.getBoundingClientRect();
+        if (width === 0 || height === 0) {
+          if (attempts < 20) { setTimeout(() => _tryInitGraph(attempts + 1), 50); return; }
+        }
+        try {
+          initGraph();
+        } catch (e) {
+          console.error('initGraph failed:', e);
+          c.innerHTML = `<div class="graph-empty" style="font-size:13px;color:var(--color-negative)">Graph render error: ${e.message}</div>`;
+        }
+      }
+      setTimeout(() => _tryInitGraph(0), 50);
     } catch (err) {
       console.error('Graph refresh failed:', err);
     }
