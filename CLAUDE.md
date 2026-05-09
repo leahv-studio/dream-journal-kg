@@ -78,6 +78,17 @@ All stages complete as of May 2026.
 6. ✓ **Natural Language Graph Query** — `POST /api/query`; `build_query_context()` serializes pre-aggregated graph analytics (symbol/theme/character frequency tables, per-LCW breakdowns, dream date index); Claude returns `{highlighted_node_ids, answer}`; KG screen left rail shows answer, graph highlights relevant nodes. See `docs/nl-query-design.md`.
 7. ✓ **GitHub Pages Static Demo** — `docs/index.html` is a self-contained copy of the dashboard with a full in-browser mock API layer (no backend, no API key). Seed data loads from `docs/data/graph.json`; all mutations (dream confirm, LCW add/edit/status) update in-memory state only. Chat flow uses scripted Grand Am playback. Deployed at https://leahv-studio.github.io/dream-journal-kg/ (source: `/docs` folder on `main`).
 
+## ⚠️ Two Files, No Auto-Sync
+
+`frontend/dashboard.html` and `docs/index.html` are **completely independent files**. Changes to one have zero effect on the other.
+
+| File | Purpose | Backend | Data |
+|---|---|---|---|
+| `frontend/dashboard.html` | Live app (localhost:5001) | Flask + real Claude API | `data/graph.json` (real graph) |
+| `docs/index.html` | GitHub Pages static demo | None — full in-browser mock | `docs/data/graph.json` (seed copy) |
+
+**When making UI, CSS, or JS changes to `frontend/dashboard.html`, note it in the PR** so the relevant changes can be manually ported to `docs/index.html` before they drift too far. The mock API layer and scripted chat flow in `docs/index.html` are the only parts that don't need porting — everything else (layout, styles, interactions) should stay in sync.
+
 ## Demo Anchor
 
 The Grand Am dream entry is the canonical before/after example for the demo — use it consistently when testing extraction and building the comparison view.

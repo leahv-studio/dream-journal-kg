@@ -1287,10 +1287,12 @@
 .add-review-actions {
       display: flex;
       gap: 10px;
-      justify-content: flex-end;
+      align-items: center;
       padding-top: 4px;
       flex-wrap: wrap;
     }
+
+    .add-review-actions .add-btn-outline { margin-right: auto; }
 
     .add-btn {
       padding: 10px 20px;
@@ -2318,8 +2320,8 @@
             <div id="add-review-sections"></div>
 
 <div class="add-review-actions">
-              <button class="add-btn add-btn-ghost"    id="add-discard-btn">Discard</button>
               <button class="add-btn add-btn-outline"  id="add-back-btn">Back to chat</button>
+              <button class="add-btn add-btn-ghost"    id="add-discard-btn">Discard</button>
               <button class="add-btn add-btn-primary"  id="add-confirm-btn">Confirm &amp; Save to Graph</button>
             </div>
           </div>
