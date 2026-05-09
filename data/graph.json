@@ -8,8 +8,8 @@
       "label": "Active job search + grad school applications",
       "start_date": "2024-09-01",
       "end_date": "2025-01-15",
-      "description": "I was laid off in late August and spent the fall applying to jobs and finishing my grad school applications simultaneously. The financial pressure was constant \u2014 I was burning through savings and every rejection letter hit harder than it should have. There was a specific kind of shame in being unemployed while also trying to present myself as competent enough for a grad program. It ended when I got the offer in January.",
-      "summary": "A period defined by financial precarity and compounding identity stress \u2014 simultaneously unemployed and applying to a graduate program, forcing the person to perform competence while feeling acutely exposed. Shame and legitimacy anxiety were central, with every rejection amplified by the underlying fear of not belonging.",
+      "description": "I was laid off in late August and spent the fall applying to jobs and finishing my grad school applications simultaneously. The financial pressure was constant — I was burning through savings and every rejection letter hit harder than it should have. There was a specific kind of shame in being unemployed while also trying to present myself as competent enough for a grad program. It ended when I got the offer in January.",
+      "summary": "A period defined by financial precarity and compounding identity stress — simultaneously unemployed and applying to a graduate program, forcing the person to perform competence while feeling acutely exposed. Shame and legitimacy anxiety were central, with every rejection amplified by the underlying fear of not belonging.",
       "status": "archived",
       "id": "lcw_job_search"
     },
@@ -18,8 +18,8 @@
       "label": "Promotion and grad school",
       "start_date": "2025-01-16",
       "end_date": "2025-10-31",
-      "description": "Started the new role in January \u2014 excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
-      "summary": "A high-demand period of simultaneous transitions \u2014 new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
+      "description": "Started the new role in January — excited but deeply aware that I don't fully know what I'm doing yet. The learning curve is steep and I catch myself second-guessing things I'd have been confident about a year ago. Grad school is running in parallel and the deadlines don't care that I'm also onboarding. I keep waiting to feel like I belong in both places.",
+      "summary": "A high-demand period of simultaneous transitions — new professional role and active graduate coursework running in parallel, with no room for either to slow down. The dominant emotional register is imposter syndrome: a persistent sense of not yet belonging in either space, and waiting for the feeling of legitimacy that hasn't arrived.",
       "status": "archived",
       "id": "lcw_new_role"
     },
@@ -28,37 +28,19 @@
       "label": "Coming out of burnout",
       "start_date": "2023-06-01",
       "end_date": "2024-06-01",
-      "description": "The year before the layoff was quietly the worst. I'd been in survival mode at work for so long that I stopped noticing. Not dramatic burnout \u2014 the creeping kind. Dreading Sunday nights. Forgetting things. Losing the thread of meetings. When I finally admitted it to myself, I was already out the other side, or at least far enough out to look back. The layoff was almost a relief.",
-      "summary": "A prolonged period of depletion that was largely invisible while it was happening \u2014 the gradual erosion of motivation and presence rather than a dramatic collapse. Recovery happened quietly alongside the daily grind, and the end of this period overlapped with the layoff that forced a harder reset. The exhaustion predated the crisis.",
+      "description": "The year before the layoff was quietly the worst. I'd been in survival mode at work for so long that I stopped noticing. Not dramatic burnout — the creeping kind. Dreading Sunday nights. Forgetting things. Losing the thread of meetings. When I finally admitted it to myself, I was already out the other side, or at least far enough out to look back. The layoff was almost a relief.",
+      "summary": "A prolonged period of depletion that was largely invisible while it was happening — the gradual erosion of motivation and presence rather than a dramatic collapse. Recovery happened quietly alongside the daily grind, and the end of this period overlapped with the layoff that forced a harder reset. The exhaustion predated the crisis.",
       "status": "dormant",
       "id": "lcw_burnout_recovery"
     },
     {
       "node_type": "LifeContextWindow",
-      "label": "Financial pressure",
-      "start_date": "2025-11-01",
-      "description": "I've been looking for a new job and not having a lot of luck. I've been networking a lot which has been it's own kind of social stress but also totally necessary. I had an interview at a company and a role I was really hoping to get. They ghosted me but it still felt validating to finally get an interview at least. I'm feeling pressure to leave my current company before I'm there too long and appear as though I can only specialize in that particular industry. I'm also feeling a lot of pressure to meaningfully increase my salary to achieve my goals.",
-      "summary": "The dreamer is experiencing significant career-related anxiety and uncertainty, caught between the urgency to advance professionally and the frustration of repeated rejections in their job search. They're navigating conflicting pressures - the need to escape career stagnation at their current position while facing the emotional toll of networking, interviews, and professional disappointments. This period is marked by a deep concern about time running out to achieve financial and career goals, creating a sense of being trapped between an unsatisfying present and an elusive future.",
-      "status": "background",
-      "id": "lcw_job_search_and_financial"
-    },
-    {
-      "node_type": "LifeContextWindow",
       "label": "Looking for a place to buy",
       "start_date": "2025-11-15",
-      "description": "I've started seriously house hunting \u2014 or trying to. The market is brutal and I know it going in. Every listing I get excited about sells before I can even schedule a showing. I've been to a few open houses and nothing feels right yet, which is its own kind of confusing \u2014 I'm not sure if nothing is right or if I'm afraid to commit. The old duplex I lived in years ago is still in my head as the benchmark. I don't think I'll find that exact thing but I keep looking for the feeling of it.",
-      "summary": "An active search for a first home purchase, shadowed by a competitive market and an internalized benchmark \u2014 a former apartment that exists in memory as the ideal. The tension between concrete logistics (listings, showings, prices) and an emotional standard the dreamer can't fully articulate creates a layered anxiety. The uncertainty about whether external or internal factors are blocking commitment adds another dimension to the search.",
+      "description": "I've started seriously house hunting — or trying to. The market is brutal and I know it going in. Every listing I get excited about sells before I can even schedule a showing. I've been to a few open houses and nothing feels right yet, which is its own kind of confusing — I'm not sure if nothing is right or if I'm afraid to commit. The old duplex I lived in years ago is still in my head as the benchmark. I don't think I'll find that exact thing but I keep looking for the feeling of it.",
+      "summary": "An active search for a first home purchase, shadowed by a competitive market and an internalized benchmark — a former apartment that exists in memory as the ideal. The tension between concrete logistics (listings, showings, prices) and an emotional standard the dreamer can't fully articulate creates a layered anxiety. The uncertainty about whether external or internal factors are blocking commitment adds another dimension to the search.",
       "status": "background",
       "id": "lcw_house_hunting"
-    },
-    {
-      "node_type": "LifeContextWindow",
-      "label": "Supporting my friend through her divorce",
-      "start_date": "2025-08-20",
-      "description": "My closest friend is going through a divorce and it's been heavy in a way I didn't fully anticipate. She's doing the actual hard work of leaving \u2014 I'm just the person on the other end of the phone. But emotional labor has a weight to it even when you're not the one going through it. I find myself absorbing her anxiety, her grief, her logistics. There are weeks I feel like I'm carrying something that isn't mine to carry and I'm not sure how to put it down without abandoning her.",
-      "summary": "A sustained period of close emotional support for a friend navigating divorce \u2014 a role that requires consistent availability, emotional attunement, and carrying another person's pain without a clear resolution date. The dreamer is experiencing the secondary stress of witnessing grief they cannot fix, alongside a personal reckoning with the limits of what can be offered. The blurring of the friend's experience and the dreamer's own emotional landscape is a central tension.",
-      "status": "foreground",
-      "id": "lcw_providing_emotional_supp"
     },
     {
       "node_type": "Character",
@@ -138,9 +120,9 @@
     },
     {
       "node_type": "Character",
-      "name": "Friend going through divorce",
+      "name": "Close friend",
       "character_type": "real_current",
-      "symbolic_role": "Grief and upheaval the dreamer is trying to hold and cannot fix",
+      "symbolic_role": "Care and helplessness; the limits of being there",
       "id": "char_friend"
     },
     {
@@ -154,7 +136,7 @@
       "node_type": "Symbol",
       "name": "Car / driving",
       "category": "object",
-      "symbolic_note": "Navigation, autonomy, forward momentum \u2014 frequent failure site",
+      "symbolic_note": "Navigation, autonomy, forward momentum — frequent failure site",
       "id": "sym_car"
     },
     {
@@ -217,7 +199,7 @@
       "node_type": "Symbol",
       "name": "The Grand Am",
       "category": "object",
-      "symbolic_note": "Specific car from adolescence \u2014 navigation failure, autonomy",
+      "symbolic_note": "Specific car from adolescence — navigation failure, autonomy",
       "id": "sym_grand_am"
     },
     {
@@ -302,7 +284,7 @@
       "name": "The duplex (way bigger inside)",
       "familiarity": "distorted",
       "real_or_constructed": "composite",
-      "symbolic_note": "Former apartment; always contains undiscovered rooms \u2014 psychic space",
+      "symbolic_note": "Former apartment; always contains undiscovered rooms — psychic space",
       "id": "set_duplex"
     },
     {
@@ -523,7 +505,7 @@
     {
       "node_type": "Theme",
       "name": "Navigation failure",
-      "description": "Can't get where I'm going \u2014 wrong turns, broken vehicles, lost exits",
+      "description": "Can't get where I'm going — wrong turns, broken vehicles, lost exits",
       "source": "user",
       "id": "thm_navigation_failure"
     },
@@ -551,7 +533,7 @@
     {
       "node_type": "Theme",
       "name": "Transformation / discovery",
-      "description": "Finding new space, capacity, or self \u2014 often surprising",
+      "description": "Finding new space, capacity, or self — often surprising",
       "source": "llm",
       "id": "thm_transformation"
     },
@@ -647,7 +629,7 @@
       "node_type": "Dream",
       "date": "2023-10-12",
       "title": "Buried at the Old Job",
-      "raw_narrative": "I'm at my desk in the old office but papers keep accumulating faster than I can move them \u2014 stacks of folders, printouts, things I don't recognize. The water starts rising from under the desk. I know there's something I'm supposed to finish but I can't find it under the pile. My backpack is somewhere down there too. I never leave the chair.",
+      "raw_narrative": "I'm at my desk in the old office but papers keep accumulating faster than I can move them — stacks of folders, printouts, things I don't recognize. The water starts rising from under the desk. I know there's something I'm supposed to finish but I can't find it under the pile. My backpack is somewhere down there too. I never leave the chair.",
       "emotional_valence": "negative",
       "intensity": 3,
       "visual_quality": "dark",
@@ -658,7 +640,7 @@
       "node_type": "Dream",
       "date": "2024-04-02",
       "title": "The Deadline Room",
-      "raw_narrative": "There's a meeting I was supposed to be in ten minutes ago. I know which building but I can't find the right floor \u2014 the stairs keep turning the wrong direction. I try my phone but it shows no signal. Every hallway looks the same. I never find the room.",
+      "raw_narrative": "There's a meeting I was supposed to be in ten minutes ago. I know which building but I can't find the right floor — the stairs keep turning the wrong direction. I try my phone but it shows no signal. Every hallway looks the same. I never find the room.",
       "emotional_valence": "negative",
       "intensity": 3,
       "visual_quality": "washed_out",
@@ -680,7 +662,7 @@
       "node_type": "Dream",
       "date": "2024-10-03",
       "title": "The Duplex With the Extra Wing",
-      "raw_narrative": "I'm back in the old duplex on Aldrich. I go through a door I thought was a closet and there's an entire extra wing \u2014 three more rooms, high ceilings, windows I've never seen. The apartment is way bigger than it ever was. I feel amazed but also anxious, like I've been missing something obvious.",
+      "raw_narrative": "I'm back in the old duplex on Aldrich. I go through a door I thought was a closet and there's an entire extra wing — three more rooms, high ceilings, windows I've never seen. The apartment is way bigger than it ever was. I feel amazed but also anxious, like I've been missing something obvious.",
       "emotional_valence": "mixed",
       "intensity": 3,
       "visual_quality": "bright",
@@ -741,7 +723,7 @@
       "node_type": "Dream",
       "date": "2025-02-05",
       "title": "Someone Else's Slides",
-      "raw_narrative": "I'm presenting to a room of people \u2014 maybe twenty of them. My slides are someone else's entirely. I try to improvise but I don't know the material. A classmate in the front row takes notes. I keep talking.",
+      "raw_narrative": "I'm presenting to a room of people — maybe twenty of them. My slides are someone else's entirely. I try to improvise but I don't know the material. A classmate in the front row takes notes. I keep talking.",
       "emotional_valence": "negative",
       "intensity": 4,
       "visual_quality": "washed_out",
@@ -752,7 +734,7 @@
       "node_type": "Dream",
       "date": "2025-02-20",
       "title": "The Exam I Never Attended",
-      "raw_narrative": "I'm sitting in an exam room \u2014 big lecture hall, fluorescent lights. The test is already being handed out and I realize I never attended the class. I don't even know what subject this is. My former boss is proctoring. I can't leave.",
+      "raw_narrative": "I'm sitting in an exam room — big lecture hall, fluorescent lights. The test is already being handed out and I realize I never attended the class. I don't even know what subject this is. My former boss is proctoring. I can't leave.",
       "emotional_valence": "negative",
       "intensity": 5,
       "visual_quality": "washed_out",
@@ -775,7 +757,7 @@
       "node_type": "Dream",
       "date": "2025-03-15",
       "title": "The Grand Am",
-      "raw_narrative": "I'm driving the Grand Am from high school \u2014 the white one with the cracked dashboard. I need to get somewhere important but I can't figure out where I parked, and when I finally find the car the GPS won't load. I keep circling the same parking structure. I know I'm late. I never arrive.",
+      "raw_narrative": "I'm driving the Grand Am from high school — the white one with the cracked dashboard. I need to get somewhere important but I can't figure out where I parked, and when I finally find the car the GPS won't load. I keep circling the same parking structure. I know I'm late. I never arrive.",
       "emotional_valence": "negative",
       "intensity": 4,
       "visual_quality": "normal",
@@ -786,7 +768,7 @@
       "node_type": "Dream",
       "date": "2025-03-28",
       "title": "The Other Me in the Bathroom",
-      "raw_narrative": "I'm in a bathroom I don't recognize. I look in the mirror and the person looking back is me but from a different time \u2014 younger, or older, I can't tell. She mouths something I can't hear. I feel the falling sensation and wake up.",
+      "raw_narrative": "I'm in a bathroom I don't recognize. I look in the mirror and the person looking back is me but from a different time — younger, or older, I can't tell. She mouths something I can't hear. I feel the falling sensation and wake up.",
       "emotional_valence": "mixed",
       "intensity": 3,
       "visual_quality": "vivid",
@@ -798,7 +780,7 @@
       "node_type": "Dream",
       "date": "2026-02-15",
       "title": "The Listing That Sold Overnight",
-      "raw_narrative": "I'm on my phone looking at a listing I've been watching \u2014 the right neighborhood, the right price, a yard. I screenshot it to send but when I go back, the photos have changed. Different rooms, different layout. I refresh and they change again. I try to call the realtor but the call won't connect. I know the original listing is gone. I waited too long.",
+      "raw_narrative": "I'm on my phone looking at a listing I've been watching — the right neighborhood, the right price, a yard. I screenshot it to send but when I go back, the photos have changed. Different rooms, different layout. I refresh and they change again. I try to call the realtor but the call won't connect. I know the original listing is gone. I waited too long.",
       "emotional_valence": "negative",
       "intensity": 3,
       "visual_quality": "normal",
@@ -820,7 +802,7 @@
       "node_type": "Dream",
       "date": "2026-03-22",
       "title": "On the Phone All Night",
-      "raw_narrative": "I'm on the phone with my friend. She's in the middle of something hard about the divorce and the call keeps dropping \u2014 not all the way, just enough to lose the thread. I catch every third sentence. I try to ask her to repeat things but my voice comes out delayed, wrong. I hold the phone as tight as I can. I'm not sure she can hear me either.",
+      "raw_narrative": "I'm on the phone with my friend. She's in the middle of something hard and the call keeps dropping — not all the way, just enough to lose the thread. I catch every third sentence. I try to ask her to repeat things but my voice comes out delayed, wrong. I hold the phone as tight as I can. I'm not sure she can hear me either.",
       "emotional_valence": "negative",
       "intensity": 3,
       "visual_quality": "dark",
@@ -831,7 +813,7 @@
       "node_type": "Dream",
       "date": "2026-03-22",
       "title": "The Empty House Tour",
-      "raw_narrative": "I'm walking through a house for sale. Everything is under white sheets. There's a room at the end of the hall that has the same proportions as the old duplex \u2014 same light, same ceiling height. I know it isn't the same place. I look in a mirror on the wall and my reflection doesn't quite match my movements \u2014 half a second behind. I don't leave. I keep walking through the same rooms.",
+      "raw_narrative": "I'm walking through a house for sale. Everything is under white sheets. There's a room at the end of the hall that has the same proportions as the old duplex — same light, same ceiling height. I know it isn't the same place. I look in a mirror on the wall and my reflection doesn't quite match my movements — half a second behind. I don't leave. I keep walking through the same rooms.",
       "emotional_valence": "mixed",
       "intensity": 3,
       "visual_quality": "bright",
@@ -842,7 +824,7 @@
       "node_type": "Dream",
       "date": "2026-04-05",
       "title": "Showing Up Where I Wasn't Expected",
-      "raw_narrative": "I arrive at a gathering. I'm certain I was invited \u2014 I have the address, I wrote it down. Everyone pauses when I come through the door. A stranger woman stands near the entrance watching. I feel immediately wrong for being there but leaving would make it worse. Someone eventually says come in, come in, the way you'd say it to someone you hadn't planned on. I stay near the edge the whole night. The stranger woman doesn't look away.",
+      "raw_narrative": "I arrive at a gathering. I'm certain I was invited — I have the address, I wrote it down. Everyone pauses when I come through the door. A stranger woman stands near the entrance watching. I feel immediately wrong for being there but leaving would make it worse. Someone eventually says come in, come in, the way you'd say it to someone you hadn't planned on. I stay near the edge the whole night. The stranger woman doesn't look away.",
       "emotional_valence": "negative",
       "intensity": 3,
       "visual_quality": "normal",
@@ -869,6 +851,81 @@
       "visual_quality": "dark",
       "lucid": false,
       "id": "dream_2026_04_27"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Grief that keeps resurfacing",
+      "start_date": "2022-03-01",
+      "end_date": "2022-09-01",
+      "description": "My mom died a few years ago. It wasn't sudden — we had time, and I thought I had used it well. I did the right things afterward. But grief doesn't follow the schedule you plan for it. It surfaces at odd moments, in dreams especially, and I've started to suspect that what I called processing was really just postponing. It feels dormant most of the time. But it's not gone.",
+      "summary": "A loss that was anticipated but not fully absorbed — the dreamer moved through the practical rituals of grief and concluded it was handled, only to find it recurring in unexpected moments. The dominant quality is deferred feeling: something that was set aside, not resolved.",
+      "status": "dormant",
+      "id": "lcw_grief_processing"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Working through things in therapy",
+      "start_date": "2025-03-01",
+      "description": "I started seeing a new therapist about a year ago — my third, and the first I've actually clicked with. I went in thinking I'd work on some concrete, manageable things. It's gotten deeper than I expected. She asks questions I don't have good answers to yet. There's a version of me that finds this exciting and a version that finds it destabilizing, and they're both showing up in my dreams.",
+      "summary": "An active therapeutic relationship that has moved beyond surface-level goals into more foundational territory — earlier than the dreamer anticipated. The work is generative but also disorienting, and the destabilization is showing up in dream content as the psyche processes material that's being surfaced for the first time.",
+      "status": "foreground",
+      "id": "lcw_therapy_journey"
+    },
+    {
+      "node_type": "LifeContextWindow",
+      "label": "Running a small side business",
+      "start_date": "2024-01-01",
+      "description": "I run a small creative business on the side — nothing that pays the bills, but something that's mine in a way my day job isn't. I take on more than I probably should given my schedule, and the line between passion project and obligation has gotten blurry. Most weeks I love it. Some weeks it's just one more thing I'm managing.",
+      "summary": "A side project that exists in the tension between genuine creative investment and self-imposed overcommitment. The business is meaningful but competes with the dreamer's time and attention in ways that occasionally tip into stress rather than joy.",
+      "status": "background",
+      "id": "lcw_side_business"
+    },
+    {
+      "node_type": "Setting",
+      "name": "Therapist's waiting room",
+      "description": "Quiet waiting area before a therapy session",
+      "symbolic_note": "Liminal space; preparing to be seen",
+      "id": "set_waiting_room"
+    },
+    {
+      "node_type": "Character",
+      "name": "Therapist",
+      "character_type": "real_current",
+      "symbolic_role": "Witness; the one asking the hard questions",
+      "id": "char_therapist"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-02-12",
+      "title": "The Intake Form That Won't End",
+      "raw_narrative": "I'm in a waiting room before my first session with a new therapist. The intake paperwork is longer than I expected — every page reveals two more. The questions get harder as I go, less clinical and more personal. One asks me to describe the most important relationship I've ever had. I don't know how to answer it in a way that's honest. I can hear my name being called from somewhere, but I haven't finished. I leave several boxes blank and go in anyway.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "muted",
+      "lucid": false,
+      "id": "dream_therapy_intake"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-01-08",
+      "title": "The Table That Won't Set Up",
+      "raw_narrative": "I have a booth at a craft fair. I've arrived on time but can't find the right building — the address matches a parking structure. By the time I find the hall, everyone else is already set up and open. My products keep rearranging in the boxes. Every time I think I've found a configuration that works, I look down and they've shifted again. People are walking past my half-set table. I keep smiling like I'm almost ready.",
+      "emotional_valence": "negative",
+      "intensity": 3,
+      "visual_quality": "bright",
+      "lucid": false,
+      "id": "dream_shop_setup"
+    },
+    {
+      "node_type": "Dream",
+      "date": "2026-02-01",
+      "title": "Split Screen",
+      "raw_narrative": "I'm on a video call for my day job but I also have a client from my side business in a different window. I keep switching between them but the audio is wrong — I hear the client when I'm talking to my manager. I mute myself in the wrong window twice. By the end of the work call I've agreed to something I didn't mean to. I close both windows without saying goodbye to either person.",
+      "emotional_valence": "negative",
+      "intensity": 2,
+      "visual_quality": "dark",
+      "lucid": false,
+      "id": "dream_split_screen"
     }
   ],
   "edges": [
@@ -958,76 +1015,6 @@
     },
     {
       "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_navigation_failure",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_legitimacy_anxiety",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_control_loss",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_imposter_syndrome",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_regression_under_pressure",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_professional_legitimacy_anxiety",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_isolation_in_crisis",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_institutional_hostility",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_escalating_obstacles",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_job_search_and_financial",
-      "target": "thm_performance_anxiety",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
       "frequency": 3,
       "source": "lcw_house_hunting",
       "target": "thm_home_belonging",
@@ -1052,48 +1039,6 @@
       "frequency": 1,
       "source": "lcw_house_hunting",
       "target": "thm_transformation",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_isolation",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 2,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_control_loss",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_legitimacy_anxiety",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_home_belonging",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_transformation",
-      "key": "activates"
-    },
-    {
-      "edge_type": "activates",
-      "frequency": 1,
-      "source": "lcw_providing_emotional_supp",
-      "target": "thm_navigation_failure",
       "key": "activates"
     },
     {
@@ -2451,12 +2396,6 @@
       "key": "expresses"
     },
     {
-      "edge_type": "occurred_during",
-      "source": "dream_on_the_phone_all_night",
-      "target": "lcw_providing_emotional_supp",
-      "key": "occurred_during"
-    },
-    {
       "edge_type": "contains",
       "prominence": "central",
       "source": "dream_on_the_phone_all_night",
@@ -2515,12 +2454,6 @@
       "key": "occurred_during"
     },
     {
-      "edge_type": "occurred_during",
-      "source": "dream_empty_house_tour",
-      "target": "lcw_providing_emotional_supp",
-      "key": "occurred_during_2"
-    },
-    {
       "edge_type": "contains",
       "prominence": "present",
       "source": "dream_empty_house_tour",
@@ -2570,12 +2503,6 @@
       "source": "dream_empty_house_tour",
       "target": "thm_transformation",
       "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_showing_up_uninvited",
-      "target": "lcw_providing_emotional_supp",
-      "key": "occurred_during"
     },
     {
       "edge_type": "contains",
@@ -2634,12 +2561,6 @@
       "source": "dream_showing_up_uninvited",
       "target": "thm_navigation_failure",
       "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_2026_04_24",
-      "target": "lcw_job_search_and_financial",
-      "key": "occurred_during"
     },
     {
       "edge_type": "features",
@@ -2769,12 +2690,6 @@
       "source": "dream_2026_04_24",
       "target": "thm_control_loss",
       "key": "expresses"
-    },
-    {
-      "edge_type": "occurred_during",
-      "source": "dream_2026_04_27",
-      "target": "lcw_job_search_and_financial",
-      "key": "occurred_during"
     },
     {
       "edge_type": "features",
@@ -2926,6 +2841,313 @@
       "source": "dream_2026_04_27",
       "target": "bs_dream_2026_04_27_0",
       "key": "includes_sensation"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_therapy_intake",
+      "target": "lcw_therapy_journey",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_shop_setup",
+      "target": "lcw_side_business",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_split_screen",
+      "target": "lcw_side_business",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_grief_processing",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_grief_processing",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_grief_processing",
+      "target": "thm_isolation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_grief_processing",
+      "target": "thm_escalating_obstacles",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 3,
+      "source": "lcw_therapy_journey",
+      "target": "thm_imposter_syndrome",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 3,
+      "source": "lcw_therapy_journey",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_therapy_journey",
+      "target": "thm_legitimacy_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_therapy_journey",
+      "target": "thm_professional_legitimacy_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_therapy_journey",
+      "target": "thm_isolation",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_therapy_journey",
+      "target": "thm_performance_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_therapy_journey",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_side_business",
+      "target": "thm_control_loss",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 2,
+      "source": "lcw_side_business",
+      "target": "thm_performance_anxiety",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_side_business",
+      "target": "thm_navigation_failure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_side_business",
+      "target": "thm_escalating_obstacles",
+      "key": "activates"
+    },
+    {
+      "edge_type": "activates",
+      "frequency": 1,
+      "source": "lcw_side_business",
+      "target": "thm_regression_under_pressure",
+      "key": "activates"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_therapy_intake",
+      "target": "set_waiting_room",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "features",
+      "role": "passive",
+      "source": "dream_therapy_intake",
+      "target": "char_therapist",
+      "key": "features"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "running out of time before they call my name",
+      "confidence": "stated",
+      "source": "dream_therapy_intake",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "can't answer honestly",
+      "confidence": "inferred",
+      "source": "dream_therapy_intake",
+      "target": "emo_shame",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_therapy_intake",
+      "target": "thm_imposter_syndrome",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_therapy_intake",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_therapy_intake",
+      "target": "thm_performance_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "distorted",
+      "source": "dream_shop_setup",
+      "target": "set_gathering_space",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "smiling like I'm almost ready",
+      "confidence": "stated",
+      "source": "dream_shop_setup",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "people walking past my half-set table",
+      "confidence": "inferred",
+      "source": "dream_shop_setup",
+      "target": "emo_dread",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_shop_setup",
+      "target": "thm_navigation_failure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_shop_setup",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_shop_setup",
+      "target": "thm_performance_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_shop_setup",
+      "target": "thm_escalating_obstacles",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "takes_place_in",
+      "distortion_level": "intact",
+      "source": "dream_split_screen",
+      "target": "set_workplace",
+      "key": "takes_place_in"
+    },
+    {
+      "edge_type": "contains",
+      "prominence": "central",
+      "source": "dream_split_screen",
+      "target": "sym_phone",
+      "key": "contains"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "audio crosswiring between calls",
+      "confidence": "stated",
+      "source": "dream_split_screen",
+      "target": "emo_anxiety",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "evoked",
+      "anchor": "muted myself in the wrong window twice",
+      "confidence": "stated",
+      "source": "dream_split_screen",
+      "target": "emo_frustration",
+      "key": "evoked"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "strong",
+      "source": "dream_split_screen",
+      "target": "thm_regression_under_pressure",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_split_screen",
+      "target": "thm_control_loss",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "expresses",
+      "strength": "moderate",
+      "source": "dream_split_screen",
+      "target": "thm_performance_anxiety",
+      "key": "expresses"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_on_the_phone_all_night",
+      "target": "lcw_grief_processing",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_27",
+      "target": "lcw_grief_processing",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_showing_up_uninvited",
+      "target": "lcw_therapy_journey",
+      "key": "occurred_during"
+    },
+    {
+      "edge_type": "occurred_during",
+      "source": "dream_2026_04_24",
+      "target": "lcw_therapy_journey",
+      "key": "occurred_during"
     }
   ]
 }
