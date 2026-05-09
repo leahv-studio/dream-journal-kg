@@ -1,0 +1,4362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dreama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Figtree:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css" />
+
+  <style>
+    /* ── Variables ─────────────────────────────────────────── */
+    :root {
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui:      'Figtree', sans-serif;
+      --font-prose:   'Lora', serif;
+
+      --color-bg:           #F2F0ED;
+      --color-surface:      #ECEAE6;
+      --color-surface-deep: #E4E1DC;
+      --color-border:       #D8D4CE;
+
+      --color-ink:          #2D2A35;
+      --color-ink-soft:     #6B6778;
+      --color-ink-faint:    #A8A4B5;
+
+      --color-purple:       #7C6B9E;
+      --color-purple-light: #B09EC9;
+      --color-purple-deep:  #4A3870;
+      --color-gold:         #C9973A;
+      --color-indigo:       #3D4E8A;
+
+      --color-positive:     #5A8A6A;
+      --color-negative:     #A05060;
+      --color-mixed:        #8A7A3A;
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      letter-spacing: 0.02em;
+      background:
+        radial-gradient(ellipse 75% 55% at 52% 4%,  rgba(176,158,201,0.22) 0%, transparent 68%),
+        radial-gradient(ellipse 50% 42% at 8%  18%,  rgba(61,78,138,0.11)  0%, transparent 58%),
+        radial-gradient(ellipse 60% 48% at 14% 78%,  rgba(74,56,112,0.19)  0%, transparent 62%),
+        radial-gradient(ellipse 65% 38% at 88% 85%,  rgba(201,151,58,0.15) 0%, transparent 64%),
+        var(--color-bg);
+      color: var(--color-ink);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ───────────────────────────────────────────────── */
+    .nav {
+      height: 56px;
+      flex-shrink: 0;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 22px;
+      color: var(--color-purple-deep);
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links li {
+      font-family: var(--font-ui);
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      padding-bottom: 3px;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+
+    .nav-links li:hover { color: var(--color-ink); }
+
+    .nav-links li.active {
+      color: var(--color-ink);
+      font-weight: 500;
+      border-bottom-color: var(--color-purple);
+    }
+
+    /* ── Main / Section shell ──────────────────────────────── */
+    .main {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .section {
+      display: none;
+      position: absolute;
+      inset: 0;
+    }
+
+    .section.active { display: flex; }
+
+    /* ── Dreams — layout ───────────────────────────────────── */
+    #section-dreams { flex-direction: row; }
+
+    /* ── Left panel ────────────────────────────────────────── */
+    .left-panel {
+      width: 280px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      gap: 12px;
+      overflow-y: auto;
+    }
+
+    .panel-card {
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .panel-card-label {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--color-ink-faint);
+      margin-bottom: 8px;
+    }
+
+    .panel-card-placeholder {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .panel-divider {
+      height: 1px;
+      background: var(--color-border);
+    }
+
+    .panel-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .panel-nav-list li {
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      padding: 9px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+    }
+
+    .panel-nav-list li:hover {
+      color: var(--color-purple);
+      background: var(--color-surface-deep);
+    }
+
+.panel-link {
+      font-size: 12px;
+      color: var(--color-purple);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .panel-link:hover { text-decoration: underline; }
+
+    .panel-empty-prompt {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      line-height: 1.5;
+    }
+
+    /* ── Left rail: ambient + selected states ──────────────── */
+
+    /* Query input (always visible) */
+    .rail-query-input-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 8px 10px;
+      background: rgba(236,234,230,0.6);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      transition: border-color 0.15s;
+    }
+    .rail-query-input-wrap:focus-within {
+      border-color: var(--color-purple-light);
+      background: rgba(236,234,230,0.9);
+    }
+    .rail-query-input-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+    }
+    .rail-search-icon {
+      font-size: 15px;
+      color: var(--color-ink-faint);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .rail-query-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 13px;
+      color: var(--color-ink);
+      font-family: var(--font-ui);
+      min-width: 0;
+      resize: none;
+      overflow: hidden;
+      overflow-wrap: break-word;
+      word-break: normal;
+      line-height: 1.5;
+      padding: 0;
+      min-height: 20px;
+    }
+    .rail-query-input::placeholder { color: var(--color-ink-faint); }
+    .rail-query-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .rail-query-counter {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      line-height: 1;
+      transition: color 0.15s;
+    }
+    .rail-query-counter.warn  { color: var(--color-gold); }
+    .rail-query-counter.limit { color: var(--color-negative); }
+    .rail-query-submit {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 15px;
+      padding: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: color 0.15s;
+    }
+    .rail-query-submit:hover:not(:disabled) { color: var(--color-purple); }
+    .rail-query-submit:disabled { opacity: 0.35; cursor: default; }
+
+    /* Query answer state */
+    .rail-query-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 14px;
+    }
+    .rail-query-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-faint);
+    }
+    .rail-query-question {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+    .rail-query-answer {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.65;
+    }
+    .rail-query-count {
+      margin-top: 12px;
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+    }
+
+    /* Section label */
+    .rail-section-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-faint);
+      padding: 0 2px;
+      margin: 12px 0 8px;
+    }
+
+    /* Ambient stat grid */
+    .ambient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+    .ambient-stat {
+      background: rgba(242,240,237,0.65);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .ambient-stat-value {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1;
+      letter-spacing: normal;
+    }
+    .ambient-stat-label {
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      margin-top: 3px;
+    }
+
+    /* Ambient insight rows */
+    .ambient-insight {
+      margin-top: 12px;
+      padding: 16px 0;
+      border-top: 1px solid var(--color-border);
+    }
+    .ambient-insight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-ink-faint);
+      margin-bottom: 5px;
+    }
+    .ambient-insight-value {
+      font-size: 13px;
+      color: var(--color-ink);
+      font-weight: 500;
+    }
+    .ambient-insight-sub {
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    /* Ambient invite */
+    .ambient-invite {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+      line-height: 1.55;
+      text-align: center;
+      padding: 20px 0 8px;
+    }
+
+    /* Selected: header */
+    .rail-selected-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2px;
+    }
+    .rail-node-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .rail-node-meta { flex: 1; min-width: 0; }
+    .rail-node-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-ink);
+      line-height: 1.35;
+      word-break: break-word;
+    }
+    .rail-node-type {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-faint);
+      margin-top: 2px;
+    }
+    .rail-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 13px;
+      padding: 2px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .rail-close-btn:hover { color: var(--color-ink); }
+
+    /* Selected: insight items */
+    .rail-insight {
+      padding: 9px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .rail-insight:last-of-type { border-bottom: none; }
+    .rail-insight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-ink-faint);
+      margin-bottom: 4px;
+    }
+    .rail-insight-value {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.4;
+    }
+    .rail-insight-value strong { color: var(--color-ink); font-weight: 500; }
+
+    /* Dream count (large) */
+    .rail-dream-count {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1;
+      letter-spacing: normal;
+    }
+    .rail-dream-label {
+      font-size: 12px;
+      color: var(--color-ink-soft);
+    }
+
+    /* Symbolic note block */
+    .rail-note {
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: rgba(236,234,230,0.55);
+      border-left: 2px solid var(--color-purple-light);
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .lcw-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── Dreams — main area ────────────────────────────────── */
+    .dreams-main {
+      flex: 1;
+      background: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .filter-row {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--color-border);
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
+
+    .chip {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 400;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .chip:hover {
+      border-color: var(--color-purple-light);
+      color: var(--color-purple);
+    }
+
+    .chip.active {
+      background: var(--color-purple);
+      border-color: var(--color-purple);
+      color: #fff;
+    }
+
+    .filter-reset-link {
+      font-size: 12px;
+      color: var(--color-ink-faint);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-left: 4px;
+      transition: color 0.15s;
+    }
+
+    .filter-reset-link:hover { color: var(--color-ink-soft); }
+
+    /* Date range */
+    .date-range-wrapper {
+      position: relative;
+      margin-left: auto;
+    }
+
+    .chip-date {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      border: 1px dashed var(--color-border);
+      padding: 5px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+      user-select: none;
+    }
+
+    .chip-date:hover {
+      color: var(--color-ink-soft);
+      border-color: var(--color-ink-faint);
+    }
+
+    .date-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      overflow: hidden;
+      z-index: 30;
+      min-width: 120px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+
+    .date-option {
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .date-option:hover { background: var(--color-surface-deep); color: var(--color-ink); }
+    .date-option.active { color: var(--color-purple); font-weight: 500; }
+
+    /* ── Graph area ────────────────────────────────────────── */
+    .graph-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #graph-container {
+      position: absolute;
+      inset: 0;
+    }
+
+    .graph-empty {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 18px;
+      color: var(--color-ink-faint);
+      letter-spacing: normal;
+    }
+
+    /* Legend */
+    .graph-legend {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: rgba(242, 240, 237, 0.92);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+    }
+
+    .legend-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      margin-bottom: 5px;
+    }
+
+    .legend-row:last-child { margin-bottom: 0; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Inspect drawer */
+    .inspect-drawer {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100%;
+      background: var(--color-surface);
+      border-left: 1px solid var(--color-border);
+      transform: translateX(100%);
+      transition: transform 0.22s ease;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .inspect-drawer.open { transform: translateX(0); }
+
+    .inspect-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 18px 16px 12px;
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      background: var(--color-surface);
+    }
+
+    .inspect-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1.2;
+      word-break: break-word;
+      letter-spacing: normal;
+    }
+
+    .inspect-type {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .inspect-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-ink-faint);
+      font-size: 16px;
+      padding: 2px 4px;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    .inspect-close:hover { color: var(--color-ink); }
+
+    .inspect-body { padding: 16px; }
+
+    .inspect-row {
+      display: flex;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--color-border);
+      align-items: baseline;
+    }
+
+    .inspect-row:last-child { border-bottom: none; }
+
+    .inspect-key {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      text-transform: capitalize;
+      min-width: 90px;
+      flex-shrink: 0;
+    }
+
+    .inspect-val {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      word-break: break-word;
+    }
+
+    .inspect-narrative {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .narrative-collapsible .narrative-body {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .narrative-collapsible.expanded .narrative-body {
+      display: block;
+      overflow: visible;
+    }
+    .narrative-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      color: var(--color-purple);
+      padding: 5px 0 0;
+      display: block;
+      letter-spacing: 0.01em;
+    }
+    .narrative-toggle:hover { text-decoration: underline; }
+
+    .inspect-empty {
+      font-size: 13px;
+      color: var(--color-ink-faint);
+      font-style: italic;
+    }
+
+    /* Tooltip */
+    .graph-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: var(--color-ink);
+      color: #F2F0ED;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 100;
+      white-space: nowrap;
+    }
+
+    /* ── Shared placeholder box ────────────────────────────── */
+    .placeholder-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed var(--color-border);
+      border-radius: 12px;
+      color: var(--color-ink-faint);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 20px;
+      letter-spacing: normal;
+    }
+
+    /* ── Add New ───────────────────────────────────────────── */
+    #section-add { flex-direction: column; }
+
+    /* ── Add New: waking life tooltip trigger ──────────────────── */
+    #add-ctx-trigger {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      padding: 2px 0 40px;
+      position: relative;
+    }
+    .add-ctx-trigger-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      color: rgba(201,151,58,0.65);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: underline;
+      text-decoration-style: dashed;
+      text-decoration-color: rgba(201,151,58,0.45);
+      text-decoration-thickness: 0.5px;
+      user-select: none;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .add-ctx-trigger-btn i {
+      font-size: 12px;
+      line-height: 1;
+      text-decoration: none;
+    }
+    #add-ctx-tooltip {
+      display: none;
+      position: absolute;
+      top: calc(100% - 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(248,246,242,0.97);
+      border: 0.5px solid rgba(201,151,58,0.28);
+      border-radius: 10px;
+      padding: 12px 16px;
+      min-width: 180px;
+      max-width: 280px;
+      z-index: 100;
+    }
+    #add-ctx-tooltip.open { display: block; }
+    .add-ctx-tooltip-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(201,151,58,0.65);
+      margin-bottom: 8px;
+    }
+    .add-ctx-tooltip-item {
+      font-family: var(--font-prose);
+      font-style: italic;
+      font-size: 13px;
+      padding: 6px 0;
+      line-height: 1.4;
+    }
+    .add-ctx-tooltip-item + .add-ctx-tooltip-item {
+      border-top: 0.5px solid rgba(201,151,58,0.2);
+    }
+    .add-ctx-tooltip-item.fg      { color: #8A6820; }
+    .add-ctx-tooltip-item.bg      { color: #B08840; }
+    .add-ctx-tooltip-item.dormant { color: #C9A96E; }
+
+    /* ── Global footer ─────────────────────────────────────── */
+    .app-footer {
+      flex-shrink: 0;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.45);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid rgba(176,158,201,0.18);
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 17px;
+      letter-spacing: normal;
+      color: var(--color-ink-soft);
+    }
+
+    .footer-sub {
+      font-size: 14px;
+      color: var(--color-ink-soft);
+    }
+
+    .footer-link {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .footer-link:hover { text-decoration: underline; }
+
+    #add-scroll { flex: 1; overflow-y: auto; }
+
+    #add-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 24px 56px;
+    }
+
+    .add-view { display: none; flex-direction: column; gap: 14px; }
+    .add-view.active { display: flex; }
+
+    #add-tell-me {
+      font-family: var(--font-prose);
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--color-purple-deep);
+      text-align: center;
+      line-height: 1;
+    }
+
+    #add-empty-state {
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 32px 0 8px;
+    }
+
+    .add-wordmark {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 48px;
+      color: var(--color-purple-deep);
+      letter-spacing: 0.04em;
+    }
+
+    #add-conversation {
+      background: rgba(255,255,255,0.20);
+      border-radius: 10px;
+      padding: 16px;
+      min-height: 200px;
+      max-height: 380px;
+      overflow-y: auto;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: -8px;
+    }
+
+    .add-msg {
+      padding: 10px 14px;
+      border-radius: 8px;
+      max-width: 88%;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .add-msg.user {
+      background: var(--color-purple-deep);
+      color: rgba(242,238,255,0.92);
+      align-self: flex-end;
+    }
+
+    .add-msg.assistant {
+      background: rgba(176,158,201,0.14);
+      color: var(--color-ink);
+      font-family: var(--font-prose);
+      align-self: flex-start;
+    }
+
+    .add-msg.streaming { opacity: 0.7; }
+
+    .add-input-row { display: flex; flex-direction: column; gap: 8px; }
+
+    .add-input-row textarea {
+      flex: 1;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(176,158,201,0.35);
+      color: var(--color-ink);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      line-height: 1.5;
+      transition: border-color 0.15s;
+      resize: none;
+      overflow-y: auto;
+      max-height: 300px;
+    }
+
+    .add-input-row textarea:focus { outline: none; border-color: var(--color-purple); }
+
+    .add-btn-send {
+      background: var(--color-purple);
+      border: none;
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+      align-self: flex-end;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+.add-btn-send:hover:not(:disabled) { background: var(--color-purple-deep); }
+    .add-btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .add-meta-row { display: flex; align-items: center; }
+
+    .add-date-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--color-ink-soft);
+    }
+
+    .add-date-label input[type="date"] {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink);
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-family: var(--font-ui);
+    }
+
+    .add-date-label input[type="date"]:focus { outline: none; border-color: var(--color-purple); }
+
+    .add-btn-save {
+      background: transparent;
+      border: 1px solid var(--color-purple);
+      color: var(--color-purple);
+      padding: 11px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.15s;
+    }
+
+    .add-btn-save:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+    .add-btn-save:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .add-extract-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .add-extract-divider {
+      border: none;
+      border-top: 1px solid var(--color-border);
+      margin: 0;
+    }
+
+    .add-extract-prompt {
+      font-family: var(--font-prose);
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      text-align: center;
+    }
+
+    .add-loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 24px;
+    }
+
+    .add-loading-cloud {
+      animation: cloud-float 3.6s ease-in-out infinite;
+      opacity: 0.92;
+    }
+
+    @keyframes cloud-float {
+      0%   { transform: translateY(0);    opacity: 0.92; }
+      50%  { transform: translateY(-14px); opacity: 0.72; }
+      100% { transform: translateY(0);    opacity: 0.92; }
+    }
+
+    .add-loading-phrase {
+      font-family: var(--font-prose);
+      font-style: italic;
+      font-size: 14px;
+      color: var(--color-ink-soft);
+      transition: opacity 0.6s ease;
+      min-height: 1.4em;
+      text-align: center;
+    }
+
+    .add-loading-phrase.fade { opacity: 0; }
+
+    .add-review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .add-review-title {
+      font-family: var(--font-prose);
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--color-purple-deep);
+      letter-spacing: normal;
+    }
+
+    .add-review-date { font-size: 13px; color: var(--color-ink-soft); }
+
+    .add-title-wrap {
+      padding: 0;
+    }
+
+    .add-title-label {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-soft);
+      margin-bottom: 8px;
+    }
+
+    .add-title-input {
+      width: 100%;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink);
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: var(--font-display);
+      font-style: italic;
+      letter-spacing: normal;
+      transition: border-color 0.15s;
+    }
+
+    .add-title-input:focus { outline: none; border-color: var(--color-purple); font-style: normal; }
+    .add-title-hint { font-size: 11px; color: var(--color-ink-soft); margin-top: 6px; }
+
+    .add-narrative {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--color-ink);
+      font-style: italic;
+    }
+
+    .add-meta-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .add-meta-chip {
+      font-size: 12px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .add-meta-chip strong { color: var(--color-ink); }
+
+    .add-review-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .add-section-title {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--color-ink-soft);
+    }
+
+    .add-item-row { display: flex; flex-wrap: wrap; gap: 7px; }
+
+    .add-ritem {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: var(--font-ui);
+    }
+
+    .ritem-character,
+    .ritem-symbol,
+    .ritem-setting,
+    .ritem-emotion,
+    .ritem-theme,
+    .ritem-bodysensation { border-color: var(--color-border); background: rgba(255,255,255,0.45); }
+
+    .add-ritem .iname   { color: var(--color-ink); }
+    .add-ritem .idetail { color: var(--color-ink-soft); font-size: 12px; }
+
+    .add-ritem .xbtn {
+      background: none;
+      border: none;
+      color: var(--color-ink-faint);
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 2px;
+      margin-left: 2px;
+    }
+
+    .add-ritem .xbtn:hover { color: var(--color-negative); }
+
+    .add-badge {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-stated,
+    .badge-inferred,
+    .badge-ambiguous,
+    .badge-strong,
+    .badge-moderate,
+    .badge-weak { background: var(--color-purple-light); color: var(--color-purple-deep); }
+
+.add-review-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      padding-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .add-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .add-btn-ghost {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .add-btn-ghost:hover:not(:disabled) { border-color: var(--color-negative); color: var(--color-negative); }
+
+    .add-btn-outline {
+      background: transparent;
+      border: 1px solid var(--color-purple);
+      color: var(--color-purple);
+    }
+
+    .add-btn-outline:hover:not(:disabled) { background: rgba(124,107,158,0.08); }
+
+    .add-btn-primary { background: var(--color-purple); color: #fff; }
+    .add-btn-primary:hover:not(:disabled) { background: var(--color-purple-deep); }
+
+    .add-success-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      gap: 14px;
+      text-align: center;
+    }
+
+    .add-success-cloud { opacity: 0.88; }
+
+    .add-success-title {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--color-ink);
+      letter-spacing: normal;
+    }
+
+    .add-success-detail { font-size: 13px; color: var(--color-ink-soft); }
+
+    .add-btn-view-graph {
+      margin-top: 8px;
+      background: var(--color-purple);
+      color: #fff;
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+    }
+
+    .add-btn-view-graph:hover { background: var(--color-purple-deep); }
+
+    .add-btn-another {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+
+    .add-btn-another:hover { border-color: var(--color-ink-faint); color: var(--color-ink); }
+
+    /* ── Waking Life ───────────────────────────────────────── */
+    #section-waking { flex-direction: row; }
+
+    .waking-header {
+      font-family: var(--font-prose);
+      font-weight: 300;
+      font-size: 28px;
+      color: #5C3A08;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+
+    /* Left rail */
+    .wl-rail {
+      width: 280px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 32px 24px 28px;
+      overflow-y: auto;
+    }
+
+    .wl-rail .wl-add-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Right column */
+    .wl-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 36px 48px 60px;
+    }
+
+    .wl-body-inner {
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .wl-add-btn {
+      font-size: 13px;
+      color: #6B4410;
+      background: none;
+      border: 1px solid rgba(201,151,58,0.55);
+      border-radius: 8px;
+      padding: 7px 14px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .wl-add-btn:hover:not(:disabled) { background: rgba(201,151,58,0.07); }
+    .wl-add-btn:disabled {
+      color: var(--color-ink-faint);
+      border-color: var(--color-border);
+      cursor: default;
+    }
+    .wl-limit-msg {
+      font-size: 11px;
+      color: var(--color-ink-faint);
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 6px;
+      display: none;
+    }
+    .wl-limit-msg.visible { display: block; }
+
+    /* Forms */
+    .wl-form {
+      display: none;
+      background:
+        radial-gradient(ellipse 120% 60% at 70% -5%, rgba(201,151,58,0.10) 0%, transparent 60%),
+        rgba(252, 250, 248, 0.88);
+      border: 1px solid rgba(201,151,58,0.28);
+      border-radius: 12px;
+      padding: 22px 24px;
+      flex-direction: column;
+      gap: 14px;
+      backdrop-filter: blur(12px) saturate(1.2);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.80),
+        0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    .wl-form.open { display: flex; }
+
+    .wl-form-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: #5C3A08;
+      letter-spacing: normal;
+    }
+
+    .wl-field { display: flex; flex-direction: column; gap: 5px; }
+
+    .wl-field label {
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-soft);
+    }
+
+    .wl-field input,
+    .wl-field textarea,
+    .wl-field select {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--color-ink);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(216, 212, 206, 0.75);
+      border-radius: 8px;
+      padding: 9px 12px;
+      width: 100%;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .wl-field textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+    .wl-field input:focus,
+    .wl-field textarea:focus,
+    .wl-field select:focus { outline: none; border-color: rgba(201,151,58,0.65); }
+
+    .wl-form-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      padding-top: 4px;
+    }
+
+    .wl-btn {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.15s, background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .wl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .wl-btn-cancel {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+    }
+
+    .wl-btn-cancel:hover { border-color: var(--color-ink-soft); color: var(--color-ink); }
+    .wl-btn-save { background: #6B4410; color: #fff; }
+    .wl-btn-save:hover:not(:disabled) { background: #4A2E05; }
+
+    /* Status groups */
+    .wl-group { display: flex; flex-direction: column; gap: 10px; }
+
+    .wl-group-header { display: flex; align-items: center; gap: 8px; }
+
+    .wl-group-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink);
+    }
+
+    .wl-group-count {
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      font-weight: 400;
+    }
+
+    .wl-group-empty {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      font-style: italic;
+    }
+
+    /* Chip cards */
+    .wl-chip-card {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(216, 212, 206, 0.55);
+      backdrop-filter: blur(10px) saturate(1.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .wl-chip-card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+
+    .wl-chip-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 18px 10px;
+      cursor: default;
+      user-select: none;
+    }
+
+    .wl-chip-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .wl-chip-label {
+      font-size: 15px;
+      color: var(--color-ink);
+      font-weight: 500;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .wl-chip-date {
+      font-size: 11px;
+      color: var(--color-ink-soft);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .wl-status-badge {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0;
+      border-radius: 0;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+    }
+
+    .wl-status-badge:hover { opacity: 0.6; }
+
+    .wl-status-badge.fg       { color: #5C3A08; }
+    .wl-status-badge.bg       { color: #6E4A14; }
+    .wl-status-badge.dormant  { color: #7E5C1E; }
+    .wl-status-badge.archived { color: #8A6820; }
+
+    .wl-chip-body {
+      display: flex;
+      padding: 0 18px 16px;
+      border-top: none;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wl-chip-desc {
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      line-height: 1.55;
+    }
+    .wl-chip-desc.empty { font-style: italic; }
+
+    .wl-chip-edit-btn {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-ink-soft);
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: var(--font-ui);
+      cursor: pointer;
+      align-self: flex-start;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .wl-chip-edit-btn:hover { border-color: rgba(201,151,58,0.6); color: #6B4410; }
+
+    /* Archive drawer */
+    .wl-archive-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      padding: 2px 0;
+    }
+
+    .wl-archive-label {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink-soft);
+    }
+
+    .wl-archive-count { font-size: 12px; color: var(--color-ink-soft); font-weight: 400; }
+
+    .wl-archive-icon {
+      font-size: 10px;
+      color: var(--color-ink-soft);
+      margin-left: 2px;
+      transition: transform 0.2s;
+    }
+
+    .wl-archive-open > .wl-archive-toggle .wl-archive-icon { transform: rotate(180deg); }
+
+    .wl-archive-body { display: none; flex-direction: column; gap: 8px; padding-top: 4px; }
+    .wl-archive-open > .wl-archive-body { display: flex; }
+
+    /* ── Atmospheric status palette ── */
+
+    /* Foreground — clean warm surface, gold border + glow carry the hierarchy */
+    .wl-chip-card:has(.wl-status-badge.fg) {
+      background: rgba(252, 250, 248, 0.85);
+      border-color: rgba(201,151,58,0.38);
+      box-shadow: 0 4px 20px rgba(201,151,58,0.08);
+    }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-label { color: #5C3A08; }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.fg) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Background — warm cream surface, present but quieter */
+    .wl-chip-card:has(.wl-status-badge.bg) {
+      background: rgba(248, 246, 241, 0.75);
+      border-color: rgba(201,151,58,0.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+    }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-label { color: #6E4A14; }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.bg) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Dormant — paused, golden and receding */
+    .wl-chip-card:has(.wl-status-badge.dormant) {
+      background: rgba(245, 242, 237, 0.45);
+      border-color: rgba(201,151,58,0.14);
+    }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-label { color: #7E5C1E; }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.dormant) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* Archived — nearly dissolved, just a whisper of warmth */
+    .wl-chip-card:has(.wl-status-badge.archived) {
+      background: rgba(242, 240, 235, 0.26);
+      border-color: rgba(201,151,58,0.10);
+    }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-label { color: #8A6820; }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-date  { color: var(--color-ink-soft); }
+    .wl-chip-card:has(.wl-status-badge.archived) .wl-chip-desc  { color: var(--color-ink-soft); }
+
+    /* ── Status dropdown menu ── */
+    #wl-status-menu {
+      position: fixed;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 4px;
+      min-width: 170px;
+      z-index: 9999;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.13), 0 1px 4px rgba(0,0,0,0.06);
+      display: none;
+    }
+    #wl-status-menu.open { display: block; }
+
+    .wl-smenu-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-ink-soft);
+      transition: background 0.1s;
+      user-select: none;
+    }
+    .wl-smenu-item:hover { background: var(--color-surface-deep); color: var(--color-ink); }
+    .wl-smenu-item.active { color: var(--color-ink); font-weight: 500; }
+    .wl-smenu-item.active::after { content: '✓'; margin-left: auto; font-size: 11px; color: var(--color-ink-faint); }
+
+    .wl-smenu-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .wl-smenu-dot.fg       { background: #5C3A08; }
+    .wl-smenu-dot.bg       { background: #6E4A14; }
+    .wl-smenu-dot.dormant  { background: #7E5C1E; }
+    .wl-smenu-dot.archived { background: #8A6820; }
+
+    .wl-status-badge { align-self: flex-start; flex-shrink: 0; }
+    .wl-status-badge::after { content: ' ▾'; font-size: 8px; }
+
+    #wl-groups { display: flex; flex-direction: column; gap: 24px; max-width: 600px; }
+
+    /* ── Rail content ── */
+    .wl-subtitle {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--color-ink-soft);
+      margin: 0;
+      max-width: 580px;
+    }
+
+    .wl-legend {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+      max-width: 500px;
+    }
+    .wl-legend.open { display: flex; }
+
+    .wl-legend-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-family: var(--font-ui);
+    }
+
+    .wl-legend-cloud {
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+    }
+
+    .wl-legend-sun {
+      font-size: 16px;
+      line-height: 1;
+    }
+    .wl-legend-sun.fg       { color: #5C3A08; }
+    .wl-legend-sun.bg       { color: #6E4A14; }
+    .wl-legend-sun.dormant  { color: #7E5C1E; }
+    .wl-legend-sun.archived { color: #8A6820; }
+
+    .wl-legend-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .wl-legend-term {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-ink);
+    }
+
+    .wl-legend-def {
+      font-size: 12px;
+      line-height: 1.45;
+      color: var(--color-ink);
+    }
+
+    .wl-legend-section { display: flex; flex-direction: column; gap: 12px; }
+
+    .wl-legend-toggle {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      cursor: pointer;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.15s;
+    }
+    .wl-legend-toggle:hover { color: var(--color-ink); }
+
+    .wl-legend-chevron {
+      font-size: 10px;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+    .wl-legend-toggle[aria-expanded="true"] .wl-legend-chevron { transform: rotate(180deg); }
+
+    /* ── KG mobile elements (hidden on desktop) ─────────────── */
+    .kg-mobile-search { display: none; }
+    .kg-mobile-stats  { display: none; }
+    .inspect-drag-handle { display: none; }
+
+    .kg-mobile-stats::-webkit-scrollbar { display: none; }
+
+    .kg-stat-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+      background: rgba(242,240,237,0.75);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 7px 14px;
+      min-width: 58px;
+    }
+
+    .kg-stat-num {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--color-ink);
+      line-height: 1;
+      letter-spacing: normal;
+    }
+
+    .kg-stat-lbl {
+      font-size: 10px;
+      color: var(--color-ink-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .kg-stat-insight { min-width: 80px; }
+
+    .kg-stat-insight-val {
+      font-size: 11px;
+      color: var(--color-ink);
+      font-weight: 500;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 110px;
+    }
+
+    /* ── Mobile ─────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .nav { padding: 0 16px; }
+      .nav-links { gap: 20px; }
+
+      #section-waking {
+        flex-direction: column;
+        overflow-y: auto;
+      }
+
+      .wl-rail {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+        padding: 24px 20px 20px;
+        overflow-y: visible;
+        flex-shrink: 0;
+      }
+
+      .wl-rail .wl-add-btn { margin-top: 0; }
+
+      .wl-body {
+        padding: 20px 16px 40px;
+        overflow-y: visible;
+        flex-shrink: 0;
+      }
+
+      .wl-body-inner { max-width: 100%; }
+
+      .wl-subtitle,
+      .wl-legend { max-width: 100%; }
+
+      #wl-groups { max-width: 100%; }
+
+      .wl-chip-header { padding: 14px 14px 8px; }
+      .wl-chip-body   { padding: 0 14px 14px; }
+
+      /* ── KG screen ── */
+      #section-dreams { flex-direction: column; }
+      .left-panel { display: none; }
+
+      .kg-mobile-search {
+        display: flex;
+        padding: 10px 16px;
+        border-bottom: 1px solid var(--color-border);
+        flex-shrink: 0;
+        background: var(--color-bg);
+      }
+
+      .filter-row {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 10px 16px;
+      }
+      .filter-row::-webkit-scrollbar { display: none; }
+
+      .kg-mobile-stats {
+        display: flex;
+        gap: 8px;
+        padding: 10px 16px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-top: 1px solid var(--color-border);
+        flex-shrink: 0;
+        background: var(--color-bg);
+      }
+
+      /* Inspect drawer → bottom sheet */
+      .inspect-drawer {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 55%;
+        border-left: none;
+        border-top: 1px solid var(--color-border);
+        border-radius: 16px 16px 0 0;
+        transform: translateY(100%);
+        transition: transform 0.25s ease;
+      }
+      .inspect-drawer.open { transform: translateY(0); }
+
+      .inspect-drag-handle {
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: var(--color-border);
+        border-radius: 2px;
+        margin: 10px auto 4px;
+        flex-shrink: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ─────────────────────────────────────────────── -->
+  <nav class="nav">
+    <a class="nav-brand" href="#" id="nav-brand-link">
+      <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                 C3.5 8, 7.5 5, 11 7.5
+                 C12.5 4, 16.5 2.5, 20.5 5.5
+                 C22 3, 26.5 3.5, 27 8.5
+                 C29.5 9, 29.5 14.5, 26.5 15.5
+                 C24 18, 10.5 18, 7 18 Z"
+          stroke="#4A3870" stroke-width="1.4" fill="none"
+          stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-wordmark">dreama</span>
+    </a>
+
+    <ul class="nav-links">
+      <li class="active" data-section="dreams">Dreams</li>
+      <li data-section="add">Add New</li>
+      <li data-section="waking">Waking Life</li>
+    </ul>
+  </nav>
+
+  <!-- ── Main ────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Dreams -->
+    <section id="section-dreams" class="section active">
+
+      <!-- Left rail -->
+      <aside class="left-panel">
+
+        <!-- Always-visible query input -->
+        <div class="rail-query-input-wrap">
+          <div class="rail-query-input-row">
+            <span class="rail-search-icon">⌕</span>
+            <textarea class="rail-query-input" id="rail-query-input"
+                      placeholder="Ask about your dreams…" autocomplete="off"
+                      maxlength="120" rows="1"
+                      aria-label="Ask about your dreams, 120 character limit"
+                      aria-describedby="rail-query-counter"></textarea>
+          </div>
+          <div class="rail-query-footer">
+            <span class="rail-query-counter" id="rail-query-counter">0 / 120</span>
+            <button class="rail-query-submit" id="rail-query-submit" title="Ask (Enter)">↵</button>
+          </div>
+        </div>
+
+        <!-- Ambient state: graph at a glance -->
+        <div id="rail-ambient">
+          <div class="rail-section-label">Your graph</div>
+
+          <div class="ambient-grid">
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-dreams">—</div>
+              <div class="ambient-stat-label">dreams</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-symbols">—</div>
+              <div class="ambient-stat-label">symbols</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-themes">—</div>
+              <div class="ambient-stat-label">themes</div>
+            </div>
+            <div class="ambient-stat">
+              <div class="ambient-stat-value" id="amb-chars">—</div>
+              <div class="ambient-stat-label">characters</div>
+            </div>
+          </div>
+
+          <div class="ambient-insight" id="amb-hub-insight">
+            <div class="ambient-insight-label">Most connected</div>
+            <div class="ambient-insight-value" id="amb-hub-name">—</div>
+            <div class="ambient-insight-sub" id="amb-hub-sub"></div>
+          </div>
+
+          <div class="ambient-insight" id="amb-oldest-insight">
+            <div class="ambient-insight-label">Earliest dream on record</div>
+            <div class="ambient-insight-value" id="amb-oldest-date">—</div>
+            <div class="ambient-insight-sub" id="amb-oldest-sub"></div>
+          </div>
+
+          <p class="ambient-invite">Click any node to surface patterns.</p>
+        </div>
+
+        <!-- Selected state: non-Dream node clicked -->
+        <div id="rail-selected" style="display:none">
+          <div class="rail-selected-header">
+            <span class="rail-node-dot" id="rail-node-dot"></span>
+            <div class="rail-node-meta">
+              <div class="rail-node-name" id="rail-node-name"></div>
+              <div class="rail-node-type" id="rail-node-type"></div>
+            </div>
+            <button class="rail-close-btn" id="rail-close" aria-label="Clear selection">✕</button>
+          </div>
+          <div id="rail-insights"></div>
+        </div>
+
+        <!-- Query state: NL answer -->
+        <div id="rail-query" style="display:none">
+          <div class="rail-query-header">
+            <div class="rail-query-label">Graph answer</div>
+            <button class="rail-close-btn" id="rail-query-close" aria-label="Clear answer">✕</button>
+          </div>
+          <div class="rail-query-question" id="rail-query-question"></div>
+          <div class="rail-query-answer" id="rail-query-answer"></div>
+          <div class="rail-query-count" id="rail-query-count"></div>
+        </div>
+
+      </aside>
+
+      <!-- Main content -->
+      <div class="dreams-main">
+
+        <!-- Mobile-only: search bar at top -->
+        <div class="kg-mobile-search">
+          <div class="rail-query-input-wrap" style="width:100%">
+            <div class="rail-query-input-row">
+              <span class="rail-search-icon">⌕</span>
+              <textarea class="rail-query-input" id="kg-mob-input"
+                        placeholder="Ask about your dreams…" autocomplete="off"
+                        maxlength="120" rows="1"
+                        aria-label="Ask about your dreams, 120 character limit"></textarea>
+            </div>
+            <div class="rail-query-footer">
+              <span class="rail-query-counter" id="kg-mob-counter">0 / 120</span>
+              <button class="rail-query-submit" id="kg-mob-submit" title="Ask (Enter)">↵</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <button class="chip active" data-filter="dreams">Dreams</button>
+          <button class="chip" data-filter="themes">Themes</button>
+          <button class="chip" data-filter="symbols">Symbols</button>
+          <button class="chip" data-filter="life-context">Life Context</button>
+          <button class="chip" data-filter="recurring">Recurring</button>
+          <a href="#" id="filter-reset" class="filter-reset-link" style="display:none">Reset</a>
+          <div class="date-range-wrapper">
+            <span class="chip-date" id="date-chip">All time ▾</span>
+            <div class="date-dropdown" id="date-dropdown" style="display:none">
+              <div class="date-option active" data-range="all">All time</div>
+              <div class="date-option" data-range="30d">30 days</div>
+              <div class="date-option" data-range="90d">90 days</div>
+              <div class="date-option" data-range="6m">6 months</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="graph-area">
+          <div id="graph-container"></div>
+          <div class="graph-legend" id="graph-legend" style="display:none"></div>
+          <div class="inspect-drawer" id="inspect-drawer">
+            <div class="inspect-drag-handle"></div>
+            <div class="inspect-header">
+              <div>
+                <div class="inspect-title" id="inspect-title"></div>
+                <div class="inspect-type" id="inspect-type"></div>
+              </div>
+              <button class="inspect-close" id="inspect-close" aria-label="Close">✕</button>
+            </div>
+            <div class="inspect-body" id="inspect-body"></div>
+          </div>
+        </div>
+
+        <!-- Mobile-only: stats bar at bottom -->
+        <div class="kg-mobile-stats">
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-dreams">—</span><span class="kg-stat-lbl">dreams</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-symbols">—</span><span class="kg-stat-lbl">symbols</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-themes">—</span><span class="kg-stat-lbl">themes</span></div>
+          <div class="kg-stat-pill"><span class="kg-stat-num" id="mob-chars">—</span><span class="kg-stat-lbl">characters</span></div>
+          <div class="kg-stat-pill kg-stat-insight" id="mob-hub-pill">
+            <span class="kg-stat-lbl">hub</span>
+            <span class="kg-stat-insight-val" id="mob-hub">—</span>
+          </div>
+          <div class="kg-stat-pill kg-stat-insight" id="mob-oldest-pill">
+            <span class="kg-stat-lbl">oldest</span>
+            <span class="kg-stat-insight-val" id="mob-oldest">—</span>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Add New -->
+    <section id="section-add" class="section">
+
+      <!-- Scrollable content -->
+      <div id="add-scroll">
+        <div id="add-content">
+
+          <!-- View: Chat -->
+          <div id="add-chat-view" class="add-view active">
+
+            <!-- Empty state: cloud + wordmark (hidden once messages appear) -->
+            <div id="add-empty-state" style="display:flex">
+              <svg width="72" height="54" viewBox="0 0 72 54" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M17 44 C8.5 44, 3.5 35, 11 30
+                         C8.5 20, 18 13, 26.5 18
+                         C30 11, 40 7, 48 13
+                         C52 8, 63 9, 63.5 20
+                         C70 21, 71 34, 64 37.5
+                         C58.5 42, 24.5 44, 17 44 Z"
+                  stroke="#4A3870" stroke-width="2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+
+            <div id="add-tell-me">tell me</div>
+
+            <div id="add-ctx-trigger">
+              <button class="add-ctx-trigger-btn" id="add-ctx-trigger-btn" type="button">
+                <i class="ti ti-sun"></i>
+                <span>waking life</span>
+              </button>
+              <div id="add-ctx-tooltip">
+                <div class="add-ctx-tooltip-eyebrow">right now</div>
+                <div id="add-ctx-tooltip-items"></div>
+              </div>
+            </div>
+
+            <div class="add-meta-row">
+              <label class="add-date-label">
+                Dream date
+                <input type="date" id="add-dream-date">
+              </label>
+            </div>
+
+            <!-- Conversation (hidden until first message) -->
+            <div id="add-conversation" style="display:none"></div>
+
+            <div class="add-input-row">
+              <textarea id="add-message-input" rows="4"
+                        placeholder="Click &quot;Play demo chat&quot; to see a scripted entry, or type and press Enter to trigger it…" style="color:var(--color-ink-faint)"></textarea>
+              <button class="add-btn-send" id="add-send-btn" aria-label="Play demo chat" style="width:auto;padding:0 18px;font-size:13px;font-family:var(--font-ui);font-weight:500;letter-spacing:0.03em;gap:6px;display:flex;align-items:center;">
+                <svg width="16" height="12" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
+                  <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                           C3.5 8, 7.5 5, 11 7.5
+                           C12.5 4, 16.5 2.5, 20.5 5.5
+                           C22 3, 26.5 3.5, 27 8.5
+                           C29.5 9, 29.5 14.5, 26.5 15.5
+                           C24 18, 10.5 18, 7 18 Z"
+                    stroke="#fff" stroke-width="1.4" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Play demo chat
+              </button>
+            </div>
+
+            <div class="add-extract-wrap" id="add-extract-wrap" style="display:none">
+              <hr class="add-extract-divider">
+              <p class="add-extract-prompt">Ready to save this dream?</p>
+              <button class="add-btn-save" id="add-save-btn" disabled>
+                Extract & review dream
+              </button>
+            </div>
+          </div>
+
+          <!-- View: Loading -->
+          <div id="add-loading-view" class="add-view">
+            <div class="add-loading-wrap">
+              <svg class="add-loading-cloud" width="64" height="48" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                         C3.5 8, 7.5 5, 11 7.5
+                         C12.5 4, 16.5 2.5, 20.5 5.5
+                         C22 3, 26.5 3.5, 27 8.5
+                         C29.5 9, 29.5 14.5, 26.5 15.5
+                         C24 18, 10.5 18, 7 18 Z"
+                  stroke="var(--color-purple)" stroke-width="1.2" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="add-loading-phrase" id="add-loading-phrase">finding the threads...</div>
+            </div>
+          </div>
+
+          <!-- View: Review -->
+          <div id="add-review-view" class="add-view">
+            <div class="add-review-header">
+              <div class="add-review-title">what surfaced</div>
+              <span class="add-review-date" id="add-review-date-display"></span>
+            </div>
+
+            <div class="add-title-wrap">
+              <div class="add-title-label">Dream title</div>
+              <input type="text" class="add-title-input" id="add-title-input"
+                     placeholder="Give this dream a title…">
+              <div class="add-title-hint">Suggested by AI — edit freely or leave as-is</div>
+            </div>
+
+            <div class="add-narrative" id="add-review-narrative"></div>
+
+            <div class="add-meta-chips" id="add-review-meta"></div>
+
+            <div id="add-review-sections"></div>
+
+<div class="add-review-actions">
+              <button class="add-btn add-btn-ghost"    id="add-discard-btn">Discard</button>
+              <button class="add-btn add-btn-outline"  id="add-back-btn">Back to chat</button>
+              <button class="add-btn add-btn-primary"  id="add-confirm-btn">Confirm &amp; Save to Graph</button>
+            </div>
+          </div>
+
+          <!-- View: Success -->
+          <div id="add-success-view" class="add-view">
+            <div class="add-success-wrap">
+              <svg class="add-success-cloud" width="80" height="60" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
+                         C3.5 8, 7.5 5, 11 7.5
+                         C12.5 4, 16.5 2.5, 20.5 5.5
+                         C22 3, 26.5 3.5, 27 8.5
+                         C29.5 9, 29.5 14.5, 26.5 15.5
+                         C24 18, 10.5 18, 7 18 Z"
+                  stroke="var(--color-purple)" stroke-width="1.2" fill="rgba(124,107,158,0.10)"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="add-success-title">Dream saved to graph</div>
+              <div class="add-success-detail" id="add-success-detail"></div>
+              <button class="add-btn-view-graph" id="add-view-graph-btn">View in graph →</button>
+              <button class="add-btn-another"    id="add-another-btn">Log another dream</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Waking Life -->
+    <section id="section-waking" class="section">
+
+      <!-- Left rail -->
+      <aside class="wl-rail">
+        <h1 class="waking-header">Waking Life</h1>
+        <p class="wl-subtitle">Life context windows are woven into your dream analysis. What's present in our waking lives follows us into our dreams. When something you considered dormant surfaces, we can notice what it reveals.</p>
+        <button class="wl-add-btn" id="wl-add-toggle-btn">+ Add context</button>
+        <p class="wl-limit-msg" id="wl-limit-msg">10 / 10 active contexts<br>Archive one to add another.</p>
+      </aside>
+
+      <!-- Right column -->
+      <div class="wl-body">
+        <div class="wl-body-inner">
+
+          <!-- Add form (hidden by default) -->
+          <div class="wl-form" id="wl-add-form">
+            <div class="wl-form-title">New life context</div>
+            <div class="wl-field">
+              <label for="wl-add-label">Label *</label>
+              <input type="text" id="wl-add-label" placeholder="e.g. Grad school application season">
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-startdate">Start date</label>
+              <input type="date" id="wl-add-startdate">
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-desc">Description</label>
+              <textarea id="wl-add-desc" placeholder="Describe this life context — what's happening, how it feels, why it matters…"></textarea>
+            </div>
+            <div class="wl-field">
+              <label for="wl-add-status">Status</label>
+              <select id="wl-add-status">
+                <option value="foreground">Foreground — consciously active</option>
+                <option value="background">Background — present but quieter</option>
+                <option value="dormant">Dormant — no longer active</option>
+              </select>
+            </div>
+            <div class="wl-form-actions">
+              <button class="wl-btn wl-btn-cancel" id="wl-add-cancel-btn">Cancel</button>
+              <button class="wl-btn wl-btn-save" id="wl-add-submit-btn">Add context</button>
+            </div>
+          </div>
+
+          <!-- Edit form (hidden by default) -->
+          <div class="wl-form" id="wl-edit-form">
+            <div class="wl-form-title">Edit life context</div>
+            <div class="wl-field">
+              <label for="wl-edit-label">Label *</label>
+              <input type="text" id="wl-edit-label">
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-startdate">Start date</label>
+              <input type="date" id="wl-edit-startdate">
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-desc">Description</label>
+              <textarea id="wl-edit-desc"></textarea>
+            </div>
+            <div class="wl-field">
+              <label for="wl-edit-status">Status</label>
+              <select id="wl-edit-status">
+                <option value="foreground">Foreground — consciously active</option>
+                <option value="background">Background — present but quieter</option>
+                <option value="dormant">Dormant — no longer active</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+            <div class="wl-form-actions">
+              <button class="wl-btn wl-btn-cancel" id="wl-edit-cancel-btn">Cancel</button>
+              <button class="wl-btn wl-btn-save" id="wl-edit-submit-btn">Save changes</button>
+            </div>
+          </div>
+
+          <!-- Status key -->
+          <div class="wl-legend-section">
+            <button class="wl-legend-toggle" id="wl-legend-toggle" aria-expanded="false">
+              About these statuses <span class="wl-legend-chevron">▾</span>
+            </button>
+            <div class="wl-legend" id="wl-legend">
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun fg"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Foreground</span>
+                  <span class="wl-legend-def">What's most alive and present in your waking life right now.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun bg"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Background</span>
+                  <span class="wl-legend-def">Ongoing but not consuming — present, quieter.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun dormant"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Dormant</span>
+                  <span class="wl-legend-def">Paused or resolved — no longer active, but still part of your life.</span>
+                </div>
+              </div>
+              <div class="wl-legend-row">
+                <span class="wl-legend-cloud" aria-hidden="true"><i class="ti ti-sun wl-legend-sun archived"></i></span>
+                <div class="wl-legend-text">
+                  <span class="wl-legend-term">Archived</span>
+                  <span class="wl-legend-def">Excluded from analysis, but remains saved if you ever want to bring it forward again.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status groups rendered by JS -->
+          <div id="wl-groups"></div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <svg width="15" height="11" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M7 18 C3.5 18, 1.5 14, 4.5 12 C3.5 8, 7.5 5, 11 7.5 C12.5 4, 16.5 2.5, 20.5 5.5 C22 3, 26.5 3.5, 27 8.5 C29.5 9, 29.5 14.5, 26.5 15.5 C24 18, 10.5 18, 7 18 Z"
+        stroke="#6B6778" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span class="footer-wordmark">dreama</span>
+    <span class="footer-sub">by leah · <a href="https://www.linkedin.com/in/leah-vogel/" class="footer-link" target="_blank" rel="noopener">contact</a></span>
+  </footer>
+
+  <!-- Tooltip (fixed, outside main) -->
+  <div id="graph-tooltip" class="graph-tooltip"></div>
+
+  <script>
+  // ── Demo mode: in-memory graph state & mock fetch ───────────────────────────
+  let _nodes = {};  // nodeId → attrs
+  let _links = [];  // [{source, target, key, edge_type, ...}]
+
+  function _loadFromGraphJson(data) {
+    _nodes = {};
+    _links = [];
+    for (const node of (data.nodes || [])) {
+      const {id, ...attrs} = node;
+      _nodes[id] = attrs;
+    }
+    for (const link of (data.links || data.edges || [])) {
+      _links.push({...link});
+    }
+  }
+
+  function _graphLabel(nodeType, attrs) {
+    if (nodeType === 'Dream') return attrs.date || '?';
+    if (nodeType === 'LifeContextWindow') return attrs.label || '?';
+    if (nodeType === 'BodySensation') {
+      const d = attrs.description || '';
+      return d.length > 40 ? d.slice(0, 40) + '…' : d;
+    }
+    return attrs.name || '?';
+  }
+
+  function _apiGraph() {
+    const nodes = Object.entries(_nodes).map(([id, attrs]) => {
+      const {node_type, ...props} = attrs;
+      return {id, label: _graphLabel(node_type || 'Unknown', attrs), type: node_type || 'Unknown', properties: props};
+    });
+    const links = _links.map(l => ({source: l.source, target: l.target, type: l.edge_type || String(l.key)}));
+    return {nodes, links};
+  }
+
+  const _STATUS_ORDER = {foreground: 0, background: 1, dormant: 2, archived: 3};
+
+  function _apiLCWs() {
+    return Object.entries(_nodes)
+      .filter(([, a]) => a.node_type === 'LifeContextWindow')
+      .map(([id, a]) => ({id, ...a}))
+      .sort((a, b) => {
+        const diff = (_STATUS_ORDER[a.status || 'dormant'] ?? 2) - (_STATUS_ORDER[b.status || 'dormant'] ?? 2);
+        return diff !== 0 ? diff : (a.start_date || '').localeCompare(b.start_date || '');
+      });
+  }
+
+  function _apiStats() {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const [y, m] = todayStr.split('-').map(Number);
+    const firstOfMonth = `${y}-${String(m).padStart(2, '0')}-01`;
+    const prevM = m === 1 ? {y: y - 1, m: 12} : {y, m: m - 1};
+    const prevLastDay = new Date(y, m - 1, 0).getDate();
+    const lmStart = `${prevM.y}-${String(prevM.m).padStart(2, '0')}-01`;
+    const lmEnd   = `${prevM.y}-${String(prevM.m).padStart(2, '0')}-${String(prevLastDay).padStart(2, '0')}`;
+    const d90 = new Date(); d90.setDate(d90.getDate() - 90);
+    const cutoff90 = d90.toISOString().slice(0, 10);
+
+    let dtm = 0, dlm = 0, total = 0;
+    for (const [, a] of Object.entries(_nodes)) {
+      if (a.node_type !== 'Dream') continue;
+      total++;
+      const d = a.date || '';
+      if (d >= firstOfMonth) dtm++;
+      if (d >= lmStart && d <= lmEnd) dlm++;
+    }
+    const tc90 = {};
+    for (const l of _links) {
+      if (l.edge_type === 'expresses') {
+        const dd = (_nodes[l.source] || {}).date || '';
+        if (dd >= cutoff90) tc90[l.target] = (tc90[l.target] || 0) + 1;
+      }
+    }
+    let topTheme = null;
+    const tc90e = Object.entries(tc90);
+    if (tc90e.length) {
+      const [tid, cnt] = tc90e.sort((a, b) => b[1] - a[1])[0];
+      topTheme = {name: (_nodes[tid] || {}).name || tid, count: cnt};
+    }
+    const sc = {};
+    for (const l of _links) {
+      if (l.edge_type === 'contains') sc[l.target] = (sc[l.target] || 0) + 1;
+    }
+    let topSym = null;
+    const sce = Object.entries(sc);
+    if (sce.length) {
+      const [sid, cnt] = sce.sort((a, b) => b[1] - a[1])[0];
+      topSym = {name: (_nodes[sid] || {}).name || sid, count: cnt};
+    }
+    return {dreams_this_month: dtm, dreams_last_month: dlm,
+            top_theme_90_days: topTheme, top_symbol_all_time: topSym, total_dreams: total};
+  }
+
+  function _apiSymbolFreq() {
+    const sd = {};
+    for (const l of _links) {
+      if (l.edge_type === 'contains') { if (!sd[l.target]) sd[l.target] = new Set(); sd[l.target].add(l.source); }
+    }
+    return Object.entries(_nodes)
+      .filter(([, a]) => a.node_type === 'Symbol')
+      .map(([id, a]) => ({id, ...a, dream_count: sd[id]?.size ?? 0, dream_ids: [...(sd[id] || [])]}))
+      .sort((a, b) => b.dream_count - a.dream_count);
+  }
+
+  function _apiThemes() {
+    const td = {};
+    for (const l of _links) {
+      if (l.edge_type === 'expresses') { if (!td[l.target]) td[l.target] = new Set(); td[l.target].add(l.source); }
+    }
+    return Object.entries(_nodes)
+      .filter(([, a]) => a.node_type === 'Theme')
+      .map(([id, a]) => ({id, ...a, dream_count: td[id]?.size ?? 0, dream_ids: [...(td[id] || [])]}))
+      .sort((a, b) => b.dream_count - a.dream_count);
+  }
+
+  function _apiNodeCounts() {
+    const c = {};
+    for (const [, a] of Object.entries(_nodes)) c[a.node_type || 'unknown'] = (c[a.node_type || 'unknown'] || 0) + 1;
+    return c;
+  }
+
+  function _demoSlug(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+  }
+
+  function _mockResp(data, status = 200) {
+    return Promise.resolve({ok: status < 400, status, json: () => Promise.resolve(data)});
+  }
+
+  // ── Grand Am demo script & canned extraction ─────────────────────────────────
+  const DEMO_SCRIPT = [
+    {role: 'user',      text: "I was driving the Grand Am — the old car, the one I learned to drive in. I kept trying to steer it straight but it kept drifting. My mom was in the passenger seat just looking out the window like everything was fine."},
+    {role: 'assistant', text: "That sounds disorienting — trying to correct something that isn't responding to you. Did the drifting feel dangerous, or more like the car had its own idea of where it wanted to go?"},
+    {role: 'user',      text: "More like the second thing. Not scary, exactly — more frustrating. I wanted to get somewhere but I couldn't even tell you where. We ended up stopped in front of this house I think was my childhood house, but it looked different. I woke up before we went in."},
+    {role: 'assistant', text: "The car taking you there without you steering is a strong image. Did the house feel like it was waiting for you — like you were being delivered to it — or more like an obstacle, something you weren't quite ready for?"},
+    {role: 'user',      text: "Waiting for me, I think. But I wasn't sure I wanted to be there. Like maybe the car knew something I didn't."},
+    {role: 'assistant', text: "That's the part worth sitting with. The car as something with agency, and you as a passenger in your own hands. We can pull this apart — go ahead and extract when you're ready."},
+  ];
+
+  const DEMO_EXTRACTION = {
+    dream: {
+      raw_narrative: "I was driving the Grand Am — the old car, the one I learned to drive in. I kept trying to steer it straight but it kept drifting. My mom was in the passenger seat looking out the window like everything was fine. We ended up stopped in front of what I think was my childhood house, but it looked different. I woke up before we went in.",
+      emotional_valence: "mixed",
+      intensity: 3,
+      visual_quality: "vivid",
+      lucid: false,
+      notable_color: null,
+      title: "The Grand Am, Drifting",
+    },
+    characters: [
+      {name: "Mom", character_type: "real_current", role_in_dream: "calm passenger"},
+    ],
+    symbols: [
+      {name: "Grand Am", prominence: "central", category: "vehicle"},
+      {name: "Childhood house", prominence: "major", category: "structure"},
+      {name: "Steering wheel", prominence: "supporting", category: "object"},
+    ],
+    settings: [
+      {name: "Unfamiliar neighborhood", familiarity: "unfamiliar", distortion_level: "mild"},
+      {name: "Childhood house exterior", familiarity: "familiar_distorted", distortion_level: "moderate"},
+    ],
+    emotions: [
+      {name: "Frustration", confidence: "stated",   anchor: "car not responding to steering"},
+      {name: "Unease",      confidence: "inferred",  anchor: "house not quite right"},
+      {name: "Nostalgia",   confidence: "inferred",  anchor: "childhood home, mother present"},
+    ],
+    themes: [
+      {name: "Loss of control",      strength: "strong"},
+      {name: "Return and reckoning", strength: "moderate"},
+      {name: "Home and belonging",   strength: "moderate"},
+    ],
+    body_sensations: [
+      {description: "Hands tense on wheel, effort without effect", location: "hands", confidence: "inferred"},
+    ],
+  };
+
+  // ── Fetch override ────────────────────────────────────────────────────────────
+  const _origFetch = window.fetch.bind(window);
+  window.fetch = async function(url, opts = {}) {
+    const u = typeof url === 'string' ? url : String(url);
+    const method = (opts.method || 'GET').toUpperCase();
+    const body = opts.body ? JSON.parse(opts.body) : {};
+
+    if (u === '/api/graph')                                       return _mockResp(_apiGraph());
+    if (u === '/api/stats')                                       return _mockResp(_apiStats());
+    if (u === '/api/symbols/frequency')                           return _mockResp(_apiSymbolFreq());
+    if (u === '/api/themes')                                      return _mockResp(_apiThemes());
+    if (u === '/api/life-context-windows' && method === 'GET')    return _mockResp(_apiLCWs());
+    if (u === '/api/context')                                     return _mockResp(_apiLCWs().filter(l => l.status === 'foreground'));
+    if (u === '/api/demo/toggle')                                 return _mockResp({demo_mode: false});
+    if (u === '/api/discard')                                     return _mockResp({status: 'discarded'});
+
+    const lcwStatusMatch = u.match(/^\/api\/life-context-windows\/([^/]+)\/status$/);
+    if (lcwStatusMatch && method === 'PUT') {
+      const lcwId = lcwStatusMatch[1];
+      if (_nodes[lcwId]) _nodes[lcwId].status = body.status;
+      return _mockResp({id: lcwId, status: body.status});
+    }
+
+    const lcwUpdateMatch = u.match(/^\/api\/life-context-windows\/([^/]+)$/);
+    if (lcwUpdateMatch && method === 'PUT') {
+      const lcwId = lcwUpdateMatch[1];
+      if (_nodes[lcwId]) Object.assign(_nodes[lcwId], {
+        label: body.label, status: body.status,
+        description: body.description || null, start_date: body.start_date || null,
+      });
+      return _mockResp({id: lcwId, ..._nodes[lcwId]});
+    }
+
+    if (u === '/api/life-context-windows' && method === 'POST') {
+      const active = Object.values(_nodes).filter(a => a.node_type === 'LifeContextWindow' && a.status !== 'archived').length;
+      if (active >= 10) return _mockResp({error: 'limit_reached', message: 'You have 10 active life contexts. Archive one before adding another.'}, 409);
+      let lcwId = 'lcw_' + _demoSlug((body.label || '').slice(0, 24));
+      let c = 1, base = lcwId;
+      while (_nodes[lcwId]) { lcwId = base + '_' + c++; }
+      _nodes[lcwId] = {node_type: 'LifeContextWindow', label: body.label, start_date: body.start_date || null,
+                       description: body.description || null, status: body.status || 'foreground', summary: null};
+      return _mockResp({id: lcwId, ..._nodes[lcwId]}, 201);
+    }
+
+    if (u === '/api/confirm' && method === 'POST') {
+      const ext = body.extracted || {};
+      const date = body.date || new Date().toISOString().slice(0, 10);
+      const dream = ext.dream || {};
+      const title = dream.title || '';
+      let dreamId = `dream_${date.replace(/-/g, '')}_${_demoSlug(title.slice(0, 32)) || 'dream'}`;
+      let ci = 1, base = dreamId;
+      while (_nodes[dreamId]) { dreamId = base + '_' + ci++; }
+      _nodes[dreamId] = {node_type: 'Dream', date, raw_narrative: dream.raw_narrative || null,
+        emotional_valence: dream.emotional_valence || null, intensity: dream.intensity ?? null,
+        visual_quality: dream.visual_quality || null, notable_color: dream.notable_color || null,
+        lucid: dream.lucid ?? null, title: title || null};
+
+      function _ensureNode(nodeType, name, extra = {}) {
+        for (const [id, a] of Object.entries(_nodes)) {
+          if (a.node_type === nodeType && (a.name || '').toLowerCase() === name.toLowerCase()) return id;
+        }
+        const id = `${nodeType.toLowerCase()}_${_demoSlug(name.slice(0, 32))}_${Math.random().toString(36).slice(2, 6)}`;
+        _nodes[id] = {node_type: nodeType, name, ...extra};
+        return id;
+      }
+      for (const ch of (ext.characters || []))
+        _links.push({source: dreamId, target: _ensureNode('Character', ch.name, {character_type: ch.character_type || null}), key: 'features', edge_type: 'features', role: ch.role_in_dream || null});
+      for (const s of (ext.symbols || []))
+        _links.push({source: dreamId, target: _ensureNode('Symbol', s.name, {category: s.category || null}), key: 'contains', edge_type: 'contains', prominence: s.prominence || null});
+      for (const st of (ext.settings || []))
+        _links.push({source: dreamId, target: _ensureNode('Setting', st.name, {familiarity: st.familiarity || null}), key: 'takes_place_in', edge_type: 'takes_place_in', distortion_level: st.distortion_level || null});
+      for (const e of (ext.emotions || []))
+        _links.push({source: dreamId, target: _ensureNode('Emotion', e.name), key: 'evoked', edge_type: 'evoked', anchor: e.anchor || null, confidence: e.confidence || null});
+      for (const t of (ext.themes || []))
+        _links.push({source: dreamId, target: _ensureNode('Theme', t.name, {source: 'llm'}), key: 'expresses', edge_type: 'expresses', strength: t.strength || null, source: 'llm'});
+      for (const bs of (ext.body_sensations || [])) {
+        const bsId = `bs_${dreamId}_${Math.random().toString(36).slice(2, 6)}`;
+        _nodes[bsId] = {node_type: 'BodySensation', description: bs.description, location: bs.location || null, confidence: bs.confidence || null};
+        _links.push({source: dreamId, target: bsId, key: 'includes_sensation', edge_type: 'includes_sensation'});
+      }
+      const activeLcws = _apiLCWs().filter(l => l.status !== 'archived' && l.status !== 'dormant');
+      if (activeLcws.length) _links.push({source: dreamId, target: activeLcws[0].id, key: 'occurred_during', edge_type: 'occurred_during'});
+      return _mockResp({dream_id: dreamId, stats: {nodes: _apiNodeCounts()}});
+    }
+
+    if (u === '/api/query' && method === 'POST') {
+      return _mockResp({
+        highlighted_node_ids: ['sym_old_car', 'theme_loss_of_control', 'char_mom'],
+        answer: "Loss of control is your most persistent theme, appearing across multiple life context windows. The old car symbol recurs most frequently, often paired with Mom as a character — suggesting an ongoing tension between autonomy and familiarity. This pattern intensified during your job search period and continues into your current house-hunting context.",
+      });
+    }
+
+    return _origFetch(url, opts);
+  };
+  // ── End demo mock layer ───────────────────────────────────────────────────────
+
+  // ─── Escape helper ──────────────────────────────────────────────────────────
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // ─── Date formatting ────────────────────────────────────────────────────────
+  // Parse ISO dates as local time (avoid UTC-offset shifting)
+  function _parseLocalDate(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return new Date(y, m - 1, d);
+  }
+  // "April 30, 2026" — Add New review, inspect drawer
+  function fmtDateFull(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  // "January 2025" — Waking Life card (caller prefixes "Added ")
+  function fmtDateMonthYear(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  }
+  // "Jan 2025" — abbreviated, for graph tooltips / tight labels
+  function fmtDateShort(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+  }
+  // "Apr 27, 2026" — abbreviated month + day, for Dream node labels and detail card header
+  function fmtDateMed(iso) {
+    if (!iso) return iso;
+    return _parseLocalDate(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  // ─── Node colors ────────────────────────────────────────────────────────────
+  const NODE_COLORS = {
+    Symbol:           '#E8B4C0',
+    Theme:            '#7B6BA8',
+    Character:        '#A8C0D6',
+    Setting:          '#4A3D5C',
+    Emotion:          '#D4956A',
+    LifeContextWindow:'#BF8E3A',
+    BodySensation:    '#B8A8C8',
+  };
+
+  const DREAM_COLOR_OLD  = '#5C3870';
+  const DREAM_COLOR_NEW  = '#D4B0D0';
+  const DREAM_R_LARGE    = 16;
+  const DREAM_R_SMALL    = 9;
+  const NODE_R_BASE      = 9;
+  const NODE_R_MAX       = 22;
+
+  // ─── State ──────────────────────────────────────────────────────────────────
+  let graphData   = { nodes: [], links: [] };
+  let allLCWs     = [];
+  let allStats    = {};
+  let allSymbols  = [];
+  let allThemes   = [];
+  let wlLcws      = [];
+  let wlEditingId = null;
+
+  let activeFilter    = 'dreams';
+  let activeDateRange = 'all';
+
+  let simulation   = null;
+  let nodeCircles  = null;
+  let linkLines    = null;
+  let nodeLabels   = null;
+  let dreamColorScale = null;
+  let simLinks     = [];
+  let selectedGraphNodeId = null;
+
+  // ─── Boot ───────────────────────────────────────────────────────────────────
+  async function boot() {
+    try {
+      const raw = await _origFetch('./data/graph.json').then(r => r.json());
+      _loadFromGraphJson(raw);
+      graphData  = _apiGraph();
+      allLCWs    = _apiLCWs();
+      allStats   = _apiStats();
+      allSymbols = _apiSymbolFreq();
+      allThemes  = _apiThemes();
+      renderAmbientRail();
+      wlLcws = allLCWs.slice();
+      wlRender();
+      requestAnimationFrame(initGraph);
+    } catch (err) {
+      console.error('Boot failed:', err);
+      document.getElementById('graph-container').innerHTML =
+        '<div class="graph-empty">Could not load graph data.</div>';
+    }
+  }
+
+  // ─── Left rail ───────────────────────────────────────────────────────────────
+
+  let selectedNodeId = null;
+
+  function renderAmbientRail() {
+    document.getElementById('rail-ambient').style.display  = '';
+    document.getElementById('rail-selected').style.display = 'none';
+    document.getElementById('rail-query').style.display    = 'none';
+    selectedNodeId = null;
+
+    const dreams  = graphData.nodes.filter(n => n.type === 'Dream');
+    const symbols = graphData.nodes.filter(n => n.type === 'Symbol');
+    const themes  = graphData.nodes.filter(n => n.type === 'Theme');
+    const chars   = graphData.nodes.filter(n => n.type === 'Character');
+
+    document.getElementById('amb-dreams').textContent  = dreams.length;
+    document.getElementById('amb-symbols').textContent = symbols.length;
+    document.getElementById('amb-themes').textContent  = themes.length;
+    document.getElementById('amb-chars').textContent   = chars.length;
+
+    // Most connected non-Dream node
+    const degree = {};
+    for (const l of graphData.links) {
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      degree[src] = (degree[src] || 0) + 1;
+      degree[tgt] = (degree[tgt] || 0) + 1;
+    }
+    let hubNode = null, hubDeg = 0;
+    for (const [id, deg] of Object.entries(degree)) {
+      const node = graphData.nodes.find(n => n.id === id);
+      if (node && node.type !== 'Dream' && deg > hubDeg) { hubNode = node; hubDeg = deg; }
+    }
+    const hubInsight = document.getElementById('amb-hub-insight');
+    if (hubNode) {
+      document.getElementById('amb-hub-name').textContent = hubNode.label;
+      document.getElementById('amb-hub-sub').textContent  =
+        `${hubNode.type.replace(/([A-Z])/g, ' $1').trim()} · ${hubDeg} connections`;
+      hubInsight.style.display = '';
+    } else {
+      hubInsight.style.display = 'none';
+    }
+
+    // Oldest dream
+    const oldestInsight = document.getElementById('amb-oldest-insight');
+    const sorted = dreams.slice().sort((a, b) =>
+      ((a.properties||{}).date||'').localeCompare((b.properties||{}).date||''));
+    if (sorted.length) {
+      const oldest = sorted[0];
+      const d = (oldest.properties||{}).date;
+      document.getElementById('amb-oldest-date').textContent = d ? fmtDateFull(d) : '—';
+      const title = (oldest.properties||{}).title || '';
+      document.getElementById('amb-oldest-sub').textContent = title ? `"${title}"` : '';
+      oldestInsight.style.display = '';
+    } else {
+      oldestInsight.style.display = 'none';
+    }
+
+    // Mobile stats bar
+    document.getElementById('mob-dreams').textContent  = dreams.length;
+    document.getElementById('mob-symbols').textContent = symbols.length;
+    document.getElementById('mob-themes').textContent  = themes.length;
+    document.getElementById('mob-chars').textContent   = chars.length;
+    const mobHubPill = document.getElementById('mob-hub-pill');
+    if (hubNode) {
+      document.getElementById('mob-hub').textContent = hubNode.label;
+      mobHubPill.style.display = '';
+    } else {
+      mobHubPill.style.display = 'none';
+    }
+    const mobOldestPill = document.getElementById('mob-oldest-pill');
+    if (sorted.length) {
+      const d2 = (sorted[0].properties||{}).date;
+      document.getElementById('mob-oldest').textContent = d2 ? fmtDateFull(d2) : '—';
+      mobOldestPill.style.display = '';
+    } else {
+      mobOldestPill.style.display = 'none';
+    }
+  }
+
+  // Helpers for per-node insights
+
+  function _getDreamIdsForNode(nodeId) {
+    const dreamSet = new Set();
+    for (const l of graphData.links) {
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      if (tgt === nodeId) {
+        const srcNode = graphData.nodes.find(n => n.id === src);
+        if (srcNode && srcNode.type === 'Dream') dreamSet.add(src);
+      }
+    }
+    return [...dreamSet];
+  }
+
+  function _getTopCoOccurrence(nodeId, nodeType, dreamIds) {
+    if (dreamIds.length === 0) return null;
+    // Count which other same-type nodes appear most in the same connected dreams.
+    // Uses shared-dream count as the metric (consistent across all types, and
+    // independent of edge-level frequency which isn't included in the API link objects).
+    const etMap = {
+      Symbol: 'contains', Theme: 'expresses',
+      Emotion: 'evoked',  Character: 'features', Setting: 'takes_place_in',
+    };
+    const et = etMap[nodeType];
+    if (!et) return null;
+    const dreamSet = new Set(dreamIds);
+    const counts = {};
+    for (const l of graphData.links) {
+      if (l.type !== et) continue;
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      if (dreamSet.has(src) && tgt !== nodeId) counts[tgt] = (counts[tgt] || 0) + 1;
+    }
+    const top = Object.entries(counts).sort((a, b) => b[1] - a[1])[0];
+    if (!top) return null;
+    const node = graphData.nodes.find(n => n.id === top[0]);
+    return node ? { label: node.label, type: node.type, count: top[1] } : null;
+  }
+
+  function _getTopLCW(dreamIds) {
+    if (!dreamIds.length) return null;
+    const dreamLCW = {};
+    for (const l of graphData.links) {
+      if (l.type !== 'occurred_during') continue;
+      const src = typeof l.source === 'object' ? l.source.id : l.source;
+      const tgt = typeof l.target === 'object' ? l.target.id : l.target;
+      dreamLCW[src] = tgt;
+    }
+    const lcwCounts = {};
+    for (const id of dreamIds) {
+      const lcwId = dreamLCW[id];
+      if (lcwId) lcwCounts[lcwId] = (lcwCounts[lcwId] || 0) + 1;
+    }
+    const top = Object.entries(lcwCounts).sort((a, b) => b[1] - a[1])[0];
+    if (!top) return null;
+    const node = graphData.nodes.find(n => n.id === top[0]);
+    return node ? { label: node.label, count: top[1] } : null;
+  }
+
+  function renderSelectedRail(d) {
+    selectedNodeId = d.id;
+    document.getElementById('rail-ambient').style.display  = 'none';
+    document.getElementById('rail-selected').style.display = '';
+    document.getElementById('rail-query').style.display    = 'none';
+
+    // Header
+    const color = NODE_COLORS[d.type] || '#B8A8C8';
+    document.getElementById('rail-node-dot').style.background = color;
+    document.getElementById('rail-node-name').textContent = d.label;
+    document.getElementById('rail-node-type').textContent  =
+      d.type.replace(/([A-Z])/g, ' $1').trim().toUpperCase();
+
+    const props    = d.properties || {};
+    const dreamIds = _getDreamIdsForNode(d.id);
+    const coOcc    = _getTopCoOccurrence(d.id, d.type, dreamIds);
+    const topLCW   = _getTopLCW(dreamIds);
+    const note     = props.symbolic_note || props.description || null;
+
+    // Date range from connected dreams
+    const dreamDates = dreamIds
+      .map(id => { const n = graphData.nodes.find(x => x.id === id); return n ? (n.properties||{}).date : null; })
+      .filter(Boolean)
+      .sort();
+    const firstDate = dreamDates[0];
+    const lastDate  = dreamDates[dreamDates.length - 1];
+
+    const coOccLabel = {
+      Symbol:    'Most often alongside',
+      Theme:     'Most often alongside',
+      Emotion:   'Tends to appear with',
+      Character: 'Appears alongside',
+      Setting:   'Often paired with',
+    }[d.type] || 'Often paired with';
+
+    let html = '';
+
+    // Dream count — prominent number
+    html += `<div class="rail-insight">
+      <div class="rail-insight-label">Appears in</div>
+      <div style="display:flex;align-items:baseline;gap:6px">
+        <span class="rail-dream-count">${dreamIds.length}</span>
+        <span class="rail-dream-label">${dreamIds.length === 1 ? 'dream' : 'dreams'}</span>
+      </div>
+    </div>`;
+
+    if (firstDate) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">First appeared</div>
+        <div class="rail-insight-value">${fmtDateFull(firstDate)}</div>
+      </div>`;
+    }
+    if (lastDate && lastDate !== firstDate) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">Most recently</div>
+        <div class="rail-insight-value">${fmtDateFull(lastDate)}</div>
+      </div>`;
+    }
+
+    if (coOcc) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">${coOccLabel}</div>
+        <div class="rail-insight-value">
+          <strong>${esc(coOcc.label)}</strong>
+          <span style="color:var(--color-ink-faint);font-size:11px;margin-left:4px">×${coOcc.count}</span>
+        </div>
+      </div>`;
+    }
+
+    if (topLCW) {
+      html += `<div class="rail-insight">
+        <div class="rail-insight-label">Most active during</div>
+        <div class="rail-insight-value">${esc(topLCW.label)}</div>
+      </div>`;
+    }
+
+    if (note) {
+      html += `<div class="rail-note">${esc(note)}</div>`;
+    }
+
+    document.getElementById('rail-insights').innerHTML = html;
+  }
+
+  // ─── Graph: ego-network highlight ───────────────────────────────────────────
+  function applyEgoHighlight(nodeId) {
+    if (!nodeCircles) return;
+    selectedGraphNodeId = nodeId;
+
+    const neighborIds = new Set([nodeId]);
+    for (const l of simLinks) {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      if (s === nodeId) neighborIds.add(t);
+      if (t === nodeId) neighborIds.add(s);
+    }
+
+    nodeCircles
+      .style('opacity', d => neighborIds.has(d.id) ? 1 : 0.07)
+      .attr('stroke',       d => d.id === nodeId ? 'rgba(255,255,255,0.92)' : 'rgba(255,255,255,0.35)')
+      .attr('stroke-width', d => d.id === nodeId ? 3 : 1.5);
+
+    linkLines.style('opacity', l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      return (s === nodeId || t === nodeId) ? 0.75 : 0.04;
+    });
+
+    nodeLabels.style('opacity', d => neighborIds.has(d.id) ? 1 : 0.04);
+  }
+
+  function clearEgoHighlight() {
+    if (!nodeCircles) return;
+    selectedGraphNodeId = null;
+    nodeCircles
+      .attr('stroke',       'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5);
+    applyFilterToGraph();
+  }
+
+  function clearSelectedRail() {
+    clearEgoHighlight();
+    renderAmbientRail();
+  }
+
+  // ─── Graph: set highlight (NL query results) ─────────────────────────────────
+  function applySetHighlight(nodeIds) {
+    if (!nodeCircles) return;
+    const idSet = new Set(nodeIds);
+
+    nodeCircles
+      .style('opacity', d => idSet.has(d.id) ? 1 : 0.07)
+      .attr('stroke',       'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5);
+
+    linkLines.style('opacity', l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      return (idSet.has(s) && idSet.has(t)) ? 0.5 : 0.04;
+    });
+
+    nodeLabels.style('opacity', d => idSet.has(d.id) ? 1 : 0.04);
+  }
+
+  // updatePanelForFilter is no longer needed — left rail no longer mirrors filter state
+  function updatePanelForFilter() {}
+
+  // ─── Graph: radius ───────────────────────────────────────────────────────────
+  function computeRadius(d) {
+    if (d.type === 'Dream') {
+      return activeFilter === 'dreams' ? DREAM_R_LARGE : DREAM_R_SMALL;
+    }
+    if (d.type === 'Theme' && activeFilter === 'themes') {
+      const maxCount = Math.max(...allThemes.map(t => t.dream_count || 0), 1);
+      const count = (allThemes.find(t => t.id === d.id) || {}).dream_count || 0;
+      return NODE_R_BASE + (NODE_R_MAX - NODE_R_BASE) * (count / maxCount);
+    }
+    if (d.type === 'Symbol' && activeFilter === 'symbols') {
+      const maxCount = Math.max(...allSymbols.map(s => s.dream_count || 0), 1);
+      const count = (allSymbols.find(s => s.id === d.id) || {}).dream_count || 0;
+      return NODE_R_BASE + (NODE_R_MAX - NODE_R_BASE) * (count / maxCount);
+    }
+    if (d.type === 'LifeContextWindow' && activeFilter === 'life-context') {
+      return NODE_R_MAX * 0.8;
+    }
+    return NODE_R_BASE;
+  }
+
+  // ─── Graph: color ────────────────────────────────────────────────────────────
+  function buildDreamColorScale() {
+    const dates = graphData.nodes
+      .filter(n => n.type === 'Dream')
+      .map(n => n.properties.date)
+      .filter(Boolean)
+      .sort();
+    if (dates.length < 2) {
+      dreamColorScale = () => '#9C74A0';
+      return;
+    }
+    dreamColorScale = d3.scaleLinear()
+      .domain([new Date(dates[0]), new Date(dates[dates.length - 1])])
+      .range([DREAM_COLOR_OLD, DREAM_COLOR_NEW]);
+  }
+
+  function computeColor(d) {
+    if (d.type === 'Dream') {
+      if (!dreamColorScale) buildDreamColorScale();
+      const date = (d.properties || {}).date;
+      return date ? dreamColorScale(new Date(date)) : '#7C6B9E';
+    }
+    return NODE_COLORS[d.type] || '#999';
+  }
+
+  // ─── Graph: opacity ──────────────────────────────────────────────────────────
+  function getCutoffDate() {
+    const now = new Date();
+    if (activeDateRange === '30d') return new Date(now - 30 * 86400000);
+    if (activeDateRange === '90d') return new Date(now - 90 * 86400000);
+    if (activeDateRange === '6m')  return new Date(now - 180 * 86400000);
+    return null;
+  }
+
+  function getRecurringConnectedIds() {
+    const recurringIds = new Set(
+      graphData.nodes
+        .filter(n => n.type === 'Dream' && n.properties && n.properties.is_recurring)
+        .map(n => n.id)
+    );
+    const connected = new Set(recurringIds);
+    graphData.links.forEach(l => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      const t = typeof l.target === 'object' ? l.target.id : l.target;
+      if (recurringIds.has(s)) connected.add(t);
+      if (recurringIds.has(t)) connected.add(s);
+    });
+    return connected;
+  }
+
+  function computeNodeOpacity(d, cutoffDate, recurringIds) {
+    if (cutoffDate && d.type === 'Dream') {
+      const date = (d.properties || {}).date;
+      if (!date || new Date(date) < cutoffDate) return 0.12;
+    }
+    if (recurringIds !== null && !recurringIds.has(d.id)) return 0.12;
+    if (activeFilter === 'life-context' &&
+        d.type !== 'LifeContextWindow' && d.type !== 'Dream') return 0.25;
+    return 1;
+  }
+
+  function computeLinkOpacity(l, cutoffDate, recurringIds) {
+    const srcId = typeof l.source === 'object' ? l.source.id : l.source;
+    const tgtId = typeof l.target === 'object' ? l.target.id : l.target;
+    const src = graphData.nodes.find(n => n.id === srcId);
+    const tgt = graphData.nodes.find(n => n.id === tgtId);
+    if (!src || !tgt) return 0.05;
+    const minOp = Math.min(
+      computeNodeOpacity(src, cutoffDate, recurringIds),
+      computeNodeOpacity(tgt, cutoffDate, recurringIds)
+    );
+    return minOp < 0.5 ? 0.05 : 0.35;
+  }
+
+  // ─── Graph: apply filter ─────────────────────────────────────────────────────
+  function applyFilterToGraph() {
+    if (!nodeCircles) return;
+
+    const cutoff      = getCutoffDate();
+    const recurringIds = activeFilter === 'recurring' ? getRecurringConnectedIds() : null;
+
+    nodeCircles
+      .attr('r', d => computeRadius(d))
+      .attr('fill', d => computeColor(d))
+      .style('opacity', d => computeNodeOpacity(d, cutoff, recurringIds));
+
+    linkLines
+      .style('opacity', l => computeLinkOpacity(l, cutoff, recurringIds));
+
+    nodeLabels
+      .attr('dy', d => computeRadius(d) + 11)
+      .style('opacity', d => computeNodeOpacity(d, cutoff, recurringIds));
+
+    simulation.force('collision').radius(d => computeRadius(d) + 3);
+    simulation.alpha(0.2).restart();
+
+    updatePanelForFilter();
+
+    const isDefault = activeFilter === 'dreams' && activeDateRange === 'all';
+    document.getElementById('filter-reset').style.display = isDefault ? 'none' : 'inline-block';
+  }
+
+  // ─── Graph: init ─────────────────────────────────────────────────────────────
+  function initGraph() {
+    const container = document.getElementById('graph-container');
+    const rect = container.getBoundingClientRect();
+    const W = rect.width || 800;
+    const H = rect.height || 600;
+
+    buildDreamColorScale();
+
+    if (graphData.nodes.length === 0) {
+      container.innerHTML = `<div class="graph-empty">No dreams in the graph yet — add your first dream to see it appear here.</div>`;
+      return;
+    }
+
+    const tooltip = d3.select('#graph-tooltip');
+
+    const svg = d3.select(container)
+      .append('svg')
+      .attr('width', W)
+      .attr('height', H)
+      .style('display', 'block');
+
+    // Dream glow filter
+    svg.append('defs').html(`
+      <filter id="dream-glow" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+        <feFlood flood-color="#D4B0D0" flood-opacity="0.5" result="glow-color"/>
+        <feComposite in="glow-color" in2="blur" operator="in" result="colored-blur"/>
+        <feMerge>
+          <feMergeNode in="colored-blur"/>
+          <feMergeNode in="SourceGraphic"/>
+        </feMerge>
+      </filter>
+    `);
+
+    // Zoom/pan layer
+    const g = svg.append('g');
+
+    const zoom = d3.zoom()
+      .scaleExtent([0.25, 4])
+      .on('zoom', e => { g.attr('transform', e.transform); });
+
+    svg.call(zoom);
+    svg.on('click', () => { closeInspectDrawer(); clearSelectedRail(); });
+
+    // Deep-copy nodes & links so D3 simulation can mutate them
+    const nodes = graphData.nodes.map(d => ({ ...d, properties: { ...(d.properties || {}) } }));
+    const links = graphData.links.map(l => ({ ...l }));
+    simLinks = links; // keep reference for ego-highlight neighbor lookup after D3 mutates source/target
+
+    // Simulation
+    simulation = d3.forceSimulation(nodes)
+      .force('link',      d3.forceLink(links).id(d => d.id).distance(80).strength(0.5))
+      .force('charge',    d3.forceManyBody().strength(-220))
+      .force('center',    d3.forceCenter(W / 2, H / 2))
+      .force('collision', d3.forceCollide().radius(d => computeRadius(d) + 3));
+
+    // Links
+    linkLines = g.append('g').attr('class', 'links')
+      .selectAll('line')
+      .data(links)
+      .join('line')
+      .attr('stroke', '#D8D4CE')
+      .attr('stroke-width', 1.5)
+      .style('opacity', 0.35);
+
+    // Node groups (drag + click)
+    const drag = d3.drag()
+      .on('start', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x; d.fy = d.y;
+      })
+      .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
+      .on('end', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null; d.fy = null;
+      });
+
+    const nodeGroups = g.append('g').attr('class', 'nodes')
+      .selectAll('g')
+      .data(nodes)
+      .join('g')
+      .call(drag);
+
+    // Circles
+    nodeCircles = nodeGroups.append('circle')
+      .attr('r',           d => computeRadius(d))
+      .attr('fill',        d => computeColor(d))
+      .attr('stroke',      'rgba(255,255,255,0.35)')
+      .attr('stroke-width', 1.5)
+      .attr('filter',      d => d.type === 'Dream' ? 'url(#dream-glow)' : null)
+      .style('cursor', 'pointer')
+      .on('mouseover', (event, d) => {
+        tooltip.style('opacity', 1)
+          .html(`<strong>${esc(d.label)}</strong>&ensp;<span style="opacity:.65">${esc(d.type)}</span>`);
+      })
+      .on('mousemove', event => {
+        tooltip
+          .style('left', (event.clientX + 14) + 'px')
+          .style('top',  (event.clientY - 10) + 'px');
+      })
+      .on('mouseout', () => { tooltip.style('opacity', 0); })
+      .on('click', (event, d) => {
+        event.stopPropagation();
+        applyEgoHighlight(d.id);
+        if (d.type === 'Dream') {
+          renderAmbientRail();
+          openInspectDrawer(d);
+        } else if (isMobile()) {
+          openInspectDrawer(d);
+        } else {
+          closeInspectDrawer();
+          renderSelectedRail(d);
+        }
+      });
+
+    // Labels
+    nodeLabels = nodeGroups.append('text')
+      .text(d => {
+        const raw = d.type === 'Dream'
+          ? fmtDateMed((d.properties || {}).date || d.label)
+          : d.label;
+        return raw.length > 16 ? raw.slice(0, 14) + '…' : raw;
+      })
+      .attr('dy',           d => computeRadius(d) + 11)
+      .attr('text-anchor',  'middle')
+      .attr('font-size',    '10px')
+      .attr('font-family',  'Figtree, sans-serif')
+      .attr('fill',         '#6B6778')
+      .style('pointer-events', 'none')
+      .style('user-select',    'none');
+
+    // Tick
+    simulation.on('tick', () => {
+      linkLines
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y);
+      nodeGroups
+        .attr('transform', d => `translate(${d.x},${d.y})`);
+    });
+
+    // Legend
+    renderLegend();
+    document.getElementById('graph-legend').style.display = 'block';
+
+    // Resize
+    new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const { width: w, height: h } = entry.contentRect;
+        svg.attr('width', w).attr('height', h);
+        simulation.force('center', d3.forceCenter(w / 2, h / 2));
+        simulation.alpha(0.1).restart();
+      }
+    }).observe(container);
+  }
+
+  // ─── Legend ──────────────────────────────────────────────────────────────────
+  function renderLegend() {
+    const el = document.getElementById('graph-legend');
+    const entries = [
+      { label: 'Dream (oldest → newest)', gradient: true },
+      { label: 'Symbol',            color: '#E8B4C0' },
+      { label: 'Theme',             color: '#7B6BA8' },
+      { label: 'Character',         color: '#A8C0D6' },
+      { label: 'Setting',           color: '#4A3D5C' },
+      { label: 'Emotion',           color: '#D4956A' },
+      { label: 'Life Context',      color: '#BF8E3A' },
+      { label: 'Body Sensation',    color: '#B8A8C8' },
+    ];
+    el.innerHTML = entries.map(e => {
+      const dot = e.gradient
+        ? `<span class="legend-dot" style="background:linear-gradient(to right,${DREAM_COLOR_OLD},${DREAM_COLOR_NEW})"></span>`
+        : `<span class="legend-dot" style="background:${e.color}"></span>`;
+      return `<div class="legend-row">${dot}<span>${e.label}</span></div>`;
+    }).join('');
+  }
+
+  // ─── Inspect drawer ──────────────────────────────────────────────────────────
+  function openInspectDrawer(d) {
+    const props  = d.properties || {};
+    const header = d.type === 'Dream'
+      ? (props.title || fmtDateMed(props.date || d.label))
+      : d.label;
+    document.getElementById('inspect-title').textContent = header;
+    document.getElementById('inspect-type').textContent  = d.type;
+    const skip   = new Set(['node_type', 'raw_narrative']);
+    let bodyHtml = '';
+
+    if (d.type === 'Dream' && props.raw_narrative) {
+      const needsToggle = props.raw_narrative.length > 400;
+      bodyHtml += `<div class="inspect-narrative${needsToggle ? ' narrative-collapsible' : ''}">
+        <div class="narrative-body">${esc(props.raw_narrative)}</div>
+        ${needsToggle ? '<button class="narrative-toggle">Read more</button>' : ''}
+      </div>`;
+    }
+
+    const rows = Object.entries(props)
+      .filter(([k, v]) => !skip.has(k) && v !== null && v !== undefined && v !== '')
+      .map(([k, v]) => {
+        const label = k.replace(/_/g, ' ');
+        let val;
+        if (typeof v === 'boolean') {
+          val = v ? 'yes' : 'no';
+        } else if (k === 'date' && typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v)) {
+          val = esc(fmtDateFull(v));
+        } else {
+          val = esc(String(v));
+        }
+        return `<div class="inspect-row">
+          <span class="inspect-key">${esc(label)}</span>
+          <span class="inspect-val">${val}</span>
+        </div>`;
+      });
+
+    bodyHtml += rows.length
+      ? rows.join('')
+      : '<div class="inspect-empty">No additional properties.</div>';
+
+    document.getElementById('inspect-body').innerHTML = bodyHtml;
+    document.getElementById('inspect-drawer').classList.add('open');
+  }
+
+  function closeInspectDrawer() {
+    document.getElementById('inspect-drawer').classList.remove('open');
+  }
+
+  // ─── Section switching ───────────────────────────────────────────────────────
+  function switchSection(id) {
+    document.querySelectorAll('.nav-links li').forEach(li => {
+      li.classList.toggle('active', li.dataset.section === id);
+    });
+    document.querySelectorAll('.section').forEach(s => {
+      s.classList.toggle('active', s.id === 'section-' + id);
+    });
+    if (id === 'waking') wlLoad();
+  }
+
+  // ─── Event listeners ─────────────────────────────────────────────────────────
+
+  // Nav
+  document.querySelectorAll('.nav-links li').forEach(li => {
+    li.addEventListener('click', () => switchSection(li.dataset.section));
+  });
+
+  document.getElementById('nav-brand-link').addEventListener('click', e => {
+    e.preventDefault();
+    switchSection('dreams');
+  });
+
+  // Inspect close
+  document.getElementById('inspect-close').addEventListener('click', () => {
+    closeInspectDrawer();
+    clearEgoHighlight();
+  });
+
+  // Narrative expand/collapse
+  document.getElementById('inspect-body').addEventListener('click', e => {
+    const btn = e.target.closest('.narrative-toggle');
+    if (!btn) return;
+    const card = btn.closest('.narrative-collapsible');
+    const expanded = card.classList.toggle('expanded');
+    btn.textContent = expanded ? 'Read less' : 'Read more';
+  });
+  document.getElementById('rail-close').addEventListener('click', clearSelectedRail);
+
+  // ─── NL query ────────────────────────────────────────────────────────────────
+  const isMobile = () => window.matchMedia('(max-width: 640px)').matches;
+
+  const queryInput  = document.getElementById('rail-query-input');
+  const querySubmit = document.getElementById('rail-query-submit');
+  const mobInput    = document.getElementById('kg-mob-input');
+  const mobSubmit   = document.getElementById('kg-mob-submit');
+
+  mobInput.addEventListener('input', () => {
+    queryInput.value = mobInput.value;
+    mobInput.style.height = 'auto';
+    mobInput.style.height = mobInput.scrollHeight + 'px';
+    const len = mobInput.value.length;
+    const ctr = document.getElementById('kg-mob-counter');
+    ctr.textContent = len >= 120 ? '120 / 120 — limit reached' : `${len} / 120`;
+    ctr.classList.toggle('warn',  len >= 100 && len < 120);
+    ctr.classList.toggle('limit', len >= 120);
+  });
+  mobInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitQuery(); } });
+  mobSubmit.addEventListener('click', submitQuery);
+
+  async function submitQuery() {
+    const q = queryInput.value.trim();
+    if (!q) return;
+
+    querySubmit.disabled    = true;
+    querySubmit.textContent = '…';
+    mobSubmit.disabled      = true;
+    mobSubmit.textContent   = '…';
+
+    if (isMobile()) {
+      document.getElementById('inspect-title').textContent = 'Graph answer';
+      document.getElementById('inspect-type').textContent  = q;
+      document.getElementById('inspect-body').innerHTML    =
+        '<div class="rail-query-answer" style="font-style:italic;color:var(--color-ink-faint)">Thinking…</div>';
+      document.getElementById('inspect-drawer').classList.add('open');
+    } else {
+      document.getElementById('rail-ambient').style.display  = 'none';
+      document.getElementById('rail-selected').style.display = 'none';
+      document.getElementById('rail-query').style.display    = '';
+      document.getElementById('rail-query-question').textContent = q;
+      document.getElementById('rail-query-answer').textContent   = 'Thinking…';
+      document.getElementById('rail-query-count').textContent    = '';
+    }
+
+    try {
+      const res  = await fetch('/api/query', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ question: q }),
+      });
+      const data = await res.json();
+      const ids  = data.highlighted_node_ids || [];
+
+      if (ids.length > 0) applySetHighlight(ids);
+
+      if (isMobile()) {
+        const countLine = ids.length > 0
+          ? `<div class="rail-query-count">${ids.length} node${ids.length === 1 ? '' : 's'} highlighted</div>`
+          : '';
+        document.getElementById('inspect-body').innerHTML =
+          `<div class="rail-query-answer">${esc(data.answer || '(no answer)')}</div>${countLine}`;
+      } else {
+        document.getElementById('rail-query-answer').textContent = data.answer || '(no answer)';
+        document.getElementById('rail-query-count').textContent  =
+          ids.length > 0 ? `${ids.length} node${ids.length === 1 ? '' : 's'} highlighted` : '';
+      }
+    } catch (err) {
+      if (isMobile()) {
+        document.getElementById('inspect-body').innerHTML =
+          '<div class="rail-query-answer">Something went wrong. Please try again.</div>';
+      } else {
+        document.getElementById('rail-query-answer').textContent = 'Something went wrong. Please try again.';
+      }
+    } finally {
+      querySubmit.disabled    = false;
+      querySubmit.textContent = '↵';
+      mobSubmit.disabled      = false;
+      mobSubmit.textContent   = '↵';
+    }
+  }
+
+  queryInput.addEventListener('input', () => {
+    queryInput.style.height = 'auto';
+    queryInput.style.height = queryInput.scrollHeight + 'px';
+    const len     = queryInput.value.length;
+    const counter = document.getElementById('rail-query-counter');
+    counter.textContent = len >= 120 ? '120 / 120 — limit reached' : `${len} / 120`;
+    counter.classList.toggle('warn',  len >= 100 && len < 120);
+    counter.classList.toggle('limit', len >= 120);
+  });
+
+  queryInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); submitQuery(); }
+  });
+  querySubmit.addEventListener('click', submitQuery);
+
+  document.getElementById('rail-query-close').addEventListener('click', () => {
+    clearEgoHighlight();
+    renderAmbientRail();
+    queryInput.value        = '';
+    queryInput.style.height = '';
+    document.getElementById('rail-query-question').textContent = '';
+    const counter = document.getElementById('rail-query-counter');
+    counter.textContent = '0 / 120';
+    counter.classList.remove('warn', 'limit');
+  });
+
+  // Filter chips
+  document.querySelectorAll('.chip[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip[data-filter]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      applyFilterToGraph();
+    });
+  });
+
+  // Reset link
+  document.getElementById('filter-reset').addEventListener('click', e => {
+    e.preventDefault();
+    activeFilter    = 'dreams';
+    activeDateRange = 'all';
+    document.querySelectorAll('.chip[data-filter]').forEach(b => {
+      b.classList.toggle('active', b.dataset.filter === 'dreams');
+    });
+    document.getElementById('date-chip').textContent = 'All time ▾';
+    document.querySelectorAll('.date-option').forEach(o => {
+      o.classList.toggle('active', o.dataset.range === 'all');
+    });
+    applyFilterToGraph();
+  });
+
+  // Date range dropdown toggle
+  const dateChipEl = document.getElementById('date-chip');
+  const dateDropEl = document.getElementById('date-dropdown');
+
+  dateChipEl.addEventListener('click', e => {
+    e.stopPropagation();
+    dateDropEl.style.display = dateDropEl.style.display === 'none' ? 'block' : 'none';
+  });
+
+  document.querySelectorAll('.date-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      activeDateRange = opt.dataset.range;
+      const labels = { all: 'All time', '30d': '30 days', '90d': '90 days', '6m': '6 months' };
+      dateChipEl.textContent = (labels[activeDateRange] || 'All time') + ' ▾';
+      document.querySelectorAll('.date-option').forEach(o => {
+        o.classList.toggle('active', o.dataset.range === activeDateRange);
+      });
+      dateDropEl.style.display = 'none';
+      applyFilterToGraph();
+    });
+  });
+
+  document.addEventListener('click', () => { dateDropEl.style.display = 'none'; });
+
+
+  // ─── Add New section ─────────────────────────────────────────────────────────
+
+  const addState = {
+    extracted: null,
+    date: null,
+    divergence: null,
+    exchangeCount: 0,
+    extractedAtExchangeCount: -1,
+  };
+
+  function addShowView(id) {
+    ['add-chat-view','add-loading-view','add-review-view','add-success-view'].forEach(v => {
+      document.getElementById(v).classList.toggle('active', v === id);
+    });
+  }
+
+  function addUpdateEmptyState() {
+    const hasMessages = document.getElementById('add-conversation').children.length > 0;
+    document.getElementById('add-empty-state').style.display   = hasMessages ? 'none'  : 'flex';
+    if (hasMessages) document.getElementById('add-ctx-trigger').style.display = 'none';
+    document.getElementById('add-conversation').style.display  = hasMessages ? 'flex'  : 'none';
+    document.getElementById('add-extract-wrap').style.display  = hasMessages ? 'flex'  : 'none';
+  }
+
+  // Waking life tooltip trigger
+  async function addLoadContext() {
+    const trigger = document.getElementById('add-ctx-trigger');
+    const itemsEl = document.getElementById('add-ctx-tooltip-items');
+    try {
+      const list = await fetch('/api/life-context-windows').then(r => r.json());
+      const byDate = arr => arr.slice().sort((a, b) =>
+        (b.start_date || '') > (a.start_date || '') ? 1 : -1);
+
+      const fg      = byDate(list.filter(c => c.status === 'foreground'));
+      const bg      = byDate(list.filter(c => c.status === 'background'));
+      const dormant = byDate(list.filter(c => c.status === 'dormant'));
+
+      const active = [
+        ...fg.map(c => ({ label: c.label, cls: 'fg' })),
+        ...bg.map(c => ({ label: c.label, cls: 'bg' })),
+        ...dormant.map(c => ({ label: c.label, cls: 'dormant' })),
+      ];
+
+      if (!active.length) {
+        trigger.style.display = 'none';
+        return;
+      }
+
+      itemsEl.innerHTML = active
+        .map(c => `<div class="add-ctx-tooltip-item ${c.cls}">${esc(c.label)}</div>`)
+        .join('');
+      trigger.style.display = 'flex';
+    } catch {
+      trigger.style.display = 'none';
+    }
+  }
+
+  // Chat
+  function addAppendMessage(text, role) {
+    const convo = document.getElementById('add-conversation');
+    const div   = document.createElement('div');
+    div.className = `add-msg ${role}`;
+    div.textContent = text;
+    convo.appendChild(div);
+    convo.scrollTop = convo.scrollHeight;
+    addUpdateEmptyState();
+    return div;
+  }
+
+  async function addSendMessage() {
+    // Demo mode: typing + Enter triggers the scripted demo instead of a real API call
+    await playDemoChat();
+  }
+
+  // Save → Extract → Review
+  // ─── Loading phrase cycler ───────────────────────────────────────────────────
+  const _loadingPhrases = [
+    'finding the threads...',
+    'reading between the images...',
+    'piecing it together...',
+    'almost there...',
+  ];
+  let _loadingPhraseIdx      = 0;
+  let _loadingPhraseInterval = null;
+
+  function _startLoadingCycler() {
+    const el = document.getElementById('add-loading-phrase');
+    _loadingPhraseIdx = 0;
+    el.textContent = _loadingPhrases[0];
+    el.classList.remove('fade');
+    _loadingPhraseInterval = setInterval(() => {
+      el.classList.add('fade');
+      setTimeout(() => {
+        _loadingPhraseIdx = (_loadingPhraseIdx + 1) % _loadingPhrases.length;
+        el.textContent = _loadingPhrases[_loadingPhraseIdx];
+        el.classList.remove('fade');
+      }, 650);
+    }, 2800);
+  }
+
+  function _stopLoadingCycler() {
+    clearInterval(_loadingPhraseInterval);
+    _loadingPhraseInterval = null;
+  }
+
+  async function addSaveToJournal() {
+    if (addState.extracted && addState.exchangeCount === addState.extractedAtExchangeCount) {
+      addRenderReviewCard(addState.extracted, addState.date, addState.divergence,
+                          addState.extracted.dream?.title);
+      addShowView('add-review-view');
+      return;
+    }
+
+    addState.date = document.getElementById('add-dream-date').value;
+    addShowView('add-loading-view');
+    _startLoadingCycler();
+
+    // Demo mode: use canned extraction with a brief delay to look real
+    await new Promise(r => setTimeout(r, 2200));
+
+    addState.extracted  = JSON.parse(JSON.stringify(DEMO_EXTRACTION));
+    addState.divergence = {
+      new_themes:    ['Return and reckoning'],
+      context_label: 'Looking for a place to buy',
+    };
+    addState.extractedAtExchangeCount = addState.exchangeCount;
+
+    _stopLoadingCycler();
+    addRenderReviewCard(addState.extracted, addState.date, addState.divergence, DEMO_EXTRACTION.dream.title);
+    addShowView('add-review-view');
+  }
+
+  // Review card
+  function addRenderReviewCard(extracted, date, divergence, suggestedTitle) {
+    const titleInput   = document.getElementById('add-title-input');
+    titleInput.value   = suggestedTitle || '';
+    titleInput.placeholder = suggestedTitle ? 'Edit or accept the suggested title' : 'Give this dream a title…';
+
+    const d = extracted.dream || {};
+    document.getElementById('add-review-date-display').textContent = fmtDateFull(date);
+    document.getElementById('add-review-narrative').textContent =
+      d.raw_narrative || '(no narrative captured)';
+
+    // Meta chips
+    const metaEl = document.getElementById('add-review-meta');
+    metaEl.innerHTML = '';
+    [
+      d.emotional_valence && ['Valence',   d.emotional_valence],
+      d.intensity != null  && ['Intensity', `${d.intensity}/5`],
+      d.visual_quality     && ['Visual',    d.visual_quality],
+      d.lucid     != null  && ['Lucid',     d.lucid ? 'yes' : 'no'],
+      d.notable_color      && ['Color',     d.notable_color],
+    ].filter(Boolean).forEach(([lbl, val]) => {
+      const c = document.createElement('span');
+      c.className = 'add-meta-chip';
+      c.innerHTML = `${esc(lbl)}: <strong>${esc(String(val))}</strong>`;
+      metaEl.appendChild(c);
+    });
+
+    // Sections
+    const sec = document.getElementById('add-review-sections');
+    sec.innerHTML = '';
+
+    addBuildSection(sec, 'Characters', extracted.characters || [], c =>
+      `<span class="iname">${esc(c.name)}</span>` +
+      (c.character_type ? ` <span class="idetail">· ${esc(c.character_type)}</span>` : '') +
+      (c.role_in_dream  ? ` <span class="idetail">· ${esc(c.role_in_dream)}</span>`  : ''),
+    'characters', 'character');
+
+    addBuildSection(sec, 'Symbols', extracted.symbols || [], s =>
+      `<span class="iname">${esc(s.name)}</span>` +
+      (s.prominence ? ` <span class="idetail">· ${esc(s.prominence)}</span>` : '') +
+      (s.category   ? ` <span class="idetail">· ${esc(s.category)}</span>`   : ''),
+    'symbols', 'symbol');
+
+    addBuildSection(sec, 'Settings', extracted.settings || [], st =>
+      `<span class="iname">${esc(st.name)}</span>` +
+      (st.familiarity      ? ` <span class="idetail">· ${esc(st.familiarity)}</span>`      : '') +
+      (st.distortion_level ? ` <span class="idetail">· ${esc(st.distortion_level)}</span>` : ''),
+    'settings', 'setting');
+
+    addBuildSection(sec, 'Emotions', extracted.emotions || [], e => {
+      const c = e.confidence || 'ambiguous';
+      return `<span class="iname">${esc(e.name)}</span> <span class="add-badge badge-${c}">${esc(c)}</span>` +
+             (e.anchor ? ` <span class="idetail">· ${esc(e.anchor)}</span>` : '');
+    }, 'emotions', 'emotion');
+
+    addBuildSection(sec, 'Themes', extracted.themes || [], t => {
+      const s = t.strength || 'weak';
+      return `<span class="iname">${esc(t.name)}</span> <span class="add-badge badge-${s}">${esc(s)}</span>`;
+    }, 'themes', 'theme');
+
+    if ((extracted.body_sensations || []).length) {
+      addBuildSection(sec, 'Body Sensations', extracted.body_sensations, bs => {
+        const c = bs.confidence || 'inferred';
+        return `<span class="iname">${esc(bs.description)}</span>` +
+               (bs.location ? ` <span class="idetail">· ${esc(bs.location)}</span>` : '') +
+               ` <span class="add-badge badge-${c}">${esc(c)}</span>`;
+      }, 'body_sensations', 'bodysensation');
+    }
+
+  }
+
+  function addBuildSection(container, title, items, formatter, key, typeClass) {
+    if (!items.length) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'add-review-section';
+
+    const h = document.createElement('div');
+    h.className = 'add-section-title';
+    h.textContent = title;
+    wrap.appendChild(h);
+
+    const row = document.createElement('div');
+    row.className = 'add-item-row';
+
+    items.forEach(item => {
+      const el = document.createElement('div');
+      el.className = `add-ritem ritem-${typeClass}`;
+      el.innerHTML = formatter(item) +
+        `<button class="xbtn" title="Remove" data-key="${esc(key)}">×</button>`;
+      row.appendChild(el);
+    });
+
+    wrap.appendChild(row);
+    container.appendChild(wrap);
+  }
+
+  function addRemoveItem(key, btn) {
+    const item = btn.closest('.add-ritem');
+    const allItems = [...item.parentElement.querySelectorAll('.add-ritem')];
+    const idx = allItems.indexOf(item);
+    if (addState.extracted[key] && idx !== -1) {
+      addState.extracted[key].splice(idx, 1);
+    }
+    item.remove();
+  }
+
+  function addBackToChat() {
+    addShowView('add-chat-view');
+    document.getElementById('add-message-input').focus();
+  }
+
+  async function addConfirmSave() {
+    const btn = document.getElementById('add-confirm-btn');
+    btn.disabled = true;
+    try {
+      const res  = await fetch('/api/confirm', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({extracted: addState.extracted, date: addState.date}),
+      });
+      const data = await res.json();
+      addShowSuccessView(data.dream_id, data.stats);
+    } catch (err) {
+      alert(`Could not save: ${err.message}`);
+      btn.disabled = false;
+    }
+  }
+
+  function addDiscardEntry() {
+    addResetToChat();
+  }
+
+  function addShowSuccessView(dreamId, stats) {
+    const n = stats ? stats.nodes : {};
+    document.getElementById('add-success-detail').textContent =
+      `${n.Dream || 0} dreams · ${n.Theme || 0} themes · ${n.Symbol || 0} symbols in graph`;
+    addShowView('add-success-view');
+  }
+
+  function addResetToChat() {
+    document.getElementById('add-conversation').innerHTML = '';
+    document.getElementById('add-save-btn').disabled = true;
+    document.getElementById('add-extract-wrap').style.display = 'none';
+    document.getElementById('add-dream-date').value  = new Date().toISOString().split('T')[0];
+    document.getElementById('add-title-input').value = '';
+    addState.extracted  = null;
+    addState.date       = null;
+    addState.divergence = null;
+    addState.exchangeCount            = 0;
+    addState.extractedAtExchangeCount = -1;
+    addShowView('add-chat-view');
+    addUpdateEmptyState();
+    document.getElementById('add-message-input').focus();
+  }
+
+  async function refreshGraph() {
+    try {
+      graphData  = _apiGraph();
+      allLCWs    = _apiLCWs();
+      allStats   = _apiStats();
+      allSymbols = _apiSymbolFreq();
+      allThemes  = _apiThemes();
+
+      const container = document.getElementById('graph-container');
+      container.innerHTML = '';
+      document.getElementById('graph-legend').style.display = 'none';
+      nodeCircles     = null;
+      linkLines       = null;
+      nodeLabels      = null;
+      simulation      = null;
+      dreamColorScale = null;
+      activeFilter    = 'dreams';
+      activeDateRange = 'all';
+
+      renderAmbientRail();
+      wlLcws = allLCWs.slice();
+      wlRender();
+      requestAnimationFrame(initGraph);
+    } catch (err) {
+      console.error('Graph refresh failed:', err);
+    }
+  }
+
+  // ─── Demo chat playback ───────────────────────────────────────────────────────
+  function _sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  async function playDemoChat() {
+    // If conversation already has messages, just re-enable extract and bail
+    const convo = document.getElementById('add-conversation');
+    if (convo.children.length > 0) {
+      document.getElementById('add-save-btn').disabled = false;
+      document.getElementById('add-extract-wrap').style.display = 'flex';
+      return;
+    }
+
+    const sendBtn = document.getElementById('add-send-btn');
+    const input   = document.getElementById('add-message-input');
+    sendBtn.disabled = true;
+    input.disabled   = true;
+
+    for (const turn of DEMO_SCRIPT) {
+      if (turn.role === 'user') {
+        addAppendMessage(turn.text, 'user');
+        await _sleep(700);
+      } else {
+        const bubble = addAppendMessage('', 'assistant');
+        bubble.classList.add('streaming');
+        const words = turn.text.split(' ');
+        for (const word of words) {
+          bubble.textContent += (bubble.textContent ? ' ' : '') + word;
+          convo.scrollTop = convo.scrollHeight;
+          await _sleep(38 + Math.random() * 28);
+        }
+        bubble.classList.remove('streaming');
+        addState.exchangeCount++;
+        await _sleep(500);
+      }
+    }
+
+    document.getElementById('add-save-btn').disabled = false;
+    document.getElementById('add-extract-wrap').style.display = 'flex';
+    sendBtn.disabled = false;
+    input.disabled   = false;
+  }
+
+  // ─── Add New: event listeners ─────────────────────────────────────────────────
+
+  document.getElementById('add-dream-date').value = new Date().toISOString().split('T')[0];
+
+
+
+  document.getElementById('add-message-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addSendMessage(); }
+  });
+
+  document.getElementById('add-message-input').addEventListener('input', function () {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 300) + 'px';
+  });
+
+  document.getElementById('add-send-btn').addEventListener('click', addSendMessage);
+
+  document.getElementById('add-save-btn').addEventListener('click', addSaveToJournal);
+
+  document.getElementById('add-title-input').addEventListener('input', function () {
+    if (addState.extracted?.dream) addState.extracted.dream.title = this.value.trim();
+  });
+
+  document.getElementById('add-discard-btn').addEventListener('click', addDiscardEntry);
+  document.getElementById('add-back-btn').addEventListener('click', addBackToChat);
+  document.getElementById('add-confirm-btn').addEventListener('click', addConfirmSave);
+
+  document.getElementById('add-review-sections').addEventListener('click', e => {
+    const btn = e.target.closest('.xbtn');
+    if (btn) addRemoveItem(btn.dataset.key, btn);
+  });
+
+  document.getElementById('add-view-graph-btn').addEventListener('click', () => {
+    addResetToChat();
+    switchSection('dreams');
+    refreshGraph();
+  });
+
+  document.getElementById('add-another-btn').addEventListener('click', addResetToChat);
+
+  // ─── Waking Life section ─────────────────────────────────────────────────────
+
+  let wlMenuLcwId = null;
+
+  function wlLoad() {
+    wlLcws = _apiLCWs();
+    wlRender();
+  }
+
+  function wlStatusClass(status) {
+    if (status === 'foreground') return 'fg';
+    if (status === 'background') return 'bg';
+    if (status === 'dormant')    return 'dormant';
+    return 'archived';
+  }
+
+  function wlChipHTML(lcw) {
+    const cls  = wlStatusClass(lcw.status);
+    const desc = lcw.description || lcw.summary || '';
+    const descHtml = desc
+      ? `<p class="wl-chip-desc">${esc(desc)}</p>`
+      : `<p class="wl-chip-desc empty">No description.</p>`;
+    return `
+      <div class="wl-chip-card" id="wl-chip-${esc(lcw.id)}">
+        <div class="wl-chip-header" data-lcwid="${esc(lcw.id)}">
+          <div class="wl-chip-left">
+            <span class="wl-chip-label">${esc(lcw.label)}</span>
+            ${lcw.start_date ? `<span class="wl-chip-date">Added ${esc(fmtDateMonthYear(lcw.start_date))}</span>` : ''}
+          </div>
+          <span class="wl-status-badge ${cls}"
+                data-lcwid="${esc(lcw.id)}"
+                data-status="${esc(lcw.status)}">${esc(lcw.status)}</span>
+        </div>
+        <div class="wl-chip-body">
+          ${descHtml}
+          <button class="wl-chip-edit-btn" data-lcwid="${esc(lcw.id)}">Edit</button>
+        </div>
+      </div>`;
+  }
+
+  const LCW_ACTIVE_LIMIT = 10;
+
+  function wlActiveCount() {
+    return wlLcws.filter(l => l.status !== 'archived').length;
+  }
+
+  function wlUpdateAddButton() {
+    const atLimit = wlActiveCount() >= LCW_ACTIVE_LIMIT;
+    const btn = document.getElementById('wl-add-toggle-btn');
+    const msg = document.getElementById('wl-limit-msg');
+    if (!btn) return;
+    btn.disabled = atLimit;
+    if (atLimit) {
+      msg.classList.add('visible');
+      // Close the add form if it was open
+      document.getElementById('wl-add-form').classList.remove('open');
+    } else {
+      msg.classList.remove('visible');
+    }
+  }
+
+  function wlRender() {
+    const container = document.getElementById('wl-groups');
+    if (!container) return;
+
+    const byStatus = { foreground: [], background: [], dormant: [], archived: [] };
+    wlLcws.forEach(lcw => { if (byStatus[lcw.status]) byStatus[lcw.status].push(lcw); });
+
+    const groupLabels = { foreground: 'Foreground', background: 'Background', dormant: 'Dormant' };
+    let html = '';
+
+    for (const status of ['foreground', 'background', 'dormant']) {
+      const items = byStatus[status];
+      html += `<div class="wl-group">
+        <div class="wl-group-header">
+          <span class="wl-group-label">${groupLabels[status]}</span>
+          <span class="wl-group-count">${items.length}</span>
+        </div>`;
+      html += items.length
+        ? items.map(wlChipHTML).join('')
+        : '<div class="wl-group-empty">None</div>';
+      html += '</div>';
+    }
+
+    const archived = byStatus['archived'];
+    html += `<div class="wl-group" id="wl-archive-group">
+      <div class="wl-archive-toggle" id="wl-archive-toggle">
+        <span class="wl-archive-label">Archive</span>
+        <span class="wl-archive-count">${archived.length}</span>
+        <span class="wl-archive-icon">▾</span>
+      </div>
+      <div class="wl-archive-body">`;
+    html += archived.length
+      ? archived.map(wlChipHTML).join('')
+      : '<div class="wl-group-empty">Nothing archived yet.</div>';
+    html += '</div></div>';
+
+    container.innerHTML = html;
+
+    // Status badge → open status dropdown
+    container.querySelectorAll('.wl-status-badge').forEach(badge => {
+      badge.addEventListener('click', e => {
+        e.stopPropagation();
+        const menu = document.getElementById('wl-status-menu');
+        if (menu.classList.contains('open') && wlMenuLcwId === badge.dataset.lcwid) {
+          wlCloseStatusMenu();
+        } else {
+          wlOpenStatusMenu(badge);
+        }
+      });
+    });
+
+    // Edit button → open edit form
+    container.querySelectorAll('.wl-chip-edit-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        wlOpenEditForm(btn.dataset.lcwid);
+      });
+    });
+
+    // Archive drawer toggle
+    const archiveToggle = document.getElementById('wl-archive-toggle');
+    if (archiveToggle) {
+      archiveToggle.addEventListener('click', () => {
+        document.getElementById('wl-archive-group').classList.toggle('wl-archive-open');
+      });
+    }
+
+    wlUpdateAddButton();
+  }
+
+  function wlInitStatusMenu() {
+    const menu = document.createElement('div');
+    menu.id = 'wl-status-menu';
+    const opts = [
+      { status: 'foreground', cls: 'fg',       label: 'Foreground' },
+      { status: 'background', cls: 'bg',       label: 'Background' },
+      { status: 'dormant',    cls: 'dormant',  label: 'Dormant'    },
+      { status: 'archived',   cls: 'archived', label: 'Archived'   },
+    ];
+    menu.innerHTML = opts.map(o =>
+      `<div class="wl-smenu-item" data-status="${o.status}" role="menuitem">` +
+      `<span class="wl-smenu-dot ${o.cls}"></span>${o.label}</div>`
+    ).join('');
+    document.body.appendChild(menu);
+
+    menu.addEventListener('click', e => {
+      const item = e.target.closest('.wl-smenu-item');
+      if (item && wlMenuLcwId) wlSetStatus(wlMenuLcwId, item.dataset.status);
+      wlCloseStatusMenu();
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('#wl-status-menu') && !e.target.closest('.wl-status-badge'))
+        wlCloseStatusMenu();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') wlCloseStatusMenu();
+    });
+  }
+
+  function wlOpenStatusMenu(badge) {
+    const menu = document.getElementById('wl-status-menu');
+    wlMenuLcwId = badge.dataset.lcwid;
+    const cur = badge.dataset.status;
+    menu.querySelectorAll('.wl-smenu-item').forEach(item =>
+      item.classList.toggle('active', item.dataset.status === cur)
+    );
+    const rect  = badge.getBoundingClientRect();
+    const menuW = 170;
+    const left  = Math.min(rect.left, window.innerWidth - menuW - 8);
+    menu.style.top  = (rect.bottom + 6) + 'px';
+    menu.style.left = left + 'px';
+    menu.classList.add('open');
+  }
+
+  function wlCloseStatusMenu() {
+    const menu = document.getElementById('wl-status-menu');
+    if (menu) menu.classList.remove('open');
+    wlMenuLcwId = null;
+  }
+
+  function wlSetStatus(lcwId, newStatus) {
+    if (_nodes[lcwId]) _nodes[lcwId].status = newStatus;
+    const lcw = wlLcws.find(l => l.id === lcwId);
+    if (lcw) lcw.status = newStatus;
+    wlRender();
+    allLCWs = wlLcws.slice();
+  }
+
+  function wlToggleAddForm() {
+    const form    = document.getElementById('wl-add-form');
+    const opening = !form.classList.contains('open');
+    document.getElementById('wl-edit-form').classList.remove('open');
+    wlEditingId = null;
+    form.classList.toggle('open', opening);
+    if (opening) {
+      document.getElementById('wl-add-label').value     = '';
+      document.getElementById('wl-add-startdate').value = '';
+      document.getElementById('wl-add-desc').value      = '';
+      document.getElementById('wl-add-status').value    = 'foreground';
+      document.getElementById('wl-add-label').focus();
+    }
+  }
+
+  function wlOpenEditForm(lcwId) {
+    const lcw = wlLcws.find(l => l.id === lcwId);
+    if (!lcw) return;
+    document.getElementById('wl-add-form').classList.remove('open');
+    wlEditingId = lcwId;
+    document.getElementById('wl-edit-label').value     = lcw.label        || '';
+    document.getElementById('wl-edit-startdate').value = lcw.start_date   || '';
+    document.getElementById('wl-edit-desc').value      = lcw.description  || '';
+    document.getElementById('wl-edit-status').value    = lcw.status       || 'foreground';
+    document.getElementById('wl-edit-form').classList.add('open');
+    document.getElementById('wl-edit-form').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+    document.getElementById('wl-edit-label').focus();
+  }
+
+  async function wlSubmitAdd() {
+    const label = document.getElementById('wl-add-label').value.trim();
+    if (!label) { document.getElementById('wl-add-label').focus(); return; }
+    const btn = document.getElementById('wl-add-submit-btn');
+    btn.disabled = true;
+    try {
+      const res = await fetch('/api/life-context-windows', {
+        method:  'POST',
+        headers: {'Content-Type': 'application/json'},
+        body:    JSON.stringify({
+          label,
+          start_date:  document.getElementById('wl-add-startdate').value || null,
+          description: document.getElementById('wl-add-desc').value.trim() || null,
+          status:      document.getElementById('wl-add-status').value,
+        }),
+      });
+      if (!res.ok) {
+        const e = await res.json();
+        throw new Error(e.message || e.error || 'Failed');
+      }
+      const newLcw = await res.json();
+      wlLcws.push(newLcw);
+      document.getElementById('wl-add-form').classList.remove('open');
+      wlRender();
+      allLCWs = wlLcws.slice();
+      addLoadContext();
+    } catch (err) {
+      alert(err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  async function wlSubmitEdit() {
+    if (!wlEditingId) return;
+    const label = document.getElementById('wl-edit-label').value.trim();
+    if (!label) { document.getElementById('wl-edit-label').focus(); return; }
+    const btn = document.getElementById('wl-edit-submit-btn');
+    btn.disabled = true;
+    try {
+      const payload = {
+        label,
+        start_date:  document.getElementById('wl-edit-startdate').value || null,
+        description: document.getElementById('wl-edit-desc').value.trim() || null,
+        status:      document.getElementById('wl-edit-status').value,
+      };
+      // Update in-memory directly (mock fetch handles the PUT too, but sync wlLcws here)
+      if (_nodes[wlEditingId]) Object.assign(_nodes[wlEditingId], {
+        label: payload.label, status: payload.status,
+        description: payload.description, start_date: payload.start_date,
+      });
+      const idx = wlLcws.findIndex(l => l.id === wlEditingId);
+      if (idx !== -1) wlLcws[idx] = { ...wlLcws[idx], ...payload };
+      document.getElementById('wl-edit-form').classList.remove('open');
+      wlEditingId = null;
+      wlRender();
+      allLCWs = wlLcws.slice();
+      addLoadContext();
+    } catch (err) {
+      alert('Could not save changes: ' + err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  // Waking Life event listeners
+  wlInitStatusMenu();
+  document.getElementById('wl-add-toggle-btn').addEventListener('click', wlToggleAddForm);
+  document.getElementById('wl-legend-toggle').addEventListener('click', () => {
+    const toggle = document.getElementById('wl-legend-toggle');
+    const legend = document.getElementById('wl-legend');
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    legend.classList.toggle('open', !open);
+  });
+  document.getElementById('wl-add-cancel-btn').addEventListener('click', () => {
+    document.getElementById('wl-add-form').classList.remove('open');
+  });
+  document.getElementById('wl-add-submit-btn').addEventListener('click', wlSubmitAdd);
+  document.getElementById('wl-edit-cancel-btn').addEventListener('click', () => {
+    document.getElementById('wl-edit-form').classList.remove('open');
+    wlEditingId = null;
+  });
+  document.getElementById('wl-edit-submit-btn').addEventListener('click', wlSubmitEdit);
+
+  // Demo toggle is a no-op on GitHub Pages (always in demo mode)
+
+  // ─── Waking life tooltip interactions ───────────────────────────────────────
+  document.getElementById('add-ctx-trigger-btn').addEventListener('click', e => {
+    e.stopPropagation();
+    document.getElementById('add-ctx-tooltip').classList.toggle('open');
+  });
+  document.addEventListener('click', () => {
+    document.getElementById('add-ctx-tooltip').classList.remove('open');
+  });
+  document.getElementById('add-ctx-tooltip').addEventListener('click', e => {
+    e.stopPropagation();
+  });
+
+  // ─── Start ───────────────────────────────────────────────────────────────────
+  boot();
+  addLoadContext();
+  </script>
+
+</body>
+</html>
