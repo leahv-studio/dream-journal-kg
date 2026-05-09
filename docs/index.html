@@ -320,6 +320,42 @@
       font-style: italic;
     }
 
+    /* Demo preset query chips */
+    .query-preset-wrap {
+      margin-top: 10px;
+    }
+    .query-preset-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-ink-faint);
+      margin-bottom: 6px;
+    }
+    .query-preset-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .query-preset-chip {
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 12px;
+      color: var(--color-ink-soft);
+      font-family: var(--font-ui);
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .query-preset-chip:hover {
+      border-color: var(--color-purple-light);
+      color: var(--color-ink);
+      background: rgba(236,234,230,0.8);
+    }
+
     /* Section label */
     .rail-section-label {
       font-size: 10px;
@@ -2022,6 +2058,16 @@
           </div>
         </div>
 
+        <!-- Demo: preset query suggestions -->
+        <div class="query-preset-wrap" id="rail-query-presets">
+          <div class="query-preset-label">Try a sample query</div>
+          <div class="query-preset-list">
+            <button class="query-preset-chip" data-query="What do I dream about most during times of grief?">What do I dream about most during times of grief?</button>
+            <button class="query-preset-chip" data-query="What's going on in my life when I dream about anxiety?">What's going on in my life when I dream about anxiety?</button>
+            <button class="query-preset-chip" data-query="What symbols show up most in the last 90 days?">What symbols show up most in the last 90 days?</button>
+          </div>
+        </div>
+
         <!-- Ambient state: graph at a glance -->
         <div id="rail-ambient">
           <div class="rail-section-label">Your graph</div>
@@ -2698,9 +2744,29 @@
     }
 
     if (u === '/api/query' && method === 'POST') {
+      const _qBody = JSON.parse(opts.body || '{}');
+      const _q     = (_qBody.question || '').toLowerCase();
+      if (_q.includes('grief')) {
+        return _mockResp({
+          highlighted_node_ids: ['emo_grief','lcw_grief_processing','thm_isolation','thm_home_belonging','dream_phone_wont_work','dream_empty_house_tour','sym_phone','dream_on_the_phone_all_night'],
+          answer: "Grief activates your isolation cluster consistently. During your grief processing window, 4 of 5 recorded dreams center on failed connection — phones that won't work, empty houses, one-sided conversations. 'Can't Reach Mom' is your most node-dense grief entry, linking Anxiety, Dread, and Home/belonging simultaneously. Even outside that window, house-hunting dreams carry the same undertow: the longing for a place to belong resurfaces as a secondary thread across two separate life contexts.",
+        });
+      }
+      if (_q.includes('anxiety')) {
+        return _mockResp({
+          highlighted_node_ids: ['emo_anxiety','lcw_new_role','lcw_job_search','lcw_house_hunting','thm_legitimacy_anxiety','thm_professional_legitimacy_anxiety','sym_wrong_slides','sym_backpack','dream_wrong_slides','dream_exam_unprepared'],
+          answer: "Anxiety appears across 14 recorded dreams, but it clusters tightly around two life windows: your promotion and your active job search — both transitions where external validation felt uncertain. During those periods, your dreams consistently invoke legitimacy symbols: wrong slides, overfull backpacks, exams you never attended. The pattern quiets during your house-hunting window, where Fear and Dread take over as dominant emotions — suggesting that housing stress registers differently in your nervous system than career stress does.",
+        });
+      }
+      if (_q.includes('90 day') || _q.includes('last 90') || _q.includes('symbol')) {
+        return _mockResp({
+          highlighted_node_ids: ['sym_grand_am','sym_driver_s_license_inspection','sym_confiscated_keys','sym_wallet_and_documents','sym_giant_crab','sym_ruler','dream_grand_am','dream_2026_04_24','dream_2026_04_27','dream_therapy_intake'],
+          answer: "Identity-and-credentials symbols dominate the last 90 days: driver's license, confiscated keys, and wallet and documents appear across 4 consecutive dreams. The Grand Am cluster introduced them in March; they've since intensified — the April 24 dream strips you of your license at Target, and the April 27 entry adds a giant crab and a ruler, both symbols with no prior recurrence. This credential-focus is your strongest emergent pattern right now, likely anchored to your therapy journey and side business life context windows.",
+        });
+      }
       return _mockResp({
-        highlighted_node_ids: ['sym_old_car', 'theme_loss_of_control', 'char_mom'],
-        answer: "Loss of control is your most persistent theme, appearing across multiple life context windows. The old car symbol recurs most frequently, often paired with Mom as a character — suggesting an ongoing tension between autonomy and familiarity. This pattern intensified during your job search period and continues into your current house-hunting context.",
+        highlighted_node_ids: ['sym_grand_am', 'thm_control_loss', 'sym_car'],
+        answer: "Loss of control is your most persistent theme, appearing across multiple life context windows. The Grand Am and car symbols recur most frequently, often paired with your mom as a character — suggesting an ongoing tension between autonomy and familiarity. This pattern intensified during your job search period and continues into your current house-hunting context.",
       });
     }
 
@@ -3575,6 +3641,15 @@
     if (e.key === 'Enter') { e.preventDefault(); submitQuery(); }
   });
   querySubmit.addEventListener('click', submitQuery);
+
+  // Preset query chips — populate input and fire
+  document.querySelectorAll('.query-preset-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      queryInput.value = chip.dataset.query;
+      queryInput.dispatchEvent(new Event('input'));
+      submitQuery();
+    });
+  });
 
   document.getElementById('rail-query-close').addEventListener('click', () => {
     clearEgoHighlight();
