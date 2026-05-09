@@ -2210,7 +2210,7 @@
             <div class="add-input-row">
               <textarea id="add-message-input" rows="4"
                         placeholder="Click &quot;Play demo chat&quot; to see a scripted entry, or type and press Enter to trigger it…" style="color:var(--color-ink-faint)"></textarea>
-              <button class="add-btn-send" id="add-send-btn" aria-label="Play demo chat" style="width:auto;padding:0 18px;font-size:13px;font-family:var(--font-ui);font-weight:500;letter-spacing:0.03em;gap:6px;display:flex;align-items:center;">
+              <button class="add-btn-send" id="add-send-btn" aria-label="Play demo chat" style="width:auto;gap:6px;">
                 <svg width="16" height="12" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0">
                   <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
                            C3.5 8, 7.5 5, 11 7.5
@@ -3932,13 +3932,16 @@
       allSymbols = _apiSymbolFreq();
       allThemes  = _apiThemes();
 
+      // Stop the running simulation before tearing down DOM so its tick
+      // callbacks don't fire against the cleared container mid-render.
+      if (simulation) { simulation.stop(); simulation = null; }
+
       const container = document.getElementById('graph-container');
       container.innerHTML = '';
       document.getElementById('graph-legend').style.display = 'none';
       nodeCircles     = null;
       linkLines       = null;
       nodeLabels      = null;
-      simulation      = null;
       dreamColorScale = null;
       activeFilter    = 'dreams';
       activeDateRange = 'all';
@@ -3946,7 +3949,9 @@
       renderAmbientRail();
       wlLcws = allLCWs.slice();
       wlRender();
-      requestAnimationFrame(initGraph);
+      // Use setTimeout rather than rAF so the newly-visible section has time
+      // to finish layout before initGraph measures the container dimensions.
+      setTimeout(initGraph, 50);
     } catch (err) {
       console.error('Graph refresh failed:', err);
     }
