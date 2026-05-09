@@ -2686,7 +2686,7 @@
       for (const e of (ext.emotions || []))
         _links.push({source: dreamId, target: _ensureNode('Emotion', e.name), key: 'evoked', edge_type: 'evoked', anchor: e.anchor || null, confidence: e.confidence || null});
       for (const t of (ext.themes || []))
-        _links.push({source: dreamId, target: _ensureNode('Theme', t.name, {source: 'llm'}), key: 'expresses', edge_type: 'expresses', strength: t.strength || null, source: 'llm'});
+        _links.push({source: dreamId, target: _ensureNode('Theme', t.name, {source: 'llm'}), key: 'expresses', edge_type: 'expresses', strength: t.strength || null});
       for (const bs of (ext.body_sensations || [])) {
         const bsId = `bs_${dreamId}_${Math.random().toString(36).slice(2, 6)}`;
         _nodes[bsId] = {node_type: 'BodySensation', description: bs.description, location: bs.location || null, confidence: bs.confidence || null};
