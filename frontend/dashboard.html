@@ -1976,7 +1976,7 @@
 
   <!-- ── Nav ─────────────────────────────────────────────── -->
   <nav class="nav">
-    <a class="nav-brand" href="#">
+    <a class="nav-brand" href="#" id="nav-brand-link">
       <svg width="30" height="22" viewBox="0 0 30 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <path d="M7 18 C3.5 18, 1.5 14, 4.5 12
                  C3.5 8, 7.5 5, 11 7.5
@@ -2428,7 +2428,7 @@
         stroke="#6B6778" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <span class="footer-wordmark">dreama</span>
-    <span class="footer-sub">by leah · <a href="#" class="footer-link">contact</a></span>
+    <span class="footer-sub">by leah · <a href="https://www.linkedin.com/in/leah-vogel/" class="footer-link" target="_blank" rel="noopener">contact</a></span>
   </footer>
 
   <!-- Tooltip (fixed, outside main) -->
@@ -3188,6 +3188,11 @@
   // Nav
   document.querySelectorAll('.nav-links li').forEach(li => {
     li.addEventListener('click', () => switchSection(li.dataset.section));
+  });
+
+  document.getElementById('nav-brand-link').addEventListener('click', e => {
+    e.preventDefault();
+    switchSection('dreams');
   });
 
   // Inspect close
