@@ -909,6 +909,150 @@
 
     .footer-link:hover { text-decoration: underline; }
 
+    /* ── About screen ──────────────────────────────────────── */
+    #section-about { flex-direction: column; }
+
+    #about-scroll { flex: 1; overflow-y: auto; }
+
+    #about-content {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    .about-title {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: 38px;
+      color: var(--color-purple-deep);
+      margin-bottom: 40px;
+      line-height: 1.1;
+    }
+
+    .about-h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 24px;
+      color: var(--color-ink);
+      margin: 40px 0 14px;
+    }
+
+    .about-h3 {
+      font-family: var(--font-ui);
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-purple);
+      margin: 28px 0 8px;
+    }
+
+    .about-p {
+      font-family: var(--font-prose);
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--color-ink);
+      margin-bottom: 16px;
+    }
+
+    .about-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0 8px;
+    }
+
+    .about-table th {
+      text-align: left;
+      font-family: var(--font-ui);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-soft);
+      padding: 8px 12px 8px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .about-table td {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--color-ink);
+      padding: 10px 12px 10px 0;
+      border-bottom: 1px solid rgba(216,212,206,0.5);
+      vertical-align: top;
+    }
+
+    .about-table td:first-child { color: var(--color-ink-soft); width: 38%; }
+
+    .about-schema-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 16px 0 8px;
+      padding: 16px;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    .about-schema-label {
+      font-family: var(--font-ui);
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-ink-soft);
+    }
+
+    .about-schema-val {
+      font-family: var(--font-ui);
+      color: var(--color-ink);
+      line-height: 1.5;
+    }
+
+    .about-key-decisions {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .about-key-decisions li {
+      font-family: var(--font-prose);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-ink);
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .about-key-decisions li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--color-purple-light);
+    }
+
+    .about-credit {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-ink-soft);
+    }
+
+    .about-credit a {
+      color: var(--color-purple);
+      text-decoration: none;
+    }
+
+    .about-credit a:hover { text-decoration: underline; }
+
     #add-scroll { flex: 1; overflow-y: auto; }
 
     #add-content {
@@ -2446,6 +2590,82 @@
 
     </section>
 
+    <!-- About -->
+    <section id="section-about" class="section">
+      <div id="about-scroll">
+        <div id="about-content">
+
+          <h1 class="about-title">About dreama</h1>
+
+          <h2 class="about-h2">What is it?</h2>
+          <p class="about-p">Dreama is a personal dream journal that thinks alongside you. Instead of storing entries as text you scroll through and forget, Dreama builds a living knowledge graph from your dreams. It connects recurring symbols, themes, characters, emotions, and settings across time so you can actually see the patterns in your inner life.</p>
+          <p class="about-p">The centerpiece is an interactive D3.js graph where every node is something that appeared in your dreams, and every edge is a relationship between them. But the real value is what the graph enables: querying your own unconscious. Ask it "what symbols appear when I'm in a major life transition?" and it answers — highlighted nodes, a direct response, grounded in your actual data. No manual recall required.</p>
+          <p class="about-p">The longer you use it, the richer and more revealing it becomes.</p>
+
+          <h2 class="about-h2">Where did it come from?</h2>
+          <p class="about-p">I'd been using Claude to dream journal for a few months, loving how rich the analysis could be the longer I maintained a chat thread. Of course, eventually I had multiple disjointed chats with collections of various dreams and analysis. I had a collection of deep insights across my dreams over several months, but no way to review them as one entity. I started to have questions like, "is this the fourth navigation-failure dream I've had lately?", "what do I dream about most when I'm stressed out?" The answers were somewhere inside all of my dream journal chats, I just needed a way to connect them all. This is what Dreama was built to solve.</p>
+          <p class="about-p">Quick note on the name: I was explaining the schema design to someone and they said, "Dream schema? So, a Dreama?"</p>
+          <p class="about-p">In Spring 2026, I was taking a graduate course on digital transformation at the University of St. Thomas, where I'm pursuing an MS in Information Technology. Our assignment was to explore how AI and knowledge graphs work together — AI creating graph structure from unstructured input, AI traversing that structure to answer questions. Dream journaling turned out to be a near-perfect use case. Dream content is compressed, symbolic, non-linear, and relationship-heavy — exactly the kind of domain where structured context dramatically outperforms raw prompting, and where the before/after delta is immediately legible.</p>
+          <p class="about-p">Dreama was built entirely using Claude Code, Anthropic's agentic coding tool — schema design, Flask backend, frontend UI, D3.js visualization, all of it. I used Claude chat to help draft many of the prompts for Claude Code, leaning heavily into describing the "What" and the "Why" and leaving the "How" to Claude Code. As a product professional deepening my technical foundation, it was a chance to experience the tool from the inside.</p>
+
+          <h2 class="about-h2">How it works</h2>
+
+          <h3 class="about-h3">Entry flow</h3>
+          <p class="about-p">When you add a dream, you describe it in a conversational interface powered by Claude (claude-sonnet-4-20250514, Anthropic). Claude asks up to two clarifying questions to draw out detail. Once the conversation closes, it extracts structured entities from the full exchange: symbols, themes, characters, settings, emotions, and body sensations. You review everything before a single node is written to the graph.</p>
+
+          <h3 class="about-h3">Life context</h3>
+          <p class="about-p">Before analyzing your dream, Claude is given a snapshot of what's currently active in your waking life. Life context windows — persistent tags like "job search" or "duplex renovation" — move between statuses (Foreground, Background, Dormant, Archived) as your circumstances shift. Foreground contexts appear in your dream entry view. Archived contexts are excluded from interpretation entirely. This grounds every extraction in your actual circumstances rather than producing generic pattern-matching.</p>
+
+          <h3 class="about-h3">The graph</h3>
+          <p class="about-p">Everything persists as a NetworkX knowledge graph, serialized to graph.json. The D3.js visualization renders it as a force-directed layout: node size reflects connection density, node color reflects type. Two edges are auto-calculated — co_occurs_with (increments each time two symbols share a dream) and activates (derived from which themes cluster within a life context window). Everything else is asserted by you or by Claude, with source always tracked.</p>
+
+          <h3 class="about-h3">Natural language query</h3>
+          <p class="about-p">Ask the graph in plain English from the Knowledge Graph view. The backend serializes pre-aggregated analytics — symbol frequency tables, theme patterns, per-context-window breakdowns — and Claude returns a direct answer plus the IDs of relevant nodes, which highlight in the visualization.</p>
+
+          <h2 class="about-h2">Technical specs</h2>
+
+          <table class="about-table">
+            <thead>
+              <tr><th>Layer</th><th>Technology</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Backend</td><td>Python / Flask</td></tr>
+              <tr><td>Graph engine</td><td>NetworkX</td></tr>
+              <tr><td>Graph storage</td><td>JSON (data/graph.json)</td></tr>
+              <tr><td>AI model</td><td>Claude API — claude-sonnet-4-20250514 (Anthropic)</td></tr>
+              <tr><td>Frontend</td><td>Vanilla JavaScript (no build step)</td></tr>
+              <tr><td>Graph visualization</td><td>D3.js force-directed layout</td></tr>
+              <tr><td>Hosting</td><td>GitHub Pages (static demo)</td></tr>
+              <tr><td>Source</td><td><a href="https://github.com/leahv-studio/dream-journal-kg" class="footer-link" target="_blank" rel="noopener">leahv-studio/dream-journal-kg</a></td></tr>
+            </tbody>
+          </table>
+
+          <div class="about-schema-row">
+            <span class="about-schema-label">Schema</span>
+            <span class="about-schema-val">8 node types · 15 edge types · 2 auto-calculated edges</span>
+            <span class="about-schema-label" style="margin-top:8px">Node types</span>
+            <span class="about-schema-val">Dream · Symbol · Theme · Character · Setting · Emotion · LifeContextWindow · BodySensation</span>
+          </div>
+
+          <p class="about-p" style="margin-top:16px">Key design decisions:</p>
+          <ul class="about-key-decisions">
+            <li>Extraction runs once per entry, after the conversation closes — never mid-conversation</li>
+            <li>is_recurring and is_novel are user-asserted only — the system surfaces frequency data but never infers these flags</li>
+            <li>Null is valid everywhere except required fields — a missing value is meaningful data, not an error</li>
+            <li>Emotion confidence is tracked as stated vs. inferred — inferred values are never presented as fact</li>
+          </ul>
+
+          <h2 class="about-h2">Status</h2>
+          <p class="about-p">Started as a class project in spring 2026, demoed in May, and now actively in development. The static GitHub Pages demo runs entirely in-browser — no backend, no API key required. UAT and continued development planned through summer 2026 and beyond.</p>
+
+          <div class="about-credit">
+            Built by Leah Vogel using Claude Code · <a href="https://www.linkedin.com/in/leah-vogel/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="app-footer">
@@ -2454,7 +2674,7 @@
         stroke="#6B6778" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <span class="footer-wordmark">dreama</span>
-    <span class="footer-sub">by leah · <a href="https://www.linkedin.com/in/leah-vogel/" class="footer-link" target="_blank" rel="noopener">contact</a></span>
+    <span class="footer-sub"><a href="#" class="footer-link" id="footer-about-link">about</a> · <a href="https://www.linkedin.com/in/leah-vogel/" class="footer-link" target="_blank" rel="noopener">contact</a></span>
   </footer>
 
   <!-- Tooltip (fixed, outside main) -->
@@ -3248,6 +3468,11 @@
   document.getElementById('nav-brand-link').addEventListener('click', e => {
     e.preventDefault();
     switchSection('dreams');
+  });
+
+  document.getElementById('footer-about-link').addEventListener('click', e => {
+    e.preventDefault();
+    switchSection('about');
   });
 
   // Inspect close
