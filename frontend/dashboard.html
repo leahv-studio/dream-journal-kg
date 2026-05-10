@@ -2092,10 +2092,15 @@
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         padding: 10px 16px;
-        position: relative;
-        z-index: 300;
       }
       .filter-row::-webkit-scrollbar { display: none; }
+
+      /* Date dropdown fixed on mobile to escape stacking contexts */
+      #date-dropdown {
+        position: fixed;
+        right: 16px;
+        z-index: 9999;
+      }
 
       .kg-mobile-stats {
         display: flex;
@@ -3631,7 +3636,12 @@
 
   dateChipEl.addEventListener('click', e => {
     e.stopPropagation();
-    dateDropEl.style.display = dateDropEl.style.display === 'none' ? 'block' : 'none';
+    const opening = dateDropEl.style.display === 'none';
+    dateDropEl.style.display = opening ? 'block' : 'none';
+    if (opening && isMobile()) {
+      const rect = dateChipEl.getBoundingClientRect();
+      dateDropEl.style.top = (rect.bottom + 6) + 'px';
+    }
   });
 
   document.querySelectorAll('.date-option').forEach(opt => {
