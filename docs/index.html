@@ -1869,6 +1869,20 @@
     .kg-mobile-search { display: none; }
     .kg-mobile-stats  { display: none; }
     .inspect-drag-handle { display: none; }
+    .kg-key-chip { display: none; }
+
+    .kg-key-popover {
+      position: fixed;
+      right: 16px;
+      background: rgba(248, 246, 242, 0.97);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      z-index: 200;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      min-width: 200px;
+    }
 
     .kg-mobile-stats::-webkit-scrollbar { display: none; }
 
@@ -1955,6 +1969,8 @@
       /* ── KG screen ── */
       #section-dreams { flex-direction: column; }
       .left-panel { display: none; }
+      .kg-key-chip { display: inline-block; }
+      .graph-legend { display: none !important; }
 
       .kg-mobile-search {
         display: flex;
@@ -2174,6 +2190,8 @@
           <button class="chip" data-filter="symbols">Symbols</button>
           <button class="chip" data-filter="life-context">Life Context</button>
           <button class="chip" data-filter="recurring">Recurring</button>
+          <span class="chip-date kg-key-chip" id="kg-key-chip">Key ▾</span>
+          <div id="kg-key-popover" class="kg-key-popover" style="display:none"></div>
           <a href="#" id="filter-reset" class="filter-reset-link" style="display:none">Reset</a>
           <div class="date-range-wrapper">
             <span class="chip-date" id="date-chip">All time ▾</span>
@@ -3454,25 +3472,52 @@
   }
 
   // ─── Legend ──────────────────────────────────────────────────────────────────
-  function renderLegend() {
-    const el = document.getElementById('graph-legend');
-    const entries = [
-      { label: 'Dream (oldest → newest)', gradient: true },
-      { label: 'Symbol',            color: '#E8B4C0' },
-      { label: 'Theme',             color: '#7B6BA8' },
-      { label: 'Character',         color: '#A8C0D6' },
-      { label: 'Setting',           color: '#4A3D5C' },
-      { label: 'Emotion',           color: '#D4956A' },
-      { label: 'Life Context',      color: '#BF8E3A' },
-      { label: 'Body Sensation',    color: '#B8A8C8' },
-    ];
-    el.innerHTML = entries.map(e => {
+  const LEGEND_ENTRIES = [
+    { label: 'Dream (oldest → newest)', gradient: true },
+    { label: 'Symbol',         color: '#E8B4C0' },
+    { label: 'Theme',          color: '#7B6BA8' },
+    { label: 'Character',      color: '#A8C0D6' },
+    { label: 'Setting',        color: '#4A3D5C' },
+    { label: 'Emotion',        color: '#D4956A' },
+    { label: 'Life Context',   color: '#BF8E3A' },
+    { label: 'Body Sensation', color: '#B8A8C8' },
+  ];
+
+  function buildLegendHTML(entries) {
+    return entries.map(e => {
       const dot = e.gradient
         ? `<span class="legend-dot" style="background:linear-gradient(to right,${DREAM_COLOR_OLD},${DREAM_COLOR_NEW})"></span>`
         : `<span class="legend-dot" style="background:${e.color}"></span>`;
       return `<div class="legend-row">${dot}<span>${e.label}</span></div>`;
     }).join('');
   }
+
+  function renderLegend() {
+    document.getElementById('graph-legend').innerHTML = buildLegendHTML(LEGEND_ENTRIES);
+    document.getElementById('kg-key-popover').innerHTML = buildLegendHTML(LEGEND_ENTRIES);
+  }
+
+  // Key chip popover (mobile)
+  const keyChip    = document.getElementById('kg-key-chip');
+  const keyPopover = document.getElementById('kg-key-popover');
+  keyChip.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = keyPopover.style.display !== 'none';
+    if (open) {
+      keyPopover.style.display = 'none';
+      keyChip.textContent = 'Key ▾';
+    } else {
+      const rect = keyChip.getBoundingClientRect();
+      keyPopover.style.display = 'block';
+      keyPopover.style.top  = (rect.bottom + 8) + 'px';
+      keyChip.textContent = 'Key ▴';
+    }
+  });
+  document.addEventListener('click', () => {
+    keyPopover.style.display = 'none';
+    keyChip.textContent = 'Key ▾';
+  });
+  keyPopover.addEventListener('click', e => e.stopPropagation());
 
   // ─── Inspect drawer ──────────────────────────────────────────────────────────
   function openInspectDrawer(d) {
