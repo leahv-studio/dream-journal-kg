@@ -2878,6 +2878,7 @@
       wlLcws = allLCWs.slice();
       wlRender();
       requestAnimationFrame(initGraph);
+      addLoadContext();
     } catch (err) {
       console.error('Boot failed:', err);
       document.getElementById('graph-container').innerHTML =
@@ -4466,7 +4467,6 @@
 
   // ─── Start ───────────────────────────────────────────────────────────────────
   boot();
-  addLoadContext();
   </script>
 
 </body>
