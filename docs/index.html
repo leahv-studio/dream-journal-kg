@@ -2739,6 +2739,8 @@
 
   <!-- Tooltip (fixed, outside main) -->
   <div id="graph-tooltip" class="graph-tooltip"></div>
+  <!-- Key popover at body level so position:fixed is never trapped by a parent stacking context -->
+  <div id="kg-key-popover" class="kg-key-popover" style="display:none"></div>
 
   <script>
   // ── Demo mode: in-memory graph state & mock fetch ───────────────────────────
@@ -4749,8 +4751,6 @@
   boot();
   </script>
 
-<!-- Key popover lives at body level so it's never trapped by a parent stacking context -->
-<div id="kg-key-popover" class="kg-key-popover" style="display:none"></div>
 
 </body>
 </html>
