@@ -2017,7 +2017,6 @@
 
     .kg-key-popover {
       position: fixed;
-      right: 16px;
       background: rgba(248, 246, 242, 0.97);
       border: 1px solid var(--color-border);
       border-radius: 10px;
@@ -2136,7 +2135,6 @@
       /* Date dropdown fixed on mobile to escape stacking contexts */
       #date-dropdown {
         position: fixed;
-        right: 16px;
         z-index: 9999;
       }
 
@@ -2344,12 +2342,6 @@
           <a href="#" id="filter-reset" class="filter-reset-link" style="display:none">Reset</a>
           <div class="date-range-wrapper">
             <span class="chip-date" id="date-chip">All time ▾</span>
-            <div class="date-dropdown" id="date-dropdown" style="display:none">
-              <div class="date-option active" data-range="all">All time</div>
-              <div class="date-option" data-range="30d">30 days</div>
-              <div class="date-option" data-range="90d">90 days</div>
-              <div class="date-option" data-range="6m">6 months</div>
-            </div>
           </div>
         </div>
 
@@ -2739,8 +2731,14 @@
 
   <!-- Tooltip (fixed, outside main) -->
   <div id="graph-tooltip" class="graph-tooltip"></div>
-  <!-- Key popover at body level so position:fixed is never trapped by a parent stacking context -->
+  <!-- Popovers at body level so position:fixed is never trapped by a parent stacking context -->
   <div id="kg-key-popover" class="kg-key-popover" style="display:none"></div>
+  <div class="date-dropdown" id="date-dropdown" style="display:none">
+    <div class="date-option active" data-range="all">All time</div>
+    <div class="date-option" data-range="30d">30 days</div>
+    <div class="date-option" data-range="90d">90 days</div>
+    <div class="date-option" data-range="6m">6 months</div>
+  </div>
 
   <script>
   // ── Demo mode: in-memory graph state & mock fetch ───────────────────────────
@@ -3735,8 +3733,10 @@
       keyChip.textContent = 'Key ▾';
     } else {
       const rect = keyChip.getBoundingClientRect();
-      keyPopover.style.display = 'block';
       keyPopover.style.top  = (rect.bottom + 8) + 'px';
+      keyPopover.style.left = rect.left + 'px';
+      keyPopover.style.right = 'auto';
+      keyPopover.style.display = 'block';
       keyChip.textContent = 'Key ▴';
     }
   });
@@ -3994,7 +3994,9 @@
     dateDropEl.style.display = opening ? 'block' : 'none';
     if (opening && isMobile()) {
       const rect = dateChipEl.getBoundingClientRect();
-      dateDropEl.style.top = (rect.bottom + 6) + 'px';
+      dateDropEl.style.top   = (rect.bottom + 6) + 'px';
+      dateDropEl.style.right = (window.innerWidth - rect.right) + 'px';
+      dateDropEl.style.left  = 'auto';
     }
   });
 
