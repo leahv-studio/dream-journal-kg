@@ -2086,6 +2086,10 @@
         background: var(--color-bg);
       }
 
+      /* Search footer: hidden at rest, revealed on focus or while text present */
+      .kg-mobile-search .rail-query-footer { display: none; }
+      .kg-mobile-search .rail-query-input-wrap.footer-active .rail-query-footer { display: flex; }
+
       .filter-row {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
@@ -3517,6 +3521,11 @@
   });
   mobInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); submitQuery(); } });
   mobSubmit.addEventListener('click', submitQuery);
+
+  // Show footer on focus; hide on blur only if empty (keeps submit visible while text is present)
+  const mobFooterWrap = mobInput.closest('.rail-query-input-wrap');
+  mobInput.addEventListener('focus', () => { if (isMobile()) mobFooterWrap.classList.add('footer-active'); });
+  mobInput.addEventListener('blur',  () => { if (isMobile() && !mobInput.value.trim()) mobFooterWrap.classList.remove('footer-active'); });
 
   async function submitQuery() {
     const q = queryInput.value.trim();
